@@ -1,6 +1,6 @@
 export const assets = {
   brand: {
-    icon: '/assets/img/icons/gamegabyte-icon.webp',
+    icon: '/assets/img/backgrounds/gamegabyte-pattern-glow.webp',
   },
   clients: [
     { name: 'Sycamore', logo: '/assets/img/clients/sycamore-logo.webp' },
@@ -31,7 +31,7 @@ export const content = {
     { label: 'GaByte Academy', href: '#academy' },
     { label: 'Case Studies', href: '#portfolio' },
     { label: 'About Us', href: '#about' },
-  ] as unknown as readonly string[] & readonly { label: string; href: string }[],
+  ] as const,
   hero: {
     headline: ['We Are The Game', 'Marketing Studio'],
     sub: 'From immersive websites to powerful digital strategies — we help your game win the market.',

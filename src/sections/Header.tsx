@@ -1,14 +1,6 @@
 import { content } from '../content/content'
 import { Button } from '../components/ui/Button'
 
-const links = [
-  ['Home', '#home'],
-  ['Our Services', '#services'],
-  ['GaByte Academy', '#academy'],
-  ['Case Studies', '#portfolio'],
-  ['About Us', '#why'],
-] as const
-
 export function Header() {
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-black">
@@ -20,8 +12,13 @@ export function Header() {
           </span>
         </a>
         <nav className="hidden items-center gap-12 text-sm font-medium uppercase text-white/86 lg:flex">
-          {links.map(([label, href]) => (
-            <a key={label} href={href} className={label === content.nav[0] ? 'text-accent' : 'transition hover:text-accent'}>
+          {content.nav.map(({ label, href }) => (
+            <a
+              key={label}
+              href={href}
+              aria-current={href === '#home' ? 'page' : undefined}
+              className={href === '#home' ? 'text-accent' : 'transition hover:text-accent'}
+            >
               {label}
             </a>
           ))}
