@@ -5,7 +5,7 @@ export function Button({
   children,
   href = '#',
   variant = 'accent',
-  showArrow = false,
+  showArrow = true,
 }: {
   children: ReactNode
   href?: string
