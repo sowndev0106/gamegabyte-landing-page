@@ -1,28 +1,29 @@
 import { content } from '../content/content'
 import { Reveal } from '../components/motion/Reveal'
 import { Container } from '../components/ui/Container'
-import { Section } from '../components/ui/Section'
 
 export function Testimonials() {
-  const intro = content.testimonials.length > 1 ? 'What studios say about working with us' : 'What our partners say'
+  const testimonial = content.testimonials[0]
 
   return (
-    <Section id="testimonials" className="bg-ink">
+    <section id="testimonials" className="bg-black py-16 sm:py-24">
       <Container>
-        <p className="mb-12 text-center text-sm uppercase tracking-[0.18em] text-white/48">{intro}</p>
-        {content.testimonials.map((testimonial) => (
-          <Reveal key={testimonial.name}>
-            <figure className="mx-auto max-w-4xl border border-white/10 bg-white/[0.045] p-8 text-center sm:p-12">
-              <blockquote className="font-display text-2xl font-bold leading-relaxed text-white sm:text-4xl">
+        <p className="mb-12 text-center text-xs uppercase tracking-[0.2em] text-white/50">
+          DON'T TAKE OUR WORD FOR IT. OVER 100+ PEOPLE TRUST US.
+        </p>
+        {testimonial && (
+          <Reveal>
+            <div className="mx-auto max-w-3xl bg-white/[0.055] px-8 py-10 text-center">
+              <blockquote className="font-display text-2xl font-bold leading-snug text-white sm:text-3xl">
                 "{testimonial.quote}"
               </blockquote>
-              <figcaption className="mt-8 text-white/58">
-                <span className="font-bold text-white">{testimonial.name}</span> / {testimonial.role}
-              </figcaption>
-            </figure>
+              <div className="mt-8 text-sm text-white/60">
+                <strong className="text-white">{testimonial.name}</strong> — {testimonial.role}
+              </div>
+            </div>
           </Reveal>
-        ))}
+        )}
       </Container>
-    </Section>
+    </section>
   )
 }
