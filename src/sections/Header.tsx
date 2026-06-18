@@ -11,15 +11,15 @@ const links = [
 
 export function Header() {
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-black/86 backdrop-blur">
-      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5 sm:px-8">
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-black">
+      <div className="mx-auto flex h-20 max-w-[1440px] items-center justify-between px-5 sm:px-12">
         <a href="#home" aria-label="Gamegabyte Studio home">
-          <span className="block font-display text-2xl font-black uppercase leading-[0.82] tracking-tight text-white sm:text-3xl">
+          <span className="block font-display text-[28px] font-black uppercase leading-[0.78] tracking-tight text-white sm:text-[32px]">
             Game
-            <span className="block tracking-[0.24em]">Gabyte</span>
+            <span className="block text-[13px] tracking-[0.42em] sm:text-[15px]">Gabyte</span>
           </span>
         </a>
-        <nav className="hidden items-center gap-10 text-sm font-medium uppercase text-white/82 lg:flex">
+        <nav className="hidden items-center gap-12 text-sm font-medium uppercase text-white/86 lg:flex">
           {links.map(([label, href]) => (
             <a key={label} href={href} className={label === content.nav[0] ? 'text-accent' : 'transition hover:text-accent'}>
               {label}

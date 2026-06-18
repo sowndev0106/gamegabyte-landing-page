@@ -13,7 +13,7 @@ export function Button({ children, href = '#', variant = 'accent' }: { children:
       href={href}
       whileHover={{ y: -2 }}
       whileTap={{ scale: 0.98 }}
-      className={`inline-flex min-h-12 items-center justify-center gap-2 border px-6 py-3 text-sm font-bold uppercase ${classes}`}
+      className={`inline-flex min-h-16 items-center justify-center gap-2 border px-8 py-4 text-base font-bold uppercase ${classes}`}
     >
       {children}
       <span aria-hidden="true">↗</span>
