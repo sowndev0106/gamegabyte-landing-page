@@ -14,7 +14,7 @@ export function Portfolio() {
           {content.portfolio.items.map((item, index) => (
             <StaggerItem key={item.title} className="group overflow-hidden border border-white/10 bg-white/[0.045]">
               <img
-                src={assets.showcase[index]}
+                src={assets.portfolio[index]}
                 alt={item.title}
                 loading="lazy"
                 className="aspect-video w-full object-cover transition duration-500 group-hover:scale-105"

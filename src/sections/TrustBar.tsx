@@ -10,7 +10,7 @@ export function TrustBar() {
       <Container>
         <div className="mb-8 grid gap-4 text-center sm:grid-cols-[1fr_auto_1fr] sm:items-center">
           <p className="text-sm uppercase tracking-[0.18em] text-white/50">{content.trust.title}</p>
-          <img src={assets.icon} alt="" className="mx-auto h-9 w-9" loading="lazy" />
+          <img src={assets.brand.icon} alt="" className="mx-auto h-9 w-9" loading="lazy" />
           <p className="text-sm uppercase tracking-[0.18em] text-white/50">{content.trust.note}</p>
         </div>
         <Marquee speed={24}>

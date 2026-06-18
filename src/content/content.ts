@@ -1,14 +1,27 @@
 export const assets = {
-  logo: '/assets/img/433b9836e8cff75088caed5999e5aac59c4987e7.webp',
-  icon: '/assets/img/cd9d6a45540edadf4778c6654fa8c3501df46b99.webp',
-  hero: '/assets/img/bfa7bdefb3f47ed0ebdc8628ac372d588072421e.webp',
-  banner: '/assets/img/a679ae9ede79cfbe23bd01ce70700bc31c9703f2.webp',
-  showcase: [
-    '/assets/img/260119f996927bf88a220565a996b6389bf82043.webp',
-    '/assets/img/66359bc02e3e849dbc8560af26925a62a9e0c106.webp',
-    '/assets/img/549c806684162d5909a2c765b10f159169bc22b4.webp',
+  brand: {
+    icon: '/assets/img/icons/gamegabyte-icon.webp',
+  },
+  clients: [
+    { name: 'Sycamore', logo: '/assets/img/clients/sycamore-logo.webp' },
+    { name: 'Disney Speedstorm', logo: '/assets/img/clients/disney-speedstorm-logo.webp' },
+    { name: 'Tally', logo: '/assets/img/clients/tally-logo.webp' },
+    { name: 'Seedify', logo: '/assets/img/clients/seedify-logo.webp' },
   ],
-  poster: '/assets/img/4038f95b0cd6c2746fe4f2da7590b09366d59ac2.webp',
+  backgrounds: {
+    hero: '/assets/img/backgrounds/hero-dark-game-scene.webp',
+    pattern: '/assets/img/backgrounds/gamegabyte-pattern-glow.webp',
+    pixelTrees: '/assets/img/backgrounds/pixel-tree-tiles.webp',
+    characterWide: '/assets/img/backgrounds/fantasy-character-wide.webp',
+    mech: '/assets/img/backgrounds/mech-concept-art.webp',
+  },
+  portfolio: [
+    '/assets/img/portfolio/beyond-the-keep-menu.webp',
+    '/assets/img/portfolio/season-pass-character.webp',
+    '/assets/img/portfolio/crafting-inventory-ui.webp',
+  ],
+  reelPoster: '/assets/img/portfolio/nova-core-ui.webp',
+  video: '/video/reel-2025.mp4',
 } as const
 
 export const content = {
@@ -57,7 +70,7 @@ export const content = {
       { title: 'Marketing Launch System', tag: 'Analytics + community' },
     ],
   },
-  reel: { title: 'Gamegabyte Studio Reel 2025', src: '/video/reel-2025.mp4' },
+  reel: { title: 'Gamegabyte Studio Reel 2025', src: assets.video },
   testimonials: [
     { quote: "We're not just another agency. We're strategic partners helping your game succeed in the fiercely competitive market.", name: 'Mickael Grants', role: 'CEO of Apples to Oranges' },
   ],

@@ -7,7 +7,7 @@ import { SectionHeading } from '../components/ui/SectionHeading'
 export function WhyChooseUs() {
   return (
     <Section id="why" className="relative overflow-hidden bg-ink">
-      <img src={assets.banner} alt="" loading="lazy" className="absolute inset-x-0 top-0 h-56 w-full object-cover opacity-14" />
+      <img src={assets.backgrounds.pixelTrees} alt="" loading="lazy" className="absolute inset-x-0 top-0 h-56 w-full object-cover opacity-14" />
       <Container className="relative">
         <SectionHeading eyebrow="Why choose us?" title="Strategic partners, not just an agency" />
         <Stagger className="grid gap-5 sm:grid-cols-2">

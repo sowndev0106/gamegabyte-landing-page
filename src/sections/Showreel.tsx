@@ -12,7 +12,7 @@ export function Showreel() {
         <SectionHeading eyebrow="Showreel 2025" title={content.reel.title} />
         <Reveal>
           <div className="overflow-hidden border border-white/10 bg-white/[0.035] p-2">
-            <LazyVideo src={content.reel.src} poster={assets.poster} className="aspect-video w-full object-cover" />
+            <LazyVideo src={content.reel.src} poster={assets.reelPoster} className="aspect-video w-full object-cover" />
           </div>
         </Reveal>
       </Container>
