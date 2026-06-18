@@ -2,8 +2,6 @@ import { content, assets } from '../content/content'
 import { Marquee } from '../components/motion/Marquee'
 import { Container } from '../components/ui/Container'
 
-const partners = ['Gameloft & Partners', 'Formerly From', 'AAA Studios', 'Mobile Titles', 'Indie Developers', 'Publishers']
-
 export function TrustBar() {
   return (
     <section className="border-y border-white/10 bg-black py-12">
@@ -14,10 +12,10 @@ export function TrustBar() {
           <p className="text-sm uppercase tracking-[0.18em] text-white/50">{content.trust.note}</p>
         </div>
         <Marquee speed={24}>
-          {partners.map((p) => (
-            <span key={p} className="font-display text-2xl font-bold uppercase text-white/42">
-              {p}
-            </span>
+          {assets.clients.map((client) => (
+            <div key={client.name} className="flex h-16 w-64 items-center justify-center">
+              <img src={client.logo} alt={client.name} loading="lazy" className="max-h-12 max-w-52 object-contain opacity-70 grayscale" />
+            </div>
           ))}
         </Marquee>
       </Container>
