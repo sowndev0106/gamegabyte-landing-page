@@ -1,6 +1,16 @@
 import { useEffect, useRef, useState } from 'react'
 
-export function LazyVideo({ src, poster, className }: { src: string; poster?: string; className?: string }) {
+export function LazyVideo({
+  src,
+  poster,
+  className,
+  'aria-label': ariaLabel,
+}: {
+  src: string
+  poster?: string
+  className?: string
+  'aria-label'?: string
+}) {
   const ref = useRef<HTMLVideoElement>(null)
   const [load, setLoad] = useState(false)
 
@@ -21,7 +31,17 @@ export function LazyVideo({ src, poster, className }: { src: string; poster?: st
   }, [])
 
   return (
-    <video ref={ref} className={className} poster={poster} muted loop playsInline controls preload={load ? 'auto' : 'none'}>
+    <video
+      ref={ref}
+      className={className}
+      poster={poster}
+      muted
+      loop
+      playsInline
+      controls
+      preload={load ? 'auto' : 'none'}
+      aria-label={ariaLabel}
+    >
       {load && <source src={src} type="video/mp4" />}
     </video>
   )

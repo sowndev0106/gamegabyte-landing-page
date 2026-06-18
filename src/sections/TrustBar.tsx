@@ -1,24 +1,11 @@
-import { content, assets } from '../content/content'
-import { Marquee } from '../components/motion/Marquee'
-import { Container } from '../components/ui/Container'
+import { assets } from '../content/content'
 
 export function TrustBar() {
   return (
-    <section className="border-y border-white/10 bg-black py-12">
-      <Container>
-        <div className="mb-8 grid gap-4 text-center sm:grid-cols-[1fr_auto_1fr] sm:items-center">
-          <p className="text-sm uppercase tracking-[0.18em] text-white/50">{content.trust.title}</p>
-          <span aria-hidden="true" className="mx-auto text-2xl font-black text-accent">+</span>
-          <p className="text-sm uppercase tracking-[0.18em] text-white/50">{content.trust.note}</p>
-        </div>
-        <Marquee speed={24}>
-          {assets.clients.map((client) => (
-            <div key={client.name} className="flex h-16 w-64 items-center justify-center">
-              <img src={client.logo} alt={client.name} loading="lazy" className="max-h-12 max-w-52 object-contain opacity-70 grayscale" />
-            </div>
-          ))}
-        </Marquee>
-      </Container>
-    </section>
+    <div className="mx-auto flex w-full max-w-[980px] flex-wrap items-center justify-center gap-x-12 gap-y-6 px-5 opacity-80">
+      {assets.clients.map((client) => (
+        <img key={client.name} src={client.logo} alt={client.name} loading="lazy" className="max-h-8 w-auto object-contain grayscale" />
+      ))}
+    </div>
   )
 }
