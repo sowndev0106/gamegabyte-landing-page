@@ -1,7 +1,17 @@
 import { motion } from 'motion/react'
 import type { ReactNode } from 'react'
 
-export function Button({ children, href = '#', variant = 'accent' }: { children: ReactNode; href?: string; variant?: 'accent' | 'light' | 'dark' }) {
+export function Button({
+  children,
+  href = '#',
+  variant = 'accent',
+  showArrow = false,
+}: {
+  children: ReactNode
+  href?: string
+  variant?: 'accent' | 'light' | 'dark'
+  showArrow?: boolean
+}) {
   const classes = {
     accent: 'border-accent bg-accent text-ink shadow-[0_0_28px_rgba(182,232,2,0.18)]',
     light: 'border-white bg-white text-ink',
@@ -16,7 +26,11 @@ export function Button({ children, href = '#', variant = 'accent' }: { children:
       className={`inline-flex min-h-16 items-center justify-center gap-2 border px-8 py-4 text-base font-bold uppercase ${classes}`}
     >
       {children}
-      <span aria-hidden="true">↗</span>
+      {showArrow && (
+        <span aria-hidden="true" className="ml-2 text-lg leading-none">
+          ↗
+        </span>
+      )}
     </motion.a>
   )
 }
