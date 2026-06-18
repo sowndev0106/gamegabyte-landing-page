@@ -13,15 +13,16 @@ export function Contact() {
         <Reveal>
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="font-display text-4xl font-bold text-white sm:text-6xl">{content.contact.title}</h2>
+            <p className="mt-5 text-lg leading-8 text-white/68">{content.contact.body}</p>
             <form className="mt-9 flex flex-col gap-4" onSubmit={(event) => { event.preventDefault(); setSent(true) }}>
               <textarea
                 required
                 rows={5}
-                placeholder={content.contact.placeholder}
+                placeholder={content.contact.fields.message}
                 className="border border-white/10 bg-white/[0.045] p-5 text-white outline-none placeholder:text-white/38 focus:border-accent"
               />
               <button type="submit" className="min-h-12 border border-accent bg-accent px-7 py-3 font-bold uppercase text-ink">
-                Send
+                {content.contact.cta}
               </button>
               {sent && <p className="text-accent">Form submitted - thank you!</p>}
             </form>

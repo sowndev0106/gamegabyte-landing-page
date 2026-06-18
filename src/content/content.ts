@@ -1,7 +1,4 @@
 export const assets = {
-  brand: {
-    icon: '/assets/img/backgrounds/gamegabyte-pattern-glow.webp',
-  },
   clients: [
     { name: 'Sycamore', logo: '/assets/img/clients/sycamore-logo.webp' },
     { name: 'Disney Speedstorm', logo: '/assets/img/clients/disney-speedstorm-logo.webp' },
@@ -37,7 +34,6 @@ export const content = {
     sub: 'From immersive websites to powerful digital strategies — we help your game win the market.',
     primaryCta: 'Case Study',
     secondaryCta: 'Connect with us',
-    tagline: 'Delivering focused impact for game teams.',
   },
   reel: {
     title: 'Showreel 2025',
@@ -47,7 +43,6 @@ export const content = {
   trust: {
     title: 'Growing with Game Studios Worldwide',
     note: 'Delivering focused impact for game teams.',
-    proof: "Don't take our word for it. Over 100+ people trust us.",
   },
   stats: [
     { value: '25+', label: 'Studio Projects', note: 'Across AAA & mobile titles' },
@@ -113,7 +108,6 @@ export const content = {
       email: 'Your email',
       message: 'Tell us about your idea',
     },
-    placeholder: 'Type your message here...',
     cta: 'Send',
   },
   footer: {
@@ -123,6 +117,5 @@ export const content = {
       { title: 'Legal', links: ['Privacy Policy', 'Terms of Service', 'Cookie Policy'] },
     ],
     tagline: 'Connect with us',
-    links: ['Documentation', 'Help Center', 'Privacy Policy', 'Terms of Service', 'Cookie Policy'],
   },
 } as const

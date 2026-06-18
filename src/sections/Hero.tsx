@@ -4,6 +4,8 @@ import { Button } from '../components/ui/Button'
 import { Container } from '../components/ui/Container'
 
 export function Hero() {
+  const [headlineLead, headlineAccent] = content.hero.headline
+
   return (
     <section id="home" className="relative flex min-h-screen items-center overflow-hidden bg-black pt-20">
       <img src={assets.backgrounds.hero} alt="" className="absolute inset-0 h-full w-full object-cover opacity-[0.08]" />
@@ -14,13 +16,10 @@ export function Hero() {
       <Container className="relative z-10">
         <Stagger className="mx-auto flex max-w-[1160px] translate-y-20 flex-col items-center gap-7 text-center sm:translate-y-28">
           <StaggerItem>
-            <p className="text-sm font-bold uppercase tracking-[0.2em] text-accent">{content.hero.tagline}</p>
-          </StaggerItem>
-          <StaggerItem>
             <h1 className="w-full font-display text-[58px] font-bold leading-[1.04] text-white sm:text-[92px] lg:text-[112px]">
-              We Are The <span className="text-accent">Game</span>
+              {headlineLead} <span className="text-accent">Game</span>
               <br />
-              Marketing Studio
+              {headlineAccent}
             </h1>
           </StaggerItem>
           <StaggerItem>
@@ -28,8 +27,8 @@ export function Hero() {
           </StaggerItem>
           <StaggerItem>
             <div className="flex flex-wrap justify-center gap-4">
-              <Button href="#portfolio" variant="light">Case Study</Button>
-              <Button href="#contact">Connect with us</Button>
+              <Button href="#portfolio" variant="light">{content.hero.primaryCta}</Button>
+              <Button href="#contact">{content.hero.secondaryCta}</Button>
             </div>
           </StaggerItem>
         </Stagger>

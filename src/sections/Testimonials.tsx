@@ -4,10 +4,12 @@ import { Container } from '../components/ui/Container'
 import { Section } from '../components/ui/Section'
 
 export function Testimonials() {
+  const intro = content.testimonials.length > 1 ? 'What studios say about working with us' : 'What our partners say'
+
   return (
     <Section id="testimonials" className="bg-ink">
       <Container>
-        <p className="mb-12 text-center text-sm uppercase tracking-[0.18em] text-white/48">{content.trust.proof}</p>
+        <p className="mb-12 text-center text-sm uppercase tracking-[0.18em] text-white/48">{intro}</p>
         {content.testimonials.map((testimonial) => (
           <Reveal key={testimonial.name}>
             <figure className="mx-auto max-w-4xl border border-white/10 bg-white/[0.045] p-8 text-center sm:p-12">
