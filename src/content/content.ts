@@ -6,7 +6,7 @@ export const assets = {
     { name: 'Seedify', logo: '/assets/img/clients/seedify-logo.webp' },
   ],
   backgrounds: {
-    hero: '/assets/img/backgrounds/gamegabyte-pattern-glow.webp',
+    hero: '/assets/img/backgrounds/hero-portal-arena-v1.png',
     pattern: '/assets/img/backgrounds/gamegabyte-pattern-glow.webp',
     pixelTrees: '/assets/img/backgrounds/pixel-tree-tiles.webp',
     characterWide: '/assets/img/backgrounds/fantasy-character-wide.webp',
