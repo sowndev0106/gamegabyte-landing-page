@@ -1,0 +1,681 @@
+<!doctype html>
+<!-- Three full-page Cinematic Tech HUD variants, switchable via ?variant=, built only to decide visual direction. -->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark" />
+    <title>Gamegabyte — Cinematic Tech HUD Prototype</title>
+    <style>
+      @font-face {
+        font-family: Schibsted;
+        src: url('/fonts/SchibstedGrotesk_wght__1/SchibstedGrotesk_wght__1-english.woff2') format('woff2');
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: Roboto;
+        src: url('/fonts/Roboto_wdth_wght__2/Roboto_wdth_wght__2-english.woff2') format('woff2');
+        font-display: swap;
+      }
+
+      :root {
+        --ink: #030213;
+        --ink-2: #09081a;
+        --panel: #0c0b1d;
+        --lime: #b6e802;
+        --lime-bright: #d4ff00;
+        --purple: #601feb;
+        --violet: #8c4fff;
+        --white: #f6f5fb;
+        --muted: #a6a3b7;
+        --line: rgba(255, 255, 255, 0.12);
+        --container: min(1180px, calc(100vw - 40px));
+        --display: Schibsted, system-ui, sans-serif;
+        --body: Roboto, system-ui, sans-serif;
+      }
+
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        overflow-x: hidden;
+        background: var(--ink);
+        color: var(--white);
+        font-family: var(--body);
+      }
+      button, a { color: inherit; font: inherit; }
+      a { text-decoration: none; }
+      button { border: 0; }
+      img { display: block; max-width: 100%; }
+
+      .prototype-note {
+        position: fixed;
+        left: 16px;
+        bottom: 18px;
+        z-index: 1000;
+        max-width: 210px;
+        color: rgba(255,255,255,.58);
+        font: 10px/1.4 ui-monospace, monospace;
+        letter-spacing: .12em;
+        text-transform: uppercase;
+        pointer-events: none;
+      }
+
+      .switcher {
+        position: fixed;
+        z-index: 1001;
+        left: 50%;
+        bottom: 18px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px;
+        border: 1px solid rgba(255,255,255,.18);
+        border-radius: 999px;
+        background: rgba(3,2,19,.9);
+        box-shadow: 0 16px 60px rgba(0,0,0,.5), 0 0 35px rgba(96,31,235,.2);
+        backdrop-filter: blur(18px);
+        transform: translateX(-50%);
+      }
+      .switcher button {
+        display: grid;
+        width: 42px;
+        height: 42px;
+        place-items: center;
+        border-radius: 50%;
+        background: transparent;
+        cursor: pointer;
+      }
+      .switcher button:hover { background: rgba(255,255,255,.08); color: var(--lime); }
+      .switcher__label {
+        min-width: 224px;
+        padding: 0 18px;
+        text-align: center;
+        font: 700 11px/1 var(--display);
+        letter-spacing: .12em;
+        text-transform: uppercase;
+      }
+      .switcher__label small {
+        display: block;
+        margin-top: 6px;
+        color: var(--lime);
+        font: 9px/1 ui-monospace, monospace;
+        letter-spacing: .2em;
+      }
+
+      .variant { display: none; min-height: 100vh; }
+      body[data-variant='A'] .variant-a,
+      body[data-variant='B'] .variant-b,
+      body[data-variant='C'] .variant-c { display: block; }
+
+      .mono {
+        font: 11px/1.25 ui-monospace, SFMono-Regular, Consolas, monospace;
+        letter-spacing: .22em;
+        text-transform: uppercase;
+      }
+      .lime { color: var(--lime); }
+      .muted { color: var(--muted); }
+      .container { width: var(--container); margin-inline: auto; }
+      .section { position: relative; padding: 104px 0; border-top: 1px solid rgba(255,255,255,.08); }
+      .section-title { margin: 18px 0 0; font: 750 clamp(40px,6vw,76px)/.92 var(--display); letter-spacing: -.045em; text-transform: uppercase; }
+      .section-head { display: grid; grid-template-columns: 1.25fr .75fr; gap: 40px; align-items: end; margin-bottom: 54px; }
+      .section-head p:last-child { max-width: 440px; margin: 0 0 2px auto; color: var(--muted); font-size: 16px; line-height: 1.65; }
+      .btn {
+        display: inline-flex;
+        min-height: 54px;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        padding: 0 26px;
+        border: 1px solid rgba(255,255,255,.6);
+        background: transparent;
+        font: 700 14px/1 var(--display);
+        text-transform: uppercase;
+        transition: transform .2s ease, background .2s ease, color .2s ease;
+      }
+      .btn:hover { transform: translateY(-2px); }
+      .btn--lime { border-color: var(--lime); background: var(--lime); color: var(--ink); }
+      .btn--violet { border-color: var(--violet); background: var(--purple); }
+      .arrow { font-size: 17px; transform: rotate(-45deg); }
+      .brand { font: 850 18px/.72 var(--display); letter-spacing: -.03em; text-transform: uppercase; }
+      .brand span { display: block; font-size: 11px; letter-spacing: .28em; }
+
+      .reveal { opacity: 0; transform: translateY(22px); transition: opacity .6s ease, transform .6s ease; }
+      .reveal.is-visible { opacity: 1; transform: none; }
+
+      .pointer-card { position: relative; overflow: hidden; }
+      .pointer-card::before {
+        position: absolute;
+        z-index: 2;
+        inset: 0;
+        background: radial-gradient(320px circle at var(--x, -500px) var(--y, -500px), rgba(182,232,2,.12), transparent 55%);
+        content: '';
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity .25s;
+      }
+      .pointer-card:hover::before { opacity: 1; }
+
+      .grid-bg::before {
+        position: absolute;
+        inset: 0;
+        background-image: linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+        background-size: 56px 56px;
+        mask-image: radial-gradient(ellipse at center, #000 12%, transparent 76%);
+        content: '';
+        pointer-events: none;
+      }
+
+      /* Variant A — balanced cinematic HUD */
+      .a-header {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        left: 50%;
+        display: flex;
+        width: var(--container);
+        height: 82px;
+        align-items: center;
+        justify-content: space-between;
+        transform: translateX(-50%);
+      }
+      .a-nav { display: flex; gap: 34px; color: rgba(255,255,255,.7); }
+      .a-nav a:first-child { color: var(--lime); }
+      .a-hero {
+        position: relative;
+        display: grid;
+        min-height: 100vh;
+        place-items: center;
+        overflow: hidden;
+        background: var(--ink) url('/assets/img/backgrounds/hero-portal-arena-v1.png') center/cover no-repeat;
+      }
+      .a-hero::before {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(90deg, rgba(3,2,19,.83), rgba(3,2,19,.72) 52%, rgba(3,2,19,.36) 84%, rgba(3,2,19,.62));
+        content: '';
+      }
+      .a-hero::after {
+        position: absolute;
+        right: 6%;
+        top: 18%;
+        width: 38vw;
+        aspect-ratio: 1;
+        border: 1px solid rgba(140,79,255,.22);
+        border-radius: 50%;
+        box-shadow: 0 0 90px rgba(96,31,235,.2), inset 0 0 80px rgba(96,31,235,.12);
+        content: '';
+        animation: portal-pulse 9s ease-in-out infinite alternate;
+      }
+      @keyframes portal-pulse { to { opacity: .6; transform: scale(1.035); } }
+      .a-hero__content { position: relative; z-index: 2; width: min(1020px, calc(100vw - 40px)); padding: 140px 0 60px; text-align: center; }
+      .a-kicker { color: var(--lime); }
+      .a-title { max-width: 1040px; margin: 28px auto 26px; font: 780 clamp(52px,7vw,100px)/.9 var(--display); letter-spacing: -.055em; }
+      .a-title em { color: var(--lime); font-style: normal; }
+      .a-lede { max-width: 730px; margin: auto; color: rgba(255,255,255,.76); font-size: 20px; line-height: 1.55; }
+      .a-actions { display: flex; justify-content: center; gap: 14px; margin-top: 34px; }
+      .a-metrics { display: grid; max-width: 980px; margin: 58px auto 0; grid-template-columns: repeat(3,1fr); border: 1px solid var(--line); background: rgba(3,2,19,.78); backdrop-filter: blur(12px); }
+      .a-metric { padding: 20px 26px; border-right: 1px solid var(--line); text-align: left; }
+      .a-metric:last-child { border: 0; }
+      .a-metric strong { display: block; margin-top: 8px; font: 700 19px/1.2 var(--display); }
+      .a-trust { padding: 72px 0 0; }
+      .a-trust__logos { display: flex; align-items: center; justify-content: space-between; gap: 30px; padding: 28px 0; border-block: 1px solid var(--line); color: rgba(255,255,255,.5); }
+      .a-trust__logos img { max-width: 130px; max-height: 34px; opacity: .6; filter: grayscale(1); }
+      .a-stats { display: grid; grid-template-columns: repeat(4,1fr); margin-top: 56px; border: 1px solid var(--line); }
+      .a-stat { min-height: 180px; padding: 30px; border-right: 1px solid var(--line); background: rgba(255,255,255,.018); }
+      .a-stat:last-child { border: 0; }
+      .a-stat b { display: block; margin: 32px 0 10px; color: var(--lime); font: 760 44px/1 var(--display); }
+      .a-feature { display: grid; grid-template-columns: 1.75fr .8fr; min-height: 520px; border: 1px solid var(--line); background: var(--panel); }
+      .a-feature__image { position: relative; min-height: 470px; overflow: hidden; }
+      .a-feature__image img, .a-project img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
+      .a-feature:hover img, .a-project:hover img { transform: scale(1.025); }
+      .a-feature__copy { display: flex; flex-direction: column; justify-content: flex-end; padding: 42px; }
+      .a-feature h3 { margin: 18px 0; font: 720 40px/.98 var(--display); }
+      .a-feature p, .a-project p { color: var(--muted); line-height: 1.6; }
+      .a-projects { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 24px; }
+      .a-project { display: grid; grid-template-columns: .9fr 1.1fr; min-height: 290px; border: 1px solid var(--line); background: var(--panel); }
+      .a-project__img { min-height: 290px; overflow: hidden; }
+      .a-project__copy { display: flex; flex-direction: column; justify-content: flex-end; padding: 26px; }
+      .a-project h3 { margin: 14px 0; font: 700 23px/1.05 var(--display); }
+      .a-services { display: grid; grid-template-columns: repeat(3,1fr); border: 1px solid var(--line); }
+      .a-service { min-height: 290px; padding: 28px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); background: rgba(255,255,255,.014); }
+      .a-service:nth-child(3n) { border-right: 0; }
+      .a-service:nth-child(n+4) { border-bottom: 0; }
+      .a-service__symbol { color: var(--lime); font: 26px/1 ui-monospace, monospace; }
+      .a-service h3 { margin: 48px 0 14px; font: 700 24px/1.1 var(--display); }
+      .a-service p { color: var(--muted); line-height: 1.6; }
+      .a-techline { display: grid; grid-template-columns: repeat(4,1fr); margin-top: 36px; border-top: 1px solid var(--line); }
+      .a-techline div { padding: 22px 18px 0 0; }
+      .a-timeline { position: relative; display: grid; grid-template-columns: repeat(4,1fr); gap: 28px; }
+      .a-timeline::before, .a-timeline::after { position: absolute; top: 17px; left: 0; width: 100%; height: 1px; content: ''; }
+      .a-timeline::before { background: var(--line); }
+      .a-timeline::after { width: 78%; background: var(--lime); box-shadow: 0 0 14px rgba(182,232,2,.6); transform-origin: left; animation: signal 4s ease-in-out infinite alternate; }
+      @keyframes signal { from { transform: scaleX(.2); } to { transform: scaleX(1); } }
+      .a-step { position: relative; padding-top: 62px; }
+      .a-step::before { position: absolute; top: 9px; left: 0; width: 17px; height: 17px; border: 4px solid var(--ink); background: var(--lime); box-shadow: 0 0 0 1px var(--lime),0 0 18px rgba(182,232,2,.45); content: ''; }
+      .a-step h3 { font: 700 22px/1.2 var(--display); }
+      .a-step p { color: var(--muted); line-height: 1.6; }
+      .a-quote { overflow: hidden; padding: 0; background: linear-gradient(110deg,#190948,#321071 58%,#151022); }
+      .a-quote__inner { display: grid; min-height: 480px; grid-template-columns: 1.4fr .6fr; align-items: center; gap: 60px; }
+      .a-quote blockquote { margin: 18px 0 32px; font: 720 clamp(34px,4.2vw,60px)/1.06 var(--display); letter-spacing: -.035em; }
+      .a-quote__signal { display: grid; aspect-ratio: 1; place-items: center; border: 1px solid rgba(255,255,255,.18); border-radius: 50%; }
+      .a-quote__signal::before { width: 52%; aspect-ratio: 1; border: 1px solid var(--lime); border-radius: inherit; box-shadow: 0 0 60px rgba(182,232,2,.18); content: ''; }
+      .a-contact { display: grid; grid-template-columns: 1.2fr .8fr; gap: 70px; }
+      .a-contact h2 { margin: 16px 0 46px; font: 760 clamp(46px,6vw,76px)/.93 var(--display); letter-spacing: -.04em; text-transform: uppercase; }
+      .a-form { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+      .a-field { min-height: 58px; padding: 19px; border: 1px solid var(--line); background: rgba(255,255,255,.025); color: var(--muted); }
+      .a-field--wide { min-height: 150px; grid-column: 1/-1; }
+      .a-form .btn { grid-column: 1/-1; }
+      .a-contact__aside { align-self: end; padding: 34px; border: 1px solid var(--line); background: rgba(182,232,2,.045); }
+      .a-contact__aside strong { display: block; margin: 20px 0 8px; font: 720 28px/1 var(--display); }
+
+      /* Variant B — asymmetric command centre */
+      .variant-b { background: #05050c; }
+      .b-shell { display: grid; grid-template-columns: 92px 1fr; }
+      .b-rail {
+        position: sticky;
+        z-index: 20;
+        top: 0;
+        display: flex;
+        height: 100vh;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        padding: 24px 0 88px;
+        border-right: 1px solid var(--line);
+        background: rgba(3,3,9,.92);
+      }
+      .b-rail .brand { writing-mode: vertical-rl; transform: rotate(180deg); }
+      .b-rail nav { display: flex; flex-direction: column; gap: 28px; }
+      .b-rail nav a { color: rgba(255,255,255,.45); writing-mode: vertical-rl; }
+      .b-main { min-width: 0; }
+      .b-topbar { position: absolute; z-index: 5; top: 0; right: 0; left: 92px; display: flex; height: 74px; align-items: center; justify-content: space-between; padding: 0 34px; border-bottom: 1px solid var(--line); }
+      .b-live { display: flex; align-items: center; gap: 10px; }
+      .b-live::before { width: 7px; height: 7px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 16px var(--lime); content: ''; }
+      .b-hero { position: relative; display: grid; min-height: 900px; grid-template-columns: 1.22fr .78fr; padding: 130px 34px 48px; overflow: hidden; }
+      .b-hero::before { position: absolute; inset: 0; background: url('/assets/img/backgrounds/hero-portal-arena-v1.png') center/cover; opacity: .35; content: ''; }
+      .b-hero::after { position: absolute; inset: 0; background: linear-gradient(90deg,#05050c 4%,rgba(5,5,12,.76) 50%,rgba(5,5,12,.25)); content: ''; }
+      .b-hero__copy, .b-dashboard { position: relative; z-index: 2; }
+      .b-hero__copy { align-self: end; max-width: 850px; padding: 0 3vw 54px; }
+      .b-title { margin: 24px 0; font: 780 clamp(62px,7.2vw,112px)/.82 var(--display); letter-spacing: -.065em; text-transform: uppercase; }
+      .b-title span { color: var(--lime); }
+      .b-hero__copy > p { max-width: 660px; color: var(--muted); font-size: 19px; line-height: 1.6; }
+      .b-actions { display: flex; gap: 14px; margin-top: 36px; }
+      .b-dashboard { display: flex; flex-direction: column; justify-content: flex-end; gap: 14px; padding-bottom: 54px; }
+      .b-panel { padding: 22px; border: 1px solid var(--line); background: rgba(5,5,12,.76); backdrop-filter: blur(12px); }
+      .b-panel__row { display: flex; align-items: end; justify-content: space-between; gap: 20px; }
+      .b-panel strong { font: 720 31px/1 var(--display); }
+      .b-bars { display: flex; height: 72px; align-items: end; gap: 7px; margin-top: 22px; }
+      .b-bars i { flex: 1; height: var(--h); background: linear-gradient(var(--lime),rgba(182,232,2,.08)); opacity: .7; }
+      .b-ticker { overflow: hidden; padding: 14px 0; border-block: 1px solid var(--line); color: var(--lime); white-space: nowrap; }
+      .b-ticker span { display: inline-block; padding-left: 100%; animation: ticker 25s linear infinite; }
+      @keyframes ticker { to { transform: translateX(-100%); } }
+      .b-section { padding: 90px 34px; border-top: 1px solid var(--line); }
+      .b-heading { display: grid; grid-template-columns: 220px 1fr; gap: 40px; margin-bottom: 42px; }
+      .b-heading h2 { max-width: 900px; margin: 0; font: 760 clamp(42px,5.2vw,76px)/.92 var(--display); text-transform: uppercase; }
+      .b-project-grid { display: grid; grid-template-columns: 1.2fr .8fr; grid-template-rows: 330px 330px; gap: 14px; }
+      .b-project { position: relative; overflow: hidden; border: 1px solid var(--line); }
+      .b-project:first-child { grid-row: 1/3; }
+      .b-project img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.8); transition: transform .5s, filter .5s; }
+      .b-project:hover img { transform: scale(1.025); filter: saturate(1.15); }
+      .b-project__label { position: absolute; right: 0; bottom: 0; left: 0; padding: 50px 22px 22px; background: linear-gradient(transparent,rgba(3,2,19,.94)); }
+      .b-project h3 { margin: 8px 0 0; font: 720 26px/1 var(--display); }
+      .b-matrix { display: grid; grid-template-columns: 210px repeat(3,1fr); border-block: 1px solid var(--line); }
+      .b-matrix > div { min-height: 210px; padding: 24px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+      .b-matrix > div:nth-child(4n) { border-right: 0; }
+      .b-matrix .b-matrix__key { color: var(--lime); background: rgba(182,232,2,.045); }
+      .b-matrix h3 { margin: 48px 0 12px; font: 700 22px/1.1 var(--display); }
+      .b-matrix p { color: var(--muted); line-height: 1.55; }
+      .b-process { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; }
+      .b-process__visual { position: sticky; top: 120px; align-self: start; aspect-ratio: 1; border: 1px solid var(--line); background: radial-gradient(circle,rgba(96,31,235,.24),transparent 64%); }
+      .b-process__visual::before, .b-process__visual::after { position: absolute; inset: 16%; border: 1px solid rgba(182,232,2,.22); border-radius: 50%; content: ''; animation: orbit 12s linear infinite; }
+      .b-process__visual::after { inset: 31%; border-style: dashed; animation-direction: reverse; animation-duration: 18s; }
+      @keyframes orbit { to { transform: rotate(360deg); } }
+      .b-process__steps { border-left: 1px solid var(--line); }
+      .b-process__step { position: relative; min-height: 210px; padding: 16px 0 54px 52px; }
+      .b-process__step::before { position: absolute; top: 18px; left: -6px; width: 11px; height: 11px; background: var(--lime); box-shadow: 0 0 18px var(--lime); content: ''; }
+      .b-process__step h3 { margin: 14px 0; font: 720 28px/1 var(--display); }
+      .b-process__step p { max-width: 540px; color: var(--muted); line-height: 1.65; }
+      .b-quote { display: grid; grid-template-columns: 220px 1fr; min-height: 540px; align-items: center; gap: 40px; padding: 70px 34px; border-block: 1px solid var(--lime); background: var(--lime); color: var(--ink); }
+      .b-quote blockquote { max-width: 1100px; margin: 0; font: 760 clamp(46px,6vw,88px)/.94 var(--display); letter-spacing: -.05em; }
+      .b-contact { display: grid; grid-template-columns: .8fr 1.2fr; gap: 90px; }
+      .b-contact h2 { margin: 18px 0; font: 760 clamp(48px,6vw,80px)/.9 var(--display); text-transform: uppercase; }
+
+      /* Variant C — neon editorial */
+      .variant-c { background: #060512; }
+      .c-header { display: flex; width: var(--container); height: 90px; align-items: center; justify-content: space-between; margin: auto; border-bottom: 1px solid var(--line); }
+      .c-header nav { display: flex; gap: 28px; color: var(--muted); }
+      .c-hero { width: var(--container); margin: auto; padding: 74px 0 30px; }
+      .c-title { position: relative; z-index: 2; max-width: 1180px; margin: 22px 0 -64px; font: 800 clamp(66px,10vw,152px)/.78 var(--display); letter-spacing: -.075em; text-transform: uppercase; }
+      .c-title span { color: var(--lime); }
+      .c-hero__visual { position: relative; height: min(62vw,680px); min-height: 440px; margin-left: 20%; overflow: hidden; }
+      .c-hero__visual img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+      .c-hero__visual::after { position: absolute; inset: 0; background: linear-gradient(90deg,#060512,transparent 48%),linear-gradient(0deg,#060512,transparent 25%); content: ''; }
+      .c-hero__foot { display: grid; grid-template-columns: 1fr auto; gap: 50px; align-items: center; margin-top: -24px; }
+      .c-hero__foot p { max-width: 650px; color: var(--muted); font-size: 20px; line-height: 1.6; }
+      .c-marquee { overflow: hidden; padding: 26px 0; border-block: 1px solid var(--line); color: rgba(255,255,255,.25); font: 720 26px/1 var(--display); white-space: nowrap; text-transform: uppercase; }
+      .c-marquee span { display: inline-block; animation: ticker 28s linear infinite; }
+      .c-section { padding: 120px 0; }
+      .c-heading { display: flex; align-items: end; justify-content: space-between; gap: 60px; margin-bottom: 58px; }
+      .c-heading h2 { max-width: 850px; margin: 15px 0 0; font: 760 clamp(50px,7vw,92px)/.86 var(--display); letter-spacing: -.055em; text-transform: uppercase; }
+      .c-heading p:last-child { max-width: 410px; color: var(--muted); line-height: 1.7; }
+      .c-feature { position: relative; min-height: 680px; overflow: hidden; }
+      .c-feature img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .7s; }
+      .c-feature:hover img { transform: scale(1.02); }
+      .c-feature::after { position: absolute; inset: 0; background: linear-gradient(10deg,rgba(3,2,19,.92),transparent 63%); content: ''; }
+      .c-feature__copy { position: absolute; z-index: 2; right: 6%; bottom: 8%; left: 6%; display: flex; align-items: end; justify-content: space-between; gap: 40px; }
+      .c-feature h3 { max-width: 700px; margin: 12px 0 0; font: 760 clamp(44px,6vw,78px)/.9 var(--display); }
+      .c-project-row { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 32px; }
+      .c-project { position: relative; min-height: 470px; overflow: hidden; background: var(--panel); }
+      .c-project img { width: 100%; height: 100%; object-fit: cover; }
+      .c-project__copy { position: absolute; right: 0; bottom: 0; left: 0; padding: 70px 28px 28px; background: linear-gradient(transparent,rgba(3,2,19,.96)); }
+      .c-project h3 { margin: 12px 0 0; font: 720 30px/1 var(--display); }
+      .c-service-list { border-top: 1px solid var(--line); }
+      .c-service { display: grid; grid-template-columns: 80px 1fr 1fr auto; gap: 34px; align-items: center; min-height: 130px; border-bottom: 1px solid var(--line); transition: padding .25s, background .25s; }
+      .c-service:hover { padding-inline: 18px; background: rgba(182,232,2,.035); }
+      .c-service h3 { font: 720 clamp(25px,3vw,38px)/1 var(--display); }
+      .c-service p { color: var(--muted); line-height: 1.55; }
+      .c-process { display: flex; gap: 14px; overflow-x: auto; padding-bottom: 18px; scroll-snap-type: x mandatory; }
+      .c-step { flex: 0 0 min(390px,75vw); min-height: 390px; padding: 34px; border: 1px solid var(--line); background: linear-gradient(145deg,rgba(96,31,235,.14),rgba(255,255,255,.01)); scroll-snap-align: start; }
+      .c-step b { color: var(--lime); font: 760 64px/1 var(--display); }
+      .c-step h3 { margin: 90px 0 18px; font: 720 30px/1 var(--display); }
+      .c-step p { color: var(--muted); line-height: 1.65; }
+      .c-quote { padding: 130px 0; background: var(--lime); color: var(--ink); }
+      .c-quote blockquote { max-width: 1050px; margin: 0; font: 800 clamp(50px,7.6vw,108px)/.88 var(--display); letter-spacing: -.06em; }
+      .c-quote footer { display: flex; justify-content: space-between; margin-top: 52px; padding-top: 22px; border-top: 1px solid rgba(3,2,19,.3); }
+      .c-contact { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: end; }
+      .c-contact h2 { margin: 20px 0 0; font: 780 clamp(60px,8vw,116px)/.82 var(--display); letter-spacing: -.06em; text-transform: uppercase; }
+      .c-contact__action { padding-bottom: 10px; }
+      .c-contact__action p { max-width: 500px; margin-bottom: 30px; color: var(--muted); font-size: 18px; line-height: 1.65; }
+      .site-footer { padding: 52px 0 110px; border-top: 1px solid var(--line); }
+      .site-footer__inner { display: flex; justify-content: space-between; gap: 40px; color: var(--muted); }
+
+      @media (max-width: 900px) {
+        :root { --container: min(100% - 32px, 760px); }
+        .section, .c-section { padding: 78px 0; }
+        .section-head, .c-heading { display: block; }
+        .section-head p:last-child, .c-heading p:last-child { margin: 22px 0 0; }
+        .a-nav, .c-header nav { display: none; }
+        .a-title { font-size: clamp(44px,12vw,70px); }
+        .a-metrics { grid-template-columns: 1fr 1fr; }
+        .a-metric:nth-child(2) { border-right: 0; }
+        .a-metric:last-child { grid-column: 1/-1; border-top: 1px solid var(--line); }
+        .a-trust__logos { display: grid; grid-template-columns: 1fr 1fr; }
+        .a-stats { grid-template-columns: 1fr 1fr; }
+        .a-stat:nth-child(2) { border-right: 0; }
+        .a-stat:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+        .a-feature, .a-project, .a-contact, .a-quote__inner { grid-template-columns: 1fr; }
+        .a-feature__image { min-height: 380px; }
+        .a-projects { grid-template-columns: 1fr; }
+        .a-services { grid-template-columns: 1fr 1fr; }
+        .a-service:nth-child(3n) { border-right: 1px solid var(--line); }
+        .a-service:nth-child(2n) { border-right: 0; }
+        .a-service:nth-child(n+4) { border-bottom: 1px solid var(--line); }
+        .a-service:nth-last-child(-n+2) { border-bottom: 0; }
+        .a-techline { grid-template-columns: 1fr 1fr; }
+        .a-timeline { grid-template-columns: 1fr; gap: 0; padding-left: 30px; }
+        .a-timeline::before, .a-timeline::after { top: 0; bottom: 0; left: 8px; width: 1px; height: 100%; }
+        .a-timeline::after { height: 78%; animation: none; }
+        .a-step { padding: 4px 0 48px; }
+        .a-step::before { top: 4px; left: -30px; }
+        .a-quote__signal { display: none; }
+        .b-shell { display: block; }
+        .b-rail { display: none; }
+        .b-topbar { left: 0; }
+        .b-hero { min-height: 960px; grid-template-columns: 1fr; padding: 100px 22px 28px; }
+        .b-hero__copy { align-self: end; padding: 0 0 18px; }
+        .b-dashboard { padding: 0; }
+        .b-section { padding: 72px 20px; }
+        .b-heading { grid-template-columns: 1fr; gap: 18px; }
+        .b-project-grid { grid-template-columns: 1fr; grid-template-rows: 470px 280px 280px; }
+        .b-project:first-child { grid-row: auto; }
+        .b-matrix { grid-template-columns: 1fr 1fr; }
+        .b-matrix > div:nth-child(4n) { border-right: 1px solid var(--line); }
+        .b-matrix > div:nth-child(2n) { border-right: 0; }
+        .b-process { grid-template-columns: 1fr; }
+        .b-process__visual { display: none; }
+        .b-quote { grid-template-columns: 1fr; padding: 70px 20px; }
+        .b-contact { grid-template-columns: 1fr; gap: 44px; }
+        .c-title { margin-bottom: -32px; font-size: clamp(58px,14vw,100px); }
+        .c-hero__visual { height: 560px; margin-left: 10%; }
+        .c-hero__foot, .c-contact { grid-template-columns: 1fr; }
+        .c-project-row { grid-template-columns: 1fr; }
+        .c-service { grid-template-columns: 48px 1fr auto; padding: 24px 0; }
+        .c-service p { display: none; }
+      }
+
+      @media (max-width: 560px) {
+        .prototype-note { display: none; }
+        .switcher { bottom: 10px; }
+        .switcher__label { min-width: 174px; padding-inline: 8px; }
+        .a-header, .c-header { height: 72px; }
+        .a-header .btn { display: none; }
+        .a-hero { min-height: 840px; }
+        .a-hero__content { padding-top: 110px; }
+        .a-kicker { font-size: 9px; }
+        .a-title { margin-top: 20px; font-size: 43px; line-height: .95; }
+        .a-lede { font-size: 17px; }
+        .a-actions { flex-direction: column; }
+        .a-metrics { margin-top: 36px; }
+        .a-metric { padding: 16px; }
+        .a-metric strong { font-size: 16px; }
+        .a-stats { grid-template-columns: 1fr; }
+        .a-stat { min-height: 150px; border-right: 0; border-bottom: 1px solid var(--line); }
+        .a-feature__image { min-height: 280px; }
+        .a-feature__copy { padding: 26px; }
+        .a-feature h3 { font-size: 32px; }
+        .a-project { display: block; }
+        .a-project__img { min-height: 240px; }
+        .a-services { grid-template-columns: 1fr; }
+        .a-service, .a-service:nth-child(3n), .a-service:nth-child(2n), .a-service:nth-last-child(-n+2) { border-right: 0; border-bottom: 1px solid var(--line); }
+        .a-service:last-child { border-bottom: 0; }
+        .a-techline { grid-template-columns: 1fr; }
+        .a-form { grid-template-columns: 1fr; }
+        .a-field { grid-column: 1/-1; }
+        .b-title { font-size: 55px; }
+        .b-actions { flex-direction: column; }
+        .b-matrix { grid-template-columns: 1fr; }
+        .b-matrix > div, .b-matrix > div:nth-child(4n), .b-matrix > div:nth-child(2n) { border-right: 0; }
+        .b-quote blockquote { font-size: 45px; }
+        .c-header .btn { display: none; }
+        .c-hero { padding-top: 48px; }
+        .c-title { margin-bottom: -18px; font-size: 53px; }
+        .c-hero__visual { height: 450px; margin-left: 0; }
+        .c-hero__foot { margin-top: 18px; }
+        .c-project { min-height: 380px; }
+        .c-service { grid-template-columns: 38px 1fr auto; gap: 16px; }
+        .site-footer__inner { flex-direction: column; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after { scroll-behavior: auto !important; animation: none !important; transition-duration: .001ms !important; }
+        .reveal { opacity: 1; transform: none; }
+      }
+    </style>
+  </head>
+  <body data-variant="A">
+    <div class="prototype-note">Prototype only · arrows switch direction · not production UI</div>
+
+    <main class="variant variant-a">
+      <header class="a-header">
+        <a class="brand" href="#">Gamega<span>byte</span></a>
+        <nav class="a-nav mono"><a href="#">Home</a><a href="#a-work">Work</a><a href="#a-services">Services</a><a href="#a-process">Process</a></nav>
+        <a class="btn btn--lime" href="#a-contact">Let's talk <span class="arrow">→</span></a>
+      </header>
+      <section class="a-hero grid-bg">
+        <div class="a-hero__content reveal">
+          <p class="a-kicker mono">// Game marketing studio</p>
+          <h1 class="a-title">We are the <em>game</em><br />marketing studio</h1>
+          <p class="a-lede">From immersive websites to powerful digital strategies — we help your game win the market.</p>
+          <div class="a-actions"><a class="btn btn--lime" href="#a-contact">Connect with us <span class="arrow">→</span></a><a class="btn" href="#a-work">View case studies <span class="arrow">→</span></a></div>
+          <div class="a-metrics">
+            <div class="a-metric"><span class="mono muted">Founded</span><strong>2024 — Studio</strong></div>
+            <div class="a-metric"><span class="mono muted">Shipped</span><strong>25+ projects</strong></div>
+            <div class="a-metric"><span class="mono muted">Focus</span><strong>AAA & mobile titles</strong></div>
+          </div>
+        </div>
+      </section>
+      <section class="a-trust section grid-bg">
+        <div class="container reveal">
+          <p class="mono lime">[01] Signal / trusted network</p>
+          <div class="a-trust__logos"><span>SYCOMORE</span><span>DISNEY SPEEDSTORM</span><span>TALLY</span><span>SEEDIFY</span></div>
+          <div class="a-stats">
+            <div class="a-stat"><span class="mono muted">01 / projects</span><b>25+</b><span>Studio projects</span></div>
+            <div class="a-stat"><span class="mono muted">02 / industry</span><b>5+</b><span>Years in games</span></div>
+            <div class="a-stat"><span class="mono muted">03 / craft</span><b>100%</b><span>Design-led</span></div>
+            <div class="a-stat"><span class="mono muted">04 / launch</span><b>24/7</b><span>Release support</span></div>
+          </div>
+        </div>
+      </section>
+      <section class="section" id="a-work">
+        <div class="container">
+          <div class="section-head reveal"><div><p class="mono lime">[02] Selected missions</p><h2 class="section-title">Project showcase</h2></div><p>Proof before promises. A featured launch story followed by two supporting worlds.</p></div>
+          <article class="a-feature pointer-card reveal">
+            <div class="a-feature__image"><img src="/assets/img/portfolio/combat-magic-scene.webp" alt="Fantasy combat campaign" /></div>
+            <div class="a-feature__copy"><span class="mono lime">Featured / UI·UX</span><h3>RPG Fantasy Quest</h3><p>A cinematic launch experience balancing world-building, product clarity and conversion.</p><span class="mono">Explore transmission ↗</span></div>
+          </article>
+          <div class="a-projects">
+            <article class="a-project pointer-card reveal"><div class="a-project__img"><img src="/assets/img/portfolio/fantasy-character-art.webp" alt="Fantasy character campaign" /></div><div class="a-project__copy"><span class="mono lime">Frontend</span><h3>Fantasy Character Campaign</h3><p>Art-directed campaign system.</p></div></article>
+            <article class="a-project pointer-card reveal"><div class="a-project__img"><img src="/assets/img/portfolio/beyond-the-keep-menu.webp" alt="Beyond the Keep interface" /></div><div class="a-project__copy"><span class="mono lime">Backend</span><h3>Beyond The Keep</h3><p>Connected community experience.</p></div></article>
+          </div>
+        </div>
+      </section>
+      <section class="section grid-bg" id="a-services">
+        <div class="container">
+          <div class="section-head reveal"><div><p class="mono lime">[03] Capabilities</p><h2 class="section-title">Services + stack</h2></div><p>Six disciplines in one launch system. Technical detail stays compact and supports the work.</p></div>
+          <div class="a-services">
+            <article class="a-service pointer-card reveal"><span class="a-service__symbol">//</span><h3>Game Landing Pages</h3><p>High-impact campaign pages built around discovery and conversion.</p></article>
+            <article class="a-service pointer-card reveal"><span class="a-service__symbol">◇</span><h3>UI/UX Design</h3><p>Player-focused interfaces shaped around your game identity.</p></article>
+            <article class="a-service pointer-card reveal"><span class="a-service__symbol">◎</span><h3>Marketing Systems</h3><p>Connected analytics and campaign experiences for launch.</p></article>
+            <article class="a-service pointer-card reveal"><span class="a-service__symbol">&lt;&gt;</span><h3>Development</h3><p>Fast, accessible production tuned for every device.</p></article>
+            <article class="a-service pointer-card reveal"><span class="a-service__symbol">↗</span><h3>Responsive Design</h3><p>Immersive layouts with thoughtful mobile behavior.</p></article>
+            <article class="a-service pointer-card reveal"><span class="a-service__symbol">#</span><h3>Community Features</h3><p>Systems that turn an audience into an active player base.</p></article>
+          </div>
+          <div class="a-techline reveal"><div><span class="mono lime">Documentation</span><p class="muted">Shared project intelligence</p></div><div><span class="mono lime">Design</span><p class="muted">Rapid prototype loops</p></div><div><span class="mono lime">Development</span><p class="muted">Modern frontend systems</p></div><div><span class="mono lime">Deployment</span><p class="muted">Stable launch workflows</p></div></div>
+        </div>
+      </section>
+      <section class="section" id="a-process">
+        <div class="container">
+          <div class="section-head reveal"><div><p class="mono lime">[04] Transmission path</p><h2 class="section-title">From signal to launch</h2></div><p>A readable process with motion that explains progression rather than decorating it.</p></div>
+          <div class="a-timeline reveal"><article class="a-step"><span class="mono lime">01</span><h3>Consultation</h3><p>Understand the world, audience and launch target.</p></article><article class="a-step"><span class="mono lime">02</span><h3>Design system</h3><p>Prototype the story, interface and conversion path.</p></article><article class="a-step"><span class="mono lime">03</span><h3>Production</h3><p>Build, integrate and optimize the experience.</p></article><article class="a-step"><span class="mono lime">04</span><h3>Launch support</h3><p>Deploy, observe and stabilize the campaign.</p></article></div>
+        </div>
+      </section>
+      <section class="a-quote section">
+        <div class="container a-quote__inner reveal"><div><p class="mono lime">[05] Partner signal</p><blockquote>“They understand that a game launch needs a world — not just a website.”</blockquote><span class="mono">Mickael Grants / Studio Partner</span></div><div class="a-quote__signal"></div></div>
+      </section>
+      <section class="section grid-bg" id="a-contact">
+        <div class="container a-contact reveal"><div><p class="mono lime">[06] Open channel</p><h2>Have an idea?<br />Let's talk.</h2><div class="a-form"><div class="a-field">Your name</div><div class="a-field">Your email</div><div class="a-field a-field--wide">Tell us about your idea</div><a class="btn btn--lime" href="#">Send transmission <span class="arrow">→</span></a></div></div><aside class="a-contact__aside"><span class="mono lime">System status / online</span><strong>Replies in 2 working days</strong><p class="muted">Share your launch date, platform and what success looks like. We will respond with a practical next step.</p></aside></div>
+      </section>
+      <footer class="site-footer"><div class="container site-footer__inner"><a class="brand" href="#">Gamega<span>byte</span></a><span class="mono">© 2026 / Ho Chi Minh City</span></div></footer>
+    </main>
+
+    <main class="variant variant-b">
+      <div class="b-shell">
+        <aside class="b-rail"><a class="brand" href="#">Gamegabyte</a><nav class="mono"><a href="#b-work">Work</a><a href="#b-services">Systems</a><a href="#b-process">Path</a></nav><span class="mono lime">GGB / 26</span></aside>
+        <div class="b-main">
+          <header class="b-topbar"><span class="b-live mono">Studio network online</span><a class="btn btn--lime" href="#b-contact">Open channel ↗</a></header>
+          <section class="b-hero grid-bg">
+            <div class="b-hero__copy reveal"><p class="mono lime">Sector 01 / Game growth systems</p><h1 class="b-title">Launch<br /><span>louder.</span><br />Build deeper.</h1><p>Game marketing systems engineered at the intersection of cinematic art, sharp interfaces and launch intelligence.</p><div class="b-actions"><a class="btn btn--lime" href="#b-work">Enter archive ↗</a><a class="btn" href="#b-contact">Start mission</a></div></div>
+            <div class="b-dashboard reveal"><div class="b-panel"><div class="b-panel__row"><span class="mono muted">Campaign readiness</span><strong class="lime">87%</strong></div><div class="b-bars"><i style="--h:27%"></i><i style="--h:42%"></i><i style="--h:39%"></i><i style="--h:68%"></i><i style="--h:76%"></i><i style="--h:62%"></i><i style="--h:88%"></i><i style="--h:100%"></i></div></div><div class="b-panel"><div class="b-panel__row"><div><span class="mono muted">Active focus</span><strong style="display:block;margin-top:14px">AAA + Mobile</strong></div><span class="mono lime">25+ shipped</span></div></div><div class="b-panel"><span class="mono muted">Available nodes</span><p class="mono lime">Strategy / Design / Code / Analytics / Community</p></div></div>
+          </section>
+          <div class="b-ticker mono"><span>GAME LANDING PAGES&nbsp;&nbsp;•&nbsp;&nbsp;UI SYSTEMS&nbsp;&nbsp;•&nbsp;&nbsp;CAMPAIGN INTELLIGENCE&nbsp;&nbsp;•&nbsp;&nbsp;DESIGN-LED PRODUCTION&nbsp;&nbsp;•&nbsp;&nbsp;PLAYER COMMUNITIES&nbsp;&nbsp;•&nbsp;&nbsp;</span></div>
+          <section class="b-section" id="b-work"><div class="b-heading reveal"><p class="mono lime">Archive / 03 files</p><h2>Selected field operations</h2></div><div class="b-project-grid"><article class="b-project reveal"><img src="/assets/img/portfolio/combat-magic-scene.webp" alt="Fantasy combat campaign" /><div class="b-project__label"><span class="mono lime">01 / UI·UX</span><h3>RPG Fantasy Quest</h3></div></article><article class="b-project reveal"><img src="/assets/img/portfolio/fantasy-character-art.webp" alt="Fantasy character campaign" /><div class="b-project__label"><span class="mono lime">02 / Frontend</span><h3>Character Campaign</h3></div></article><article class="b-project reveal"><img src="/assets/img/portfolio/beyond-the-keep-menu.webp" alt="Beyond the Keep interface" /><div class="b-project__label"><span class="mono lime">03 / Backend</span><h3>Beyond The Keep</h3></div></article></div></section>
+          <section class="b-section grid-bg" id="b-services"><div class="b-heading reveal"><p class="mono lime">Systems matrix</p><h2>One network.<br />Six capabilities.</h2></div><div class="b-matrix reveal"><div class="b-matrix__key mono">Input / discipline</div><div><span class="mono lime">01 / Web</span><h3>Launch pages</h3><p>Cinematic worlds with a clear conversion path.</p></div><div><span class="mono lime">02 / Product</span><h3>UI/UX systems</h3><p>Player-first product and campaign interfaces.</p></div><div><span class="mono lime">03 / Data</span><h3>Analytics</h3><p>Signals that inform your launch decisions.</p></div><div class="b-matrix__key mono">Output / growth</div><div><span class="mono lime">04 / Code</span><h3>Development</h3><p>Accessible, fast and stable production.</p></div><div><span class="mono lime">05 / Device</span><h3>Responsive</h3><p>Intentional design across every screen.</p></div><div><span class="mono lime">06 / Players</span><h3>Community</h3><p>Features that turn attention into belonging.</p></div></div></section>
+          <section class="b-section" id="b-process"><div class="b-heading reveal"><p class="mono lime">Mission sequence</p><h2>Signal becomes launch.</h2></div><div class="b-process"><div class="b-process__visual"></div><div class="b-process__steps reveal"><article class="b-process__step"><span class="mono lime">01 / Decode</span><h3>Consultation & analysis</h3><p>We map the world, audience, channels and the deadline that everything must serve.</p></article><article class="b-process__step"><span class="mono lime">02 / Shape</span><h3>Design & concept</h3><p>We build the visual and interaction language before committing to production.</p></article><article class="b-process__step"><span class="mono lime">03 / Assemble</span><h3>Development</h3><p>We turn the approved system into a responsive, measurable launch surface.</p></article><article class="b-process__step"><span class="mono lime">04 / Transmit</span><h3>Launch & support</h3><p>We deploy, observe and stabilize while your campaign meets its audience.</p></article></div></div></section>
+          <section class="b-quote reveal"><span class="mono">Human intelligence / 01</span><blockquote>We make ambitious game teams look impossible to ignore.</blockquote></section>
+          <section class="b-section" id="b-contact"><div class="b-contact reveal"><div><p class="mono lime">Open frequency 24.08</p><h2>Brief the<br />studio.</h2></div><div class="a-form"><div class="a-field">Your name</div><div class="a-field">Your email</div><div class="a-field a-field--wide">Mission brief</div><a class="btn btn--lime" href="#">Transmit brief ↗</a></div></div></section>
+          <footer class="site-footer"><div class="container site-footer__inner"><span class="mono">Gamegabyte Studio / Command prototype</span><span class="mono">Network online</span></div></footer>
+        </div>
+      </div>
+    </main>
+
+    <main class="variant variant-c">
+      <header class="c-header"><a class="brand" href="#">Gamega<span>byte</span></a><nav class="mono"><a href="#c-work">Selected work</a><a href="#c-services">Capabilities</a><a href="#c-process">Method</a></nav><a class="btn btn--lime" href="#c-contact">Let's talk ↗</a></header>
+      <section class="c-hero">
+        <p class="mono lime reveal">Independent game marketing studio / 2026</p>
+        <h1 class="c-title reveal">Make your<br /><span>game</span> the event.</h1>
+        <div class="c-hero__visual reveal"><img src="/assets/img/backgrounds/hero-portal-arena-v1.png" alt="Purple portal arena" /></div>
+        <div class="c-hero__foot reveal"><p>We design launch experiences, campaign interfaces and digital worlds that make players stop, look and enter.</p><a class="btn btn--lime" href="#c-work">See the work ↗</a></div>
+      </section>
+      <div class="c-marquee"><span>World building&nbsp;&nbsp;✦&nbsp;&nbsp;Interface design&nbsp;&nbsp;✦&nbsp;&nbsp;Game launches&nbsp;&nbsp;✦&nbsp;&nbsp;Community systems&nbsp;&nbsp;✦&nbsp;&nbsp;World building&nbsp;&nbsp;✦&nbsp;&nbsp;Interface design&nbsp;&nbsp;✦&nbsp;&nbsp;</span></div>
+      <section class="c-section" id="c-work"><div class="container"><div class="c-heading reveal"><div><p class="mono lime">01 / Work worth entering</p><h2>Three worlds.<br />Three missions.</h2></div><p>Less interface chrome, more art direction. Projects become the main visual language of the page.</p></div><article class="c-feature reveal"><img src="/assets/img/portfolio/combat-magic-scene.webp" alt="Fantasy combat campaign" /><div class="c-feature__copy"><div><span class="mono lime">Featured / UI·UX</span><h3>RPG Fantasy Quest</h3></div><a class="btn" href="#">Enter project ↗</a></div></article><div class="c-project-row"><article class="c-project reveal"><img src="/assets/img/portfolio/fantasy-character-art.webp" alt="Fantasy character campaign" /><div class="c-project__copy"><span class="mono lime">Frontend</span><h3>Fantasy Character Campaign</h3></div></article><article class="c-project reveal"><img src="/assets/img/portfolio/beyond-the-keep-menu.webp" alt="Beyond the Keep interface" /><div class="c-project__copy"><span class="mono lime">Backend</span><h3>Beyond The Keep</h3></div></article></div></div></section>
+      <section class="c-section" id="c-services"><div class="container"><div class="c-heading reveal"><div><p class="mono lime">02 / What we shape</p><h2>Capabilities without the card grid.</h2></div><p>A calmer editorial list creates contrast after the image-heavy work section.</p></div><div class="c-service-list reveal"><article class="c-service"><span class="mono lime">01</span><h3>Game landing pages</h3><p>Campaign worlds built to earn attention and drive action.</p><span>↗</span></article><article class="c-service"><span class="mono lime">02</span><h3>UI/UX design</h3><p>Player-first systems with a recognizable visual language.</p><span>↗</span></article><article class="c-service"><span class="mono lime">03</span><h3>Marketing analytics</h3><p>Useful signals connected to launch decisions.</p><span>↗</span></article><article class="c-service"><span class="mono lime">04</span><h3>Frontend development</h3><p>Fast, responsive and expressive production.</p><span>↗</span></article><article class="c-service"><span class="mono lime">05</span><h3>Community features</h3><p>Spaces that turn attention into belonging.</p><span>↗</span></article></div></div></section>
+      <section class="c-section grid-bg" id="c-process"><div class="container"><div class="c-heading reveal"><div><p class="mono lime">03 / How it moves</p><h2>A launch in four scenes.</h2></div><p>A horizontal scroll sequence feels cinematic while preserving a simple reading order.</p></div><div class="c-process reveal"><article class="c-step"><b>01</b><h3>Listen</h3><p>Audience, world, platform and ambition become one clear brief.</p></article><article class="c-step"><b>02</b><h3>Direct</h3><p>We find the visual idea that can carry the entire experience.</p></article><article class="c-step"><b>03</b><h3>Build</h3><p>Design and engineering move as one production system.</p></article><article class="c-step"><b>04</b><h3>Release</h3><p>We launch, observe and protect the experience in the wild.</p></article></div></div></section>
+      <section class="c-quote"><div class="container reveal"><blockquote>“Not another agency. A partner who understands why players care.”</blockquote><footer><span class="mono">Mickael Grants</span><span class="mono">Studio partner / 2026</span></footer></div></section>
+      <section class="c-section" id="c-contact"><div class="container c-contact reveal"><div><p class="mono lime">04 / Next world</p><h2>Ready to<br />be seen?</h2></div><div class="c-contact__action"><p>Tell us what you are launching, when it needs to land and what players should feel when they arrive.</p><a class="btn btn--lime" href="#">Start a conversation ↗</a></div></div></section>
+      <footer class="site-footer"><div class="container site-footer__inner"><a class="brand" href="#">Gamega<span>byte</span></a><span class="mono">Design / Development / Game growth</span></div></footer>
+    </main>
+
+    <div class="switcher" role="group" aria-label="Prototype variants">
+      <button id="previous" type="button" aria-label="Previous variant">←</button>
+      <div id="variant-label" class="switcher__label" aria-live="polite"></div>
+      <button id="next" type="button" aria-label="Next variant">→</button>
+    </div>
+
+    <script>
+      const variants = [
+        { key: 'A', name: 'Cinematic Tech HUD', note: 'Balanced / recommended' },
+        { key: 'B', name: 'Command Center', note: 'Data-dense / asymmetric' },
+        { key: 'C', name: 'Neon Editorial', note: 'Art-led / minimal chrome' },
+      ]
+      const params = new URLSearchParams(location.search)
+      let current = Math.max(0, variants.findIndex((item) => item.key === (params.get('variant') || 'A').toUpperCase()))
+      const label = document.querySelector('#variant-label')
+
+      function show(index) {
+        current = (index + variants.length) % variants.length
+        const variant = variants[current]
+        document.body.dataset.variant = variant.key
+        label.innerHTML = `${variant.key} — ${variant.name}<small>${variant.note}</small>`
+        const url = new URL(location.href)
+        url.searchParams.set('variant', variant.key)
+        history.replaceState({}, '', url)
+        window.scrollTo({ top: 0, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' })
+        observeReveals()
+      }
+
+      document.querySelector('#previous').addEventListener('click', () => show(current - 1))
+      document.querySelector('#next').addEventListener('click', () => show(current + 1))
+      addEventListener('keydown', (event) => {
+        if (['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName) || document.activeElement?.isContentEditable) return
+        if (event.key === 'ArrowLeft') show(current - 1)
+        if (event.key === 'ArrowRight') show(current + 1)
+      })
+
+      let observer
+      function observeReveals() {
+        observer?.disconnect()
+        const active = document.querySelector(`.variant-${variants[current].key.toLowerCase()}`)
+        const items = active.querySelectorAll('.reveal')
+        if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          items.forEach((item) => item.classList.add('is-visible'))
+          return
+        }
+        observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible')
+              observer.unobserve(entry.target)
+            }
+          })
+        }, { threshold: .08, rootMargin: '0px 0px -8% 0px' })
+        items.forEach((item) => {
+          item.classList.remove('is-visible')
+          observer.observe(item)
+        })
+      }
+
+      document.querySelectorAll('.pointer-card').forEach((card) => {
+        card.addEventListener('pointermove', (event) => {
+          if (!matchMedia('(hover: hover) and (pointer: fine)').matches) return
+          const rect = card.getBoundingClientRect()
+          card.style.setProperty('--x', `${event.clientX - rect.left}px`)
+          card.style.setProperty('--y', `${event.clientY - rect.top}px`)
+        })
+      })
+
+      show(current)
+    </script>
+  </body>
+</html>

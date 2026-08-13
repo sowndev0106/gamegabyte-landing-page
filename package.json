@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "prototype:ui": "vite --host 127.0.0.1 --open /prototypes/cinematic-tech-hud/index.html?variant=A",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
