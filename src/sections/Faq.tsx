@@ -1,78 +1,87 @@
 import { useState } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
-import { content, assets } from '../content/content'
+import { content } from '../content/content'
+import { Stagger, StaggerItem } from '../components/motion/Stagger'
 import { Container } from '../components/ui/Container'
+import { Section } from '../components/ui/Section'
+import { SectionHeader } from '../components/ui/SectionHeader'
 import { Button } from '../components/ui/Button'
 
 export function Faq() {
   const [open, setOpen] = useState<number | null>(0)
 
   return (
-    <section id="faq" className="relative overflow-hidden bg-brand px-4 py-16 sm:px-6 sm:py-24 lg:py-32">
-      <div 
-        className="absolute inset-0 bg-cover bg-center opacity-[0.18] pointer-events-none"
-        style={{ backgroundImage: `url(${assets.backgrounds.pattern})` }}
-      />
-      <Container className="relative z-10">
-        <div className="mx-auto mb-16 max-w-3xl text-center text-white">
-          <h2 className="font-display text-4xl font-bold uppercase tracking-tight sm:text-5xl lg:text-6xl">
-            FAQ
-          </h2>
-          <p className="mt-4 text-lg text-white/80">
-            We're not just another agency. We're strategic partners helping your game succeed in the fiercely competitive market.
-          </p>
-        </div>
+    <Section id="faq">
+      <Container>
+        <SectionHeader
+          index="07"
+          eyebrow="FAQ"
+          title="Questions, answered"
+          description="Everything you need to know before starting a project with us."
+          action={
+            <Button href="#contact" variant="ghost" showArrow>
+              Ask a question
+            </Button>
+          }
+        />
 
-        <div className="mx-auto max-w-3xl space-y-4">
+        <Stagger>
           {content.faq.map((item, index) => {
             const isOpen = open === index
             return (
-              <div 
-                key={item.q} 
-                className="overflow-hidden bg-white text-black rounded-lg transition-all duration-300"
-              >
+              <StaggerItem key={item.q} className="border-b border-white/8">
                 <button
                   type="button"
                   onClick={() => setOpen(isOpen ? null : index)}
-                  className="flex w-full items-center justify-between gap-6 p-6 text-left font-display text-lg font-bold sm:text-xl"
+                  aria-expanded={isOpen}
+                  aria-controls={`faq-panel-${index}`}
+                  className="group flex w-full cursor-pointer items-center gap-6 py-6 text-left"
                 >
-                  <div className="flex items-center gap-4">
-                    <span className="text-brand text-2xl font-black">{index + 1}</span>
-                    <span>{item.q}</span>
-                  </div>
-                  <div 
-                    className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition-colors duration-200 ${
-                      isOpen ? 'bg-[#601feb] text-white' : 'bg-[#f1f2f9] text-black'
+                  <span className="font-mono text-[11px] uppercase tracking-[0.24em] text-white/55">
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+                  <span
+                    className={`flex-1 font-display text-lg font-bold transition-colors sm:text-xl ${
+                      isOpen ? 'text-accent' : 'text-white group-hover:text-accent'
                     }`}
                   >
-                    <span className="text-xl leading-none">{isOpen ? '−' : '+'}</span>
-                  </div>
+                    {item.q}
+                  </span>
+                  <span
+                    aria-hidden="true"
+                    className={`relative flex h-8 w-8 shrink-0 items-center justify-center border transition-colors ${
+                      isOpen ? 'border-accent text-accent' : 'border-white/15 text-white/60'
+                    }`}
+                  >
+                    <span className="absolute h-px w-3 bg-current" />
+                    <span
+                      className={`absolute h-3 w-px bg-current transition-transform duration-300 ${
+                        isOpen ? 'scale-y-0' : 'scale-y-100'
+                      }`}
+                    />
+                  </span>
                 </button>
                 <AnimatePresence initial={false}>
                   {isOpen && (
                     <motion.div
+                      id={`faq-panel-${index}`}
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: 'auto', opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
                       transition={{ duration: 0.25 }}
+                      className="overflow-hidden"
                     >
-                      <p className="px-6 pb-6 text-base leading-relaxed text-black/70 border-t border-gray-100 pt-4">
+                      <p className="max-w-3xl pb-8 pl-12 text-base leading-relaxed text-white/70">
                         {item.a}
                       </p>
                     </motion.div>
                   )}
                 </AnimatePresence>
-              </div>
+              </StaggerItem>
             )
           })}
-        </div>
-
-        <div className="mt-12 text-center">
-          <Button href="#contact" variant="accent" showArrow={true}>
-            ask a question
-          </Button>
-        </div>
+        </Stagger>
       </Container>
-    </section>
+    </Section>
   )
 }

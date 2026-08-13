@@ -1,33 +1,64 @@
 import { content, assets } from '../content/content'
 import { Stagger, StaggerItem } from '../components/motion/Stagger'
 import { Container } from '../components/ui/Container'
+import { Section, GlowSpot } from '../components/ui/Section'
+import { SectionHeader } from '../components/ui/SectionHeader'
+import { PixelSprite } from '../components/brand/PixelSprite'
 
 export function WhyChooseUs() {
   return (
-    <section id="about" className="relative overflow-hidden bg-ink py-16 sm:py-24 lg:py-32">
-      <img 
-        src={assets.backgrounds.pixelTrees} 
-        alt="" 
-        loading="lazy" 
-        className="absolute inset-x-0 top-0 h-56 w-full object-cover opacity-14 pointer-events-none" 
-      />
-      <Container className="relative z-10">
-        <div className="mx-auto mb-16 max-w-3xl text-center">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-accent">WHY CHOOSE US</p>
-          <h2 className="mt-4 font-display text-4xl font-bold uppercase tracking-tight text-white sm:text-5xl">
-            Strategic partners, not just an agency
-          </h2>
-        </div>
-        
-        <Stagger className="grid gap-5 sm:grid-cols-2">
+    <Section
+      id="about"
+      backdrop={
+        <>
+          <img
+            src={assets.backgrounds.pixelTrees}
+            alt=""
+            loading="lazy"
+            className="pointer-events-none absolute inset-x-0 top-0 h-56 w-full object-cover opacity-10"
+          />
+          <GlowSpot className="left-[-6%] bottom-[10%] h-[320px] w-[440px]" />
+        </>
+      }
+    >
+      <Container>
+        <SectionHeader
+          index="05"
+          eyebrow="Why choose us"
+          title="Strategic partners, not just an agency"
+          description="We work the way an internal team would — inside your milestones, not alongside them."
+        />
+
+        {/*
+          One shared stage rather than four boxed cards: the four characters
+          stand on the same ground line, which is the point the copy is making.
+        */}
+        <Stagger className="hud-portrait grid border border-white/10 sm:grid-cols-2 lg:grid-cols-4">
           {content.why.map((item) => (
-            <StaggerItem key={item.title} className="border border-white/10 bg-white/[0.035] p-6 flex flex-col justify-between min-h-[160px]">
-              <h3 className="font-display text-2xl font-bold text-white capitalize">{item.title}</h3>
-              <p className="mt-4 text-base leading-relaxed text-white/70">{item.body}</p>
+            <StaggerItem
+              key={item.title}
+              className="group flex flex-col items-center px-6 pb-7 pt-9 text-center transition-colors hover:bg-white/[0.035]"
+            >
+              <div className="relative grid h-[170px] w-full place-items-end justify-center">
+                <PixelSprite
+                  index={item.sprite}
+                  className="h-[150px] w-[150px] transition-transform duration-300 group-hover:-translate-y-2.5"
+                />
+                {/* Light on the ground ties the four figures to one stage. */}
+                <span
+                  aria-hidden="true"
+                  className="absolute inset-x-[8%] bottom-0 h-px bg-linear-to-r from-transparent via-accent/55 to-transparent"
+                />
+              </div>
+              <p className="mt-6 font-mono text-[10px] uppercase tracking-[0.24em] text-accent">{item.tag}</p>
+              <h3 className="mt-2.5 font-display text-lg font-bold capitalize leading-tight text-white transition-colors group-hover:text-accent">
+                {item.title}
+              </h3>
+              <p className="mt-2 text-[13px] leading-relaxed text-white/70">{item.body}</p>
             </StaggerItem>
           ))}
         </Stagger>
       </Container>
-    </section>
+    </Section>
   )
 }

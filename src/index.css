@@ -6,10 +6,311 @@
   --color-accent-bright: #d4ff00;
   --color-purple-light: #8c4fff;
   --color-ink: #030213;
+  --color-ink-raised: #17171f;
   --color-surface: #f1f2f9;
+  --color-chip: #e8e8fd;
+  --color-chip-ink: #5d5c81;
 
   --font-display: "Schibsted Grotesk", system-ui, sans-serif;
   --font-sans: "Roboto", system-ui, sans-serif;
+  /* System mono keeps the HUD/metadata voice without another webfont download. */
+  --font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+/*
+ * HUD surface language. One card recipe for the whole page: near-flat dark
+ * surface, hairline border, accent border + glow on hover.
+ */
+@utility hud-surface {
+  background-color: rgb(255 255 255 / 0.028);
+  border: 1px solid rgb(255 255 255 / 0.09);
+  transition: border-color 200ms ease, background-color 200ms ease, box-shadow 200ms ease;
+}
+
+@utility hud-surface-interactive {
+  &:hover {
+    background-color: rgb(255 255 255 / 0.05);
+    border-color: rgb(182 232 2 / 0.45);
+    box-shadow: 0 0 0 1px rgb(182 232 2 / 0.12), 0 18px 40px -24px rgb(182 232 2 / 0.5);
+  }
+}
+
+/*
+ * Character-portrait plate: a fine grid with accent light pooling at the feet,
+ * so a sprite reads as standing on a stage rather than floating on a panel.
+ */
+@utility hud-portrait {
+  background-image:
+    radial-gradient(120% 100% at 50% 100%, rgb(182 232 2 / 0.1), transparent 62%),
+    linear-gradient(rgb(255 255 255 / 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 0.035) 1px, transparent 1px);
+  background-size:
+    100% 100%,
+    100% 22px,
+    22px 100%;
+}
+
+/* Faint technical grid, used instead of flat colour slabs to separate sections. */
+@utility hud-grid {
+  background-image:
+    linear-gradient(to right, rgb(255 255 255 / 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.035) 1px, transparent 1px);
+  background-size: 72px 72px;
+}
+
+/* Variant A uses a tighter, fully visible technical grid behind Services. */
+.services-grid-background > .hud-grid {
+  background-size: 56px 56px;
+  opacity: 1;
+}
+
+.services-card-grid > * {
+  border-bottom: 1px solid rgb(255 255 255 / 0.09);
+}
+
+@media (min-width: 640px) {
+  .services-card-grid > * {
+    border-right: 1px solid rgb(255 255 255 / 0.09);
+  }
+
+  .services-card-grid > :nth-child(2n) {
+    border-right: 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .services-card-grid > :nth-child(2n) {
+    border-right: 1px solid rgb(255 255 255 / 0.09);
+  }
+
+  .services-card-grid > :nth-child(3n) {
+    border-right: 0;
+  }
+
+  .services-card-grid > :nth-last-child(-n + 3) {
+    border-bottom: 0;
+  }
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  .services-card-grid > :nth-last-child(-n + 2) {
+    border-bottom: 0;
+  }
+}
+
+@media (max-width: 639px) {
+  .services-card-grid > :last-child {
+    border-bottom: 0;
+  }
+}
+
+/* Stats variant A — Signal Command Board. */
+.stats-command-board {
+  display: grid;
+  min-height: 430px;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+  border: 1px solid rgb(255 255 255 / 0.11);
+  background: rgb(4 3 18 / 0.66);
+}
+
+.stats-command-primary {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: clamp(30px, 4vw, 50px);
+  overflow: hidden;
+  border-right: 1px solid rgb(255 255 255 / 0.11);
+}
+
+.stats-command-primary::after {
+  position: absolute;
+  right: -90px;
+  bottom: -140px;
+  width: 390px;
+  height: 390px;
+  border: 1px solid rgb(182 232 2 / 0.18);
+  border-radius: 999px;
+  box-shadow: 0 0 0 60px rgb(182 232 2 / 0.015), 0 0 0 120px rgb(182 232 2 / 0.01);
+  content: '';
+}
+
+.stats-command-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--color-accent);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.stats-command-status::before {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--color-accent);
+  box-shadow: 0 0 14px var(--color-accent);
+  content: '';
+  animation: stats-status-pulse 2.6s ease-in-out infinite;
+}
+
+.stats-command-primary-value {
+  display: block;
+  color: var(--color-accent-bright);
+  font-family: var(--font-display);
+  font-size: clamp(100px, 14vw, 188px);
+  font-weight: 700;
+  letter-spacing: -0.06em;
+  line-height: 0.74;
+}
+
+.stats-command-secondary {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+
+.stats-command-reading {
+  position: relative;
+  min-width: 0;
+  padding: 32px;
+  overflow: hidden;
+}
+
+.stats-command-reading:nth-child(1) {
+  border-right: 1px solid rgb(255 255 255 / 0.11);
+  border-bottom: 1px solid rgb(255 255 255 / 0.11);
+}
+
+.stats-command-reading:nth-child(2) {
+  border-bottom: 1px solid rgb(255 255 255 / 0.11);
+}
+
+.stats-command-reading:nth-child(3) {
+  grid-column: 1 / -1;
+}
+
+.stats-command-index,
+.stats-command-note {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+}
+
+.stats-command-index {
+  color: rgb(255 255 255 / 0.48);
+  font-size: 9px;
+  letter-spacing: 0.22em;
+}
+
+.stats-command-value {
+  display: block;
+  margin-top: 28px;
+  color: var(--color-accent-bright);
+  font-family: var(--font-display);
+  font-size: clamp(46px, 5vw, 68px);
+  font-weight: 700;
+  letter-spacing: -0.055em;
+  line-height: 0.84;
+}
+
+.stats-command-label {
+  margin-bottom: 0;
+  color: white;
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+
+.stats-command-note {
+  margin-bottom: 0;
+  color: rgb(255 255 255 / 0.6);
+  font-size: 10px;
+  letter-spacing: 0.105em;
+  line-height: 1.65;
+}
+
+.stats-signal-trace {
+  position: absolute;
+  right: 28px;
+  bottom: 24px;
+  width: 118px;
+  height: 35px;
+  opacity: 0.6;
+}
+
+.stats-signal-trace polyline {
+  fill: none;
+  stroke: var(--color-accent);
+  stroke-dasharray: 160;
+  stroke-dashoffset: 160;
+  stroke-width: 1.2;
+  animation: stats-signal-trace 3.6s ease-in-out infinite;
+}
+
+@keyframes stats-status-pulse {
+  50% { opacity: 0.35; transform: scale(0.7); }
+}
+
+@keyframes stats-signal-trace {
+  0%, 15% { stroke-dashoffset: 160; }
+  55%, 100% { stroke-dashoffset: 0; }
+}
+
+@media (max-width: 900px) {
+  .stats-command-board { grid-template-columns: 1fr; }
+  .stats-command-primary {
+    min-height: 360px;
+    border-right: 0;
+    border-bottom: 1px solid rgb(255 255 255 / 0.11);
+  }
+}
+
+@media (max-width: 639px) {
+  .stats-command-primary {
+    min-height: 320px;
+    padding: 30px 24px;
+  }
+
+  .stats-command-primary-value {
+    font-size: clamp(96px, 35vw, 148px);
+  }
+
+  .stats-command-secondary {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+
+  .stats-command-reading {
+    min-height: 205px;
+    padding: 27px 24px;
+    border-right: 0 !important;
+    border-bottom: 1px solid rgb(255 255 255 / 0.11);
+  }
+
+  .stats-command-reading:nth-child(3) {
+    grid-column: auto;
+    border-bottom: 0;
+  }
+
+  .stats-command-value { font-size: 55px; }
+
+  .stats-signal-trace { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stats-command-status::before,
+  .stats-signal-trace polyline {
+    animation: none;
+  }
+
+  .stats-signal-trace polyline { stroke-dashoffset: 0; }
 }
 
 @font-face {
@@ -41,6 +342,57 @@ button,
 a,
 textarea {
   font: inherit;
+}
+
+.pointer-glow {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.pointer-glow::before {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  background: radial-gradient(
+    320px circle at var(--pointer-x, -400px) var(--pointer-y, -400px),
+    rgb(182 232 2 / 0.12),
+    transparent 58%
+  );
+  content: "";
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 250ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pointer-glow:hover::before {
+    opacity: 1;
+  }
+}
+
+.process-signal-node::after {
+  position: absolute;
+  inset: 4px;
+  background: var(--color-accent);
+  box-shadow: 0 0 12px rgb(182 232 2 / 0.75);
+  content: "";
+}
+
+/* Fixed header is 5rem tall; keep anchor targets clear of it. */
+:is(section, footer, div)[id] {
+  scroll-margin-top: 6rem;
+}
+
+/*
+ * Single global focus ring. The bright outline reads on dark surfaces, the dark
+ * halo behind it reads on the lime and white surfaces, so one rule covers every
+ * background on the page.
+ */
+:where(a, button, input, textarea, select, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-accent-bright);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgb(3 2 19 / 0.85);
 }
 
 @media (prefers-reduced-motion: reduce) {

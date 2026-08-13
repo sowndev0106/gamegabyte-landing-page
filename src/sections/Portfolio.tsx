@@ -1,57 +1,95 @@
+import { useState } from 'react'
 import { content, assets } from '../content/content'
 import { Stagger, StaggerItem } from '../components/motion/Stagger'
+import { Reveal } from '../components/motion/Reveal'
 import { Container } from '../components/ui/Container'
+import { Section } from '../components/ui/Section'
+import { SectionHeader } from '../components/ui/SectionHeader'
+import { ArrowUpRight } from '../components/ui/ArrowUpRight'
+
+const ALL = 'ALL'
 
 export function Portfolio() {
-  return (
-    <section id="portfolio" className="bg-ink py-16 sm:py-24 lg:py-32">
-      <Container>
-        <div className="mx-auto mb-16 max-w-3xl text-center">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-accent">CASE STUDIES</p>
-          <h2 className="mt-4 font-display text-4xl font-bold uppercase tracking-tight text-white sm:text-5xl">
-            {content.portfolio.title}
-          </h2>
-          <p className="mt-4 text-lg text-white/60">
-            {content.portfolio.intro}
-          </p>
-        </div>
+  const [filter, setFilter] = useState<string>(ALL)
+  const filters = [ALL, ...content.portfolio.tags]
 
-        {/* Tag chips */}
-        <div className="flex flex-wrap justify-center gap-3 mb-12">
-          {content.portfolio.tags.map((tag) => (
-            <span 
-              key={tag} 
-              className="inline-flex bg-[#e8e8fd] px-3 py-2 text-[13px] font-semibold text-[#5d5c81] uppercase tracking-wider"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
-        
-        <Stagger className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {content.portfolio.items.map((item, index) => (
-            <StaggerItem 
-              key={item.title} 
-              className="group overflow-hidden bg-white text-black"
-            >
-              <div className="aspect-[16/10] overflow-hidden">
-                <img
-                  src={assets.portfolio[index]}
-                  alt={item.title}
-                  loading="lazy"
-                  className="w-full h-full object-cover transition duration-500 group-hover:scale-105"
-                />
-              </div>
-              <div className="p-8">
-                <span className="inline-flex bg-[#e8e8fd] px-3 py-2 text-[13px] font-semibold text-[#5d5c81] uppercase tracking-wider">
-                  {item.tag}
-                </span>
-                <h3 className="mt-4 font-display text-2xl font-bold tracking-tight text-black">{item.title}</h3>
-              </div>
-            </StaggerItem>
-          ))}
-        </Stagger>
+  const items = content.portfolio.items
+    .map((item, index) => ({ ...item, image: assets.portfolio[index] }))
+    .filter((item) => filter === ALL || item.tag === filter)
+
+  return (
+    <Section id="portfolio">
+      <Container>
+        <SectionHeader
+          index="06"
+          eyebrow="Case studies"
+          title={content.portfolio.title}
+          description={content.portfolio.intro}
+        />
+
+        <Reveal className="mb-10">
+          <div
+            className="flex flex-wrap gap-2 lg:justify-end"
+            role="group"
+            aria-label="Filter case studies by discipline"
+          >
+          {filters.map((tag) => {
+            const active = filter === tag
+            return (
+              <button
+                key={tag}
+                type="button"
+                onClick={() => setFilter(tag)}
+                aria-pressed={active}
+                className={`inline-flex min-h-11 cursor-pointer items-center border px-4 font-mono text-[11px] uppercase tracking-[0.18em] transition-colors ${
+                  active
+                    ? 'border-accent bg-accent text-ink'
+                    : 'border-white/12 text-white/70 hover:border-white/40 hover:text-white'
+                }`}
+              >
+                {tag}
+              </button>
+              )
+            })}
+          </div>
+        </Reveal>
+
+        {items.length === 0 ? (
+          <p className="hud-surface p-12 text-center font-mono text-sm uppercase tracking-[0.18em] text-white/60">
+            No case studies under this discipline yet.
+          </p>
+        ) : (
+          <Stagger key={filter} className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {items.map((item) => (
+              <StaggerItem key={item.title}>
+                <a
+                  href={item.href}
+                  className="hud-surface hud-surface-interactive group flex h-full flex-col overflow-hidden"
+                >
+                  <div className="relative aspect-16/10 overflow-hidden">
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      loading="lazy"
+                      className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                    />
+                    <div aria-hidden="true" className="absolute inset-0 bg-linear-to-t from-ink via-ink/20 to-transparent" />
+                    <span className="absolute left-4 top-4 border border-white/20 bg-ink/70 px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-accent backdrop-blur-sm">
+                      {item.tag}
+                    </span>
+                  </div>
+                  <div className="flex flex-1 items-end justify-between gap-4 p-6">
+                    <h3 className="font-display text-xl font-bold tracking-tight text-white transition-colors group-hover:text-accent">
+                      {item.title}
+                    </h3>
+                    <ArrowUpRight className="mb-1 h-4 w-4 shrink-0 text-white/30 transition duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent" />
+                  </div>
+                </a>
+              </StaggerItem>
+            ))}
+          </Stagger>
+        )}
       </Container>
-    </section>
+    </Section>
   )
 }

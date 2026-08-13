@@ -1,27 +1,36 @@
 import { assets, content } from '../content/content'
 import { LazyVideo } from '../components/motion/LazyVideo'
 import { Reveal } from '../components/motion/Reveal'
+import { Container } from '../components/ui/Container'
+import { Section } from '../components/ui/Section'
+import { SectionHeader } from '../components/ui/SectionHeader'
+import { CornerTicks } from '../components/ui/CornerTicks'
 import { TrustBar } from './TrustBar'
 
 export function Showreel() {
   return (
-    <section id="reel" className="relative w-full bg-black py-8 sm:py-12 lg:py-16">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <h2 className="mb-8 bg-gradient-to-r from-white via-[#f4f4f4] to-[#7a7a7a] bg-clip-text text-center font-display text-2xl font-bold capitalize text-transparent sm:mb-12 sm:text-3xl md:text-4xl lg:mb-16 lg:text-5xl xl:text-[56px]">
-          {content.reel.title}
-        </h2>
+    <Section id="reel">
+      <Container>
+        <SectionHeader
+          index="01"
+          eyebrow="Showreel"
+          title={content.reel.title}
+          description="A minute of the work — interface design, campaign pages and launch art shipped for game teams."
+        />
         <Reveal>
-          <div className="mx-auto mb-8 aspect-video w-[90%] overflow-hidden rounded-lg sm:mb-12 sm:w-[85%] lg:mb-16 lg:w-[1166px]">
+          {/* Corner ticks frame the player like a viewfinder instead of a plain rounded box. */}
+          <div className="relative">
+            <CornerTicks size="h-6 w-6" />
             <LazyVideo
               src={content.reel.src}
               poster={assets.reelPoster}
               aria-label={content.reel.ariaLabel}
-              className="w-full h-full object-cover"
+              className="aspect-video w-full border border-white/10"
             />
           </div>
         </Reveal>
         <TrustBar />
-      </div>
-    </section>
+      </Container>
+    </Section>
   )
 }

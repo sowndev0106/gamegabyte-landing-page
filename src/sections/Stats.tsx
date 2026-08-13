@@ -1,37 +1,58 @@
-import { content, assets } from '../content/content'
+import { content } from '../content/content'
 import { Reveal } from '../components/motion/Reveal'
+import { CountUp } from '../components/motion/CountUp'
 import { Container } from '../components/ui/Container'
+import { Section, GlowSpot } from '../components/ui/Section'
+import { SectionHeader } from '../components/ui/SectionHeader'
 
 export function Stats() {
+  const primaryStat = content.stats[0]
+
   return (
-    <section className="relative overflow-hidden bg-black px-4 py-12 sm:px-6 sm:py-20 lg:py-40">
-      <div 
-        className="absolute inset-0 bg-cover bg-center opacity-[0.05] pointer-events-none"
-        style={{ backgroundImage: `url(${assets.backgrounds.pattern})` }}
-      />
-      <Container className="relative z-10">
-        <div className="mx-auto mb-16 max-w-3xl text-center">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-accent">OUR NUMBER</p>
-          <h2 className="mt-4 font-display text-3xl font-bold uppercase tracking-tight text-white sm:text-4xl md:text-5xl">
-            {content.trust.title}
-          </h2>
-          <p className="mt-4 text-lg text-white/60">
-            {content.trust.note}
-          </p>
-        </div>
-        
-        <div className="grid grid-cols-2 gap-6 sm:gap-8 md:grid-cols-4">
-          {content.stats.map((stat, index) => (
-            <Reveal key={stat.label} delay={index * 0.08} className="text-center">
-              <p className="font-display text-5xl font-bold text-accent sm:text-[64px]">{stat.value}</p>
-              <p className="mt-3 text-sm font-semibold uppercase tracking-[0.16em] text-white/80">{stat.label}</p>
-              {stat.note && (
-                <p className="mt-2 text-xs uppercase tracking-[0.14em] text-white/40">{stat.note}</p>
-              )}
-            </Reveal>
-          ))}
-        </div>
+    <Section
+      data-export="stats"
+      grid
+      backdrop={<GlowSpot className="left-[10%] top-[10%] h-[300px] w-[500px]" />}
+    >
+      <Container>
+        <SectionHeader
+          index="02"
+          eyebrow="Our numbers"
+          title={content.trust.title}
+          description={content.trust.note}
+        />
+
+        <Reveal>
+          <div className="stats-command-board">
+            <article className="stats-command-primary">
+              <span className="stats-command-status">Studio signal / active</span>
+              <div className="relative z-10">
+                <CountUp value={primaryStat.value} className="stats-command-primary-value" />
+                <p className="stats-command-label mt-8">{primaryStat.label}</p>
+                {primaryStat.note && <p className="stats-command-note mt-3">{primaryStat.note}</p>}
+              </div>
+            </article>
+
+            <div className="stats-command-secondary">
+              {content.stats.slice(1).map((stat, index) => (
+                <article key={stat.label} className="stats-command-reading">
+                  <span className="stats-command-index">
+                    {String(index + 2).padStart(2, '0')} / {index === 0 ? 'Experience' : index === 1 ? 'Method' : 'Origin'}
+                  </span>
+                  <CountUp value={stat.value} className="stats-command-value" />
+                  <p className="stats-command-label mt-5">{stat.label}</p>
+                  {stat.note && <p className="stats-command-note mt-2">{stat.note}</p>}
+                  {index === 2 && (
+                    <svg className="stats-signal-trace" viewBox="0 0 118 35" aria-hidden="true">
+                      <polyline points="0,25 18,25 25,10 35,31 45,18 53,25 72,25 79,15 88,25 118,25" />
+                    </svg>
+                  )}
+                </article>
+              ))}
+            </div>
+          </div>
+        </Reveal>
       </Container>
-    </section>
+    </Section>
   )
 }

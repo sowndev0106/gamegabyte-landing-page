@@ -1,15 +1,26 @@
 import { motion, useReducedMotion } from 'motion/react'
 import type { ReactNode } from 'react'
+import { RISE, RISE_DURATION, RISE_EASE, REVEAL_AMOUNT } from './motionTokens'
 
-export function Reveal({ children, delay = 0, y = 28, className }: { children: ReactNode; delay?: number; y?: number; className?: string }) {
+export function Reveal({
+  children,
+  delay = 0,
+  y = RISE,
+  className,
+}: {
+  children: ReactNode
+  delay?: number
+  y?: number
+  className?: string
+}) {
   const reduceMotion = useReducedMotion()
 
   return (
     <motion.div
-      initial={reduceMotion ? false : { opacity: 0.92, y }}
+      initial={reduceMotion ? false : { opacity: 0, y }}
       whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.25 }}
-      transition={{ duration: 0.6, ease: 'easeOut', delay }}
+      viewport={{ once: true, amount: REVEAL_AMOUNT }}
+      transition={{ duration: RISE_DURATION, ease: RISE_EASE, delay }}
       className={className}
     >
       {children}

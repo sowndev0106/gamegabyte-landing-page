@@ -9,6 +9,7 @@ export const assets = {
     hero: '/assets/img/backgrounds/hero-portal-arena-v1.png',
     pattern: '/assets/img/backgrounds/gamegabyte-pattern-glow.webp',
     pixelTrees: '/assets/img/backgrounds/pixel-tree-tiles.webp',
+    battlefield: '/assets/img/backgrounds/hero-fantasy-battlefield-v1.png',
     characterWide: '/assets/img/backgrounds/fantasy-character-wide.webp',
     mech: '/assets/img/backgrounds/mech-concept-art.webp',
   },
@@ -22,10 +23,12 @@ export const assets = {
 } as const
 
 export const content = {
+  // `external: true` items leave the site and open in a new tab; they are also
+  // skipped by the active-section observer, which only understands hash hrefs.
   nav: [
     { label: 'Home', href: '#home' },
     { label: 'Our Services', href: '#services' },
-    { label: 'GaByte Academy', href: '#academy' },
+    { label: 'GaByte Academy', href: 'https://game-uxui-fundamentals.gamegabyte.com/', external: true },
     { label: 'Case Studies', href: '#portfolio' },
     { label: 'About Us', href: '#about' },
   ] as const,
@@ -34,6 +37,11 @@ export const content = {
     sub: 'From immersive websites to powerful digital strategies — we help your game win the market.',
     primaryCta: 'Case Study',
     secondaryCta: 'Connect with us',
+    credentials: [
+      { label: 'Founded', value: '2024 — Studio' },
+      { label: 'Shipped', value: '25+ projects' },
+      { label: 'Focus', value: 'AAA & mobile titles' },
+    ],
   },
   reel: {
     title: 'Showreel 2025',
@@ -51,39 +59,63 @@ export const content = {
     { value: '2024', label: 'Studio Founded', note: 'Built for long-term collaboration' },
   ],
   services: [
-    { title: 'Game landing page', body: 'Create impressive landing pages showcasing your game with unique design and high conversion rates.' },
-    { title: 'UI/UX Design', body: 'Forge captivating landing pages that spotlight your game with cutting-edge design and optimized conversion strategies.' },
-    { title: 'Marketing Analytics', body: 'Drive growth with data-driven insights. We transform raw data into actionable strategies, boosting user engagement and maximizing ROI.' },
-    { title: 'Development', body: 'Develop stunning, high-performance landing pages that captivate players and drive conversions.' },
-    { title: 'responsive design', body: 'Craft adaptable landing pages ensuring seamless experiences across all devices, enhancing user engagement and broadening your audience reach.' },
-    { title: 'community features', body: 'Enhance player interaction with integrated forums, chats, and social feeds, fostering a vibrant community around your game.' },
+    { title: 'Game Landing Pages', body: 'High-impact campaign pages built around discovery and conversion.' },
+    { title: 'UI/UX Design', body: 'Player-focused interfaces shaped around your game identity.' },
+    { title: 'Marketing Systems', body: 'Connected analytics and campaign experiences for launch.' },
+    { title: 'Development', body: 'Fast, accessible production tuned for every device.' },
+    { title: 'Responsive Design', body: 'Immersive layouts with thoughtful mobile behavior.' },
+    { title: 'Community Features', body: 'Systems that turn an audience into an active player base.' },
   ],
   technology: [
-    { title: 'Documentation', body: 'Cloud platforms where we store project info, making progress easy to follow and update with clients in real time.' },
-    { title: 'Design', body: 'Cutting edge design tools with prototype workflows for fast review.' },
-    { title: 'Development', body: 'Modern frontend builds tuned for launch pages and campaign performance.' },
-    { title: 'Deployment', body: 'Release workflows that keep game campaigns stable after launch.' },
+    { title: 'Documentation', body: 'Shared project intelligence' },
+    { title: 'Design', body: 'Rapid prototype loops' },
+    { title: 'Development', body: 'Modern frontend systems' },
+    { title: 'Deployment', body: 'Stable launch workflows' },
   ],
   process: [
-    { step: '01', title: 'Consultation & Analysis', body: 'Understand your game, target audience, and marketing goals to develop the right strategy.' },
-    { step: '02', title: 'Design & Concept', body: "Create mockups and prototypes that truly reflect your game's spirit and brand identity." },
-    { step: '03', title: 'Development & Optimization', body: 'Code the website with modern technology, integrating SEO and analytics for optimal performance.' },
-    { step: '04', title: 'Launch & Support', body: 'Deploy the website and provide technical support, plus training for your team.' },
+    { step: '01', title: 'Consultation', body: 'Understand the world, audience and launch target.' },
+    { step: '02', title: 'Design system', body: 'Prototype the story, interface and conversion path.' },
+    { step: '03', title: 'Production', body: 'Build, integrate and optimize the experience.' },
+    { step: '04', title: 'Launch support', body: 'Deploy, observe and stabilize the campaign.' },
   ],
+  // `sprite` indexes the 4×4 pixel-character sheet, left-to-right, top-to-bottom.
+  // `tag` names the attribute each point stands for — these four are parallel
+  // claims, not a sequence, so they carry a label rather than a step number.
   why: [
-    { title: 'Lightning speed delivery', body: 'Fast turnaround without compromise.' },
-    { title: 'Unbeatable Pricing', body: 'Competitive pricing without sacrificing quality, built to maximize ROI.' },
-    { title: 'Gaming Expertise', body: 'A team of gamers who understand player psychology and what attracts game audiences.' },
-    { title: 'Design-Led Production', body: 'No templates. No shortcuts. Visually attractive design from concept to final result.' },
+    { tag: 'Turnaround', title: 'Lightning speed delivery', body: 'Fast turnaround without compromise.', sprite: 5 },
+    { tag: 'Value', title: 'Unbeatable Pricing', body: 'Competitive pricing without sacrificing quality, built to maximize ROI.', sprite: 8 },
+    { tag: 'Insight', title: 'Gaming Expertise', body: 'A team of gamers who understand player psychology and what attracts game audiences.', sprite: 0 },
+    { tag: 'Craft', title: 'Design-Led Production', body: 'No templates. No shortcuts. Visually attractive design from concept to final result.', sprite: 6 },
   ],
   portfolio: {
     title: 'Project Showcase',
     intro: "Explore the impressive game marketing websites we've created for game developers worldwide.",
     tags: ['UI/UX', 'FRONTEND', 'BACKEND'],
+    // `href` points at the case study page for each project. Until those pages
+    // exist they route to the contact form.
     items: [
-      { title: 'RPG Fantasy Quest', tag: 'UI/UX' },
-      { title: 'Fantasy Character Campaign', tag: 'FRONTEND' },
-      { title: 'Beyond The Keep', tag: 'BACKEND' },
+      { title: 'RPG Fantasy Quest', tag: 'UI/UX', href: '#contact' },
+      { title: 'Fantasy Character Campaign', tag: 'FRONTEND', href: '#contact' },
+      { title: 'Beyond The Keep', tag: 'BACKEND', href: '#contact' },
+    ],
+  },
+  // All of these screens belong to one shipped title, so they read as a single
+  // deep case study rather than a set of unrelated thumbnails.
+  caseStudy: {
+    client: 'Seedify',
+    title: 'Beyond The Keep',
+    intro:
+      'A full interface system for SeedWorld — onboarding, progression, crafting, maps and live-ops screens built around the Nova Orb.',
+    screens: [
+      { src: '/assets/img/portfolio/awakening-screen.webp', label: 'Onboarding — Awakening' },
+      { src: '/assets/img/portfolio/beyond-the-keep-menu.webp', label: 'Main menu' },
+      { src: '/assets/img/portfolio/nova-core-ui.webp', label: 'Nova Core progression' },
+      { src: '/assets/img/portfolio/leaderboard-menu-ui.webp', label: 'Echo Archives leaderboard' },
+      { src: '/assets/img/portfolio/crafting-inventory-ui.webp', label: 'Crafting & inventory' },
+      { src: '/assets/img/portfolio/map-screen-ui.webp', label: 'Tactical map' },
+      { src: '/assets/img/portfolio/gameplay-hud-desert.webp', label: 'In-game HUD' },
+      { src: '/assets/img/portfolio/gameplay-radial-menu.webp', label: 'Radial action menu' },
+      { src: '/assets/img/portfolio/season-pass-character.webp', label: 'Season pass — Emberborn Saga' },
     ],
   },
   testimonials: [
@@ -109,6 +141,11 @@ export const content = {
       message: 'Tell us about your idea',
     },
     cta: 'Send',
+    // Wire `endpoint` to the form backend (Formspree, a Worker, etc.). While it
+    // is empty the form falls back to opening the visitor's mail client, so it
+    // never reports a success that did not happen. Replace `email` too.
+    endpoint: '',
+    email: 'hello@gamegabyte.studio',
   },
   footer: {
     columns: [
@@ -117,5 +154,12 @@ export const content = {
       { title: 'Legal', links: ['Privacy Policy', 'Terms of Service', 'Cookie Policy'] },
     ],
     tagline: 'Connect with us',
+    // Replace the placeholder hrefs with the studio's real profiles.
+    social: [
+      { label: 'LinkedIn', href: '#' },
+      { label: 'X', href: '#' },
+      { label: 'YouTube', href: '#' },
+      { label: 'Discord', href: '#' },
+    ],
   },
 } as const
