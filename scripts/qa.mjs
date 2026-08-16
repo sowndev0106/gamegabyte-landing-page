@@ -111,6 +111,35 @@ for (const viewport of VIEWPORTS) {
     await page.waitForTimeout(300)
   }
 
+  check(
+    `${viewport.label}: contact form has all three fields`,
+    (await page.locator('#contact-name').count()) === 1 &&
+      (await page.locator('#contact-email').count()) === 1 &&
+      (await page.locator('#contact-message').count()) === 1,
+  )
+
+  {
+    const faqButtons = page.locator('#faq button[aria-expanded]')
+    check(`${viewport.label}: four diagnostics`, (await faqButtons.count()) === 4)
+    const first = faqButtons.first()
+    const panelId = await first.getAttribute('aria-controls')
+    check(`${viewport.label}: faq answer starts hidden`, !(await page.locator(`#${panelId}`).isVisible()))
+    await first.click()
+    await page.waitForTimeout(300)
+    check(`${viewport.label}: faq opens`, (await first.getAttribute('aria-expanded')) === 'true')
+    // The design says several records may stay open at once.
+    const second = faqButtons.nth(1)
+    await second.click()
+    await page.waitForTimeout(300)
+    check(
+      `${viewport.label}: faq records stay open together`,
+      (await first.getAttribute('aria-expanded')) === 'true' &&
+        (await second.getAttribute('aria-expanded')) === 'true',
+    )
+    await first.click()
+    await second.click()
+  }
+
   const quote = await page.locator('#testimonials blockquote').innerText()
   check(
     `${viewport.label}: full testimonial quote present`,

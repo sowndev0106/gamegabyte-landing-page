@@ -3,12 +3,13 @@ import { content } from '../content/content'
 import { Reveal } from '../components/motion/Reveal'
 import { Container } from '../components/ui/Container'
 import { Section, GlowSpot } from '../components/ui/Section'
+import { Panel } from '../components/ui/Panel'
 import { SectionHeader } from '../components/ui/SectionHeader'
 
 type Status = 'idle' | 'submitting' | 'success' | 'mail' | 'error'
 
 const fieldClass =
-  'w-full border border-white/12 bg-white/[0.03] px-5 py-4 text-white placeholder:text-white/30 transition-colors hover:border-white/25 focus:border-accent'
+  'w-full border border-white/11 bg-white/1.5 px-5 py-4 text-white transition-colors hover:border-white/25 focus:border-accent'
 
 export function Contact() {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' })
@@ -46,7 +47,7 @@ export function Contact() {
   const message = {
     idle: '',
     submitting: '',
-    success: 'Message sent — we will get back to you within two working days.',
+    success: 'Message sent — we will be in touch.',
     mail: `Your mail client should now be open. If nothing happened, write to ${content.contact.email}.`,
     error: `Something went wrong. Please email ${content.contact.email} directly.`,
   }[status]
@@ -55,7 +56,7 @@ export function Contact() {
     <Section
       id="contact"
       grid
-      backdrop={<GlowSpot className="left-1/2 top-[20%] h-[360px] w-[640px] -translate-x-1/2" />}
+      backdrop={<GlowSpot className="top-[20%] left-1/2 h-90 w-160 -translate-x-1/2" />}
     >
       <Container>
         <SectionHeader
@@ -139,17 +140,15 @@ export function Contact() {
           </Reveal>
 
           <Reveal delay={0.12}>
-            <aside className="hud-surface p-7 sm:p-8" aria-label="Open channel response status">
+            <Panel as="aside" className="p-7 sm:p-8" aria-label="Open channel response status">
               <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-accent">
-                System status / online
+                {content.contact.response.status}
               </p>
               <h3 className="mt-5 font-display text-2xl font-bold text-white sm:text-[28px]">
-                Replies in 2 working days
+                {content.contact.response.title}
               </h3>
-              <p className="mt-3 text-base leading-relaxed text-white/70">
-                Share your launch date, platform and what success looks like. We will respond with a practical next step.
-              </p>
-            </aside>
+              <p className="mt-3 text-base leading-relaxed text-white/70">{content.contact.response.body}</p>
+            </Panel>
           </Reveal>
         </div>
       </Container>

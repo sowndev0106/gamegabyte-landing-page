@@ -180,6 +180,10 @@ export const content = {
     // old nav list, so it moved here when the rail replaced that list.
     href: 'https://game-uxui-fundamentals.gamegabyte.com/',
   },
+  faqSection: {
+    title: 'Questions / decoded.',
+    intro: 'Expand any diagnostic record. Multiple channels can remain open.',
+  },
   faq: [
     { q: 'How long does it take to build a game landing page?', a: 'Typically, a custom game landing page takes 2-4 weeks from initial concept to launch. This includes design, development, revisions, and optimization.' },
     { q: 'Do you provide ongoing support after launch?', a: 'Yes. We offer post-launch support including bug fixes, content updates, performance monitoring, and technical assistance.' },
@@ -200,6 +204,14 @@ export const content = {
     // never reports a success that did not happen. Replace `email` too.
     endpoint: '',
     email: 'hello@gamegabyte.studio',
+    // The prototype promised a reply within two working days. That is a service
+    // commitment nobody has confirmed, so the card states only what is known.
+    // Restore the specific promise here once the studio stands behind it.
+    response: {
+      status: 'System status / online',
+      title: 'Channel open',
+      body: 'Share your launch date, platform and what success looks like. We will respond with a practical next step.',
+    },
   },
   footer: {
     columns: [
