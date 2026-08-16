@@ -75,6 +75,20 @@
   50% { opacity: 0.35; transform: scale(0.7); }
 }
 
+/* Concentric rings turning at different rates. The dashed inner ring is what
+   makes the motion readable; both stop under the reduced-motion block below. */
+.orbit-ring {
+  animation: orbit-spin 12s linear infinite;
+}
+
+.orbit-ring-inner {
+  animation: orbit-spin 18s linear infinite reverse;
+}
+
+@keyframes orbit-spin {
+  to { transform: rotate(360deg); }
+}
+
 @font-face {
   font-family: "Schibsted Grotesk";
   src: url("/fonts/SchibstedGrotesk_wght__1/SchibstedGrotesk_wght__1-english.woff2") format("woff2");
@@ -131,14 +145,6 @@ textarea {
   .pointer-glow:hover::before {
     opacity: 1;
   }
-}
-
-.process-signal-node::after {
-  position: absolute;
-  inset: 4px;
-  background: var(--color-accent);
-  box-shadow: 0 0 12px rgb(182 232 2 / 0.75);
-  content: "";
 }
 
 /* Fixed header is 5rem tall; keep anchor targets clear of it. */

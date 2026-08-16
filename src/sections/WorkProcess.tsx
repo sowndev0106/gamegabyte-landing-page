@@ -1,54 +1,62 @@
 import { content } from '../content/content'
-import { motion, useReducedMotion } from 'motion/react'
-import { Stagger, StaggerItem } from '../components/motion/Stagger'
+import { Reveal } from '../components/motion/Reveal'
 import { Container } from '../components/ui/Container'
 import { Section } from '../components/ui/Section'
 import { SectionHeader } from '../components/ui/SectionHeader'
 
+/**
+ * The four steps hang off one vertical signal path, with a sticky orbital
+ * panel holding station beside them — the sequence reads as one transmission
+ * rather than four numbered cards.
+ */
 export function WorkProcess() {
-  const reduceMotion = useReducedMotion()
+  const { title, intro, engine, engineNote } = content.processSection
 
   return (
     <Section id="process" grid>
       <Container>
         <SectionHeader
           id="process"
-          title="From signal to launch"
-          description="A readable process with motion that explains progression rather than decorating it."
+          title={title.map((line) => (
+            <span key={line} className="block">
+              {line}
+            </span>
+          ))}
+          description={intro}
         />
 
-        <div className="relative">
+        <div className="grid gap-10 lg:grid-cols-2 lg:gap-20">
           <div
             aria-hidden="true"
-            className="absolute bottom-0 left-[11px] top-0 w-px bg-white/10 lg:bottom-auto lg:left-0 lg:right-0 lg:top-[11px] lg:h-px lg:w-auto"
-          />
-          <motion.div
-            aria-hidden="true"
-            className="absolute bottom-0 left-[11px] top-0 w-px origin-top bg-accent shadow-[0_0_16px_rgba(182,232,2,0.45)] lg:bottom-auto lg:left-0 lg:right-0 lg:top-[11px] lg:h-px lg:w-auto lg:origin-left"
-            initial={reduceMotion ? false : { scaleY: 0, scaleX: 0 }}
-            whileInView={reduceMotion ? undefined : { scaleY: 1, scaleX: 1 }}
-            viewport={{ once: true, amount: 0.35 }}
-            transition={{ duration: 1.15, ease: [0.22, 1, 0.36, 1] }}
-          />
+            className="relative grid aspect-square place-items-center self-start border border-white/11 bg-[radial-gradient(circle,rgb(96_31_235/0.25),transparent_65%)] lg:sticky lg:top-27.5"
+          >
+            <span className="orbit-ring absolute inset-[16%] rounded-full border border-accent/24" />
+            <span className="orbit-ring-inner absolute inset-[31%] rounded-full border border-dashed border-accent/24" />
+            <span className="h-2.75 w-2.75 rounded-full bg-accent shadow-[0_0_24px_var(--color-accent)]" />
+            <span className="absolute bottom-[11%] text-center font-mono text-[8px] leading-relaxed uppercase tracking-[0.18em] text-white/40">
+              {engine}
+              <br />
+              {engineNote}
+            </span>
+          </div>
 
-          <Stagger className="grid gap-0 lg:grid-cols-4 lg:gap-8">
-            {content.process.map((step) => (
-              <StaggerItem
-                key={step.step}
-                className="relative min-h-[190px] pb-10 pl-12 last:pb-0 lg:min-h-0 lg:pb-0 lg:pl-0 lg:pt-14"
-              >
-                <span
-                  aria-hidden="true"
-                  className="process-signal-node absolute left-0 top-0 h-[22px] w-[22px] border border-accent bg-ink shadow-[0_0_18px_rgba(182,232,2,0.42)] lg:left-0"
-                />
-                <span className="font-mono text-[11px] font-bold uppercase tracking-[0.22em] text-accent">
-                  {step.step}
-                </span>
-                <h3 className="mt-5 font-display text-xl font-bold text-white">{step.title}</h3>
-                <p className="mt-4 max-w-[260px] text-base leading-relaxed text-white/70">{step.body}</p>
-              </StaggerItem>
+          <ol className="border-l border-white/11">
+            {content.process.map((step, i) => (
+              <li key={step.step} data-process-step className="relative min-h-52.5 py-4 pr-0 pb-13.5 pl-9 lg:pl-13">
+                <Reveal delay={i * 0.05}>
+                  <span
+                    aria-hidden="true"
+                    className="absolute top-4.5 -left-1.5 h-2.75 w-2.75 bg-accent shadow-[0_0_18px_var(--color-accent)]"
+                  />
+                  <span className="font-mono text-[9px] uppercase tracking-[0.22em] text-accent">
+                    {step.step} / {step.phase}
+                  </span>
+                  <h3 className="my-4 font-display text-[28px] leading-none font-bold text-white">{step.title}</h3>
+                  <p className="max-w-135 leading-relaxed text-white/70">{step.body}</p>
+                </Reveal>
+              </li>
             ))}
-          </Stagger>
+          </ol>
         </div>
       </Container>
     </Section>

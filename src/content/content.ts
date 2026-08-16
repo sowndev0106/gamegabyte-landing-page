@@ -102,11 +102,18 @@ export const content = {
     { title: 'Development', body: 'Modern frontend systems' },
     { title: 'Deployment', body: 'Stable launch workflows' },
   ],
+  processSection: {
+    title: ['Signal becomes', 'launch.'],
+    intro: 'A readable operational path from the first brief to a stable launch.',
+    engine: 'GGB / Mission engine',
+    engineNote: 'Sequence synchronized',
+  },
+  // `phase` names what each step does to the signal, in the page's voice.
   process: [
-    { step: '01', title: 'Consultation', body: 'Understand the world, audience and launch target.' },
-    { step: '02', title: 'Design system', body: 'Prototype the story, interface and conversion path.' },
-    { step: '03', title: 'Production', body: 'Build, integrate and optimize the experience.' },
-    { step: '04', title: 'Launch support', body: 'Deploy, observe and stabilize the campaign.' },
+    { step: '01', phase: 'Decode', title: 'Consultation', body: 'Understand the world, audience and launch target.' },
+    { step: '02', phase: 'Shape', title: 'Design system', body: 'Prototype the story, interface and conversion path.' },
+    { step: '03', phase: 'Assemble', title: 'Production', body: 'Build, integrate and optimize the experience.' },
+    { step: '04', phase: 'Transmit', title: 'Launch support', body: 'Deploy, observe and stabilize the campaign.' },
   ],
   // `sprite` indexes the 4×4 pixel-character sheet, left-to-right, top-to-bottom.
   // `tag` names the attribute each point stands for — these four are parallel
