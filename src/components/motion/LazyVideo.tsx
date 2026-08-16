@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useReducedMotion } from 'motion/react'
 
 function formatTime(seconds: number) {
   if (!Number.isFinite(seconds)) return '0:00'
@@ -10,6 +11,11 @@ function formatTime(seconds: number) {
 /**
  * Video with brand-styled controls. The native control bar is deliberately not
  * used — its browser chrome is the one unstyled surface on the page.
+ *
+ * It plays itself once it is properly on screen and pauses again when it leaves,
+ * so the reel is running by the time the reader arrives at it and is not burning
+ * decode off-screen once they have scrolled past. Muted, because that is the only
+ * kind of autoplay a browser allows, and never for `prefers-reduced-motion`.
  */
 export function LazyVideo({
   src,
@@ -28,32 +34,59 @@ export function LazyVideo({
   labels: { play: string; pause: string; muteOn: string; muteOff: string }
   'aria-label'?: string
 }) {
+  const reduceMotion = useReducedMotion()
   const ref = useRef<HTMLVideoElement>(null)
   const [load, setLoad] = useState(false)
+  const [onScreen, setOnScreen] = useState(false)
   const [playing, setPlaying] = useState(false)
   const [muted, setMuted] = useState(true)
   const [progress, setProgress] = useState(0)
   const [duration, setDuration] = useState(0)
+  // A pause the reader asked for is not undone by scrolling back, so the reel
+  // cannot restart itself under somebody who just stopped it.
+  const pausedByReader = useRef(false)
 
   useEffect(() => {
     const el = ref.current
     if (!el) return
-    const io = new IntersectionObserver(
+    // Two thresholds, because fetching and playing want different moments: the
+    // file starts downloading 200px early so it is ready on arrival, while
+    // playback waits until half the frame is actually in the viewport.
+    const loader = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setLoad(true)
-          io.disconnect()
-        }
+        if (!entry.isIntersecting) return
+        setLoad(true)
+        loader.disconnect()
       },
       { rootMargin: '200px' },
     )
-    io.observe(el)
-    return () => io.disconnect()
+    const player = new IntersectionObserver(([entry]) => setOnScreen(entry.isIntersecting), {
+      threshold: 0.5,
+    })
+    loader.observe(el)
+    player.observe(el)
+    return () => {
+      loader.disconnect()
+      player.disconnect()
+    }
   }, [])
+
+  // Runs on `load` too, not just `onScreen`: the <source> is only mounted once
+  // `load` flips, so a video that is already on screen has nothing to play until
+  // this effect comes back around with a source attached.
+  useEffect(() => {
+    const el = ref.current
+    if (!el || !load) return
+    if (!onScreen) el.pause()
+    // A rejected play() is an autoplay policy saying no — the poster and the
+    // play button are already the right fallback, so there is nothing to handle.
+    else if (!reduceMotion && !pausedByReader.current) void el.play().catch(() => {})
+  }, [load, onScreen, reduceMotion])
 
   const toggle = () => {
     const el = ref.current
     if (!el) return
+    pausedByReader.current = !el.paused
     if (el.paused) void el.play()
     else el.pause()
   }

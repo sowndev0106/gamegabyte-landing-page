@@ -90,12 +90,14 @@
       "caption": ""
     },
     {
-      "type": "embed",
-      "url": "https://www-ccv.adobe.io/v1/player/ccv/Fy6rq5jC9cE/embed?api_key=behance1&bgcolor=%23191919",
-      "provider": "adobe-ccv",
-      "width": 600,
-      "height": 297,
-      "caption": "Visit live website: https://www.gameloft.com/promotions/the-tyrant-update"
+      "type": "video",
+      "src": "/assets/img/work/game-landing-page-game-website-the-lost-tyrants/embed-08.webm",
+      "poster": "/assets/img/work/game-landing-page-game-website-the-lost-tyrants/embed-08.webp",
+      "width": 1280,
+      "height": 634,
+      "alt": "",
+      "caption": "Visit live website: https://www.gameloft.com/promotions/the-tyrant-update",
+      "player": true
     },
     {
       "type": "image",

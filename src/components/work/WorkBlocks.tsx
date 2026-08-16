@@ -43,17 +43,24 @@ function Block({ block, index }: { block: WorkBlock; index: number }) {
       return (
         <figure className="border border-white/11">
           {/*
-            A transcoded GIF, so it behaves like one: no controls, no sound, no
-            tap to start. `playsInline` keeps iOS from hijacking it fullscreen.
+            Two things arrive as one block type and they behave oppositely. A
+            transcoded GIF behaves like a GIF: no controls, no sound, no tap to
+            start. A mirrored player is a film — it gets controls and waits to be
+            asked, and `preload="none"` keeps several megabytes off the wire
+            until it is. Autoplaying one is a cost the reader did not agree to.
+
+            `playsInline` on both, or iOS hijacks either one fullscreen.
           */}
           <video
             src={block.src}
             poster={block.poster}
             width={block.width}
             height={block.height}
-            autoPlay
-            loop
-            muted
+            controls={block.player}
+            autoPlay={!block.player}
+            loop={!block.player}
+            muted={!block.player}
+            preload={block.player ? 'none' : undefined}
             playsInline
             aria-label={block.alt || undefined}
             className="block h-auto w-full"
