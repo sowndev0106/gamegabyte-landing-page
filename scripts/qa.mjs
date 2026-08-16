@@ -83,6 +83,18 @@ for (const viewport of VIEWPORTS) {
   })
   check(`${viewport.label}: nothing clipped outside the viewport`, clipped.length === 0, clipped.join(' | '))
 
+  // The hero headline is the page's largest type in the narrowest column, so it
+  // is the first thing to blow its grid track. Checked explicitly because the
+  // clipping sweep above cannot see inside `overflow: hidden`.
+  const heroFits = await page.evaluate(() => {
+    const title = document.querySelector('#home h1')
+    if (!title) return false
+    const vw = document.documentElement.clientWidth
+    const r = title.getBoundingClientRect()
+    return r.left >= -1 && r.right <= vw + 1
+  })
+  check(`${viewport.label}: hero headline fits the viewport`, heroFits)
+
   for (const section of SECTIONS) {
     const el = page.locator(`#${section.id}`)
     const count = await el.count()

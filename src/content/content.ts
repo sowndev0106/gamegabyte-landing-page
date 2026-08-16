@@ -33,7 +33,13 @@ export const content = {
     menu: 'Menu',
   },
   hero: {
-    headline: ['We Are The Game', 'Marketing Studio'],
+    // Three display lines rather than one string, so the accent line is data
+    // rather than a substring the component has to go hunting for.
+    headline: [
+      { text: 'We are the game', accent: false },
+      { text: 'Marketing', accent: true },
+      { text: 'Studio.', accent: false },
+    ],
     sub: 'From immersive websites to powerful digital strategies — we help your game win the market.',
     primaryCta: 'Case Study',
     secondaryCta: 'Connect with us',
@@ -42,6 +48,14 @@ export const content = {
       { label: 'Shipped', value: '25+ projects' },
       { label: 'Focus', value: 'AAA & mobile titles' },
     ],
+    // Labels only. Every figure the dashboard shows is read from `stats` and
+    // `services` below, so nothing on it can claim something untrue.
+    dashboard: {
+      projectsLabel: 'Studio projects',
+      focusLabel: 'Active focus',
+      focusValue: 'AAA + Mobile',
+      nodesLabel: 'Available system nodes',
+    },
   },
   reel: {
     title: 'Showreel 2025',
