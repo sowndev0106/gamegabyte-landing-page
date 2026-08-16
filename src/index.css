@@ -417,6 +417,10 @@ textarea {
   *::before,
   *::after {
     animation-duration: 0.001ms !important;
+    /* Duration alone does not stop an infinite animation — it just runs it a
+       thousand times a second, still reporting `running`. Capping iterations
+       is what actually brings it to rest. */
+    animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
   }

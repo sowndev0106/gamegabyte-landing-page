@@ -8,6 +8,7 @@
     "prototype:ui": "vite --host 127.0.0.1 --open /prototypes/cinematic-tech-hud/index.html?variant=A",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
+    "qa": "node scripts/qa.mjs",
     "preview": "vite preview",
     "deploy": "npm run build && wrangler pages deploy dist --project-name=gamegabyte-web",
     "optimize": "node scripts/optimize-images.mjs"
