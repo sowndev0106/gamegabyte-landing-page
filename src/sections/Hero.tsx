@@ -119,7 +119,7 @@ export function Hero() {
             {content.services.map((service) => (
               <li
                 key={service.title}
-                className="flex items-center gap-2 font-mono text-[8px] leading-snug uppercase tracking-[0.12em] text-white/70 before:h-1.25 before:w-1.25 before:shrink-0 before:bg-accent before:shadow-[0_0_10px_var(--color-accent)] before:content-['']"
+                className="flex items-center gap-2 font-mono text-[8px] leading-snug uppercase tracking-[0.18em] text-white/70 before:h-1.25 before:w-1.25 before:shrink-0 before:bg-accent before:shadow-[0_0_10px_var(--color-accent)] before:content-['']"
               >
                 {service.title}
               </li>

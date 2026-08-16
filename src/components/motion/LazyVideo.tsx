@@ -134,7 +134,7 @@ export function LazyVideo({
           }}
         />
 
-        <span className="hidden shrink-0 font-mono text-[10px] tabular-nums text-white/70 sm:block">
+        <span className="hidden shrink-0 font-mono text-[9px] tabular-nums text-white/70 sm:block">
           {formatTime((progress / 100) * duration)} / {formatTime(duration)}
         </span>
 
