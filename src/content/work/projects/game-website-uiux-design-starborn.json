@@ -1,0 +1,72 @@
+{
+  "id": "220702859",
+  "slug": "game-website-uiux-design-starborn",
+  "title": "Game Website UI/UX Design | Starborn",
+  "titleParts": [
+    "Game Website UI/UX Design",
+    "Starborn"
+  ],
+  "description": "",
+  "cover": "/assets/img/work/game-website-uiux-design-starborn/cover.webp",
+  "coverWidth": 2048,
+  "coverHeight": 1577,
+  "tags": [
+    "game",
+    "Website Design",
+    "uiux",
+    "game website",
+    "landing page"
+  ],
+  "tools": [
+    "Figma",
+    "Adobe Photoshop"
+  ],
+  "publishedOn": "2025-03-05",
+  "sourceUrl": "https://www.behance.net/gallery/220702859/Game-Website-UIUX-Design-Starborn",
+  "author": {
+    "name": "Thalia Tran",
+    "url": "https://www.behance.net/thaliatran"
+  },
+  "blocks": [
+    {
+      "type": "image",
+      "src": "/assets/img/work/game-website-uiux-design-starborn/01.webp",
+      "width": 2048,
+      "height": 1577,
+      "alt": "Image may contain: cartoon and screenshot",
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/game-website-uiux-design-starborn/02.webp",
+      "width": 2048,
+      "height": 1353,
+      "alt": "Image may contain: screenshot, cartoon and poster",
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/game-website-uiux-design-starborn/03.webp",
+      "width": 2048,
+      "height": 6325,
+      "alt": "",
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/game-website-uiux-design-starborn/04.webp",
+      "width": 2048,
+      "height": 2779,
+      "alt": "Image may contain: cartoon and poster",
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/game-website-uiux-design-starborn/05.webp",
+      "width": 2048,
+      "height": 1106,
+      "alt": "Image may contain: cartoon, poster and screenshot",
+      "caption": ""
+    }
+  ]
+}

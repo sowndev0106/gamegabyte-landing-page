@@ -1,0 +1,109 @@
+{
+  "id": "208921493",
+  "slug": "game-banner-game-social-post",
+  "title": "Game Banner | Game | Social Post",
+  "titleParts": [
+    "Game Banner",
+    "Game",
+    "Social Post"
+  ],
+  "description": "",
+  "cover": "/assets/img/work/game-banner-game-social-post/cover.webp",
+  "coverWidth": 2048,
+  "coverHeight": 1577,
+  "tags": [
+    "game banner",
+    "graphic design ",
+    "visual identity",
+    "Social media post"
+  ],
+  "tools": [],
+  "publishedOn": "2024-09-27",
+  "sourceUrl": "https://www.behance.net/gallery/208921493/Game-Banner-Game-Social-Post",
+  "author": {
+    "name": "Thalia Tran",
+    "url": "https://www.behance.net/thaliatran"
+  },
+  "blocks": [
+    {
+      "type": "image",
+      "src": "/assets/img/work/game-banner-game-social-post/01.webp",
+      "width": 2048,
+      "height": 1577,
+      "alt": "Image may contain: screenshot and cartoon",
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/game-banner-game-social-post/02.webp",
+      "width": 2048,
+      "height": 1152,
+      "alt": "Image may contain: screenshot and cartoon",
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/game-banner-game-social-post/03.webp",
+      "width": 2048,
+      "height": 1152,
+      "alt": "Image may contain: screenshot",
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/game-banner-game-social-post/04.webp",
+      "width": 2048,
+      "height": 1152,
+      "alt": "Image may contain: screenshot",
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/game-banner-game-social-post/05.webp",
+      "width": 2048,
+      "height": 1152,
+      "alt": "Image may contain: screenshot and ship",
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/game-banner-game-social-post/06.webp",
+      "width": 2048,
+      "height": 1152,
+      "alt": "Image may contain: screenshot, monitor and map",
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/game-banner-game-social-post/07.webp",
+      "width": 2048,
+      "height": 1152,
+      "alt": "Image may contain: screenshot and indoor",
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/game-banner-game-social-post/08.webp",
+      "width": 2048,
+      "height": 1152,
+      "alt": "Image may contain: screenshot",
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/game-banner-game-social-post/09.webp",
+      "width": 2048,
+      "height": 1152,
+      "alt": "Image may contain: screenshot and cartoon",
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/game-banner-game-social-post/10.webp",
+      "width": 2048,
+      "height": 966,
+      "alt": "Image may contain: screenshot and electronics",
+      "caption": ""
+    }
+  ]
+}

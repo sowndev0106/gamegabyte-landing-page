@@ -1,0 +1,92 @@
+{
+  "id": "190730687",
+  "slug": "gameloft-game-website-design-disney-speedstorm",
+  "title": "Gameloft Game Website Design | Disney Speedstorm",
+  "titleParts": [
+    "Gameloft Game Website Design",
+    "Disney Speedstorm"
+  ],
+  "description": "",
+  "cover": "/assets/img/work/gameloft-game-website-design-disney-speedstorm/cover.webp",
+  "coverWidth": 2048,
+  "coverHeight": 1577,
+  "tags": [
+    "UIUX design",
+    "gaming website",
+    "gaming website design",
+    "gameloft",
+    "Figma",
+    "ui design",
+    "UI/UX",
+    "user interface",
+    "Gaming",
+    "disney speedstorm"
+  ],
+  "tools": [
+    "Figma"
+  ],
+  "publishedOn": "2024-02-04",
+  "sourceUrl": "https://www.behance.net/gallery/190730687/Gameloft-Game-Website-Design-Disney-Speedstorm",
+  "author": {
+    "name": "Thalia Tran",
+    "url": "https://www.behance.net/thaliatran"
+  },
+  "blocks": [
+    {
+      "type": "image",
+      "src": "/assets/img/work/gameloft-game-website-design-disney-speedstorm/01.webp",
+      "width": 2048,
+      "height": 1577,
+      "alt": "Image may contain: cartoon and screenshot",
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/gameloft-game-website-design-disney-speedstorm/02.webp",
+      "width": 1920,
+      "height": 2356,
+      "alt": "Image may contain: screenshot, template and abstract",
+      "caption": ""
+    },
+    {
+      "type": "embed",
+      "url": "https://player.vimeo.com/video/909793971?h=1640682ca9&badge=0&autoplay=1&loop=1&autopause=0&player_id=0&app_id=58479",
+      "provider": "vimeo",
+      "width": 1400,
+      "height": 740,
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/gameloft-game-website-design-disney-speedstorm/03.webp",
+      "width": 1920,
+      "height": 2356,
+      "alt": "",
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/gameloft-game-website-design-disney-speedstorm/04.webp",
+      "width": 1920,
+      "height": 2736,
+      "alt": "",
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/gameloft-game-website-design-disney-speedstorm/05.webp",
+      "width": 2048,
+      "height": 2306,
+      "alt": "",
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/gameloft-game-website-design-disney-speedstorm/06.webp",
+      "width": 1920,
+      "height": 896,
+      "alt": "",
+      "caption": ""
+    }
+  ]
+}

@@ -1,0 +1,91 @@
+{
+  "id": "208782363",
+  "slug": "gaming-website-design-carmen-sandiego",
+  "title": "Gaming Website Design | Carmen Sandiego",
+  "titleParts": [
+    "Gaming Website Design",
+    "Carmen Sandiego"
+  ],
+  "description": "",
+  "cover": "/assets/img/work/gaming-website-design-carmen-sandiego/cover.webp",
+  "coverWidth": 1400,
+  "coverHeight": 1078,
+  "tags": [
+    "game",
+    "gaming website",
+    "Web Design ",
+    "UI/UX",
+    "user interface",
+    "landing page",
+    "Figma",
+    "Website",
+    "Website Design"
+  ],
+  "tools": [
+    "Figma"
+  ],
+  "publishedOn": "2024-09-25",
+  "sourceUrl": "https://www.behance.net/gallery/208782363/Gaming-Website-Design-Carmen-Sandiego",
+  "author": {
+    "name": "Thalia Tran",
+    "url": "https://www.behance.net/thaliatran"
+  },
+  "blocks": [
+    {
+      "type": "image",
+      "src": "/assets/img/work/gaming-website-design-carmen-sandiego/01.webp",
+      "width": 2048,
+      "height": 1577,
+      "alt": "Image may contain: screenshot, book and poster",
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/gaming-website-design-carmen-sandiego/02.webp",
+      "width": 2048,
+      "height": 1847,
+      "alt": "Image may contain: screenshot and poster",
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/gaming-website-design-carmen-sandiego/03.webp",
+      "width": 2048,
+      "height": 1414,
+      "alt": "Image may contain: screenshot",
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/gaming-website-design-carmen-sandiego/04.webp",
+      "width": 2048,
+      "height": 1414,
+      "alt": "Image may contain: screenshot, template and poster",
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/gaming-website-design-carmen-sandiego/05.webp",
+      "width": 2048,
+      "height": 1732,
+      "alt": "Image may contain: template and magazine",
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/gaming-website-design-carmen-sandiego/06.webp",
+      "width": 2048,
+      "height": 1414,
+      "alt": "",
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/gaming-website-design-carmen-sandiego/07.webp",
+      "width": 2048,
+      "height": 966,
+      "alt": "Image may contain: screenshot",
+      "caption": ""
+    }
+  ]
+}

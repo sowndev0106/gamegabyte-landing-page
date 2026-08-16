@@ -1,0 +1,71 @@
+{
+  "id": "208861217",
+  "slug": "game-store-uiux-design",
+  "title": "Game Store | UI/UX Design",
+  "titleParts": [
+    "Game Store",
+    "UI/UX Design"
+  ],
+  "description": "",
+  "cover": "/assets/img/work/game-store-uiux-design/cover.webp",
+  "coverWidth": 808,
+  "coverHeight": 632,
+  "tags": [
+    "uiux",
+    "uiuxdesign",
+    "shop",
+    "store",
+    "game store",
+    "Website",
+    "Website Design"
+  ],
+  "tools": [],
+  "publishedOn": "2024-09-26",
+  "sourceUrl": "https://www.behance.net/gallery/208861217/Game-Store-UIUX-Design",
+  "author": {
+    "name": "Thalia Tran",
+    "url": "https://www.behance.net/thaliatran"
+  },
+  "blocks": [
+    {
+      "type": "image",
+      "src": "/assets/img/work/game-store-uiux-design/01.webp",
+      "width": 2048,
+      "height": 1537,
+      "alt": "Image may contain: screenshot",
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/game-store-uiux-design/02.webp",
+      "width": 2048,
+      "height": 2918,
+      "alt": "",
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/game-store-uiux-design/03.webp",
+      "width": 2048,
+      "height": 2239,
+      "alt": "Image may contain: display, cartoon and electronics",
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/game-store-uiux-design/04.webp",
+      "width": 2048,
+      "height": 2013,
+      "alt": "Image may contain: screenshot",
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/game-store-uiux-design/05.webp",
+      "width": 2048,
+      "height": 966,
+      "alt": "Image may contain: screenshot and electronics",
+      "caption": ""
+    }
+  ]
+}

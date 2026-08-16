@@ -1,7 +1,7 @@
 # Behance clone pipeline — design
 
 Date: 2026-08-16
-Status: approved
+Status: built — see "What changed during the build" for where reality overrode the design.
 Scope: phase 1 only — data + assets. No UI, no routing, no changes to `Portfolio.tsx`.
 
 ## Goal
@@ -161,6 +161,55 @@ Flags: `--limit=16`, `--force` (ignore existing files), `--stage=snapshot|normal
 - The script prints a final tally: projects written, images downloaded, images
   converted, failures. A non-zero failure count exits non-zero so the result is
   never silently partial.
+
+## What changed during the build
+
+Five things the design got wrong, corrected against the live site.
+
+**Transport.** Node's `fetch` and every Playwright HTTP path answer 403 on
+project pages; `curl` did too, once warmed up. The cause is not a TLS
+fingerprint and not a rate limit: Behance's Varnish layer replies with a 453-byte
+page that sets a `js_challenge_value` cookie in JavaScript and reloads. Reading
+that cookie out of the body and replaying the request makes plain `fetch` work
+with no delay at all. Playwright is still used, but only to scroll the profile
+grid past its first 12 cards.
+
+**Long GIFs become video.** One module is a 1916×1080, 358-frame, 48MB GIF.
+Animated WebP — the approved format — lands at 19.8MB, which is not shippable.
+Past 60 frames or 2MB the pipeline transcodes to h264 via ffmpeg instead: 4.1MB,
+2.5 seconds. Short GIFs still take the approved animated-WebP path. This adds a
+`video` block carrying `src` and a `poster` still.
+
+**More module kinds than expected.** Across the 16 projects: 105 `ImageModule`,
+7 `EmbedModule`, 1 `VideoModule`, 1 `TextModule`. `VideoModule` was missing from
+the design. Embeds are Vimeo and Adobe CCV iframes — not ours to mirror — so we
+keep the player URL, provider and aspect ratio and discard Behance's markup.
+
+**Detail files live in `src/content/work/projects/`,** one level below
+`index.json`, so `import.meta.glob('./projects/*.json')` can address them without
+also matching the index.
+
+**Added `scripts/clone-behance.test.mjs`.** The clone reads a site we do not
+control, and its dangerous failure is not a crash but a run that reports success
+while emitting a record pointing at an image that never landed. The test walks
+every reference in the generated content and asserts the file exists.
+
+## What the source does not contain
+
+Worth stating plainly, because it shapes what the showcase page can be:
+
+- **15 of 16 projects have an empty `description`.** Only
+  `seedworld-game-ui-creative-mode` has one, at 140 characters.
+- **All 105 images have an empty `caption`.** 87 carry `altText`, but it is
+  Behance's machine-generated guess ("Image may contain: screenshot, outdoor and
+  poster") — acceptable as a fallback, not as copy.
+- **The single `TextModule` is keyboard mashing** left in a published project.
+  It is preserved faithfully in
+  `game-landing-page-game-website-the-lost-tyrants.json` rather than silently
+  dropped, and should be deleted by hand.
+
+So the clone yields titles, tags, tools, dates and art. Descriptions and
+captions have to be written.
 
 ## Out of scope
 

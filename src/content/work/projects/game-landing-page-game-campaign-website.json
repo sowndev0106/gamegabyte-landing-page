@@ -1,0 +1,71 @@
+{
+  "id": "210510493",
+  "slug": "game-landing-page-game-campaign-website",
+  "title": "Game Landing Page | Game | Campaign Website",
+  "titleParts": [
+    "Game Landing Page",
+    "Game",
+    "Campaign Website"
+  ],
+  "description": "",
+  "cover": "/assets/img/work/game-landing-page-game-campaign-website/cover.webp",
+  "coverWidth": 2048,
+  "coverHeight": 1536,
+  "tags": [
+    "game",
+    "landing page",
+    "Web Design "
+  ],
+  "tools": [
+    "Figma",
+    "Adobe Photoshop"
+  ],
+  "publishedOn": "2024-10-18",
+  "sourceUrl": "https://www.behance.net/gallery/210510493/Game-Landing-Page-Game-Campaign-Website",
+  "author": {
+    "name": "Thalia Tran",
+    "url": "https://www.behance.net/thaliatran"
+  },
+  "blocks": [
+    {
+      "type": "image",
+      "src": "/assets/img/work/game-landing-page-game-campaign-website/01.webp",
+      "width": 2048,
+      "height": 1536,
+      "alt": "Image may contain: screenshot",
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/game-landing-page-game-campaign-website/02.webp",
+      "width": 2048,
+      "height": 2669,
+      "alt": "Image may contain: screenshot",
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/game-landing-page-game-campaign-website/03.webp",
+      "width": 2048,
+      "height": 3102,
+      "alt": "Image may contain: screenshot and musical instrument",
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/game-landing-page-game-campaign-website/04.webp",
+      "width": 1920,
+      "height": 1280,
+      "alt": "Image may contain: screenshot and indoor",
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/game-landing-page-game-campaign-website/05.webp",
+      "width": 2048,
+      "height": 1367,
+      "alt": "Image may contain: screenshot",
+      "caption": ""
+    }
+  ]
+}

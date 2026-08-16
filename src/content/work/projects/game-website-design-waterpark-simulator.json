@@ -1,0 +1,90 @@
+{
+  "id": "237182449",
+  "slug": "game-website-design-waterpark-simulator",
+  "title": "Game Website Design | Waterpark Simulator",
+  "titleParts": [
+    "Game Website Design",
+    "Waterpark Simulator"
+  ],
+  "description": "",
+  "cover": "/assets/img/work/game-website-design-waterpark-simulator/cover.webp",
+  "coverWidth": 2048,
+  "coverHeight": 1600,
+  "tags": [
+    "UI/UX",
+    "game design ",
+    "game website",
+    "game landing page",
+    "ui design",
+    "user experience",
+    "Website",
+    "user interface"
+  ],
+  "tools": [
+    "Figma"
+  ],
+  "publishedOn": "2025-10-24",
+  "sourceUrl": "https://www.behance.net/gallery/237182449/Game-Website-Design-Waterpark-Simulator",
+  "author": {
+    "name": "Thalia Tran",
+    "url": "https://www.behance.net/thaliatran"
+  },
+  "blocks": [
+    {
+      "type": "image",
+      "src": "/assets/img/work/game-website-design-waterpark-simulator/01.webp",
+      "width": 2048,
+      "height": 3034,
+      "alt": "Image may contain: cartoon and bird",
+      "caption": ""
+    },
+    {
+      "type": "embed",
+      "url": "https://www.youtube.com/embed/IkEKqNbssUg?si=OW3V-VrfE8JRMGzA&start=9&autoplay=1&mute=1&loop=1&playlist=IkEKqNbssUg",
+      "provider": "iframe",
+      "width": 560,
+      "height": 315,
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/game-website-design-waterpark-simulator/02.webp",
+      "width": 2048,
+      "height": 1103,
+      "alt": "",
+      "caption": ""
+    },
+    {
+      "type": "embed",
+      "url": "https://player.vimeo.com/video/1130152413?badge=0&autopause=1&autoplay=0&muted=0&loop=1&background=0",
+      "provider": "vimeo",
+      "width": 1920,
+      "height": 1060,
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/game-website-design-waterpark-simulator/03.webp",
+      "width": 2048,
+      "height": 7620,
+      "alt": "Image may contain: cartoon",
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/game-website-design-waterpark-simulator/04.webp",
+      "width": 2048,
+      "height": 4695,
+      "alt": "",
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/game-website-design-waterpark-simulator/05.webp",
+      "width": 2048,
+      "height": 906,
+      "alt": "Image may contain: cartoon and screenshot",
+      "caption": ""
+    }
+  ]
+}

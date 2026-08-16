@@ -1,0 +1,105 @@
+{
+  "id": "210595511",
+  "slug": "game-landing-page-game-website-the-lost-tyrants",
+  "title": "Game Landing Page | Game Website | The Lost Tyrants",
+  "titleParts": [
+    "Game Landing Page",
+    "Game Website",
+    "The Lost Tyrants"
+  ],
+  "description": "",
+  "cover": "/assets/img/work/game-landing-page-game-website-the-lost-tyrants/cover.webp",
+  "coverWidth": 2048,
+  "coverHeight": 1536,
+  "tags": [
+    "landing page",
+    "Web Design "
+  ],
+  "tools": [
+    "Figma "
+  ],
+  "publishedOn": "2024-10-19",
+  "sourceUrl": "https://www.behance.net/gallery/210595511/Game-Landing-Page-Game-Website-The-Lost-Tyrants",
+  "author": {
+    "name": "Thalia Tran",
+    "url": "https://www.behance.net/thaliatran"
+  },
+  "blocks": [
+    {
+      "type": "image",
+      "src": "/assets/img/work/game-landing-page-game-website-the-lost-tyrants/01.webp",
+      "width": 2048,
+      "height": 1536,
+      "alt": "Image may contain: screenshot, cartoon and monitor",
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/game-landing-page-game-website-the-lost-tyrants/02.webp",
+      "width": 2048,
+      "height": 1199,
+      "alt": "Image may contain: cartoon",
+      "caption": ""
+    },
+    {
+      "type": "embed",
+      "url": "https://www.youtube.com/embed/gboOTSdtqQE?",
+      "provider": "iframe",
+      "width": 1280,
+      "height": 720,
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/game-landing-page-game-website-the-lost-tyrants/03.webp",
+      "width": 2048,
+      "height": 1343,
+      "alt": "Image may contain: screenshot, cartoon and electronics",
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/game-landing-page-game-website-the-lost-tyrants/04.webp",
+      "width": 2048,
+      "height": 1133,
+      "alt": "Image may contain: screenshot and cartoon",
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/game-landing-page-game-website-the-lost-tyrants/05.webp",
+      "width": 2048,
+      "height": 1133,
+      "alt": "Image may contain: screenshot, cartoon and indoor",
+      "caption": ""
+    },
+    {
+      "type": "text",
+      "html": "<div><span style=\"color:#000000;\" class=\"texteditor-inline-color\">     jhbgsa;dkjDF'OIKSJDF;KJHDSFK;JDSHF;CKLDJFCL'kdjs';DOLASjf'dlafj'dpofjedflj</span></div><div><br></div><div><br></div>"
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/game-landing-page-game-website-the-lost-tyrants/06.webp",
+      "width": 2048,
+      "height": 1478,
+      "alt": "Image may contain: cartoon and screenshot",
+      "caption": ""
+    },
+    {
+      "type": "embed",
+      "url": "https://www-ccv.adobe.io/v1/player/ccv/Fy6rq5jC9cE/embed?api_key=behance1&bgcolor=%23191919",
+      "provider": "adobe-ccv",
+      "width": 600,
+      "height": 297,
+      "caption": "Visit live website: https://www.gameloft.com/promotions/the-tyrant-update"
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/game-landing-page-game-website-the-lost-tyrants/07.webp",
+      "width": 2048,
+      "height": 966,
+      "alt": "Image may contain: screenshot",
+      "caption": ""
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "id": "190721493",
+  "slug": "gaming-website-uiux-design-disney-magic-kingdoms",
+  "title": "Gaming Website UIUX Design | Disney Magic Kingdoms",
+  "titleParts": [
+    "Gaming Website UIUX Design",
+    "Disney Magic Kingdoms"
+  ],
+  "description": "",
+  "cover": "/assets/img/work/gaming-website-uiux-design-disney-magic-kingdoms/cover.webp",
+  "coverWidth": 2048,
+  "coverHeight": 1577,
+  "tags": [
+    "gaming website design",
+    "UI/UX",
+    "ui design",
+    "landing page",
+    "gameloft",
+    "UIUX design",
+    "Web Design ",
+    "Website Design",
+    "Figma",
+    "Disney Magic Kingdoms"
+  ],
+  "tools": [
+    "Figma"
+  ],
+  "publishedOn": "2024-02-04",
+  "sourceUrl": "https://www.behance.net/gallery/190721493/Gaming-Website-UIUX-Design-Disney-Magic-Kingdoms",
+  "author": {
+    "name": "Thalia Tran",
+    "url": "https://www.behance.net/thaliatran"
+  },
+  "blocks": [
+    {
+      "type": "image",
+      "src": "/assets/img/work/gaming-website-uiux-design-disney-magic-kingdoms/01.webp",
+      "width": 2048,
+      "height": 1577,
+      "alt": "",
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/gaming-website-uiux-design-disney-magic-kingdoms/02.webp",
+      "width": 1920,
+      "height": 1970,
+      "alt": "",
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/gaming-website-uiux-design-disney-magic-kingdoms/03.webp",
+      "width": 1920,
+      "height": 1926,
+      "alt": "",
+      "caption": ""
+    },
+    {
+      "type": "embed",
+      "url": "https://player.vimeo.com/video/909734967?h=6d24a295d7&badge=0&autoplay=1&loop=1&autopause=0&player_id=0&app_id=58479",
+      "provider": "vimeo",
+      "width": 1400,
+      "height": 740,
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/gaming-website-uiux-design-disney-magic-kingdoms/04.webp",
+      "width": 1920,
+      "height": 1292,
+      "alt": "",
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/gaming-website-uiux-design-disney-magic-kingdoms/05.webp",
+      "width": 1920,
+      "height": 906,
+      "alt": "Image may contain: screenshot",
+      "caption": ""
+    }
+  ]
+}

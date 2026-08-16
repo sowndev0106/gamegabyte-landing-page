@@ -1,0 +1,99 @@
+{
+  "id": "240684015",
+  "slug": "asphalt-legends-unite-rewind-campaign-2024",
+  "title": "Asphalt Legends Unite Rewind Campaign (2024)",
+  "titleParts": [
+    "Asphalt Legends Unite Rewind Campaign (2024)"
+  ],
+  "description": "",
+  "cover": "/assets/img/work/asphalt-legends-unite-rewind-campaign-2024/cover.webp",
+  "coverWidth": 2048,
+  "coverHeight": 1536,
+  "tags": [
+    "asphalt",
+    "Asphalt 9",
+    "rewind",
+    "game design ",
+    "game",
+    "Racing Game",
+    "ui design",
+    "UI/UX",
+    "Web Design "
+  ],
+  "tools": [
+    "Figma",
+    "Adobe Photoshop"
+  ],
+  "publishedOn": "2025-12-18",
+  "sourceUrl": "https://www.behance.net/gallery/240684015/Asphalt-Legends-Unite-Rewind-Campaign-%282024%29",
+  "author": {
+    "name": "Thalia Tran",
+    "url": "https://www.behance.net/thaliatran"
+  },
+  "blocks": [
+    {
+      "type": "image",
+      "src": "/assets/img/work/asphalt-legends-unite-rewind-campaign-2024/01.webp",
+      "width": 2048,
+      "height": 1152,
+      "alt": "Image may contain: screenshot, indoor and car",
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/asphalt-legends-unite-rewind-campaign-2024/02.webp",
+      "width": 2048,
+      "height": 3422,
+      "alt": "Image may contain: screenshot, vehicle and car",
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/asphalt-legends-unite-rewind-campaign-2024/03.webp",
+      "width": 2048,
+      "height": 2468,
+      "alt": "Image may contain: screenshot, monitor and car",
+      "caption": ""
+    },
+    {
+      "type": "embed",
+      "url": "https://player.vimeo.com/video/1147565189?badge=0&autopause=0&player_id=0&app_id=58479&loop=1",
+      "provider": "vimeo",
+      "width": 1920,
+      "height": 1080,
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/asphalt-legends-unite-rewind-campaign-2024/04.webp",
+      "width": 2048,
+      "height": 3898,
+      "alt": "Image may contain: car, vehicle and land vehicle",
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/asphalt-legends-unite-rewind-campaign-2024/05.webp",
+      "width": 2048,
+      "height": 2180,
+      "alt": "Image may contain: car, vehicle and monitor",
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/asphalt-legends-unite-rewind-campaign-2024/06.webp",
+      "width": 2048,
+      "height": 2379,
+      "alt": "",
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/asphalt-legends-unite-rewind-campaign-2024/07.webp",
+      "width": 1920,
+      "height": 1034,
+      "alt": "Image may contain: screenshot",
+      "caption": ""
+    }
+  ]
+}

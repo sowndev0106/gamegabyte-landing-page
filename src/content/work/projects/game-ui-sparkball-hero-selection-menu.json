@@ -1,0 +1,58 @@
+{
+  "id": "237264481",
+  "slug": "game-ui-sparkball-hero-selection-menu",
+  "title": "Game UI | Sparkball Hero Selection Menu",
+  "titleParts": [
+    "Game UI",
+    "Sparkball Hero Selection Menu"
+  ],
+  "description": "",
+  "cover": "/assets/img/work/game-ui-sparkball-hero-selection-menu/cover.webp",
+  "coverWidth": 2048,
+  "coverHeight": 1600,
+  "tags": [
+    "鬼",
+    "UI/UX",
+    "ui design",
+    "user interface",
+    "game ui",
+    "game design ",
+    "menu"
+  ],
+  "tools": [
+    "Adobe Photoshop",
+    "Figma"
+  ],
+  "publishedOn": "2025-10-25",
+  "sourceUrl": "https://www.behance.net/gallery/237264481/Game-UI-Sparkball-Hero-Selection-Menu",
+  "author": {
+    "name": "Thalia Tran",
+    "url": "https://www.behance.net/thaliatran"
+  },
+  "blocks": [
+    {
+      "type": "image",
+      "src": "/assets/img/work/game-ui-sparkball-hero-selection-menu/01.webp",
+      "width": 2048,
+      "height": 757,
+      "alt": "Image may contain: cartoon, screenshot and drawing",
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/game-ui-sparkball-hero-selection-menu/02.webp",
+      "width": 2048,
+      "height": 10897,
+      "alt": "Image may contain: cartoon",
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/game-ui-sparkball-hero-selection-menu/03.webp",
+      "width": 2048,
+      "height": 625,
+      "alt": "Image may contain: screenshot",
+      "caption": ""
+    }
+  ]
+}

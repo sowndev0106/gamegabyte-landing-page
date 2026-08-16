@@ -1,0 +1,152 @@
+{
+  "id": "239775853",
+  "slug": "seedworld-game-ui-creative-mode",
+  "title": "Seedworld Game UI | Creative Mode",
+  "titleParts": [
+    "Seedworld Game UI",
+    "Creative Mode"
+  ],
+  "description": "A UI/UX showcase for Seedworld’s Creative Mode, featuring interfaces crafted to support world-building, terrain editing, and asset creation.",
+  "cover": "/assets/img/work/seedworld-game-ui-creative-mode/cover.webp",
+  "coverWidth": 2048,
+  "coverHeight": 1152,
+  "tags": [
+    "gameui",
+    "Seedworld",
+    "gamedesign",
+    "鬼"
+  ],
+  "tools": [
+    "Figma",
+    "Adobe Photoshop"
+  ],
+  "publishedOn": "2025-12-03",
+  "sourceUrl": "https://www.behance.net/gallery/239775853/Seedworld-Game-UI-Creative-Mode",
+  "author": {
+    "name": "Thalia Tran",
+    "url": "https://www.behance.net/thaliatran"
+  },
+  "blocks": [
+    {
+      "type": "image",
+      "src": "/assets/img/work/seedworld-game-ui-creative-mode/01.webp",
+      "width": 2048,
+      "height": 1152,
+      "alt": "Image may contain: screenshot, outdoor and poster",
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/seedworld-game-ui-creative-mode/02.webp",
+      "width": 2048,
+      "height": 1183,
+      "alt": "Image may contain: screenshot",
+      "caption": ""
+    },
+    {
+      "type": "video",
+      "src": "/assets/img/work/seedworld-game-ui-creative-mode/03.mp4",
+      "poster": "/assets/img/work/seedworld-game-ui-creative-mode/03.webp",
+      "width": 1600,
+      "height": 900,
+      "alt": "",
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/seedworld-game-ui-creative-mode/04.webp",
+      "width": 2048,
+      "height": 122,
+      "alt": "Image may contain: screenshot",
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/seedworld-game-ui-creative-mode/05.webp",
+      "width": 2048,
+      "height": 1369,
+      "alt": "Image may contain: screenshot and cartoon",
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/seedworld-game-ui-creative-mode/06.webp",
+      "width": 2048,
+      "height": 1369,
+      "alt": "Image may contain: monitor, cartoon and indoor",
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/seedworld-game-ui-creative-mode/07.webp",
+      "width": 2048,
+      "height": 1369,
+      "alt": "Image may contain: screenshot, cartoon and pc game",
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/seedworld-game-ui-creative-mode/08.webp",
+      "width": 2048,
+      "height": 1369,
+      "alt": "Image may contain: screenshot, monitor and video game",
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/seedworld-game-ui-creative-mode/09.webp",
+      "width": 2048,
+      "height": 1369,
+      "alt": "Image may contain: screenshot, cartoon and monitor",
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/seedworld-game-ui-creative-mode/10.webp",
+      "width": 2048,
+      "height": 1369,
+      "alt": "Image may contain: monitor, indoor and cartoon",
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/seedworld-game-ui-creative-mode/11.webp",
+      "width": 2048,
+      "height": 1369,
+      "alt": "Image may contain: cartoon and pc game",
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/seedworld-game-ui-creative-mode/12.webp",
+      "width": 2048,
+      "height": 1369,
+      "alt": "Image may contain: screenshot, cartoon and electronics",
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/seedworld-game-ui-creative-mode/13.webp",
+      "width": 2048,
+      "height": 1369,
+      "alt": "Image may contain: cartoon, monitor and pc game",
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/seedworld-game-ui-creative-mode/14.webp",
+      "width": 2048,
+      "height": 1369,
+      "alt": "Image may contain: electronics, cartoon and display",
+      "caption": ""
+    },
+    {
+      "type": "image",
+      "src": "/assets/img/work/seedworld-game-ui-creative-mode/15.webp",
+      "width": 2048,
+      "height": 1183,
+      "alt": "Image may contain: screenshot and typography",
+      "caption": ""
+    }
+  ]
+}

@@ -1,0 +1,2177 @@
+{
+  "modules": [
+    {
+      "id": 1250382561,
+      "fullBleed": 1,
+      "caption": "",
+      "imageSizes": {
+        "size_disp": {
+          "url": "https://mir-s3-cdn-cf.behance.net/project_modules/disp/b54f8e219355389.67b0b57405131.png",
+          "height": 462,
+          "width": 600
+        },
+        "size_disp_still": null,
+        "size_1400": {
+          "width": 1400,
+          "height": 1078
+        },
+        "size_max_1200": {
+          "width": 1200,
+          "height": 924
+        },
+        "allAvailable": [
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/source/b54f8e219355389.67b0b57405131.png",
+            "width": 1920,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_632/b54f8e219355389.67b0b57405131.png",
+            "width": 820,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_632_webp/b54f8e219355389.67b0b57405131.png",
+            "width": 820,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_316/b54f8e219355389.67b0b57405131.png",
+            "width": 410,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_316_webp/b54f8e219355389.67b0b57405131.png",
+            "width": 410,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_158/b54f8e219355389.67b0b57405131.png",
+            "width": 205,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_158_webp/b54f8e219355389.67b0b57405131.png",
+            "width": 205,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/disp/b54f8e219355389.67b0b57405131.png",
+            "width": 600,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/disp_webp/b54f8e219355389.67b0b57405131.png",
+            "width": 600,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/hd/b54f8e219355389.67b0b57405131.png",
+            "width": 1240,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/hd_webp/b54f8e219355389.67b0b57405131.png",
+            "width": 1240,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/fs/b54f8e219355389.67b0b57405131.png",
+            "width": 1920,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/fs_webp/b54f8e219355389.67b0b57405131.png",
+            "width": 1920,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/b54f8e219355389.67b0b57405131.png",
+            "width": 1200,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200_webp/b54f8e219355389.67b0b57405131.png",
+            "width": 1200,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/1400/b54f8e219355389.67b0b57405131.png",
+            "width": 1400,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/b54f8e219355389.67b0b57405131.png",
+            "width": 1400,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/b54f8e219355389.67b0b57405131.png",
+            "width": 1400,
+            "type": "OPT1"
+          }
+        ]
+      },
+      "width": 600,
+      "height": 462,
+      "hasCaiData": false,
+      "projectId": 219355389,
+      "src": "https://mir-s3-cdn-cf.behance.net/project_modules/disp/b54f8e219355389.67b0b57405131.png",
+      "exifData": {
+        "lens": null,
+        "software": null,
+        "makeAndModel": null,
+        "focalLength": null,
+        "iso": null,
+        "location": null,
+        "flash": null,
+        "exposureMode": null,
+        "shutterSpeed": null,
+        "aperture": null
+      },
+      "altText": "Image may contain: poster, screenshot and cartoon",
+      "threeDData": {
+        "iframeUrl": null
+      },
+      "captionAlignment": "left",
+      "__typename": "ImageModule"
+    },
+    {
+      "id": 1250382565,
+      "fullBleed": 1,
+      "caption": "",
+      "imageSizes": {
+        "size_disp": {
+          "url": "https://mir-s3-cdn-cf.behance.net/project_modules/disp/524a80219355389.67b0b57405f9b.png",
+          "height": 338,
+          "width": 600
+        },
+        "size_disp_still": null,
+        "size_1400": {
+          "width": 1400,
+          "height": 788
+        },
+        "size_max_1200": {
+          "width": 1200,
+          "height": 676
+        },
+        "allAvailable": [
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/source/524a80219355389.67b0b57405f9b.png",
+            "width": 1920,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_632/524a80219355389.67b0b57405f9b.png",
+            "width": 1123,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_632_webp/524a80219355389.67b0b57405f9b.png",
+            "width": 1123,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_316/524a80219355389.67b0b57405f9b.png",
+            "width": 561,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_316_webp/524a80219355389.67b0b57405f9b.png",
+            "width": 561,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_158/524a80219355389.67b0b57405f9b.png",
+            "width": 281,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_158_webp/524a80219355389.67b0b57405f9b.png",
+            "width": 281,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/disp/524a80219355389.67b0b57405f9b.png",
+            "width": 600,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/disp_webp/524a80219355389.67b0b57405f9b.png",
+            "width": 600,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/hd/524a80219355389.67b0b57405f9b.png",
+            "width": 1240,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/hd_webp/524a80219355389.67b0b57405f9b.png",
+            "width": 1240,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/fs/524a80219355389.67b0b57405f9b.png",
+            "width": 1920,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/fs_webp/524a80219355389.67b0b57405f9b.png",
+            "width": 1920,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/524a80219355389.67b0b57405f9b.png",
+            "width": 1200,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200_webp/524a80219355389.67b0b57405f9b.png",
+            "width": 1200,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/1400/524a80219355389.67b0b57405f9b.png",
+            "width": 1400,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/524a80219355389.67b0b57405f9b.png",
+            "width": 1400,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/524a80219355389.67b0b57405f9b.png",
+            "width": 1400,
+            "type": "OPT1"
+          }
+        ]
+      },
+      "width": 600,
+      "height": 338,
+      "hasCaiData": false,
+      "projectId": 219355389,
+      "src": "https://mir-s3-cdn-cf.behance.net/project_modules/disp/524a80219355389.67b0b57405f9b.png",
+      "exifData": {
+        "lens": null,
+        "software": null,
+        "makeAndModel": null,
+        "focalLength": null,
+        "iso": null,
+        "location": null,
+        "flash": null,
+        "exposureMode": null,
+        "shutterSpeed": null,
+        "aperture": null
+      },
+      "altText": "Image may contain: screenshot, poster and typography",
+      "threeDData": {
+        "iframeUrl": null
+      },
+      "captionAlignment": "left",
+      "__typename": "ImageModule"
+    },
+    {
+      "id": 1250382571,
+      "fullBleed": 1,
+      "caption": "",
+      "imageSizes": {
+        "size_disp": {
+          "url": "https://mir-s3-cdn-cf.behance.net/project_modules/disp/e72dc7219355389.67b0b57407602.png",
+          "height": 338,
+          "width": 600
+        },
+        "size_disp_still": null,
+        "size_1400": {
+          "width": 1400,
+          "height": 788
+        },
+        "size_max_1200": {
+          "width": 1200,
+          "height": 676
+        },
+        "allAvailable": [
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/source/e72dc7219355389.67b0b57407602.png",
+            "width": 1920,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_632/e72dc7219355389.67b0b57407602.png",
+            "width": 1123,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_632_webp/e72dc7219355389.67b0b57407602.png",
+            "width": 1123,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_316/e72dc7219355389.67b0b57407602.png",
+            "width": 561,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_316_webp/e72dc7219355389.67b0b57407602.png",
+            "width": 561,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_158/e72dc7219355389.67b0b57407602.png",
+            "width": 281,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_158_webp/e72dc7219355389.67b0b57407602.png",
+            "width": 281,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/disp/e72dc7219355389.67b0b57407602.png",
+            "width": 600,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/disp_webp/e72dc7219355389.67b0b57407602.png",
+            "width": 600,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/hd/e72dc7219355389.67b0b57407602.png",
+            "width": 1240,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/hd_webp/e72dc7219355389.67b0b57407602.png",
+            "width": 1240,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/fs/e72dc7219355389.67b0b57407602.png",
+            "width": 1920,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/fs_webp/e72dc7219355389.67b0b57407602.png",
+            "width": 1920,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/e72dc7219355389.67b0b57407602.png",
+            "width": 1200,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200_webp/e72dc7219355389.67b0b57407602.png",
+            "width": 1200,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/1400/e72dc7219355389.67b0b57407602.png",
+            "width": 1400,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/e72dc7219355389.67b0b57407602.png",
+            "width": 1400,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/e72dc7219355389.67b0b57407602.png",
+            "width": 1400,
+            "type": "OPT1"
+          }
+        ]
+      },
+      "width": 600,
+      "height": 338,
+      "hasCaiData": false,
+      "projectId": 219355389,
+      "src": "https://mir-s3-cdn-cf.behance.net/project_modules/disp/e72dc7219355389.67b0b57407602.png",
+      "exifData": {
+        "lens": null,
+        "software": null,
+        "makeAndModel": null,
+        "focalLength": null,
+        "iso": null,
+        "location": null,
+        "flash": null,
+        "exposureMode": null,
+        "shutterSpeed": null,
+        "aperture": null
+      },
+      "altText": "",
+      "threeDData": {
+        "iframeUrl": null
+      },
+      "captionAlignment": "left",
+      "__typename": "ImageModule"
+    },
+    {
+      "id": 1250382563,
+      "fullBleed": 1,
+      "caption": "",
+      "imageSizes": {
+        "size_disp": {
+          "url": "https://mir-s3-cdn-cf.behance.net/project_modules/disp/0e076b219355389.67b0b57405996.png",
+          "height": 338,
+          "width": 600
+        },
+        "size_disp_still": null,
+        "size_1400": {
+          "width": 1400,
+          "height": 788
+        },
+        "size_max_1200": {
+          "width": 1200,
+          "height": 676
+        },
+        "allAvailable": [
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/source/0e076b219355389.67b0b57405996.png",
+            "width": 1920,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_632/0e076b219355389.67b0b57405996.png",
+            "width": 1123,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_632_webp/0e076b219355389.67b0b57405996.png",
+            "width": 1123,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_316/0e076b219355389.67b0b57405996.png",
+            "width": 561,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_316_webp/0e076b219355389.67b0b57405996.png",
+            "width": 561,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_158/0e076b219355389.67b0b57405996.png",
+            "width": 281,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_158_webp/0e076b219355389.67b0b57405996.png",
+            "width": 281,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/disp/0e076b219355389.67b0b57405996.png",
+            "width": 600,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/disp_webp/0e076b219355389.67b0b57405996.png",
+            "width": 600,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/hd/0e076b219355389.67b0b57405996.png",
+            "width": 1240,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/hd_webp/0e076b219355389.67b0b57405996.png",
+            "width": 1240,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/fs/0e076b219355389.67b0b57405996.png",
+            "width": 1920,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/fs_webp/0e076b219355389.67b0b57405996.png",
+            "width": 1920,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/0e076b219355389.67b0b57405996.png",
+            "width": 1200,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200_webp/0e076b219355389.67b0b57405996.png",
+            "width": 1200,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/1400/0e076b219355389.67b0b57405996.png",
+            "width": 1400,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/0e076b219355389.67b0b57405996.png",
+            "width": 1400,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/0e076b219355389.67b0b57405996.png",
+            "width": 1400,
+            "type": "OPT1"
+          }
+        ]
+      },
+      "width": 600,
+      "height": 338,
+      "hasCaiData": false,
+      "projectId": 219355389,
+      "src": "https://mir-s3-cdn-cf.behance.net/project_modules/disp/0e076b219355389.67b0b57405996.png",
+      "exifData": {
+        "lens": null,
+        "software": null,
+        "makeAndModel": null,
+        "focalLength": null,
+        "iso": null,
+        "location": null,
+        "flash": null,
+        "exposureMode": null,
+        "shutterSpeed": null,
+        "aperture": null
+      },
+      "altText": "Image may contain: screenshot and abstract",
+      "threeDData": {
+        "iframeUrl": null
+      },
+      "captionAlignment": "left",
+      "__typename": "ImageModule"
+    },
+    {
+      "id": 1250382567,
+      "fullBleed": 1,
+      "caption": "",
+      "imageSizes": {
+        "size_disp": {
+          "url": "https://mir-s3-cdn-cf.behance.net/project_modules/disp/06ac99219355389.67b0b574067a9.png",
+          "height": 836,
+          "width": 600
+        },
+        "size_disp_still": null,
+        "size_1400": {
+          "width": 1400,
+          "height": 1951
+        },
+        "size_max_1200": {
+          "width": 1200,
+          "height": 1672
+        },
+        "allAvailable": [
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/source/06ac99219355389.67b0b574067a9.png",
+            "width": 1920,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_632/06ac99219355389.67b0b574067a9.png",
+            "width": 454,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_632_webp/06ac99219355389.67b0b574067a9.png",
+            "width": 454,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_316/06ac99219355389.67b0b574067a9.png",
+            "width": 227,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_316_webp/06ac99219355389.67b0b574067a9.png",
+            "width": 227,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_158/06ac99219355389.67b0b574067a9.png",
+            "width": 113,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_158_webp/06ac99219355389.67b0b574067a9.png",
+            "width": 113,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/disp/06ac99219355389.67b0b574067a9.png",
+            "width": 600,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/disp_webp/06ac99219355389.67b0b574067a9.png",
+            "width": 600,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/hd/06ac99219355389.67b0b574067a9.png",
+            "width": 1240,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/hd_webp/06ac99219355389.67b0b574067a9.png",
+            "width": 1240,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/fs/06ac99219355389.67b0b574067a9.png",
+            "width": 1920,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/fs_webp/06ac99219355389.67b0b574067a9.png",
+            "width": 1920,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/06ac99219355389.67b0b574067a9.png",
+            "width": 1200,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200_webp/06ac99219355389.67b0b574067a9.png",
+            "width": 1200,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/1400/06ac99219355389.67b0b574067a9.png",
+            "width": 1400,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/06ac99219355389.67b0b574067a9.png",
+            "width": 1400,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/06ac99219355389.67b0b574067a9.png",
+            "width": 1400,
+            "type": "OPT1"
+          }
+        ]
+      },
+      "width": 600,
+      "height": 836,
+      "hasCaiData": false,
+      "projectId": 219355389,
+      "src": "https://mir-s3-cdn-cf.behance.net/project_modules/disp/06ac99219355389.67b0b574067a9.png",
+      "exifData": {
+        "lens": null,
+        "software": null,
+        "makeAndModel": null,
+        "focalLength": null,
+        "iso": null,
+        "location": null,
+        "flash": null,
+        "exposureMode": null,
+        "shutterSpeed": null,
+        "aperture": null
+      },
+      "altText": "Image may contain: cartoon, monitor and television",
+      "threeDData": {
+        "iframeUrl": null
+      },
+      "captionAlignment": "left",
+      "__typename": "ImageModule"
+    },
+    {
+      "id": 1250382569,
+      "fullBleed": 1,
+      "caption": "",
+      "imageSizes": {
+        "size_disp": {
+          "url": "https://mir-s3-cdn-cf.behance.net/project_modules/disp/524c72219355389.67b0b57406f54.png",
+          "height": 528,
+          "width": 600
+        },
+        "size_disp_still": null,
+        "size_1400": {
+          "width": 1400,
+          "height": 1232
+        },
+        "size_max_1200": {
+          "width": 1200,
+          "height": 1056
+        },
+        "allAvailable": [
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/source/524c72219355389.67b0b57406f54.png",
+            "width": 1920,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_632/524c72219355389.67b0b57406f54.png",
+            "width": 718,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_632_webp/524c72219355389.67b0b57406f54.png",
+            "width": 718,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_316/524c72219355389.67b0b57406f54.png",
+            "width": 359,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_316_webp/524c72219355389.67b0b57406f54.png",
+            "width": 359,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_158/524c72219355389.67b0b57406f54.png",
+            "width": 180,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_158_webp/524c72219355389.67b0b57406f54.png",
+            "width": 180,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/disp/524c72219355389.67b0b57406f54.png",
+            "width": 600,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/disp_webp/524c72219355389.67b0b57406f54.png",
+            "width": 600,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/hd/524c72219355389.67b0b57406f54.png",
+            "width": 1240,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/hd_webp/524c72219355389.67b0b57406f54.png",
+            "width": 1240,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/fs/524c72219355389.67b0b57406f54.png",
+            "width": 1920,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/fs_webp/524c72219355389.67b0b57406f54.png",
+            "width": 1920,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/524c72219355389.67b0b57406f54.png",
+            "width": 1200,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200_webp/524c72219355389.67b0b57406f54.png",
+            "width": 1200,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/1400/524c72219355389.67b0b57406f54.png",
+            "width": 1400,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/524c72219355389.67b0b57406f54.png",
+            "width": 1400,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/524c72219355389.67b0b57406f54.png",
+            "width": 1400,
+            "type": "OPT1"
+          }
+        ]
+      },
+      "width": 600,
+      "height": 528,
+      "hasCaiData": false,
+      "projectId": 219355389,
+      "src": "https://mir-s3-cdn-cf.behance.net/project_modules/disp/524c72219355389.67b0b57406f54.png",
+      "exifData": {
+        "lens": null,
+        "software": null,
+        "makeAndModel": null,
+        "focalLength": null,
+        "iso": null,
+        "location": null,
+        "flash": null,
+        "exposureMode": null,
+        "shutterSpeed": null,
+        "aperture": null
+      },
+      "altText": "Image may contain: book, screenshot and poster",
+      "threeDData": {
+        "iframeUrl": null
+      },
+      "captionAlignment": "left",
+      "__typename": "ImageModule"
+    },
+    {
+      "id": 1250382573,
+      "fullBleed": 1,
+      "caption": "",
+      "imageSizes": {
+        "size_disp": {
+          "url": "https://mir-s3-cdn-cf.behance.net/project_modules/disp/9f21d4219355389.67b0b57407c73.png",
+          "height": 310,
+          "width": 600
+        },
+        "size_disp_still": null,
+        "size_1400": {
+          "width": 1400,
+          "height": 723
+        },
+        "size_max_1200": {
+          "width": 1200,
+          "height": 620
+        },
+        "allAvailable": [
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/source/9f21d4219355389.67b0b57407c73.png",
+            "width": 1920,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_632/9f21d4219355389.67b0b57407c73.png",
+            "width": 1223,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_632_webp/9f21d4219355389.67b0b57407c73.png",
+            "width": 1223,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_316/9f21d4219355389.67b0b57407c73.png",
+            "width": 612,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_316_webp/9f21d4219355389.67b0b57407c73.png",
+            "width": 612,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_158/9f21d4219355389.67b0b57407c73.png",
+            "width": 306,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_158_webp/9f21d4219355389.67b0b57407c73.png",
+            "width": 306,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/disp/9f21d4219355389.67b0b57407c73.png",
+            "width": 600,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/disp_webp/9f21d4219355389.67b0b57407c73.png",
+            "width": 600,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/hd/9f21d4219355389.67b0b57407c73.png",
+            "width": 1240,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/hd_webp/9f21d4219355389.67b0b57407c73.png",
+            "width": 1240,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/fs/9f21d4219355389.67b0b57407c73.png",
+            "width": 1920,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/fs_webp/9f21d4219355389.67b0b57407c73.png",
+            "width": 1920,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/9f21d4219355389.67b0b57407c73.png",
+            "width": 1200,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200_webp/9f21d4219355389.67b0b57407c73.png",
+            "width": 1200,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/1400/9f21d4219355389.67b0b57407c73.png",
+            "width": 1400,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/9f21d4219355389.67b0b57407c73.png",
+            "width": 1400,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/9f21d4219355389.67b0b57407c73.png",
+            "width": 1400,
+            "type": "OPT1"
+          }
+        ]
+      },
+      "width": 600,
+      "height": 310,
+      "hasCaiData": false,
+      "projectId": 219355389,
+      "src": "https://mir-s3-cdn-cf.behance.net/project_modules/disp/9f21d4219355389.67b0b57407c73.png",
+      "exifData": {
+        "lens": null,
+        "software": null,
+        "makeAndModel": null,
+        "focalLength": null,
+        "iso": null,
+        "location": null,
+        "flash": null,
+        "exposureMode": null,
+        "shutterSpeed": null,
+        "aperture": null
+      },
+      "altText": "Image may contain: flower and screenshot",
+      "threeDData": {
+        "iframeUrl": null
+      },
+      "captionAlignment": "left",
+      "__typename": "ImageModule"
+    }
+  ],
+  "id": 219355389,
+  "oid": "9zU4jsrwmRfK_4IEPDzQyQ",
+  "slug": "Game-UIUX-Battle-Pass-UI-Design",
+  "premium": 0,
+  "isPrivate": false,
+  "isOwner": 0,
+  "canvasWidth": 1400,
+  "embedTag": "<iframe src=\"https://www.behance.net/embed/project/219355389?ilo0=1\" height=\"316\" width=\"404\" allowfullscreen lazyload frameborder=\"0\" allow=\"clipboard-write\" refererPolicy=\"strict-origin-when-cross-origin\"></iframe>",
+  "url": "https://www.behance.net/gallery/219355389/Game-UIUX-Battle-Pass-UI-Design",
+  "stylesInline": "#project-modules .title { color: #191919;font-family: helvetica,arial,sans-serif;font-size: 36px;font-style: normal;font-weight: bold;line-height: 1.1em;text-align: left;text-decoration: none; }\r\n#project-modules .sub-title { color: #a4a4a4;font-family: helvetica,arial,sans-serif;font-size: 20px;font-style: normal;font-weight: normal;line-height: 1.4em;text-align: left;text-decoration: none; }\r\n#project-modules .editor-text .main-text, #primary-project-content.project-styles .main-text { color: #696969;font-family: helvetica,arial,sans-serif;font-size: 20px;font-style: normal;font-weight: normal;line-height: 1.4em;text-align: left;text-decoration: none; }\r\n#project-modules .caption, #project-modules .caption-text-wrap { color: #a4a4a4;font-family: helvetica,arial,sans-serif;font-size: 14px;font-style: italic;font-weight: normal;line-height: 1.4em;text-align: left;text-decoration: none; }\r\n#project-modules .caption-text-wrap a { font-size: 14px !important; }\r\n#project-modules .main-text a { color: #1769FF;text-align: left;text-decoration: none; }\r\n#primary-project-content .module { padding-bottom: 0px; }\r\n#primary-project-content { padding-top: 0px; background-color: #000000;  }\r\n.spacer { height: 0px; }.divider { display: none; }.module.last .divider { display: none; }",
+  "name": "Game UI/UX | Battle Pass UI Design",
+  "description": "",
+  "tags": [
+    {
+      "id": 976121,
+      "title": "game"
+    },
+    {
+      "id": 17336239,
+      "title": "game design "
+    },
+    {
+      "id": 23080387,
+      "title": "gameUI"
+    },
+    {
+      "id": 978579,
+      "title": "GUI"
+    }
+  ],
+  "privacyLevel": "PUBLIC",
+  "matureAccess": "allowed",
+  "hasMatureContent": false,
+  "publishedOn": 1739634173,
+  "canBeAddedToMoodboard": true,
+  "isMonaReported": false,
+  "isAppreciated": false,
+  "projectCTA": {
+    "ctaType": "GET_HIRED",
+    "link": null,
+    "isDefaultCTA": true
+  },
+  "covers": {
+    "allAvailable": [
+      {
+        "url": "https://mir-s3-cdn-cf.behance.net/projects/original/31ec60219355389.Y3JvcCwxODkwLDE0NzksMTQsMA.png",
+        "width": null,
+        "type": "JPG"
+      },
+      {
+        "url": "https://mir-s3-cdn-cf.behance.net/projects/original_webp/31ec60219355389.Y3JvcCwxODkwLDE0NzksMTQsMA.png",
+        "width": null,
+        "type": "WEBP"
+      },
+      {
+        "url": "https://mir-s3-cdn-cf.behance.net/projects/max_808/31ec60219355389.Y3JvcCwxODkwLDE0NzksMTQsMA.png",
+        "width": 808,
+        "type": "JPG"
+      },
+      {
+        "url": "https://mir-s3-cdn-cf.behance.net/projects/max_808_webp/31ec60219355389.Y3JvcCwxODkwLDE0NzksMTQsMA.png",
+        "width": 808,
+        "type": "WEBP"
+      },
+      {
+        "url": "https://mir-s3-cdn-cf.behance.net/projects/808/31ec60219355389.Y3JvcCwxODkwLDE0NzksMTQsMA.png",
+        "width": 808,
+        "type": "JPG"
+      },
+      {
+        "url": "https://mir-s3-cdn-cf.behance.net/projects/808_webp/31ec60219355389.Y3JvcCwxODkwLDE0NzksMTQsMA.png",
+        "width": 808,
+        "type": "WEBP"
+      },
+      {
+        "url": "https://mir-s3-cdn-cf.behance.net/projects/404/31ec60219355389.Y3JvcCwxODkwLDE0NzksMTQsMA.png",
+        "width": 404,
+        "type": "JPG"
+      },
+      {
+        "url": "https://mir-s3-cdn-cf.behance.net/projects/404_webp/31ec60219355389.Y3JvcCwxODkwLDE0NzksMTQsMA.png",
+        "width": 404,
+        "type": "WEBP"
+      },
+      {
+        "url": "https://mir-s3-cdn-cf.behance.net/projects/202/31ec60219355389.Y3JvcCwxODkwLDE0NzksMTQsMA.png",
+        "width": 202,
+        "type": "JPG"
+      },
+      {
+        "url": "https://mir-s3-cdn-cf.behance.net/projects/202_webp/31ec60219355389.Y3JvcCwxODkwLDE0NzksMTQsMA.png",
+        "width": 202,
+        "type": "WEBP"
+      },
+      {
+        "url": "https://mir-s3-cdn-cf.behance.net/projects/230/31ec60219355389.Y3JvcCwxODkwLDE0NzksMTQsMA.png",
+        "width": 230,
+        "type": "JPG"
+      },
+      {
+        "url": "https://mir-s3-cdn-cf.behance.net/projects/230_webp/31ec60219355389.Y3JvcCwxODkwLDE0NzksMTQsMA.png",
+        "width": 230,
+        "type": "WEBP"
+      },
+      {
+        "url": "https://mir-s3-cdn-cf.behance.net/projects/115/31ec60219355389.Y3JvcCwxODkwLDE0NzksMTQsMA.png",
+        "width": 115,
+        "type": "JPG"
+      },
+      {
+        "url": "https://mir-s3-cdn-cf.behance.net/projects/115_webp/31ec60219355389.Y3JvcCwxODkwLDE0NzksMTQsMA.png",
+        "width": 115,
+        "type": "WEBP"
+      }
+    ],
+    "size_original_webp": {
+      "url": "https://mir-s3-cdn-cf.behance.net/projects/original_webp/31ec60219355389.Y3JvcCwxODkwLDE0NzksMTQsMA.png",
+      "width": null,
+      "type": "WEBP"
+    }
+  },
+  "owners": [
+    {
+      "id": 387756319,
+      "displayName": "Thalia Tran",
+      "url": "https://www.behance.net/thaliatran",
+      "isFollowing": false,
+      "isProfileOwner": false,
+      "availabilityInfo": {
+        "isAvailableFullTime": true,
+        "isAvailableFreelance": true,
+        "budgetMin": 250000,
+        "enforceMinBudget": false,
+        "availabilityTimeline": "within_next_few_weeks",
+        "hiringTimeline": {
+          "key": "now"
+        }
+      },
+      "isActive": true,
+      "isDeleted": false,
+      "location": "Ho Chi Minh City, Vietnam",
+      "locationUrl": "https://www.behance.net/search/users?country=VN&city=Ho+Chi+Minh+City",
+      "country": "Vietnam",
+      "city": "Ho Chi Minh City",
+      "state": "",
+      "creatorPro": {
+        "isActive": true,
+        "initialSubscriptionDate": "2025-10-23 04:19:55"
+      },
+      "recruiterPro": {
+        "isActive": false
+      },
+      "images": {
+        "allAvailable": [
+          {
+            "url": "https://pps.services.adobe.com/api/profile/265F36B85D2C3D2B0A495CEF@AdobeID/image/77749c44-d22a-43d9-a4bc-079704dbc25c/50",
+            "width": 50,
+            "type": "JPG"
+          },
+          {
+            "url": "https://pps.services.adobe.com/api/profile/265F36B85D2C3D2B0A495CEF@AdobeID/image/77749c44-d22a-43d9-a4bc-079704dbc25c/100",
+            "width": 100,
+            "type": "JPG"
+          },
+          {
+            "url": "https://pps.services.adobe.com/api/profile/265F36B85D2C3D2B0A495CEF@AdobeID/image/77749c44-d22a-43d9-a4bc-079704dbc25c/115",
+            "width": 115,
+            "type": "JPG"
+          },
+          {
+            "url": "https://pps.services.adobe.com/api/profile/265F36B85D2C3D2B0A495CEF@AdobeID/image/77749c44-d22a-43d9-a4bc-079704dbc25c/230",
+            "width": 230,
+            "type": "JPG"
+          },
+          {
+            "url": "https://pps.services.adobe.com/api/profile/265F36B85D2C3D2B0A495CEF@AdobeID/image/77749c44-d22a-43d9-a4bc-079704dbc25c/138",
+            "width": 138,
+            "type": "JPG"
+          },
+          {
+            "url": "https://pps.services.adobe.com/api/profile/265F36B85D2C3D2B0A495CEF@AdobeID/image/77749c44-d22a-43d9-a4bc-079704dbc25c/276",
+            "width": 276,
+            "type": "JPG"
+          }
+        ]
+      },
+      "firstName": "Thalia",
+      "isMessageButtonVisible": true,
+      "username": "thaliatran",
+      "isResponsiveToHiring": false
+    }
+  ],
+  "isCommentingAllowed": true,
+  "sourceFiles": [],
+  "creator": {
+    "id": 387756319,
+    "isProfileOwner": false,
+    "isFollowing": false,
+    "hasPremiumAccess": false,
+    "hasAllowEmbeds": true,
+    "url": "https://www.behance.net/thaliatran",
+    "displayName": "Thalia Tran",
+    "images": {
+      "allAvailable": [
+        {
+          "width": 50,
+          "url": "https://pps.services.adobe.com/api/profile/265F36B85D2C3D2B0A495CEF@AdobeID/image/77749c44-d22a-43d9-a4bc-079704dbc25c/50",
+          "type": "JPG"
+        },
+        {
+          "width": 100,
+          "url": "https://pps.services.adobe.com/api/profile/265F36B85D2C3D2B0A495CEF@AdobeID/image/77749c44-d22a-43d9-a4bc-079704dbc25c/100",
+          "type": "JPG"
+        },
+        {
+          "width": 115,
+          "url": "https://pps.services.adobe.com/api/profile/265F36B85D2C3D2B0A495CEF@AdobeID/image/77749c44-d22a-43d9-a4bc-079704dbc25c/115",
+          "type": "JPG"
+        },
+        {
+          "width": 230,
+          "url": "https://pps.services.adobe.com/api/profile/265F36B85D2C3D2B0A495CEF@AdobeID/image/77749c44-d22a-43d9-a4bc-079704dbc25c/230",
+          "type": "JPG"
+        },
+        {
+          "width": 138,
+          "url": "https://pps.services.adobe.com/api/profile/265F36B85D2C3D2B0A495CEF@AdobeID/image/77749c44-d22a-43d9-a4bc-079704dbc25c/138",
+          "type": "JPG"
+        },
+        {
+          "width": 276,
+          "url": "https://pps.services.adobe.com/api/profile/265F36B85D2C3D2B0A495CEF@AdobeID/image/77749c44-d22a-43d9-a4bc-079704dbc25c/276",
+          "type": "JPG"
+        }
+      ]
+    }
+  },
+  "tools": [],
+  "allModules": [
+    {
+      "id": 1250382561,
+      "fullBleed": 1,
+      "caption": "",
+      "imageSizes": {
+        "size_disp": {
+          "url": "https://mir-s3-cdn-cf.behance.net/project_modules/disp/b54f8e219355389.67b0b57405131.png",
+          "height": 462,
+          "width": 600
+        },
+        "size_disp_still": null,
+        "size_1400": {
+          "width": 1400,
+          "height": 1078
+        },
+        "size_max_1200": {
+          "width": 1200,
+          "height": 924
+        },
+        "allAvailable": [
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/source/b54f8e219355389.67b0b57405131.png",
+            "width": 1920,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_632/b54f8e219355389.67b0b57405131.png",
+            "width": 820,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_632_webp/b54f8e219355389.67b0b57405131.png",
+            "width": 820,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_316/b54f8e219355389.67b0b57405131.png",
+            "width": 410,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_316_webp/b54f8e219355389.67b0b57405131.png",
+            "width": 410,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_158/b54f8e219355389.67b0b57405131.png",
+            "width": 205,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_158_webp/b54f8e219355389.67b0b57405131.png",
+            "width": 205,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/disp/b54f8e219355389.67b0b57405131.png",
+            "width": 600,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/disp_webp/b54f8e219355389.67b0b57405131.png",
+            "width": 600,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/hd/b54f8e219355389.67b0b57405131.png",
+            "width": 1240,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/hd_webp/b54f8e219355389.67b0b57405131.png",
+            "width": 1240,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/fs/b54f8e219355389.67b0b57405131.png",
+            "width": 1920,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/fs_webp/b54f8e219355389.67b0b57405131.png",
+            "width": 1920,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/b54f8e219355389.67b0b57405131.png",
+            "width": 1200,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200_webp/b54f8e219355389.67b0b57405131.png",
+            "width": 1200,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/1400/b54f8e219355389.67b0b57405131.png",
+            "width": 1400,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/b54f8e219355389.67b0b57405131.png",
+            "width": 1400,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/b54f8e219355389.67b0b57405131.png",
+            "width": 1400,
+            "type": "OPT1"
+          }
+        ]
+      },
+      "width": 600,
+      "height": 462,
+      "hasCaiData": false,
+      "projectId": 219355389,
+      "src": "https://mir-s3-cdn-cf.behance.net/project_modules/disp/b54f8e219355389.67b0b57405131.png",
+      "exifData": {
+        "lens": null,
+        "software": null,
+        "makeAndModel": null,
+        "focalLength": null,
+        "iso": null,
+        "location": null,
+        "flash": null,
+        "exposureMode": null,
+        "shutterSpeed": null,
+        "aperture": null
+      },
+      "altText": "Image may contain: poster, screenshot and cartoon",
+      "threeDData": {
+        "iframeUrl": null
+      },
+      "captionAlignment": "left",
+      "__typename": "ImageModule"
+    },
+    {
+      "id": 1250382565,
+      "fullBleed": 1,
+      "caption": "",
+      "imageSizes": {
+        "size_disp": {
+          "url": "https://mir-s3-cdn-cf.behance.net/project_modules/disp/524a80219355389.67b0b57405f9b.png",
+          "height": 338,
+          "width": 600
+        },
+        "size_disp_still": null,
+        "size_1400": {
+          "width": 1400,
+          "height": 788
+        },
+        "size_max_1200": {
+          "width": 1200,
+          "height": 676
+        },
+        "allAvailable": [
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/source/524a80219355389.67b0b57405f9b.png",
+            "width": 1920,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_632/524a80219355389.67b0b57405f9b.png",
+            "width": 1123,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_632_webp/524a80219355389.67b0b57405f9b.png",
+            "width": 1123,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_316/524a80219355389.67b0b57405f9b.png",
+            "width": 561,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_316_webp/524a80219355389.67b0b57405f9b.png",
+            "width": 561,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_158/524a80219355389.67b0b57405f9b.png",
+            "width": 281,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_158_webp/524a80219355389.67b0b57405f9b.png",
+            "width": 281,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/disp/524a80219355389.67b0b57405f9b.png",
+            "width": 600,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/disp_webp/524a80219355389.67b0b57405f9b.png",
+            "width": 600,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/hd/524a80219355389.67b0b57405f9b.png",
+            "width": 1240,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/hd_webp/524a80219355389.67b0b57405f9b.png",
+            "width": 1240,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/fs/524a80219355389.67b0b57405f9b.png",
+            "width": 1920,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/fs_webp/524a80219355389.67b0b57405f9b.png",
+            "width": 1920,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/524a80219355389.67b0b57405f9b.png",
+            "width": 1200,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200_webp/524a80219355389.67b0b57405f9b.png",
+            "width": 1200,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/1400/524a80219355389.67b0b57405f9b.png",
+            "width": 1400,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/524a80219355389.67b0b57405f9b.png",
+            "width": 1400,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/524a80219355389.67b0b57405f9b.png",
+            "width": 1400,
+            "type": "OPT1"
+          }
+        ]
+      },
+      "width": 600,
+      "height": 338,
+      "hasCaiData": false,
+      "projectId": 219355389,
+      "src": "https://mir-s3-cdn-cf.behance.net/project_modules/disp/524a80219355389.67b0b57405f9b.png",
+      "exifData": {
+        "lens": null,
+        "software": null,
+        "makeAndModel": null,
+        "focalLength": null,
+        "iso": null,
+        "location": null,
+        "flash": null,
+        "exposureMode": null,
+        "shutterSpeed": null,
+        "aperture": null
+      },
+      "altText": "Image may contain: screenshot, poster and typography",
+      "threeDData": {
+        "iframeUrl": null
+      },
+      "captionAlignment": "left",
+      "__typename": "ImageModule"
+    },
+    {
+      "id": 1250382571,
+      "fullBleed": 1,
+      "caption": "",
+      "imageSizes": {
+        "size_disp": {
+          "url": "https://mir-s3-cdn-cf.behance.net/project_modules/disp/e72dc7219355389.67b0b57407602.png",
+          "height": 338,
+          "width": 600
+        },
+        "size_disp_still": null,
+        "size_1400": {
+          "width": 1400,
+          "height": 788
+        },
+        "size_max_1200": {
+          "width": 1200,
+          "height": 676
+        },
+        "allAvailable": [
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/source/e72dc7219355389.67b0b57407602.png",
+            "width": 1920,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_632/e72dc7219355389.67b0b57407602.png",
+            "width": 1123,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_632_webp/e72dc7219355389.67b0b57407602.png",
+            "width": 1123,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_316/e72dc7219355389.67b0b57407602.png",
+            "width": 561,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_316_webp/e72dc7219355389.67b0b57407602.png",
+            "width": 561,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_158/e72dc7219355389.67b0b57407602.png",
+            "width": 281,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_158_webp/e72dc7219355389.67b0b57407602.png",
+            "width": 281,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/disp/e72dc7219355389.67b0b57407602.png",
+            "width": 600,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/disp_webp/e72dc7219355389.67b0b57407602.png",
+            "width": 600,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/hd/e72dc7219355389.67b0b57407602.png",
+            "width": 1240,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/hd_webp/e72dc7219355389.67b0b57407602.png",
+            "width": 1240,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/fs/e72dc7219355389.67b0b57407602.png",
+            "width": 1920,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/fs_webp/e72dc7219355389.67b0b57407602.png",
+            "width": 1920,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/e72dc7219355389.67b0b57407602.png",
+            "width": 1200,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200_webp/e72dc7219355389.67b0b57407602.png",
+            "width": 1200,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/1400/e72dc7219355389.67b0b57407602.png",
+            "width": 1400,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/e72dc7219355389.67b0b57407602.png",
+            "width": 1400,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/e72dc7219355389.67b0b57407602.png",
+            "width": 1400,
+            "type": "OPT1"
+          }
+        ]
+      },
+      "width": 600,
+      "height": 338,
+      "hasCaiData": false,
+      "projectId": 219355389,
+      "src": "https://mir-s3-cdn-cf.behance.net/project_modules/disp/e72dc7219355389.67b0b57407602.png",
+      "exifData": {
+        "lens": null,
+        "software": null,
+        "makeAndModel": null,
+        "focalLength": null,
+        "iso": null,
+        "location": null,
+        "flash": null,
+        "exposureMode": null,
+        "shutterSpeed": null,
+        "aperture": null
+      },
+      "altText": "",
+      "threeDData": {
+        "iframeUrl": null
+      },
+      "captionAlignment": "left",
+      "__typename": "ImageModule"
+    },
+    {
+      "id": 1250382563,
+      "fullBleed": 1,
+      "caption": "",
+      "imageSizes": {
+        "size_disp": {
+          "url": "https://mir-s3-cdn-cf.behance.net/project_modules/disp/0e076b219355389.67b0b57405996.png",
+          "height": 338,
+          "width": 600
+        },
+        "size_disp_still": null,
+        "size_1400": {
+          "width": 1400,
+          "height": 788
+        },
+        "size_max_1200": {
+          "width": 1200,
+          "height": 676
+        },
+        "allAvailable": [
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/source/0e076b219355389.67b0b57405996.png",
+            "width": 1920,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_632/0e076b219355389.67b0b57405996.png",
+            "width": 1123,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_632_webp/0e076b219355389.67b0b57405996.png",
+            "width": 1123,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_316/0e076b219355389.67b0b57405996.png",
+            "width": 561,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_316_webp/0e076b219355389.67b0b57405996.png",
+            "width": 561,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_158/0e076b219355389.67b0b57405996.png",
+            "width": 281,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_158_webp/0e076b219355389.67b0b57405996.png",
+            "width": 281,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/disp/0e076b219355389.67b0b57405996.png",
+            "width": 600,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/disp_webp/0e076b219355389.67b0b57405996.png",
+            "width": 600,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/hd/0e076b219355389.67b0b57405996.png",
+            "width": 1240,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/hd_webp/0e076b219355389.67b0b57405996.png",
+            "width": 1240,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/fs/0e076b219355389.67b0b57405996.png",
+            "width": 1920,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/fs_webp/0e076b219355389.67b0b57405996.png",
+            "width": 1920,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/0e076b219355389.67b0b57405996.png",
+            "width": 1200,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200_webp/0e076b219355389.67b0b57405996.png",
+            "width": 1200,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/1400/0e076b219355389.67b0b57405996.png",
+            "width": 1400,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/0e076b219355389.67b0b57405996.png",
+            "width": 1400,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/0e076b219355389.67b0b57405996.png",
+            "width": 1400,
+            "type": "OPT1"
+          }
+        ]
+      },
+      "width": 600,
+      "height": 338,
+      "hasCaiData": false,
+      "projectId": 219355389,
+      "src": "https://mir-s3-cdn-cf.behance.net/project_modules/disp/0e076b219355389.67b0b57405996.png",
+      "exifData": {
+        "lens": null,
+        "software": null,
+        "makeAndModel": null,
+        "focalLength": null,
+        "iso": null,
+        "location": null,
+        "flash": null,
+        "exposureMode": null,
+        "shutterSpeed": null,
+        "aperture": null
+      },
+      "altText": "Image may contain: screenshot and abstract",
+      "threeDData": {
+        "iframeUrl": null
+      },
+      "captionAlignment": "left",
+      "__typename": "ImageModule"
+    },
+    {
+      "id": 1250382567,
+      "fullBleed": 1,
+      "caption": "",
+      "imageSizes": {
+        "size_disp": {
+          "url": "https://mir-s3-cdn-cf.behance.net/project_modules/disp/06ac99219355389.67b0b574067a9.png",
+          "height": 836,
+          "width": 600
+        },
+        "size_disp_still": null,
+        "size_1400": {
+          "width": 1400,
+          "height": 1951
+        },
+        "size_max_1200": {
+          "width": 1200,
+          "height": 1672
+        },
+        "allAvailable": [
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/source/06ac99219355389.67b0b574067a9.png",
+            "width": 1920,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_632/06ac99219355389.67b0b574067a9.png",
+            "width": 454,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_632_webp/06ac99219355389.67b0b574067a9.png",
+            "width": 454,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_316/06ac99219355389.67b0b574067a9.png",
+            "width": 227,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_316_webp/06ac99219355389.67b0b574067a9.png",
+            "width": 227,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_158/06ac99219355389.67b0b574067a9.png",
+            "width": 113,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_158_webp/06ac99219355389.67b0b574067a9.png",
+            "width": 113,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/disp/06ac99219355389.67b0b574067a9.png",
+            "width": 600,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/disp_webp/06ac99219355389.67b0b574067a9.png",
+            "width": 600,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/hd/06ac99219355389.67b0b574067a9.png",
+            "width": 1240,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/hd_webp/06ac99219355389.67b0b574067a9.png",
+            "width": 1240,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/fs/06ac99219355389.67b0b574067a9.png",
+            "width": 1920,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/fs_webp/06ac99219355389.67b0b574067a9.png",
+            "width": 1920,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/06ac99219355389.67b0b574067a9.png",
+            "width": 1200,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200_webp/06ac99219355389.67b0b574067a9.png",
+            "width": 1200,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/1400/06ac99219355389.67b0b574067a9.png",
+            "width": 1400,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/06ac99219355389.67b0b574067a9.png",
+            "width": 1400,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/06ac99219355389.67b0b574067a9.png",
+            "width": 1400,
+            "type": "OPT1"
+          }
+        ]
+      },
+      "width": 600,
+      "height": 836,
+      "hasCaiData": false,
+      "projectId": 219355389,
+      "src": "https://mir-s3-cdn-cf.behance.net/project_modules/disp/06ac99219355389.67b0b574067a9.png",
+      "exifData": {
+        "lens": null,
+        "software": null,
+        "makeAndModel": null,
+        "focalLength": null,
+        "iso": null,
+        "location": null,
+        "flash": null,
+        "exposureMode": null,
+        "shutterSpeed": null,
+        "aperture": null
+      },
+      "altText": "Image may contain: cartoon, monitor and television",
+      "threeDData": {
+        "iframeUrl": null
+      },
+      "captionAlignment": "left",
+      "__typename": "ImageModule"
+    },
+    {
+      "id": 1250382569,
+      "fullBleed": 1,
+      "caption": "",
+      "imageSizes": {
+        "size_disp": {
+          "url": "https://mir-s3-cdn-cf.behance.net/project_modules/disp/524c72219355389.67b0b57406f54.png",
+          "height": 528,
+          "width": 600
+        },
+        "size_disp_still": null,
+        "size_1400": {
+          "width": 1400,
+          "height": 1232
+        },
+        "size_max_1200": {
+          "width": 1200,
+          "height": 1056
+        },
+        "allAvailable": [
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/source/524c72219355389.67b0b57406f54.png",
+            "width": 1920,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_632/524c72219355389.67b0b57406f54.png",
+            "width": 718,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_632_webp/524c72219355389.67b0b57406f54.png",
+            "width": 718,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_316/524c72219355389.67b0b57406f54.png",
+            "width": 359,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_316_webp/524c72219355389.67b0b57406f54.png",
+            "width": 359,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_158/524c72219355389.67b0b57406f54.png",
+            "width": 180,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_158_webp/524c72219355389.67b0b57406f54.png",
+            "width": 180,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/disp/524c72219355389.67b0b57406f54.png",
+            "width": 600,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/disp_webp/524c72219355389.67b0b57406f54.png",
+            "width": 600,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/hd/524c72219355389.67b0b57406f54.png",
+            "width": 1240,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/hd_webp/524c72219355389.67b0b57406f54.png",
+            "width": 1240,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/fs/524c72219355389.67b0b57406f54.png",
+            "width": 1920,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/fs_webp/524c72219355389.67b0b57406f54.png",
+            "width": 1920,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/524c72219355389.67b0b57406f54.png",
+            "width": 1200,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200_webp/524c72219355389.67b0b57406f54.png",
+            "width": 1200,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/1400/524c72219355389.67b0b57406f54.png",
+            "width": 1400,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/524c72219355389.67b0b57406f54.png",
+            "width": 1400,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/524c72219355389.67b0b57406f54.png",
+            "width": 1400,
+            "type": "OPT1"
+          }
+        ]
+      },
+      "width": 600,
+      "height": 528,
+      "hasCaiData": false,
+      "projectId": 219355389,
+      "src": "https://mir-s3-cdn-cf.behance.net/project_modules/disp/524c72219355389.67b0b57406f54.png",
+      "exifData": {
+        "lens": null,
+        "software": null,
+        "makeAndModel": null,
+        "focalLength": null,
+        "iso": null,
+        "location": null,
+        "flash": null,
+        "exposureMode": null,
+        "shutterSpeed": null,
+        "aperture": null
+      },
+      "altText": "Image may contain: book, screenshot and poster",
+      "threeDData": {
+        "iframeUrl": null
+      },
+      "captionAlignment": "left",
+      "__typename": "ImageModule"
+    },
+    {
+      "id": 1250382573,
+      "fullBleed": 1,
+      "caption": "",
+      "imageSizes": {
+        "size_disp": {
+          "url": "https://mir-s3-cdn-cf.behance.net/project_modules/disp/9f21d4219355389.67b0b57407c73.png",
+          "height": 310,
+          "width": 600
+        },
+        "size_disp_still": null,
+        "size_1400": {
+          "width": 1400,
+          "height": 723
+        },
+        "size_max_1200": {
+          "width": 1200,
+          "height": 620
+        },
+        "allAvailable": [
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/source/9f21d4219355389.67b0b57407c73.png",
+            "width": 1920,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_632/9f21d4219355389.67b0b57407c73.png",
+            "width": 1223,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_632_webp/9f21d4219355389.67b0b57407c73.png",
+            "width": 1223,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_316/9f21d4219355389.67b0b57407c73.png",
+            "width": 612,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_316_webp/9f21d4219355389.67b0b57407c73.png",
+            "width": 612,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_158/9f21d4219355389.67b0b57407c73.png",
+            "width": 306,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_158_webp/9f21d4219355389.67b0b57407c73.png",
+            "width": 306,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/disp/9f21d4219355389.67b0b57407c73.png",
+            "width": 600,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/disp_webp/9f21d4219355389.67b0b57407c73.png",
+            "width": 600,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/hd/9f21d4219355389.67b0b57407c73.png",
+            "width": 1240,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/hd_webp/9f21d4219355389.67b0b57407c73.png",
+            "width": 1240,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/fs/9f21d4219355389.67b0b57407c73.png",
+            "width": 1920,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/fs_webp/9f21d4219355389.67b0b57407c73.png",
+            "width": 1920,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/9f21d4219355389.67b0b57407c73.png",
+            "width": 1200,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200_webp/9f21d4219355389.67b0b57407c73.png",
+            "width": 1200,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/1400/9f21d4219355389.67b0b57407c73.png",
+            "width": 1400,
+            "type": "JPG"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/9f21d4219355389.67b0b57407c73.png",
+            "width": 1400,
+            "type": "WEBP"
+          },
+          {
+            "url": "https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/9f21d4219355389.67b0b57407c73.png",
+            "width": 1400,
+            "type": "OPT1"
+          }
+        ]
+      },
+      "width": 600,
+      "height": 310,
+      "hasCaiData": false,
+      "projectId": 219355389,
+      "src": "https://mir-s3-cdn-cf.behance.net/project_modules/disp/9f21d4219355389.67b0b57407c73.png",
+      "exifData": {
+        "lens": null,
+        "software": null,
+        "makeAndModel": null,
+        "focalLength": null,
+        "iso": null,
+        "location": null,
+        "flash": null,
+        "exposureMode": null,
+        "shutterSpeed": null,
+        "aperture": null
+      },
+      "altText": "Image may contain: flower and screenshot",
+      "threeDData": {
+        "iframeUrl": null
+      },
+      "captionAlignment": "left",
+      "__typename": "ImageModule"
+    }
+  ],
+  "aeroData": null,
+  "adminNotices": [],
+  "license": {
+    "license": "no-use"
+  },
+  "features": [],
+  "stats": {
+    "appreciations": {
+      "all": 46
+    },
+    "views": {
+      "all": 866
+    },
+    "comments": {
+      "all": 4
+    }
+  },
+  "styles": {
+    "spacing": {
+      "projectTopMargin": "0"
+    }
+  },
+  "colors": {
+    "r": 13,
+    "g": 14,
+    "b": 13
+  },
+  "isPublished": true,
+  "shortUrl": "http://be.net/gallery/219355389/Game-UIUX-Battle-Pass-UI-Design"
+}

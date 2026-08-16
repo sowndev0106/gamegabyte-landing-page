@@ -16,7 +16,8 @@
     "qa": "node scripts/qa.mjs",
     "preview": "vite preview",
     "deploy": "npm run build && wrangler pages deploy dist --project-name=gamegabyte-web",
-    "optimize": "node scripts/optimize-images.mjs"
+    "optimize": "node scripts/optimize-images.mjs",
+    "clone:behance": "node scripts/clone-behance.mjs"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.1",
