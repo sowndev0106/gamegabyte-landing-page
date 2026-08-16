@@ -6,7 +6,7 @@ export const assets = {
     { name: 'Seedify', logo: '/assets/img/clients/seedify-logo.webp' },
   ],
   backgrounds: {
-    hero: '/assets/img/backgrounds/hero-portal-arena-v1.png',
+    hero: '/assets/img/backgrounds/hero-fantasy-battlefield-v1.png',
     pattern: '/assets/img/backgrounds/gamegabyte-pattern-glow.webp',
     pixelTrees: '/assets/img/backgrounds/pixel-tree-tiles.webp',
     battlefield: '/assets/img/backgrounds/hero-fantasy-battlefield-v1.png',
@@ -23,11 +23,13 @@ export const assets = {
 } as const
 
 export const content = {
-  // Navigation lives in `src/content/sections.ts` — the rail and the mobile
-  // menu are both generated from the section registry, so there is no separate
-  // nav list to keep in sync.
+  // Navigation lives in `src/content/sections.ts` — the rail, the topbar groups
+  // and the mobile menu are all generated from the section registry, so there is
+  // no separate nav list to keep in sync.
   shell: {
-    status: 'Studio network online',
+    // The topbar prints `<host>:<path>$`, where the path is the section being
+    // read (see `sectionPath`). Only the host is copy; the rest is a reading.
+    host: 'gamegabyte',
     cta: 'Open channel',
     brand: 'Gamegabyte / OS',
     menu: 'Menu',
@@ -48,13 +50,15 @@ export const content = {
       { label: 'Shipped', value: '25+ projects' },
       { label: 'Focus', value: 'AAA & mobile titles' },
     ],
-    // Labels only. Every figure the dashboard shows is read from `stats` and
-    // `services` below, so nothing on it can claim something untrue.
+    // Labels only. Every row the node table shows is read from `services`
+    // below, so nothing on it can claim something untrue.
     dashboard: {
-      projectsLabel: 'Studio projects',
       focusLabel: 'Active focus',
       focusValue: 'AAA + Mobile',
       nodesLabel: 'Available system nodes',
+      // One word per row, not a sentence — the rows are a list of what is
+      // available, so the status is a column value rather than a claim.
+      nodeStatus: 'Online',
     },
   },
   reel: {

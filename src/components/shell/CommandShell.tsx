@@ -24,7 +24,7 @@ export function CommandShell({ children, footer }: { children: ReactNode; footer
       </a>
 
       <CommandRail active={active} />
-      <CommandTopbar />
+      <CommandTopbar active={active} />
       <MobileCommandBar active={active} />
 
       {/* The footer sits beside `main`, not inside it — it is not page content. */}

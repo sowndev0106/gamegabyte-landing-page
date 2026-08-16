@@ -42,6 +42,22 @@
   50% { opacity: 0.35; transform: scale(0.7); }
 }
 
+/* The topbar prompt's cursor, sitting after `gamegabyte:~/work/archive$`.
+   Deliberately NOT the status pulse above: a pulse eases, and an easing cursor
+   reads as a decorative light. A terminal cursor is a square wave — it is on,
+   then it is off — which is what says "waiting for input" rather than "this
+   thing is alive". `step-end` is what holds each half flat instead of fading
+   between them. Rests visible under reduced motion, since the block below caps
+   iterations at one and the keyframe ends back at full opacity. */
+.command-cursor {
+  box-shadow: 0 0 10px var(--color-accent);
+  animation: command-cursor-blink 1.1s step-end infinite;
+}
+
+@keyframes command-cursor-blink {
+  50% { opacity: 0; }
+}
+
 /* Concentric rings turning at different rates. The dashed inner ring is what
    makes the motion readable; both stop under the reduced-motion block below. */
 .orbit-ring {
@@ -121,6 +137,10 @@ body {
        is what actually brings it to rest. */
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
+    /* Zeroing the duration alone still leaves a staggered change arriving in
+       pieces over the delay, which reads as motion even though nothing moves.
+       The rail's ticks stagger by up to 78ms, so the delay has to go too. */
+    transition-delay: 0ms !important;
     scroll-behavior: auto !important;
   }
 }

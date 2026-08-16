@@ -1,0 +1,361 @@
+<!doctype html>
+<!--
+  Eight ways the active tick can behave, on top of the ruler that shipped.
+  Every card runs the same geometry as src/components/shell/CommandRail.tsx —
+  44px reading, +10/+4 swell, 26ms stagger, RISE_EASE at 400ms — so the only
+  thing under comparison is what the live tick does when it arrives.
+-->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark" />
+    <title>Gamegabyte — Active tick / 8 motions</title>
+    <style>
+      @font-face {
+        font-family: Schibsted;
+        src: url('/fonts/SchibstedGrotesk_wght__1/SchibstedGrotesk_wght__1-english.woff2') format('woff2');
+        font-weight: 400 700;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: Roboto;
+        src: url('/fonts/Roboto_wdth_wght__2/Roboto_wdth_wght__2-english.woff2') format('woff2');
+        font-display: swap;
+      }
+
+      :root {
+        --ink: #05050c;
+        --ink-2: #0a0a14;
+        --lime: #b6e802;
+        --lime-bright: #d4ff00;
+        --white: #f6f5fb;
+        --muted: #a6a3b7;
+        --line: rgb(255 255 255 / 0.11);
+        --display: Schibsted, system-ui, sans-serif;
+        --body: Roboto, system-ui, sans-serif;
+        --mono: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
+        /* The shipped rail's curve, taken from motionTokens RISE_EASE. */
+        --ease: cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      * { box-sizing: border-box; }
+      body { margin: 0; background: var(--ink); color: var(--white); font-family: var(--body); }
+      a { color: inherit; text-decoration: none; }
+      button { border: 0; background: none; color: inherit; font: inherit; cursor: pointer; }
+      :where(a, button):focus-visible { outline: 2px solid var(--lime-bright); outline-offset: 2px; }
+
+      .chrome {
+        position: fixed;
+        inset: 0 0 auto 0;
+        z-index: 20;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 10px 18px;
+        border-bottom: 1px solid var(--line);
+        background: rgb(5 5 12 / 0.93);
+        backdrop-filter: blur(18px);
+        font-family: var(--mono);
+        font-size: 10px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+      .chrome b { font-weight: 500; }
+      .chrome span.muted { color: var(--muted); }
+      .spacer { flex: 1; }
+      .chip { padding: 5px 10px; border: 1px solid var(--line); color: var(--muted); }
+      .chip:hover { border-color: rgb(255 255 255 / 0.4); color: var(--white); }
+      .chip[aria-pressed='true'] { border-color: var(--lime); background: var(--lime); color: var(--ink); }
+
+      .intro { max-width: 720px; padding: 74px 26px 18px; }
+      .intro h1 { margin: 0 0 10px; font-family: var(--display); font-size: 25px; font-weight: 700; }
+      .intro p { margin: 0 0 8px; color: var(--muted); font-size: 14px; line-height: 1.6; }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(212px, 1fr));
+        gap: 18px;
+        padding: 14px 26px 60px;
+      }
+      .card { border: 1px solid var(--line); background: linear-gradient(180deg, var(--ink-2), var(--ink)); }
+      .card__stage {
+        position: relative;
+        height: 330px;
+        padding: 14px 0;
+        border-bottom: 1px solid var(--line);
+        background-image:
+          linear-gradient(to right, rgb(255 255 255 / 0.03) 1px, transparent 1px),
+          linear-gradient(to bottom, rgb(255 255 255 / 0.03) 1px, transparent 1px);
+        background-size: 34px 34px;
+      }
+      .card__meta { padding: 12px 14px 14px; }
+      .card__name {
+        display: flex;
+        align-items: baseline;
+        gap: 8px;
+        font-family: var(--mono);
+        font-size: 10px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+      }
+      .card__name i { color: var(--lime); font-style: normal; }
+      .badge {
+        margin-left: auto;
+        padding: 2px 6px;
+        border: 1px solid var(--line);
+        font-size: 8px;
+        letter-spacing: 0.1em;
+        color: var(--muted);
+      }
+      .badge[data-kind='loop'] { border-color: rgb(214 120 60 / 0.5); color: #e0954e; }
+      .card__note { margin: 8px 0 0; color: var(--muted); font-size: 12px; line-height: 1.5; }
+
+      /* ------------------------------------------------------- the ruler ---- */
+      .ruler { position: relative; display: flex; flex-direction: column; padding-left: 22px; }
+      .row { position: relative; display: flex; height: 24px; align-items: center; }
+      .tick {
+        height: 1px;
+        background: rgb(255 255 255 / 0.3);
+        transform-origin: left center;
+        transition: width 0.4s var(--ease), height 0.4s var(--ease), background-color 0.4s var(--ease);
+        transition-delay: var(--d, 0ms);
+      }
+      .row[data-on] .tick { height: 2px; background: var(--lime); box-shadow: 0 0 12px var(--lime); }
+      .num {
+        margin-left: 6px;
+        font-family: var(--mono);
+        font-size: 8px;
+        letter-spacing: 0.1em;
+        color: var(--lime);
+        opacity: 0;
+        translate: -4px;
+        transition: opacity 0.3s var(--ease), translate 0.3s var(--ease);
+      }
+      .row[data-on] .num { opacity: 1; translate: 0; transition-delay: 150ms; }
+
+      /* ---- 01 Settle ------------------------------------------------------
+         Overshoot on the way out, so the reading lands like a needle rather
+         than easing politely into place. */
+      .m-settle .row[data-on] .tick { transition-timing-function: cubic-bezier(0.34, 1.7, 0.64, 1); }
+
+      /* ---- 02 Draw --------------------------------------------------------- */
+      .m-draw .row[data-on] .tick { animation: draw 0.45s var(--ease); }
+      @keyframes draw { from { scale: 0 1; } }
+
+      /* ---- 03 Lock flash --------------------------------------------------- */
+      .m-flash .row[data-on] .tick { animation: flash 0.6s ease-out; }
+      @keyframes flash {
+        0% { background: var(--lime-bright); box-shadow: 0 0 26px var(--lime-bright); }
+        100% { background: var(--lime); box-shadow: 0 0 12px var(--lime); }
+      }
+
+      /* ---- 04 Trail -------------------------------------------------------- */
+      .ghost {
+        position: absolute;
+        left: 22px;
+        height: 2px;
+        width: 44px;
+        background: var(--lime);
+        opacity: 0;
+        pointer-events: none;
+      }
+      .ghost[data-run] { animation: trail 0.5s ease-out; }
+      @keyframes trail {
+        from { opacity: 0.55; scale: 1 1; }
+        to { opacity: 0; scale: 0.3 1; }
+      }
+
+      /* ---- 05 Roll --------------------------------------------------------- */
+      /* The readout is a two-slot strip that slides, so the number changes the
+         way a mechanical counter does instead of fading. */
+      .m-roll .num { overflow: hidden; height: 10px; opacity: 1; translate: 0; }
+      .m-roll .row:not([data-on]) .num { opacity: 0; }
+      .m-roll .num i { display: block; font-style: normal; line-height: 10px; transition: translate 0.4s var(--ease); }
+      .m-roll .row[data-on] .num i { translate: 0 -10px; }
+
+      /* ---- 06 Breathe (continuous) ----------------------------------------- */
+      .m-breathe .row[data-on] .tick { animation: breathe 2.6s ease-in-out infinite; }
+      @keyframes breathe { 50% { box-shadow: 0 0 4px var(--lime); opacity: 0.72; } }
+
+      /* ---- 07 Scan (continuous) -------------------------------------------- */
+      .m-scan .row[data-on] .tick {
+        background: linear-gradient(90deg, var(--lime) 0 40%, var(--lime-bright) 50%, var(--lime) 60% 100%);
+        background-size: 260% 100%;
+        animation: scan 1.9s linear infinite;
+      }
+      @keyframes scan { from { background-position: 130% 0; } to { background-position: -130% 0; } }
+
+      /* ---- 08 Caret (continuous) ------------------------------------------- */
+      .m-caret .row[data-on] .num::after { content: '_'; animation: blink 1.1s steps(1) infinite; }
+      @keyframes blink { 50% { opacity: 0; } }
+
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+          animation-duration: 0.001ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.001ms !important;
+          transition-delay: 0ms !important;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header class="chrome">
+      <span><b>Active tick</b> <span class="muted">· 8 motions · on the shipped ruler</span></span>
+      <span class="spacer"></span>
+      <button class="chip" id="step">Step once</button>
+      <button class="chip" id="auto" aria-pressed="true">Auto</button>
+      <button class="chip" id="far" aria-pressed="false">Long jumps</button>
+      <span class="muted" id="reading">03</span>
+    </header>
+
+    <div class="intro">
+      <h1>What the reading does when it arrives</h1>
+      <p>
+        The swell, the stagger and the printed index are already shipped and identical in
+        every card. Each option below changes only the live tick itself. Watch them in
+        sync — <b>Long jumps</b> sends the reading across the whole scale, which is where
+        the differences are largest.
+      </p>
+      <p>
+        Options marked <b>loop</b> keep running while the section is live. The page has a
+        documented budget of two continuous animations (status dot, process orbit), so
+        those four need a reason before they ship — the other four cost nothing.
+      </p>
+    </div>
+
+    <div class="grid" id="grid"></div>
+
+    <script type="module">
+      const SECTIONS = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+
+      const MOTIONS = [
+        { key: 'settle', name: 'Settle', kind: 'once', note: 'The tick overshoots 44px and springs back. Reads as a needle landing; the only option that adds weight without adding light.' },
+        { key: 'draw', name: 'Draw', kind: 'once', note: 'The tick is drawn out from the rail edge instead of growing from its resting length. Strongest sense of the scale writing itself.' },
+        { key: 'flash', name: 'Lock flash', kind: 'once', note: 'Arrives at accent-bright with a wide glow, decaying to accent. Confirms the lock, and uses the brightest lime the system allows.' },
+        { key: 'trail', name: 'Trail', kind: 'once', note: 'The old reading is left behind as a ghost that collapses. The only option that shows where the reading came from.' },
+        { key: 'roll', name: 'Number roll', kind: 'once', note: 'The index counts over mechanically rather than fading in. Motion moves off the tick and onto the readout.' },
+        { key: 'breathe', name: 'Breathe', kind: 'loop', note: 'The glow rises and falls while the section is live. Same language as the status dot — cheapest of the four loops to justify.' },
+        { key: 'scan', name: 'Scan', kind: 'loop', note: 'A bright band travels the length of the live tick. Most obviously "instrument", most likely to pull the eye off the copy.' },
+        { key: 'caret', name: 'Live caret', kind: 'loop', note: 'A blinking underscore after the index. Borrows the terminal voice; the tick itself stays perfectly still.' },
+      ]
+
+      /** The shipped rule, copied deliberately so the cards cannot drift from it. */
+      function tickWidth(distance, isMajor) {
+        if (distance === 0) return 44
+        const rest = isMajor ? 20 : 12
+        if (distance === 1) return rest + 10
+        if (distance === 2) return rest + 4
+        return rest
+      }
+
+      const grid = document.getElementById('grid')
+      grid.innerHTML = MOTIONS.map(
+        (m, i) => `<article class="card">
+          <div class="card__stage">
+            <div class="ruler m-${m.key}" data-motion="${m.key}">
+              <span class="ghost" aria-hidden="true"></span>
+              ${SECTIONS.map(
+                (n, j) => `<span class="row" data-i="${j}">
+                    <span class="tick"></span>
+                    <span class="num">${m.key === 'roll' ? `<i>${n}</i><i>${n}</i>` : n}</span>
+                  </span>`,
+              ).join('')}
+            </div>
+          </div>
+          <div class="card__meta">
+            <h2 class="card__name"><i>${String(i + 1).padStart(2, '0')}</i> ${m.name}
+              <span class="badge" data-kind="${m.kind}">${m.kind === 'loop' ? 'loop' : 'one-shot'}</span></h2>
+            <p class="card__note">${m.note}</p>
+          </div>
+        </article>`,
+      ).join('')
+
+      const rulers = [...grid.querySelectorAll('.ruler')]
+      let active = 2
+      let previous = 2
+
+      function paint() {
+        for (const ruler of rulers) {
+          const rows = [...ruler.querySelectorAll('.row')]
+          rows.forEach((row, i) => {
+            const distance = Math.abs(i - active)
+            const tick = row.querySelector('.tick')
+            tick.style.width = `${tickWidth(distance, i % 3 === 0)}px`
+            tick.style.setProperty('--d', `${Math.min(distance, 3) * 26}ms`)
+            row.toggleAttribute('data-on', i === active)
+          })
+
+          // A CSS animation only plays on the element that gained the class, and
+          // only if the browser sees it start fresh — hence the reflow.
+          const live = rows[active].querySelector('.tick')
+          live.style.animation = 'none'
+          void live.offsetWidth
+          live.style.animation = ''
+
+          if (ruler.dataset.motion === 'trail' && previous !== active) {
+            const ghost = ruler.querySelector('.ghost')
+            ghost.style.top = `${rows[previous].offsetTop + 11}px`
+            ghost.removeAttribute('data-run')
+            void ghost.offsetWidth
+            ghost.setAttribute('data-run', '')
+          }
+
+          if (ruler.dataset.motion === 'roll') {
+            rows.forEach((row, i) => {
+              const slots = row.querySelectorAll('.num i')
+              // Slot one holds where the counter is coming from, slot two where
+              // it is going, so the strip always travels the same 10px.
+              slots[0].textContent = SECTIONS[i === active ? previous : i]
+              slots[1].textContent = SECTIONS[i]
+            })
+          }
+        }
+        document.getElementById('reading').textContent = SECTIONS[active]
+      }
+
+      function step(long) {
+        previous = active
+        active = long
+          ? (active + 5 + Math.floor(SECTIONS.length / 2)) % SECTIONS.length
+          : (active + 1) % SECTIONS.length
+        paint()
+      }
+
+      let timer = null
+      const autoBtn = document.getElementById('auto')
+      const farBtn = document.getElementById('far')
+
+      function restart() {
+        clearInterval(timer)
+        timer = null
+        if (autoBtn.getAttribute('aria-pressed') === 'true') {
+          timer = setInterval(() => step(farBtn.getAttribute('aria-pressed') === 'true'), 2200)
+        }
+      }
+      autoBtn.addEventListener('click', () => {
+        autoBtn.setAttribute('aria-pressed', String(autoBtn.getAttribute('aria-pressed') !== 'true'))
+        restart()
+      })
+      farBtn.addEventListener('click', () => {
+        farBtn.setAttribute('aria-pressed', String(farBtn.getAttribute('aria-pressed') !== 'true'))
+        restart()
+      })
+      document.getElementById('step').addEventListener('click', () =>
+        step(farBtn.getAttribute('aria-pressed') === 'true'),
+      )
+      grid.addEventListener('click', (e) => {
+        const row = e.target.closest('.row')
+        if (!row) return
+        previous = active
+        active = Number(row.dataset.i)
+        paint()
+      })
+
+      paint()
+      restart()
+    </script>
+  </body>
+</html>

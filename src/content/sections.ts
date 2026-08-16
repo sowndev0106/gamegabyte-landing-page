@@ -26,3 +26,65 @@ export function sectionById(id: SectionId): SectionMeta {
   if (!found) throw new Error(`Unknown section id: ${id}`)
   return found
 }
+
+/**
+ * The five groups the topbar prints, in document order.
+ *
+ * Twelve sections do not fit a horizontal bar at the mono nav step — the wide
+ * tracking that makes a two-word label read as an instrument is exactly what
+ * makes twelve of them overflow. So the bar carries groups and the rail keeps
+ * the full twelve; the two are different resolutions of one list, not two
+ * different navigations.
+ *
+ * `home` and `contact` are deliberately absent: the logo is the way back to
+ * one, and the CTA is the way to twelve. A group links to its first section.
+ */
+export const NAV_GROUPS = [
+  { id: 'work', label: 'Work', sections: ['reel', 'portfolio', 'case-study'] },
+  { id: 'services', label: 'Services', sections: ['services', 'process'] },
+  { id: 'studio', label: 'Studio', sections: ['telemetry', 'about', 'testimonials'] },
+  { id: 'academy', label: 'Academy', sections: ['academy'] },
+  { id: 'faq', label: 'FAQ', sections: ['faq'] },
+] as const satisfies readonly {
+  id: string
+  label: string
+  // Typed as SectionId so a renamed or mistyped section fails the build rather
+  // than shipping a nav link that scrolls nowhere.
+  sections: readonly SectionId[]
+}[]
+
+/**
+ * Which group owns the section currently being read, or `undefined` while the
+ * viewport belongs to `home` or `contact` — neither has a group, so the bar
+ * shows no prompt rather than picking an arbitrary one.
+ */
+export function activeGroupId(section: string): string | undefined {
+  return NAV_GROUPS.find((group) => (group.sections as readonly string[]).includes(section))?.id
+}
+
+/**
+ * The section being read, written as a shell path for the topbar prompt. The
+ * page is the working directory and scrolling is `cd` — so the readout reports
+ * a real position instead of restating a fixed claim.
+ *
+ *   home         → `~`
+ *   reel         → `~/work/reel`
+ *   process      → `~/services/process`
+ *   services     → `~/services`        (the section IS the group root)
+ *   academy      → `~/academy`         (likewise)
+ *   contact      → `~/contact`         (belongs to no group)
+ *
+ * Section ids are already lowercase and hyphenated, so they are used verbatim
+ * rather than slugged from labels — the path can never drift from the anchor it
+ * describes.
+ */
+export function sectionPath(section: string): string {
+  if (!section || section === 'home') return '~'
+
+  const group = NAV_GROUPS.find((entry) => (entry.sections as readonly string[]).includes(section))
+  if (!group) return `~/${section}`
+  // A group whose name is also a section would otherwise repeat itself
+  // (`~/services/services`), which reads as a bug rather than a root.
+  if (group.id === section) return `~/${group.id}`
+  return `~/${group.id}/${section}`
+}

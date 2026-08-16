@@ -1,0 +1,640 @@
+<!doctype html>
+<!--
+  Five header ARCHITECTURES for gamegabyte-web.
+
+  The question this prototype answers is one level above the existing
+  `prototypes/header-variants/index.html`. That file asks "what goes inside the
+  72px topbar, and how is it arranged" — ten answers, all sharing one frame:
+  92px rail on the left, 72px bar across the top, nav somewhere inside it.
+
+  This file asks the harder question the design system actually poses:
+
+      The page is an instrument with a measuring rail down its left edge.
+      What SHAPE should the top of that instrument be — or should there be
+      a top at all?
+
+  So each variant here rearranges the FRAME, not the bar: one removes the bar
+  entirely, one turns the rail into the header, one turns the header into a
+  gauge, one puts a masthead in the document flow, one hides navigation behind
+  a full-screen index. Rail verdict is stated per variant because the rail and
+  the header cannot both own navigation.
+
+  Every token is verbatim from src/index.css @theme; every mono step is one of
+  the four roles in STYLE.md §2; no rounded corners, no shadow-as-elevation,
+  lime only on active / live / primary. Nothing here is production code.
+
+  Throwaway. Run: npm run prototype:header-arch
+  Switch with ← / → or the bar at the bottom. Variant lives in ?variant=A..E.
+-->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark" />
+    <title>Gamegabyte — Header Architectures</title>
+    <style>
+      /* ═══════════════════════════════════════════════════════════
+         TOKENS — verbatim from src/index.css @theme
+         ═══════════════════════════════════════════════════════════ */
+      @font-face {
+        font-family: 'Schibsted Grotesk';
+        src: url('/fonts/SchibstedGrotesk_wght__1/SchibstedGrotesk_wght__1-english.woff2') format('woff2');
+        font-weight: 400 700;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: Roboto;
+        src: url('/fonts/Roboto_wdth_wght__2/Roboto_wdth_wght__2-english.woff2') format('woff2');
+        font-weight: 400 500;
+        font-display: swap;
+      }
+
+      :root {
+        --color-accent: #b6e802;
+        --color-accent-bright: #d4ff00;
+        --color-brand: #601feb;
+        --color-ink: #05050c;
+
+        --font-display: 'Schibsted Grotesk', system-ui, sans-serif;
+        --font-sans: Roboto, system-ui, sans-serif;
+        --font-mono: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
+
+        --line: rgb(255 255 255 / 0.11); /* the one hairline */
+        --panel: rgb(255 255 255 / 0.015); /* the one lift above ink */
+
+        /* Shell geometry — w-23 / h-18 / pl-11 in the app. Each variant may
+           redefine these two; everything else reads them. */
+        --rail: 92px;
+        --topbar: 72px;
+        --pad: 44px;
+      }
+
+      /* The frame each architecture asks for. */
+      body[data-variant='A'] { --topbar: 0px; }                 /* no bar at all */
+      body[data-variant='B'] { --rail: 232px; --topbar: 0px; }  /* rail IS the header */
+      body[data-variant='D'] { --topbar: 0px; }                 /* masthead sits in flow */
+
+      * { box-sizing: border-box; }
+
+      html { scroll-behavior: smooth; }
+
+      body {
+        margin: 0;
+        background: var(--color-ink);
+        color: #e7e7ee;
+        font-family: var(--font-sans);
+        -webkit-font-smoothing: antialiased;
+      }
+
+      a { color: inherit; text-decoration: none; }
+      button { background: none; border: 0; color: inherit; font: inherit; cursor: pointer; }
+
+      /* STYLE.md §2 — the four mono roles, nothing between. */
+      .mono-eyebrow { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; }
+      .mono-label   { font-family: var(--font-mono); font-size: 9px;  letter-spacing: 0.22em; text-transform: uppercase; }
+      .mono-nav     { font-family: var(--font-mono); font-size: 9px;  letter-spacing: 0.16em; text-transform: uppercase; }
+      .mono-micro   { font-family: var(--font-mono); font-size: 8px;  letter-spacing: 0.18em; text-transform: uppercase; }
+
+      .hud-grid {
+        background-image:
+          linear-gradient(to right, rgb(255 255 255 / 0.035) 1px, transparent 1px),
+          linear-gradient(to bottom, rgb(255 255 255 / 0.035) 1px, transparent 1px);
+        background-size: 72px 72px;
+      }
+
+      .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--color-accent);
+             box-shadow: 0 0 14px var(--color-accent); animation: pulse 2.6s ease-in-out infinite; }
+      @keyframes pulse { 50% { opacity: 0.35; transform: scale(0.7); } }
+
+      .cta {
+        display: inline-flex; align-items: center; gap: 8px;
+        background: var(--color-accent); color: var(--color-ink);
+        font-family: var(--font-display); font-size: 14px; font-weight: 700;
+        text-transform: uppercase; letter-spacing: 0.01em; padding: 0 44px;
+      }
+      .cta:hover { background: var(--color-accent-bright); }
+      .cta svg { width: 13px; height: 13px; }
+
+      /* ═══════════════════════════════════════════════════════════
+         THE PAGE BEING JUDGED — one hero + six section stubs, so every
+         header is read against real density and real scrolling.
+         ═══════════════════════════════════════════════════════════ */
+      .page { margin-left: var(--rail); }
+
+      .hero { position: relative; padding: calc(var(--topbar) + 96px) var(--pad) 104px; overflow: hidden; }
+      .hero::after {
+        content: ''; position: absolute; inset: -10% -10% auto auto; width: 620px; height: 620px;
+        background: radial-gradient(circle, rgb(96 31 235 / 0.28), transparent 62%); filter: blur(40px); pointer-events: none;
+      }
+      .hero > * { position: relative; z-index: 1; }
+      .hero-inner { display: grid; grid-template-columns: minmax(0, 1fr) 400px; gap: 56px; align-items: start; }
+      .hero .eyebrow { color: var(--color-accent); }
+      .hero h1 {
+        font-family: var(--font-display); font-size: clamp(48px, 6.4vw, 92px); font-weight: 800;
+        text-transform: uppercase; letter-spacing: -0.03em; line-height: 0.86; margin: 20px 0 0;
+      }
+      .hero h1 em { font-style: normal; color: var(--color-accent); }
+      .hero p.lede { max-width: 46ch; margin: 30px 0 0; font-size: 16px; line-height: 1.62; color: rgb(255 255 255 / 0.7); }
+      .hero .acts { display: flex; gap: 14px; margin-top: 34px; }
+      .hero .acts .cta { height: 54px; }
+      .hero .acts .ghost {
+        display: inline-flex; align-items: center; height: 54px; padding: 0 34px; border: 1px solid rgb(255 255 255 / 0.28);
+        font-family: var(--font-display); font-size: 14px; font-weight: 700; text-transform: uppercase;
+      }
+      .hero .stats { display: flex; gap: 56px; margin-top: 68px; padding-top: 26px; border-top: 1px solid var(--line); }
+      .hero .stats b { display: block; margin-top: 10px; font-size: 14px; font-weight: 500; }
+      .hero .stats span { color: rgb(255 255 255 / 0.3); }
+
+      .nodes { border: 1px solid var(--line); background: var(--panel); }
+      .nodes header { display: flex; justify-content: space-between; align-items: center; padding: 16px 18px; border-bottom: 1px solid var(--line); color: rgb(255 255 255 / 0.48); }
+      .nodes a { display: flex; justify-content: space-between; align-items: center; padding: 15px 18px; border-bottom: 1px solid var(--line); }
+      .nodes a span:first-child { color: rgb(255 255 255 / 0.3); margin-right: 14px; }
+      .nodes a b { flex: 1; font-weight: 400; color: rgb(255 255 255 / 0.7); }
+      .nodes a em { font-style: normal; color: var(--color-accent); }
+      .nodes footer { display: flex; justify-content: space-between; padding: 16px 18px; color: rgb(255 255 255 / 0.48); }
+
+      .sec { border-top: 1px solid var(--line); padding: 104px var(--pad); min-height: 74vh; }
+      .sec .head { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 8px; }
+      .sec .head .ix { color: var(--color-accent); }
+      .sec h2 { font-family: var(--font-display); font-size: clamp(34px, 5vw, 64px); font-weight: 800;
+                text-transform: uppercase; letter-spacing: -0.025em; line-height: 0.9; margin: 0; }
+      .sec p { grid-column: 2; max-width: 58ch; margin: 22px 0 0; font-size: 15px; line-height: 1.65; color: rgb(255 255 255 / 0.7); }
+
+      /* ═══════════════════════════════════════════════════════════
+         THE RAIL — four modes, because the header decides what is left for it
+         ═══════════════════════════════════════════════════════════ */
+      .rail {
+        position: fixed; top: 0; bottom: 0; left: 0; width: var(--rail); z-index: 40;
+        display: flex; flex-direction: column; align-items: center; justify-content: space-between;
+        padding: 24px 0; border-right: 1px solid var(--line); background: rgb(5 5 12 / 0.95);
+        backdrop-filter: blur(18px); transition: width 0.32s cubic-bezier(0.2, 0.8, 0.2, 1);
+      }
+      .rail .logo { width: 60px; flex-shrink: 0; }
+      .rail .logo svg { width: 100%; height: auto; }
+      .rail .online { color: var(--color-accent); writing-mode: vertical-rl; }
+
+      /* ticks — ported from CommandRail.tsx, including the swell */
+      .rail .ticks { display: flex; flex-direction: column; width: 100%; padding-left: 20px; }
+      .rail .tick { display: flex; align-items: center; height: 24px; }
+      .rail .tick i { display: block; height: 1px; background: rgb(255 255 255 / 0.3);
+                      transition: width 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), height 0.4s, background-color 0.4s; }
+      .rail .tick.on i { height: 2px; background: var(--color-accent); box-shadow: 0 0 12px var(--color-accent); }
+      .rail .tick b { margin-left: 6px; font-family: var(--font-mono); font-size: 8px; letter-spacing: 0.18em;
+                      color: var(--color-accent); opacity: 0; transition: opacity 0.3s; }
+      .rail .tick.on b { opacity: 1; }
+      .rail .tick .name { margin-left: 12px; white-space: nowrap; color: rgb(255 255 255 / 0.7);
+                          opacity: 0; transition: opacity 0.2s; }
+      .rail .tick.on .name { color: #fff; }
+
+      /* A — the rail is the only navigation, so it opens on hover */
+      .rail[data-mode='hover'] { align-items: flex-start; padding-left: 16px; }
+      .rail[data-mode='hover'] .online,
+      .rail[data-mode='hover'] .logo { margin-left: 4px; }
+      .rail[data-mode='hover']:hover { width: 248px; }
+      .rail[data-mode='hover']:hover .tick .name { opacity: 1; }
+      .rail[data-mode='hover']:hover .tick i { width: 18px !important; }
+
+      /* B — the rail expanded permanently into a full navigation column */
+      .rail[data-mode='column'] { align-items: stretch; justify-content: flex-start; padding: 0; }
+      .rail[data-mode='column'] .top { display: flex; align-items: center; gap: 12px; height: 96px; padding: 0 20px; border-bottom: 1px solid var(--line); }
+      .rail[data-mode='column'] .top .logo { width: 84px; }
+      .rail[data-mode='column'] .status { display: flex; align-items: center; gap: 9px; padding: 15px 20px; border-bottom: 1px solid var(--line); color: rgb(255 255 255 / 0.7); }
+      .rail[data-mode='column'] nav { flex: 1; overflow: auto; }
+      .rail[data-mode='column'] nav a { display: flex; gap: 12px; padding: 11px 20px; border-bottom: 1px solid rgb(255 255 255 / 0.05); color: rgb(255 255 255 / 0.48); }
+      .rail[data-mode='column'] nav a .ix { color: rgb(255 255 255 / 0.3); }
+      .rail[data-mode='column'] nav a:hover { color: #fff; }
+      .rail[data-mode='column'] nav a.on { color: #fff; box-shadow: inset 2px 0 0 var(--color-accent); background: var(--panel); }
+      .rail[data-mode='column'] nav a.on .ix { color: var(--color-accent); }
+      .rail[data-mode='column'] .cta { height: 64px; justify-content: center; padding: 0 20px; }
+
+      /* ═══════════════════════════════════════════════════════════
+         A — CORNER CLUSTER. No bar. The top edge is left to the page.
+         ═══════════════════════════════════════════════════════════ */
+      .hA-status { position: fixed; top: 28px; left: calc(var(--rail) + var(--pad)); z-index: 30;
+                   display: flex; align-items: center; gap: 10px; color: rgb(255 255 255 / 0.7); }
+      .hA-cta { position: fixed; top: 0; right: 0; z-index: 30; height: 72px; }
+
+      /* ═══════════════════════════════════════════════════════════
+         C — INSTRUMENT BAR. The nav is a 12-segment scale, not a list.
+         ═══════════════════════════════════════════════════════════ */
+      .hC { position: fixed; top: 0; left: var(--rail); right: 0; z-index: 30; height: 72px;
+            display: flex; align-items: stretch; border-bottom: 1px solid var(--line);
+            background: rgb(5 5 12 / 0.9); backdrop-filter: blur(18px); }
+      .hC .cell { display: flex; align-items: center; gap: 12px; padding: 0 22px; border-right: 1px solid var(--line); }
+      .hC .read b { font-family: var(--font-display); font-size: 26px; font-weight: 800; line-height: 1; color: var(--color-accent-bright); }
+      .hC .read span { color: rgb(255 255 255 / 0.3); }
+      .hC .now { font-family: var(--font-display); font-size: 17px; font-weight: 700; text-transform: uppercase; letter-spacing: -0.01em; min-width: 148px; }
+      .hC .scale { flex: 1; display: flex; align-items: stretch; }
+      .hC .scale button { position: relative; flex: 1; border-right: 1px solid rgb(255 255 255 / 0.05); display: flex; align-items: flex-end; justify-content: center; padding-bottom: 16px; }
+      .hC .scale button i { display: block; width: 1px; height: 12px; background: rgb(255 255 255 / 0.3); transition: height 0.3s, background-color 0.3s; }
+      .hC .scale button.major i { height: 20px; }
+      .hC .scale button:hover i { background: #fff; }
+      .hC .scale button.on i { height: 30px; background: var(--color-accent); box-shadow: 0 0 12px var(--color-accent); }
+      .hC .scale button span { position: absolute; top: 14px; left: 50%; translate: -50% 0; white-space: nowrap;
+                               color: rgb(255 255 255 / 0.48); opacity: 0; transition: opacity 0.2s; }
+      .hC .scale button:hover span { opacity: 1; }
+      .hC .status { display: flex; align-items: center; gap: 9px; color: rgb(255 255 255 / 0.7); }
+      .hC .fill { position: absolute; left: 0; bottom: -1px; height: 2px; background: var(--color-accent);
+                  box-shadow: 0 0 14px var(--color-accent); transition: width 0.2s linear; }
+
+      /* ═══════════════════════════════════════════════════════════
+         D — MASTHEAD IN FLOW, condensing to a slim fixed bar on scroll.
+         ═══════════════════════════════════════════════════════════ */
+      .hD { border-bottom: 1px solid var(--line); }
+      .hD .mast { display: grid; grid-template-columns: minmax(0, 1fr) auto; }
+      .hD .meta { display: flex; align-items: flex-start; gap: 0; padding: 0; }
+      .hD .meta > div { padding: 30px 30px 26px; border-right: 1px solid var(--line); }
+      .hD .meta > div:first-child { padding-left: var(--pad); }
+      .hD .meta .mark { display: block; width: 132px; }
+      .hD .meta .mark svg { width: 100%; height: auto; }
+      .hD .meta span { color: rgb(255 255 255 / 0.3); }
+      .hD .meta b { display: block; margin-top: 9px; font-size: 13px; font-weight: 500; }
+      .hD .mast .cta { height: 100%; }
+      .hD nav { display: flex; border-top: 1px solid var(--line); }
+      .hD nav a { padding: 15px 26px; border-right: 1px solid var(--line); color: rgb(255 255 255 / 0.48); display: flex; gap: 9px; }
+      .hD nav a:first-child { padding-left: var(--pad); }
+      .hD nav a .ix { color: rgb(255 255 255 / 0.3); }
+      .hD nav a:hover { color: #fff; }
+      .hD nav a.on { color: var(--color-accent); }
+      .hD-slim { position: fixed; top: 0; left: var(--rail); right: 0; z-index: 35; height: 52px;
+                 display: flex; align-items: center; justify-content: space-between; padding-left: var(--pad);
+                 border-bottom: 1px solid var(--line); background: rgb(5 5 12 / 0.94); backdrop-filter: blur(18px);
+                 translate: 0 -100%; transition: translate 0.28s cubic-bezier(0.2, 0.8, 0.2, 1); }
+      .hD-slim.on { translate: 0 0; }
+      .hD-slim .now { display: flex; align-items: center; gap: 12px; }
+      .hD-slim .now b { font-family: var(--font-display); font-size: 14px; font-weight: 700; text-transform: uppercase; }
+      .hD-slim .now .ix { color: var(--color-accent); }
+      .hD-slim .cta { height: 52px; padding: 0 28px; font-size: 12px; }
+
+      /* ═══════════════════════════════════════════════════════════
+         E — MINIMAL BAR + FULL-SCREEN INDEX. Navigation is a place you go.
+         ═══════════════════════════════════════════════════════════ */
+      .hE { position: fixed; top: 0; left: var(--rail); right: 0; z-index: 30; height: 72px;
+            display: flex; align-items: stretch; justify-content: space-between;
+            border-bottom: 1px solid var(--line); background: rgb(5 5 12 / 0.9); backdrop-filter: blur(18px); }
+      .hE .brand { display: flex; align-items: center; padding-left: var(--pad); font-family: var(--font-display);
+                   font-size: 15px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; }
+      .hE .right { display: flex; align-items: stretch; }
+      .hE .key { display: flex; align-items: center; gap: 12px; padding: 0 30px; border-left: 1px solid var(--line);
+                 border-right: 1px solid var(--line); color: rgb(255 255 255 / 0.7); }
+      .hE .key:hover { color: #fff; }
+      .hE .key em { font-style: normal; color: var(--color-accent); }
+      .hE .key .bars { display: flex; flex-direction: column; gap: 3px; width: 15px; }
+      .hE .key .bars i { height: 1px; background: currentColor; }
+      .hE .key .bars i:last-child { width: 9px; }
+
+      .index { position: fixed; inset: 0; z-index: 60; background: rgb(5 5 12 / 0.985); backdrop-filter: blur(6px);
+               display: flex; flex-direction: column; }
+      .index[hidden] { display: none; }
+      .index .top { display: flex; align-items: center; justify-content: space-between; height: 72px;
+                    padding: 0 var(--pad); border-bottom: 1px solid var(--line); color: rgb(255 255 255 / 0.48); }
+      .index .grid { flex: 1; display: grid; grid-template-columns: 1fr 1fr; grid-auto-rows: minmax(0, 1fr); overflow: auto; }
+      .index .grid a { display: flex; align-items: center; gap: 22px; padding: 22px var(--pad);
+                       border-bottom: 1px solid var(--line); border-right: 1px solid var(--line); }
+      .index .grid a:nth-child(2n) { border-right: 0; }
+      .index .foot { display: flex; align-items: center; justify-content: space-between; height: 72px;
+                     padding-left: var(--pad); border-top: 1px solid var(--line); color: rgb(255 255 255 / 0.7); }
+      .index .foot .cta { height: 72px; }
+      .index .grid a .ix { color: rgb(255 255 255 / 0.3); }
+      .index .grid a .nm { font-family: var(--font-display); font-size: 38px; font-weight: 800; text-transform: uppercase;
+                           letter-spacing: -0.025em; line-height: 1; color: rgb(255 255 255 / 0.7); transition: color 0.2s; }
+      .index .grid a .ds { margin-left: auto; color: rgb(255 255 255 / 0.3); opacity: 0; transition: opacity 0.2s; }
+      .index .grid a:hover .nm { color: #fff; }
+      .index .grid a:hover .ix { color: var(--color-accent); }
+      .index .grid a:hover .ds { opacity: 1; color: var(--color-accent); }
+      .index .grid a.on .nm { color: #fff; }
+      .index .grid a.on .ix { color: var(--color-accent); }
+
+      /* ═══════════════════════════════════════════════════════════
+         PROTOTYPE CHROME — deliberately not part of any design
+         ═══════════════════════════════════════════════════════════ */
+      .proto { position: fixed; left: 50%; bottom: 22px; translate: -50% 0; z-index: 100;
+               display: flex; align-items: stretch; border: 1px solid var(--color-accent);
+               background: rgb(5 5 12 / 0.96); box-shadow: 0 18px 50px rgb(0 0 0 / 0.6); }
+      .proto button { padding: 0 16px; font-size: 15px; color: var(--color-accent); }
+      .proto button:hover { background: var(--color-accent); color: var(--color-ink); }
+      .proto .lbl { display: flex; flex-direction: column; gap: 4px; justify-content: center; min-width: 320px;
+                    padding: 10px 18px; border-left: 1px solid var(--color-accent); border-right: 1px solid var(--color-accent); }
+      .proto .lbl .t { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; }
+      .proto .lbl .t b { color: var(--color-accent); }
+      .proto .lbl .r { font-family: var(--font-mono); font-size: 8px; letter-spacing: 0.18em; text-transform: uppercase; color: rgb(255 255 255 / 0.48); }
+
+      .proto-why { position: fixed; right: 22px; bottom: 22px; z-index: 100; max-width: 330px; padding: 14px 16px;
+                   border: 1px solid var(--line); background: rgb(5 5 12 / 0.96); font-size: 12px; line-height: 1.6;
+                   color: rgb(255 255 255 / 0.7); }
+      .proto-why b { display: block; margin-bottom: 6px; font-family: var(--font-mono); font-size: 8px;
+                     letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-accent); font-weight: 400; }
+    </style>
+  </head>
+
+  <body data-variant="A">
+    <div id="app"></div>
+
+    <div class="proto">
+      <button data-dir="-1" aria-label="Previous variant">&#8592;</button>
+      <div class="lbl">
+        <span class="t"><b id="p-key">A</b> — <span id="p-name"></span></span>
+        <span class="r" id="p-rail"></span>
+      </div>
+      <button data-dir="1" aria-label="Next variant">&#8594;</button>
+    </div>
+    <aside class="proto-why"><b>Why this shape</b><span id="p-why"></span></aside>
+
+    <script>
+      /* ── brand + icon, inlined so the file survives on its own ── */
+      const LOGO = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 277 99" aria-hidden="true"><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M0 0H68.6308L60.5942 24.729H23.2219L21.3204 25.5395V27.2332H23.2219V31.7885L20.5285 45.7061L31.4876 44.7332L32.3825 37.9829H34.6174L37.6283 33.7858H57.6508L46.2684 68.8104L32.6306 61.1849H0V0ZM32.5886 36.4288L33.0567 33.7858H33.925H37.0172L32.5167 36.9708L32.5886 36.4288Z"/><path fill="#fff" d="M223.451 59.9497V42.9612L228.56 41.9819V17.8404L223.451 16.8611V0.000364064H276.077V21.8001H270.244C268.342 20.3809 266.014 19.2455 263.261 18.3939C260.508 17.5424 257.485 17.1166 254.192 17.1166V26.3559L265.986 23.8438V35.9785L254.192 33.4238V42.8335C257.513 42.8335 260.55 42.4219 263.304 41.5987C266.085 40.7756 268.399 39.626 270.244 38.1499H276.077V59.9497H223.451Z"/><path fill="#fff" d="M130.546 59.9497V42.9612L135.656 41.9819V17.7552L130.546 16.776V0.000364064H161.245L174.146 22.9071L186.919 0.000364064H217.618V16.776L212.508 17.7552V41.9819L217.618 42.9612V59.9497H186.919V30.6137L174.146 52.2431L161.245 30.6137V59.9497H130.546Z"/><path fill="#fff" d="M58.6756 59.9496V40.1936L63.6146 39.2143L75.4086 0.000327195H108.449L120.328 39.2143L125.224 40.1936V59.9496H102.445L100.317 49.8588H83.5835L81.4546 59.9496H58.6756ZM86.1807 36.4042H97.7193L91.9287 12.8588L86.1807 36.4042Z"/><path fill="#fff" d="M14.1004 98.9912C9.72655 98.9912 6.28315 97.8948 3.77023 95.7019C1.25731 93.4972 0.000856804 90.2019 0.000856804 85.8162C0.000856804 82.8647 0.575746 80.4407 1.72552 78.5441C2.88715 76.6476 4.53477 75.243 6.66838 74.3303C8.81384 73.4176 11.3564 72.9612 14.296 72.9612C16.4178 72.9612 18.3262 73.1509 20.0212 73.5302C21.7281 73.8976 23.2809 74.3955 24.6796 75.0237V82.758H19.6478C19.1974 82.0942 18.6818 81.549 18.101 81.1222C17.532 80.6837 16.7023 80.4644 15.6118 80.4644C13.9997 80.4644 12.7788 80.9444 11.9491 81.9046C11.1312 82.8647 10.7222 84.1686 10.7222 85.8162C10.7222 87.7483 11.0838 89.1944 11.8068 90.1545C12.5417 91.1028 13.8575 91.5769 15.754 91.5769C16.2874 91.5769 16.7734 91.5414 17.212 91.4702C17.6624 91.3991 18.1128 91.2924 18.5632 91.1502V89.1233H14.9895V84.7494H25.3908V96.5553C23.7787 97.231 22.0541 97.8059 20.2168 98.28C18.3795 98.7541 16.3407 98.9912 14.1004 98.9912Z"/><path fill="#fff" d="M48.6235 98.4932V90.2433L50.6859 89.8343L55.611 73.4589H69.4084L74.369 89.8343L76.4137 90.2433V98.4932H66.9014L66.0124 94.2794H59.0248L58.1358 98.4932H48.6235ZM60.1094 88.6608H64.9278L62.5097 78.8285L60.1094 88.6608Z"/><path fill="#fff" d="M99.6456 98.4932V91.399L101.779 90.99V80.2687L99.6456 79.8597V73.4589H121.231C122.783 73.8263 124.046 74.4368 125.018 75.2902C125.99 76.1437 126.476 77.4594 126.476 79.2374C126.476 79.8538 126.411 80.5235 126.28 81.2466C126.162 81.9696 125.93 82.6571 125.587 83.3091C125.243 83.9491 124.751 84.4885 124.111 84.927C123.471 85.3538 122.635 85.5908 121.604 85.6382C122.789 85.6975 123.88 85.9109 124.876 86.2783C125.871 86.6339 126.671 87.191 127.276 87.9496C127.88 88.7083 128.183 89.7217 128.183 90.99C128.183 92.8392 127.815 94.3149 127.08 95.4173C126.357 96.5078 125.314 97.296 123.951 97.782C122.588 98.2562 120.952 98.4932 119.044 98.4932H99.6456ZM112.483 83.878H114.047C115.15 83.878 115.997 83.7239 116.59 83.4157C117.183 83.0957 117.479 82.3726 117.479 81.2466C117.479 80.1798 117.171 79.51 116.554 79.2374C115.938 78.9648 115.102 78.8285 114.047 78.8285H112.483V83.878ZM112.483 92.4124H114.047C115.15 92.4124 115.997 92.2524 116.59 91.9324C117.183 91.6123 117.479 90.8893 117.479 89.7632C117.479 88.6964 117.171 88.0326 116.554 87.7718C115.938 87.4992 115.102 87.3629 114.047 87.3629H112.483V92.4124Z"/><path fill="#fff" d="M159.327 98.4932V91.4345L161.461 90.9011L154.118 80.8554L151.415 80.4642V73.4589H165.692V80.4642L164.021 80.8554L167.417 85.9938L170.795 80.8554L169.124 80.4642V73.4589H183.384V80.4642L180.699 80.8554L173.356 90.9011L175.507 91.4345V98.4932H159.327Z"/><path fill="#fff" d="M211.257 98.4932V91.399L213.391 90.99V80.0731C212.81 80.0731 212.223 80.1679 211.63 80.3576C211.049 80.5472 210.564 80.8258 210.172 81.1932C209.781 81.5607 209.586 82.017 209.586 82.5623H206.616V73.4589H230.868V82.5623H227.899C227.899 82.017 227.698 81.5607 227.295 81.1932C226.903 80.8258 226.417 80.5472 225.837 80.3576C225.256 80.1679 224.675 80.0731 224.094 80.0731V90.99L226.228 91.399V98.4932H211.257Z"/><path fill="#fff" d="M254.101 98.4932V91.399L256.234 90.99V80.9087L254.101 80.4998V73.4589H276.077V82.5623H273.641C272.847 81.9696 271.875 81.4955 270.725 81.1399C269.575 80.7843 268.313 80.6065 266.938 80.6065V84.4648L271.863 83.4157V88.483L266.938 87.4162V91.3456C268.325 91.3456 269.593 91.1738 270.743 90.83C271.905 90.4863 272.871 90.0062 273.641 89.3898H276.077V98.4932H254.101Z"/></svg>`
+      const ARROW = `<svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 9L9 3M9 3H4M9 3V8" stroke="currentColor" stroke-width="1.6"/></svg>`
+
+      /* ── src/content/sections.ts, verbatim ─────────────────────── */
+      const SECTIONS = [
+        ['01', 'home', 'Command', 'Game growth systems'],
+        ['02', 'reel', 'Transmission', 'Visual transmission'],
+        ['03', 'telemetry', 'Telemetry', 'Studio telemetry'],
+        ['04', 'services', 'Services', 'Systems matrix'],
+        ['05', 'process', 'Process', 'Mission sequence'],
+        ['06', 'about', 'Advantages', 'Operational advantages'],
+        ['07', 'portfolio', 'Archive', 'Archive / 03 files'],
+        ['08', 'case-study', 'Dossier', 'Mission dossier / Seedify'],
+        ['09', 'testimonials', 'Logs', 'Communication logs'],
+        ['10', 'academy', 'Academy', 'Training subsystem'],
+        ['11', 'faq', 'Diagnostics', 'System diagnostics'],
+        ['12', 'contact', 'Channel', 'Open channel'],
+      ]
+
+      /* Twelve labels do not fit a horizontal row at 9px/0.16em — the tracking
+         that makes a label read as an instrument is what makes twelve overflow.
+         Only variant D carries a horizontal row, so only D groups them. */
+      const NAV = [
+        ['02', 'Work'], ['04', 'Services'], ['03', 'Studio'], ['10', 'Academy'], ['11', 'FAQ'],
+      ]
+
+      const SERVICES = [
+        'Game landing pages', 'UI/UX design', 'Marketing systems',
+        'Development', 'Responsive design', 'Community features',
+      ]
+
+      const VARIANTS = [
+        {
+          key: 'A', name: 'Corner cluster', rail: 'Rail nhận toàn bộ nav — hover mở tên',
+          why: 'Bỏ hẳn thanh ngang. Chỉ còn hai góc: logo + status ở góc trái, khối CTA lime bám góc phải. Không có hairline nào cắt ngang đỉnh trang nên hero chạm sát mép trên — điện ảnh nhất, và đúng nhất với luật "một mặt phẳng duy nhất". Đổi lại: người dùng phải phát hiện ra rail mới biết trang có 12 mục.',
+        },
+        {
+          key: 'B', name: 'Rail thành cột header', rail: 'Rail nở 232px, không còn topbar',
+          why: 'Lật trục: header không phải hàng mà là cột. Rail nở ra đủ chứa logo, status, cả 12 section có tên, CTA lime chốt đáy cột. Không còn topbar nên không còn trùng lặp giữa hai vùng điều hướng. Đọc như app shell, mất 140px chiều ngang của nội dung.',
+        },
+        {
+          key: 'C', name: 'Đồng hồ đo', rail: 'Rail rút còn logo + online',
+          why: 'Header không phải danh sách link mà là một máy đo: ô đọc số "04/12", tên section đang đọc, thang 12 vạch chính là nav (hover hiện tên, click nhảy), status, CTA. Vạch lime dưới mép chạy theo tiến độ trang. Đúng chất Command OS nhất; đổi lại nav ẩn danh — phải hover mới đọc được.',
+        },
+        {
+          key: 'D', name: 'Masthead thu gọn', rail: 'Rail giữ 12 tick',
+          why: 'Header nằm trong luồng như bìa hồ sơ: logo, bốn cột meta (Founded / Shipped / Focus / Status), CTA lime cao hết khối, hàng nav 5 nhóm ở mép dưới. Cuộn qua 140px thì thu thành thanh 52px chỉ còn logo + section đang đọc + CTA. Cho trang một "trang bìa" mà vẫn có nav thường trực.',
+        },
+        {
+          key: 'E', name: 'Index toàn màn', rail: 'Rail rút còn logo + online',
+          why: 'Thanh trên tối giản: tên studio, phím INDEX [12], CTA. Bấm INDEX mở trang mục lục toàn màn hình — 12 section chữ display 38px trên lưới hairline, hover hiện eyebrow thật. Điều hướng là một nơi để đến, không phải thứ chiếm chỗ thường trực. Tốn thêm một cú click cho mọi lần chuyển mục.',
+        },
+      ]
+
+      const el = (html) => { const t = document.createElement('template'); t.innerHTML = html.trim(); return t.content.firstElementChild }
+
+      /* ── the page under the header ─────────────────────────────── */
+      const heroHtml = `
+        <section class="hero hud-grid" id="home">
+          <div class="hero-inner">
+            <div>
+              <span class="eyebrow mono-eyebrow">[01] Game growth systems</span>
+              <h1>We are the game<br /><em>Marketing</em><br />Studio.</h1>
+              <p class="lede">From immersive websites to powerful digital strategies — we help your game win the market.</p>
+              <div class="acts">
+                <a href="#" class="cta">Case study ${ARROW}</a>
+                <a href="#" class="ghost">Connect with us</a>
+              </div>
+              <div class="stats">
+                <div><span class="mono-micro">Founded</span><b>2024 — Studio</b></div>
+                <div><span class="mono-micro">Shipped</span><b>25+ projects</b></div>
+                <div><span class="mono-micro">Focus</span><b>AAA &amp; mobile titles</b></div>
+              </div>
+            </div>
+            <div class="nodes">
+              <header><span class="mono-label">Available system nodes</span><span class="dot"></span></header>
+              ${SERVICES.map((s, i) => `<a href="#"><span class="mono-micro">0${i + 1}</span><b class="mono-nav">${s}</b><em class="mono-micro">Online</em></a>`).join('')}
+              <footer><span class="mono-label">Active focus</span><span class="mono-label">AAA + mobile</span></footer>
+            </div>
+          </div>
+        </section>`
+
+      const sectionsHtml = SECTIONS.slice(1, 7).map(([ix, id, label, eyebrow]) => `
+        <section class="sec hud-grid" id="${id}">
+          <div class="head">
+            <span class="mono-eyebrow"><span class="ix" style="color:var(--color-accent)">[${ix}]</span> ${eyebrow}</span>
+            <h2>${label}</h2>
+            <p>Section stub. It exists so the header above is judged against a page that actually scrolls — the condensing masthead, the progress fill and the travelling reading all need real distance to prove themselves.</p>
+          </div>
+        </section>`).join('')
+
+      /* ── the rail, in the mode each architecture leaves it in ──── */
+      const tickWidth = (d, major) => d === 0 ? 44 : d === 1 ? (major ? 30 : 22) : d === 2 ? (major ? 24 : 16) : (major ? 20 : 12)
+
+      function railHtml(mode) {
+        if (mode === 'column') {
+          return `<aside class="rail" data-mode="column">
+            <div class="top"><span class="logo">${LOGO}</span></div>
+            <div class="status mono-label"><span class="dot"></span>Studio network online</div>
+            <nav>${SECTIONS.map(([ix, id, label]) =>
+              `<a href="#${id}" class="mono-nav" data-ix="${ix}"><span class="ix mono-micro">${ix}</span>${label}</a>`).join('')}</nav>
+            <a href="#contact" class="cta">Open channel ${ARROW}</a>
+          </aside>`
+        }
+        if (mode === 'quiet') {
+          return `<aside class="rail" data-mode="quiet"><span class="logo">${LOGO}</span>
+            <span class="online mono-micro">Online</span></aside>`
+        }
+        const ticks = SECTIONS.map(([ix, id, label], i) =>
+          `<a href="#${id}" class="tick" data-i="${i}" aria-label="${label}">
+             <i style="width:${tickWidth(99, i % 3 === 0)}px"></i><b>${ix}</b>
+             ${mode === 'hover' ? `<span class="name mono-nav">${label}</span>` : ''}
+           </a>`).join('')
+        return `<aside class="rail" data-mode="${mode}"><span class="logo">${LOGO}</span>
+          <nav class="ticks">${ticks}</nav><span class="online mono-micro">Online</span></aside>`
+      }
+
+      /* ── the five headers ──────────────────────────────────────── */
+      const statusHtml = `<span class="mono-label" style="display:flex;align-items:center;gap:10px"><span class="dot"></span>Studio network online</span>`
+
+      const HEADER = {
+        A: () => `<div>
+          <div class="hA-status mono-label"><span class="dot"></span>Studio network online</div>
+          <a href="#contact" class="cta hA-cta">Open channel ${ARROW}</a>
+        </div>`,
+
+        B: () => `<div></div>`, /* B has no header — the rail is it */
+
+        C: () => `<header class="hC">
+          <div class="cell read"><b id="c-ix">01</b><span class="mono-micro">/ 12</span></div>
+          <div class="cell"><span class="now" id="c-now">Command</span></div>
+          <div class="scale">${SECTIONS.map(([ix, id, label], i) =>
+            `<button data-i="${i}" data-id="${id}" class="${i % 3 === 0 ? 'major' : ''}" aria-label="${label}">
+               <span class="mono-micro">${ix} ${label}</span><i></i></button>`).join('')}</div>
+          <div class="cell status">${statusHtml}</div>
+          <a href="#contact" class="cta">Open channel ${ARROW}</a>
+          <span class="fill" id="c-fill" style="width:0"></span>
+        </header>`,
+
+        D: () => `<header class="hD">
+          <div class="mast">
+            <div class="meta">
+              <div><span class="mark">${LOGO}</span></div>
+              <div><span class="mono-micro">Founded</span><b>2024 — Studio</b></div>
+              <div><span class="mono-micro">Shipped</span><b>25+ projects</b></div>
+              <div><span class="mono-micro">Focus</span><b>AAA &amp; mobile</b></div>
+              <div><span class="mono-micro">Status</span><b style="display:flex;align-items:center;gap:9px"><span class="dot"></span>Online</b></div>
+            </div>
+            <a href="#contact" class="cta">Open channel ${ARROW}</a>
+          </div>
+          <nav>${NAV.map(([ix, label], i) =>
+            `<a href="#" class="mono-nav${i === 0 ? ' on' : ''}"><span class="ix mono-micro">[${ix}]</span>${label}</a>`).join('')}</nav>
+        </header>
+        <div class="hD-slim" id="d-slim">
+          <span class="now"><span style="width:96px;display:block">${LOGO}</span>
+            <span class="ix mono-micro" id="d-ix">01</span><b id="d-now">Command</b></span>
+          <a href="#contact" class="cta">Open channel ${ARROW}</a>
+        </div>`,
+
+        E: () => `<header class="hE">
+          <a href="#home" class="brand">Gamegabyte / OS</a>
+          <div class="right">
+            <button class="key mono-nav" id="e-key" aria-expanded="false" aria-controls="e-index">
+              <span class="bars"><i></i><i></i><i></i></span>Index <em>[12]</em>
+            </button>
+            <a href="#contact" class="cta">Open channel ${ARROW}</a>
+          </div>
+        </header>
+        <div class="index" id="e-index" hidden>
+          <div class="top">
+            <span class="mono-label">Section index — 12 nodes</span>
+            <button class="mono-nav" id="e-close">Close &#10005;</button>
+          </div>
+          <div class="grid">${SECTIONS.map(([ix, id, label, eyebrow]) =>
+            `<a href="#${id}" data-id="${id}"><span class="ix mono-label">${ix}</span><span class="nm">${label}</span><span class="ds mono-nav">${eyebrow}</span></a>`).join('')}</div>
+          <div class="foot">${statusHtml}<a href="#contact" class="cta">Open channel ${ARROW}</a></div>
+        </div>`,
+      }
+
+      const RAIL_MODE = { A: 'hover', B: 'column', C: 'quiet', D: 'ticks', E: 'quiet' }
+
+      /* ── render ────────────────────────────────────────────────── */
+      const app = document.getElementById('app')
+      let cleanup = null
+
+      function render(key) {
+        const v = VARIANTS.find((x) => x.key === key) ?? VARIANTS[0]
+        if (cleanup) { cleanup(); cleanup = null }
+        document.body.dataset.variant = v.key
+
+        // D is the one architecture whose header is document content rather than
+        // chrome, so it renders inside the page column instead of over it.
+        const inFlow = v.key === 'D'
+        app.innerHTML = `${railHtml(RAIL_MODE[v.key])}${inFlow ? '' : HEADER[v.key]()}
+          <div class="page">${inFlow ? HEADER.D() : ''}${heroHtml}${sectionsHtml}</div>`
+
+        document.getElementById('p-key').textContent = v.key
+        document.getElementById('p-name').textContent = v.name
+        document.getElementById('p-rail').textContent = v.rail
+        document.getElementById('p-why').textContent = v.why
+
+        const url = new URL(location.href)
+        url.searchParams.set('variant', v.key)
+        history.replaceState(null, '', url)
+
+        wire(v.key)
+      }
+
+      /* ── behaviour: one scroll spy, each header reads it its own way ── */
+      function wire(key) {
+        const rail = app.querySelector('.rail')
+        const ticks = [...app.querySelectorAll('.rail .tick')]
+        const colLinks = [...app.querySelectorAll('.rail[data-mode="column"] nav a')]
+        const segs = [...app.querySelectorAll('.hC .scale button')]
+        const slim = document.getElementById('d-slim')
+        const fill = document.getElementById('c-fill')
+        let last = -1
+
+        const onScroll = () => {
+          const marks = SECTIONS.slice(0, 7).map(([, id]) => document.getElementById(id)).filter(Boolean)
+          let i = 0
+          marks.forEach((s, n) => { if (s.getBoundingClientRect().top <= 180) i = n })
+
+          if (i !== last) {
+            last = i
+            ticks.forEach((t, n) => {
+              t.classList.toggle('on', n === i)
+              t.querySelector('i').style.width = `${tickWidth(Math.abs(n - i), n % 3 === 0)}px`
+            })
+            colLinks.forEach((a, n) => a.classList.toggle('on', n === i))
+            segs.forEach((b, n) => b.classList.toggle('on', n === i))
+            const [ix, , label] = SECTIONS[i]
+            const set = (id, text) => { const n = document.getElementById(id); if (n) n.textContent = text }
+            set('c-ix', ix); set('c-now', label); set('d-ix', ix); set('d-now', label)
+          }
+
+          if (fill) {
+            const max = document.documentElement.scrollHeight - innerHeight
+            fill.style.width = `${Math.min(100, (scrollY / Math.max(max, 1)) * 100)}%`
+          }
+          if (slim) slim.classList.toggle('on', scrollY > 140)
+        }
+
+        addEventListener('scroll', onScroll, { passive: true })
+        onScroll()
+
+        // C — the scale is the navigation
+        segs.forEach((b) => b.addEventListener('click', () => {
+          document.getElementById(b.dataset.id)?.scrollIntoView({ block: 'start' })
+        }))
+
+        // E — the index sheet
+        let onKeyEsc = null
+        const keyBtn = document.getElementById('e-key')
+        if (keyBtn) {
+          const sheet = document.getElementById('e-index')
+          const set = (open) => { keyBtn.setAttribute('aria-expanded', String(open)); sheet.hidden = !open }
+          keyBtn.addEventListener('click', () => set(sheet.hidden))
+          document.getElementById('e-close').addEventListener('click', () => set(false))
+          sheet.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => set(false)))
+          onKeyEsc = (e) => { if (e.key === 'Escape') set(false) }
+          addEventListener('keydown', onKeyEsc)
+        }
+
+        // A — the rail is the only nav, so say so on first hover
+        if (rail && rail.dataset.mode === 'hover') rail.title = 'Sections'
+
+        cleanup = () => {
+          removeEventListener('scroll', onScroll)
+          if (onKeyEsc) removeEventListener('keydown', onKeyEsc)
+        }
+      }
+
+      /* ── the switcher ──────────────────────────────────────────── */
+      const keys = VARIANTS.map((v) => v.key)
+      const current = () => new URL(location.href).searchParams.get('variant')?.toUpperCase() ?? 'A'
+      const step = (dir) => {
+        const i = Math.max(0, keys.indexOf(current()))
+        render(keys[(i + dir + keys.length) % keys.length])
+        scrollTo({ top: 0 })
+      }
+
+      document.querySelectorAll('.proto button').forEach((b) =>
+        b.addEventListener('click', () => step(Number(b.dataset.dir))))
+
+      addEventListener('keydown', (e) => {
+        const t = e.target
+        if (t instanceof HTMLElement && (t.matches('input, textarea') || t.isContentEditable)) return
+        if (e.key === 'ArrowLeft') step(-1)
+        if (e.key === 'ArrowRight') step(1)
+      })
+
+      render(current())
+    </script>
+  </body>
+</html>

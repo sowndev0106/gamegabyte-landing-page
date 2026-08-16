@@ -50,8 +50,9 @@ Two tests for anything new:
 
 The costume version of this design is the failure mode to watch for: a `$` on a
 button, a caret in front of a heading, a blinking block after a paragraph. Those
-say "terminal" instead of *behaving* like one. The two places the page does
-speak in prompt syntax are fixed and listed in [The shell](#the-shell).
+say "terminal" instead of *behaving* like one. The page does speak in prompt
+syntax in exactly three places, all of them in the command bar and all of them
+reporting something — they are listed in [The prompt](#the-prompt).
 
 ### Vocabulary
 
@@ -150,7 +151,7 @@ claiming a section conforms.
 | Topbar | 72px; mobile command bar 70px |
 | Section rhythm | `py-19.5` → `md:py-28` → `lg:py-32` (128px at desktop) |
 | Panel padding | 28px desktop, 22px mobile |
-| Breakpoints | `md: 760px`, `lg: 1050px` — matched to the prototype, **not** Tailwind's stock 768/1024. `sm`, `xl` and `2xl` are untouched, so `xl` is still 1280; the topbar is the only thing that uses it. |
+| Breakpoints | `md: 760px`, `lg: 1050px` — matched to the prototype, **not** Tailwind's stock 768/1024. `sm`, `xl` and `2xl` are untouched but unused; nothing on the page reaches past `lg`. |
 
 ### Form
 
@@ -166,8 +167,13 @@ claiming a section conforms.
 
 - Entrances use `Reveal` / `Stagger` / `CountUp` (the `motion` library). Do not
   hand-roll an IntersectionObserver.
-- Only two continuous animations exist: the status-dot pulse and the process
-  orbit rings. Adding a third needs a reason.
+- Three continuous animations exist, and a fourth needs a reason:
+  the status-dot pulse, the process orbit rings, and the topbar cursor blink.
+  The cursor earns its place because a cursor that does not blink is a
+  rectangle — the blink is the whole message ("waiting for input"), not a
+  decoration on top of one. Note it is a **square wave** (`step-end`), not the
+  eased pulse the status dot uses: an easing cursor reads as a light that is
+  alive rather than a prompt that is waiting.
 - Everything continuous must stop under `prefers-reduced-motion: reduce`.
   Capping `animation-duration` alone does **not** stop an infinite animation —
   `animation-iteration-count: 1` is what brings it to rest. `index.css` does both.
@@ -182,8 +188,8 @@ the *same* twelve-item list — never as three competing navigations.
 
 | Where | Renders | Carries |
 |---|---|---|
-| Rail, `md`+ | Twelve ticks, no text | **Position.** The active tick is a reading on a scale. |
-| Topbar, `md`+ | Five text groups | **Destination.** The group being read carries a lime `>` caret. |
+| Rail, `md`+ | Twelve ticks, no text | **Position**, as a reading on a scale. |
+| Topbar, `md`+ | Five text groups, plus a path readout at `lg`+ | **Destination** (the group being read carries a lime `>` caret) and **position** (the path names the section). |
 | Mobile bar, `<md` | Twelve rows in a sheet | Both. A sheet has room for the real list, so groups are not used. |
 
 All three read `src/content/sections.ts`. The rail and the sheet map `SECTIONS`
@@ -200,12 +206,31 @@ prompt with nothing at it is a truthful reading.
 
 ### The prompt
 
-Two constructs carry the prompt syntax, and they are the only two on the page:
+The bar reads as one shell line: five groups on the left, the working directory
+on the right. Scrolling into a section **is** the `cd` — so the readout reports
+where the reader actually is, and asserts nothing it has not measured.
 
-| Construct | Where | Rule |
-|---|---|---|
-| `>` caret | The active topbar group | Lime. **Always rendered**, faded to `opacity-0` when inactive — taking it out of the flow would shift the whole row sideways every time the reading moves. |
-| `gamegabyte:~$` | In front of the status readout | `white/30`, so it frames the status rather than competing with it. Chrome, not a claim: it asserts nothing measurable. |
+```
+> WORK   SERVICES   STUDIO   ACADEMY   FAQ        GAMEGABYTE:~/WORK/PORTFOLIO ▍
+└ caret marks the group ┘                         └ host ┘└─ path ─┘└ cursor ┘
+```
+
+Three constructs carry the prompt syntax, and they are the only three on the page:
+
+| Construct | Rule |
+|---|---|
+| `>` caret | Lime, on the active group. **Always rendered**, faded to `opacity-0` when inactive — taking it out of the flow would shift the whole row sideways every time the reading moves. |
+| `gamegabyte:` + path | Host at `white/30`, path at `white/70`. The path comes from `sectionPath()`, built from section **ids**, so it can never drift from the anchor it names. |
+| Block cursor | Lime, square, `command-cursor`. Marks the end of the line, which is why there is **no `$` terminator** — a dim `$` wedged between the path and the cursor read as a smudge rather than as syntax. |
+
+Two things were tried and rejected, both worth not re-litigating:
+
+- **A lowercase path.** Closer to a real shell, but it was the one string in the
+  bar not shouting, so it read as a different system rather than a detail. The
+  mono voice stays uppercase everywhere, no exceptions.
+- **A status sentence** (`STUDIO NETWORK ONLINE`). A fixed claim sitting where a
+  live reading belongs. The path replaced it and the status dot became the
+  cursor, so the bar gained a readout and lost nothing.
 
 Everything else in the shell does its ordinary job — mono labels, indices,
 hairlines. That restraint is what keeps the voice from tipping into costume; see
@@ -218,13 +243,15 @@ Things go in the order they can be spared. Measured on the running page:
 | Width | State |
 |---|---|
 | `< md` (760) | The whole bar goes. `MobileCommandBar` takes over with twelve rows. |
-| `md` – `lg` | Nav spacing and CTA padding tighten (`pl-6` / `pr-4` / `px-6`). At 760 — the narrowest the bar ever renders — this leaves **127px** between the last group and the CTA. |
-| `lg` – `xl` | Spacing relaxes to `pl-11` / `pr-7` / `px-11`. |
-| `xl` (1280) + | The status readout appears. It is the only decorative element in the bar, so it is first to go and last to return. |
+| `md` – `lg` | No path. Nav spacing and CTA padding tighten (`pl-6` / `pr-4` / `px-6`). At 760 — the narrowest the bar ever renders — this leaves **127px** between the last group and the CTA. |
+| `lg` (1050) + | The path appears and spacing relaxes to `pl-11` / `pr-7` / `px-11`. The longest path, `~/studio/testimonials`, measures **265px** and clears the groups by 31px at 1050. |
 
-The bar is 72px at every width and the five groups never wrap. `npm run qa`
-covers 1440 and 390 only, so the 760–1280 band is verified by hand — measure it
-before adding anything to the bar.
+The path goes first because it is the one thing the rail still says on its own.
+The bar is 72px at every width and the five groups never wrap.
+
+`npm run qa` covers 1440 and 390 only, so the 760–1050 band is verified by hand.
+Measure it before adding anything to the bar — 31px is the whole margin at 1050,
+and a sixth group would spend it.
 
 ---
 

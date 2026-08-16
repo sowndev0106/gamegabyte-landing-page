@@ -1,0 +1,1130 @@
+<!doctype html>
+<!--
+  HERO — ROUND 4. Five more directions, rendered inside the REAL Command OS shell
+  (rail + topbar + mobile bar) so each one is judged in the frame it will ship in.
+  Tokens, primitives and shell CSS are a verbatim carry-over from
+  prototypes/hero-variants/index.html — only the hero layout differs.
+
+  Rounds 1-3 (prototypes/hero-variants/index.html, ?v=1..10) covered: terminal boot,
+  kinetic type, bento, inverted split, orbit, matrix, cropped dial, signal path,
+  pixel ident, archive rail. All ten keep the same skeleton: a headline column on
+  the left, an object on the right.
+
+  Round 4 attacks that skeleton itself. Each variant below removes or inverts one
+  thing every previous hero took for granted:
+
+    11  MASTHEAD    — deletes the right column. Type runs the full measure; the
+                      credentials become a masthead strip, the six disciplines a
+                      contents bar. Nothing floats; only rules divide.
+    12  LEDGER      — deletes the panel. Each headline line IS a table row, ruled
+                      edge to edge, with its reading in the second column. The
+                      diagnostic-record idiom (faq) at hero scale.
+    13  SCOPE       — inverts art and type. The plate is windowed inside a hairline
+                      instrument frame with edge readouts; the headline sits BELOW
+                      it on clean ink, never over it.
+    14  HUNG        — inverts the vertical. Content hangs off the bottom edge of the
+                      fold, the top two-thirds left as measured void with a gauge
+                      spine. Markings at the edges of the housing (STYLE §3).
+    15  DIRECTORY   — inverts the hierarchy. The twelve sections ARE the hero; the
+                      headline drops to a system name in the corner. The aggressive
+                      end of "the page is an instrument you read".
+
+  Truth rule (STYLE §4) holds: every figure, label and row below is read from
+  src/content/content.ts or src/content/sections.ts. Nothing is invented.
+
+  Throwaway. Switch with the toolbar or ?v=11..15. Press H to hide the toolbar.
+-->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark" />
+    <title>Gamegabyte — Hero Variants (in shell)</title>
+    <style>
+      /* ═══════════════════════════════════════════════════════════════
+         TOKENS — verbatim from src/index.css @theme
+         ═══════════════════════════════════════════════════════════════ */
+      @font-face {
+        font-family: 'Schibsted Grotesk';
+        src: url('/fonts/SchibstedGrotesk_wght__1/SchibstedGrotesk_wght__1-english.woff2') format('woff2');
+        font-weight: 400 700;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: Roboto;
+        src: url('/fonts/Roboto_wdth_wght__2/Roboto_wdth_wght__2-english.woff2') format('woff2');
+        font-weight: 400 500;
+        font-display: swap;
+      }
+
+      :root {
+        --color-brand: #601feb;
+        --color-accent: #b6e802;
+        --color-accent-bright: #d4ff00;
+        --color-purple-light: #8c4fff;
+        --color-ink: #05050c;
+        --color-ink-raised: #17171f;
+        --color-surface: #f1f2f9;
+        --color-chip: #e8e8fd;
+        --color-chip-ink: #5d5c81;
+
+        --font-display: 'Schibsted Grotesk', system-ui, sans-serif;
+        --font-sans: Roboto, system-ui, sans-serif;
+        --font-mono: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
+
+        /* Shell geometry — w-23 / h-18 / pl-11 / w-15 / h-17.5 in the app. */
+        --rail: 92px;
+        --topbar: 72px;
+        --topbar-pad: 44px;
+        --mobile-bar: 70px;
+
+        /* Container.tsx: max-w-330 (1320px), px-4.5 / md:px-12 */
+        --measure: 1320px;
+        --gutter: 18px;
+
+        --line: rgb(255 255 255 / 0.11); /* border-white/11 — the one hairline */
+        --surface-panel: rgb(255 255 255 / 0.015); /* bg-white/1.5 — the one panel ground */
+      }
+
+      @media (min-width: 760px) {
+        :root { --gutter: 48px; }
+      }
+
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        background: var(--color-ink);
+        color: #e7e7ee;
+        font-family: var(--font-sans);
+        -webkit-font-smoothing: antialiased;
+      }
+      img { display: block; max-width: 100%; }
+      a { color: inherit; text-decoration: none; }
+
+      /* ═══════════════════════════════════════════════════════════════
+         PRIMITIVES — ports of src/components/ui/*
+         ═══════════════════════════════════════════════════════════════ */
+      .hud-grid {
+        background-image:
+          linear-gradient(to right, rgb(255 255 255 / 0.035) 1px, transparent 1px),
+          linear-gradient(to bottom, rgb(255 255 255 / 0.035) 1px, transparent 1px);
+        background-size: 72px 72px;
+      }
+      .hud-grid--masked {
+        opacity: 0.6;
+        -webkit-mask-image: radial-gradient(ellipse at center, black, transparent 75%);
+        mask-image: radial-gradient(ellipse at center, black, transparent 75%);
+      }
+
+      .container {
+        width: 100%;
+        max-width: var(--measure);
+        margin-inline: auto;
+        padding-inline: var(--gutter);
+      }
+
+      /* Panel.tsx — border border-white/11 bg-white/1.5. Nothing else. */
+      .panel {
+        position: relative;
+        border: 1px solid var(--line);
+        background: var(--surface-panel);
+      }
+
+      /* CornerTicks.tsx — 2px accent brackets, 16px, offset -1px */
+      .ticks::before,
+      .ticks::after {
+        content: '';
+        position: absolute;
+        z-index: 10;
+        width: 16px;
+        height: 16px;
+        border: 0 solid var(--color-accent);
+        pointer-events: none;
+      }
+      .ticks::before { top: -1px; left: -1px; border-top-width: 2px; border-left-width: 2px; }
+      .ticks::after { right: -1px; bottom: -1px; border-right-width: 2px; border-bottom-width: 2px; }
+
+      .eyebrow {
+        margin: 0;
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--color-accent);
+      }
+      .eyebrow i { font-style: normal; color: rgb(255 255 255 / 0.45); }
+
+      .label {
+        font-family: var(--font-mono);
+        font-size: 9px;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: rgb(255 255 255 / 0.48);
+      }
+      /* Readout.tsx value — accent-BRIGHT, not accent. */
+      .readout {
+        display: block;
+        font-family: var(--font-display);
+        font-weight: 700;
+        line-height: 0.84;
+        letter-spacing: -0.055em;
+        color: var(--color-accent-bright);
+        font-size: clamp(46px, 5vw, 68px);
+      }
+      .readout--sm { font-size: clamp(30px, 3.2vw, 44px); }
+
+      .h1 {
+        margin: 0;
+        font-family: var(--font-display);
+        font-weight: 800;
+        text-transform: uppercase;
+        line-height: 0.82;
+        letter-spacing: -0.065em;
+        color: #fff;
+      }
+      .h1 span { display: block; }
+      .h1 .accent { color: var(--color-accent); }
+
+      .h2 {
+        margin: 0;
+        font-family: var(--font-display);
+        font-size: clamp(38px, 6vw, 84px);
+        font-weight: 800;
+        text-transform: uppercase;
+        line-height: 0.86;
+        letter-spacing: -0.05em;
+        color: #fff;
+      }
+
+      .sub {
+        margin: 0;
+        max-width: 650px;
+        font-size: 16px;
+        line-height: 1.625;
+        color: rgb(255 255 255 / 0.7);
+      }
+      @media (min-width: 760px) { .sub { font-size: 18px; } }
+
+      /* Button.tsx — min-h-14, px-8 py-4, text-base bold uppercase. No tracking. */
+      .btn {
+        display: inline-flex;
+        min-height: 56px;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        border: 1px solid transparent;
+        padding: 16px 32px;
+        font-family: var(--font-sans);
+        font-size: 16px;
+        font-weight: 700;
+        text-transform: uppercase;
+        transition: background-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+      }
+      .btn:hover { transform: translateY(-2px); }
+      .btn:active { transform: scale(0.98); }
+      .btn--accent {
+        border-color: var(--color-accent);
+        background: var(--color-accent);
+        color: var(--color-ink);
+        box-shadow: 0 0 28px rgb(182 232 2 / 0.18);
+      }
+      .btn--ghost { border-color: rgb(255 255 255 / 0.7); color: #fff; }
+      .btn--ghost:hover { background: rgb(255 255 255 / 0.1); }
+      /* The two variants the app declares but has never placed on a page. */
+      .btn--dark { border-color: var(--color-ink); background: var(--color-ink); color: #fff; }
+      .btn--dark:hover { background: rgb(5 5 12 / 0.88); }
+      .btn--outline-ink { border-color: rgb(5 5 12 / 0.4); color: var(--color-ink); }
+      .btn--outline-ink:hover { background: rgb(5 5 12 / 0.07); }
+      .btn svg { width: 16px; height: 16px; flex: none; }
+
+      .creds { display: flex; flex-wrap: wrap; gap: 18px 28px; margin: 0; }
+      .creds dt {
+        font-family: var(--font-mono);
+        font-size: 8px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: rgb(255 255 255 / 0.42);
+      }
+      .creds dd {
+        margin: 10px 0 0;
+        font-family: var(--font-display);
+        font-size: 13px;
+        font-weight: 600;
+        color: #fff;
+      }
+
+      .status-dot {
+        width: 6px;
+        height: 6px;
+        flex: none;
+        border-radius: 50%;
+        background: var(--color-accent);
+        box-shadow: 0 0 14px var(--color-accent);
+        animation: command-status-pulse 2.6s ease-in-out infinite;
+      }
+      @keyframes command-status-pulse { 50% { opacity: 0.35; transform: scale(0.7); } }
+
+      .marquee { overflow: hidden; }
+      .marquee > div {
+        display: flex;
+        width: max-content;
+        gap: 56px;
+        animation: marquee 34s linear infinite;
+      }
+      @keyframes marquee { to { transform: translateX(-50%); } }
+      .marquee span {
+        font-family: var(--font-mono);
+        font-size: 9px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        white-space: nowrap;
+        color: var(--color-accent);
+      }
+
+      /* orbit-ring / orbit-ring-inner from index.css */
+      @keyframes orbit-spin { to { transform: rotate(360deg); } }
+
+      /* ═══════════════════════════════════════════════════════════════
+         SHELL — CommandRail + CommandTopbar + MobileCommandBar
+         ═══════════════════════════════════════════════════════════════ */
+      .rail {
+        position: fixed;
+        inset-block: 0;
+        left: 0;
+        z-index: 40;
+        display: none;
+        width: var(--rail);
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        padding-block: 24px;
+        border-right: 1px solid var(--line);
+        background: rgb(5 5 12 / 0.95);
+        backdrop-filter: blur(24px);
+      }
+      .rail__logo { display: block; width: 60px; flex: none; }
+      .rail__nav { display: flex; flex-direction: column; gap: 4px; }
+      .rail__nav a { display: flex; width: 24px; height: 24px; align-items: center; justify-content: center; }
+      .rail__nav i {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: rgb(255 255 255 / 0.3);
+        transition: all 0.2s ease;
+      }
+      .rail__nav a:hover i { transform: scale(1.25); background: rgb(255 255 255 / 0.8); }
+      .rail__nav a[aria-current] i {
+        transform: scale(1.5);
+        background: var(--color-accent);
+        box-shadow: 0 0 12px var(--color-accent);
+      }
+      .rail__status {
+        writing-mode: vertical-rl;
+        font-family: var(--font-mono);
+        font-size: 8px;
+        letter-spacing: 0.13em;
+        text-transform: uppercase;
+        color: var(--color-accent);
+      }
+
+      .topbar {
+        position: fixed;
+        top: 0;
+        right: 0;
+        left: var(--rail);
+        z-index: 30;
+        display: none;
+        height: var(--topbar);
+        align-items: center;
+        justify-content: space-between;
+        padding-left: var(--topbar-pad);
+        border-bottom: 1px solid var(--line);
+        background: rgb(5 5 12 / 0.9);
+        backdrop-filter: blur(24px);
+      }
+      .topbar__status {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-family: var(--font-mono);
+        font-size: 10px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: rgb(255 255 255 / 0.7);
+      }
+      .topbar__cta {
+        display: flex;
+        height: var(--topbar);
+        align-items: center;
+        gap: 8px;
+        padding-inline: var(--topbar-pad);
+        background: var(--color-accent);
+        font-family: var(--font-display);
+        font-size: 14px;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: var(--color-ink);
+        transition: background-color 0.15s ease;
+      }
+      .topbar__cta:hover { background: var(--color-accent-bright); }
+      .topbar__cta svg { width: 14px; height: 14px; }
+
+      .mobilebar {
+        position: fixed;
+        inset-inline: 0;
+        top: 0;
+        z-index: 50;
+        display: flex;
+        height: var(--mobile-bar);
+        align-items: center;
+        justify-content: space-between;
+        padding-inline: 18px;
+        border-bottom: 1px solid var(--line);
+        background: rgb(5 5 12 / 0.95);
+        backdrop-filter: blur(24px);
+      }
+      .mobilebar a {
+        font-family: var(--font-display);
+        font-size: 15px;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .mobilebar button {
+        min-height: 42px;
+        min-width: 48px;
+        border: 1px solid var(--line);
+        background: none;
+        color: inherit;
+        font-family: var(--font-mono);
+        font-size: 8px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+
+      .frame { margin-left: 0; }
+
+      @media (min-width: 760px) {
+        .rail { display: flex; }
+        .topbar { display: flex; }
+        .mobilebar { display: none; }
+        .frame { margin-left: var(--rail); }
+      }
+
+      /* ═══════════════════════════════════════════════════════════════
+         HERO SHARED
+         ═══════════════════════════════════════════════════════════════ */
+      .hero {
+        position: relative;
+        overflow: hidden;
+        background: var(--color-ink);
+        min-height: 100svh;
+        padding-top: calc(var(--mobile-bar) + 40px);
+      }
+      @media (min-width: 760px) {
+        .hero { padding-top: calc(var(--topbar) + 56px); }
+      }
+      .btn-row { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+
+      .next { position: relative; border-top: 1px solid var(--line); padding-block: 78px; }
+      @media (min-width: 760px) { .next { padding-block: 112px; } }
+      .next__inner { display: grid; gap: 24px; }
+      @media (min-width: 1050px) {
+        .next__inner { grid-template-columns: minmax(0, 240px) minmax(0, 1fr); gap: 48px; }
+      }
+
+      /* ═══════════════════════════════════════════════════════════════
+         11 — MASTHEAD
+         No right column at all. The headline gets the full 1320 measure and
+         the size that comes with it; the credentials are promoted to a strip
+         above it, the six disciplines demoted to a contents bar below.
+         Both strips are full-bleed, so the fold is framed by two rules
+         rather than by a box.
+         ═══════════════════════════════════════════════════════════════ */
+      .v-mast { flex-direction: column; padding-bottom: 0; }
+      .v-mast__strip { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+      .v-mast__strip .container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 36px;
+        padding-block: 13px;
+        font-family: var(--font-mono);
+        font-size: 9px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: rgb(255 255 255 / 0.42);
+      }
+      .v-mast__strip b { font-weight: 400; color: rgb(255 255 255 / 0.82); }
+      .v-mast__strip .lime { color: var(--color-accent); letter-spacing: 0.22em; }
+      .v-mast__strip .push { margin-left: auto; }
+      .v-mast__body { flex: 1; display: flex; flex-direction: column; justify-content: center; padding-block: 52px; }
+      /* Full measure buys ~2.4x the hero's current cap. Held at 9.5vw so a
+         1920 viewport does not run the line past the container. */
+      .v-mast .h1 { font-size: clamp(38px, 9.5vw, 132px); }
+      .v-mast__lede { display: grid; gap: 26px; margin-top: 46px; padding-top: 28px; border-top: 1px solid var(--line); }
+      @media (min-width: 1050px) {
+        .v-mast__lede { grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 56px; }
+      }
+      .v-mast__lede .btn-row { margin-top: 0; }
+      .v-mast__index {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        border-top: 1px solid var(--line);
+      }
+      @media (min-width: 760px) { .v-mast__index { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+      @media (min-width: 1050px) { .v-mast__index { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
+      .v-mast__index li {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        min-height: 92px;
+        padding: 16px 18px 20px;
+        border-right: 1px solid var(--line);
+        font-family: var(--font-mono);
+        font-size: 9px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+      .v-mast__index li:last-child { border-right: 0; }
+      .v-mast__index i { font-style: normal; color: rgb(255 255 255 / 0.3); }
+      .v-mast__index span { color: rgb(255 255 255 / 0.72); line-height: 1.7; }
+      .v-mast__index li:hover { background: rgb(255 255 255 / 0.015); }
+      .v-mast__index li:hover i { color: var(--color-accent); }
+
+      /* ═══════════════════════════════════════════════════════════════
+         12 — LEDGER
+         The headline stops being a block and becomes a table. Three rows,
+         ruled edge to edge; each row's second column carries the reading
+         that belongs to it. This is the faq diagnostic-record construct —
+         a stack of ruled rows, nothing boxed — read at hero scale.
+         ═══════════════════════════════════════════════════════════════ */
+      .v-ledger { flex-direction: column; justify-content: center; padding-bottom: 0; }
+      .v-ledger__head { padding-bottom: 22px; }
+      .v-ledger__row { border-top: 1px solid var(--line); }
+      .v-ledger__row:last-of-type { border-bottom: 1px solid var(--line); }
+      .v-ledger__row > .container {
+        display: grid;
+        gap: 14px;
+        padding-block: 20px;
+      }
+      @media (min-width: 1050px) {
+        .v-ledger__row > .container {
+          grid-template-columns: minmax(0, 1fr) 260px;
+          align-items: end;
+          gap: 48px;
+          padding-block: 26px;
+        }
+      }
+      .v-ledger__row:hover { background: rgb(255 255 255 / 0.012); }
+      /* Capped so the longest line ("WE ARE THE GAME") stays on ONE line beside
+         the 260px meta column. A row that wraps stops being a row. */
+      .v-ledger .h1 { font-size: clamp(38px, 7.4vw, 104px); }
+      .v-ledger .h1 span { display: block; }
+      .v-ledger__meta { margin: 0; }
+      .v-ledger__meta dt {
+        font-family: var(--font-mono);
+        font-size: 8px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: rgb(255 255 255 / 0.42);
+      }
+      .v-ledger__meta dd { margin: 9px 0 0; font-family: var(--font-display); font-size: 13px; font-weight: 600; color: #fff; }
+      .v-ledger__foot > .container { display: grid; gap: 26px; padding-block: 30px 0; }
+      @media (min-width: 1050px) {
+        .v-ledger__foot > .container { grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 56px; }
+      }
+      .v-ledger__foot .btn-row { margin-top: 0; }
+
+      /* ═══════════════════════════════════════════════════════════════
+         13 — SCOPE
+         Every previous hero laid type over the plate and then had to scrim
+         the plate to keep the type readable. This one refuses the overlap:
+         the art is a specimen inside an instrument window with its readings
+         pinned to the frame edges, and the headline sits below on bare ink.
+         ═══════════════════════════════════════════════════════════════ */
+      .v-scope { flex-direction: column; justify-content: center; gap: 26px; padding-bottom: 42px; }
+      .v-scope__frame {
+        position: relative;
+        overflow: hidden;
+        /* Wider than 21:9 on purpose — the window and the type below it have to
+           share one fold, and the type is the part that cannot shrink. */
+        aspect-ratio: 2.76 / 1;
+        border: 1px solid var(--line);
+        background: #08080f;
+      }
+      @media (max-width: 759px) { .v-scope__frame { aspect-ratio: 4 / 3; } }
+      .v-scope__frame img { position: absolute; inset: 0; height: 100%; width: 100%; object-fit: cover; opacity: 0.66; }
+      .v-scope__frame::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background: linear-gradient(0deg, rgb(5 5 12 / 0.72), transparent 55%), radial-gradient(ellipse at center, transparent 40%, rgb(5 5 12 / 0.5));
+      }
+      .v-scope__edge {
+        position: absolute;
+        z-index: 3;
+        font-family: var(--font-mono);
+        font-size: 9px;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: rgb(255 255 255 / 0.58);
+      }
+      /* tl and br clear the 16px CornerTicks brackets rather than sitting under them. */
+      .v-scope__edge.tl { top: 14px; left: 28px; }
+      .v-scope__edge.tr { top: 14px; right: 16px; }
+      .v-scope__edge.bl { bottom: 14px; left: 16px; }
+      .v-scope__edge.br { bottom: 14px; right: 28px; color: var(--color-accent); }
+      /* Four crosshair stubs on the mid-points — the frame reads as a sight,
+         not a picture border. 2px lime, the same weight as CornerTicks. */
+      .v-scope__cross i { position: absolute; z-index: 3; background: var(--color-accent); }
+      .v-scope__cross i:nth-child(1) { top: 0; left: 50%; width: 2px; height: 14px; }
+      .v-scope__cross i:nth-child(2) { bottom: 0; left: 50%; width: 2px; height: 14px; }
+      .v-scope__cross i:nth-child(3) { left: 0; top: 50%; height: 2px; width: 14px; }
+      .v-scope__cross i:nth-child(4) { right: 0; top: 50%; height: 2px; width: 14px; }
+      .v-scope__lede { display: grid; gap: 28px; }
+      @media (min-width: 1050px) {
+        .v-scope__lede { grid-template-columns: minmax(0, 1fr) minmax(300px, 380px); gap: 64px; align-items: end; }
+      }
+      .v-scope .h1 { font-size: clamp(36px, 5.6vw, 76px); }
+      .v-scope__lede .btn-row { margin-top: 24px; }
+
+      /* ═══════════════════════════════════════════════════════════════
+         14 — HUNG
+         "A gauge reads as an instrument because its markings sit at the
+         edges of the housing, not because the housing is full" (STYLE §3).
+         The pinned-panel pattern applied to the fold itself: status at the
+         top edge, everything else hanging off the bottom, measured void
+         between, with a ticked spine so the void reads as deliberate.
+         ═══════════════════════════════════════════════════════════════ */
+      .v-hung { flex-direction: column; padding-bottom: 0; }
+      .v-hung__top > .container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 10px 24px;
+        padding-block: 6px 0;
+      }
+      .v-hung__top .label { letter-spacing: 0.22em; }
+      .v-hung__void { position: relative; flex: 1; min-height: 120px; }
+      .v-hung__spine { position: absolute; inset: 0; }
+      .v-hung__spine > div { position: relative; height: 100%; }
+      .v-hung__spine .line { position: absolute; top: 18px; bottom: 0; left: 0; width: 1px; background: var(--line); }
+      .v-hung__spine .tick { position: absolute; left: 0; width: 9px; height: 1px; background: var(--line); }
+      .v-hung__spine .tick.lit { width: 18px; background: var(--color-accent); }
+      .v-hung__base { padding-bottom: 34px; }
+      .v-hung__base > .container { display: grid; gap: 30px; }
+      @media (min-width: 1050px) {
+        .v-hung__base > .container { grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 56px; }
+      }
+      .v-hung .h1 { font-size: clamp(40px, 7.2vw, 104px); }
+      .v-hung__figure { display: flex; flex-direction: column; gap: 12px; }
+      .v-hung__rule { margin-top: 30px; border-top: 1px solid var(--line); }
+      .v-hung__rule > .container { display: grid; gap: 24px; padding-top: 24px; }
+      @media (min-width: 1050px) {
+        .v-hung__rule > .container { grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 56px; }
+      }
+      .v-hung__rule .btn-row { margin-top: 0; }
+
+      /* ═══════════════════════════════════════════════════════════════
+         15 — DIRECTORY
+         The hard inversion: the twelve sections are the hero, the headline
+         is a system name in the corner. Rows carry the operational idiom
+         each section actually uses (STYLE §1 vocabulary), so the fold
+         doubles as the page's table of contents.
+         ═══════════════════════════════════════════════════════════════ */
+      .v-dir { flex-direction: column; justify-content: center; gap: 26px; padding-bottom: 44px; }
+      .v-dir__head { display: grid; gap: 24px; }
+      @media (min-width: 1050px) {
+        .v-dir__head { grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 56px; }
+      }
+      /* Deliberately demoted — one panel-title step, set inline rather than
+         stacked, so it reads as a name and not as a headline. */
+      .v-dir .h1 { font-size: clamp(22px, 2.6vw, 32px); line-height: 1.12; letter-spacing: -0.03em; }
+      .v-dir .h1 span { display: inline; }
+      .v-dir .btn-row { margin-top: 0; }
+      .v-dir__list { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
+      .v-dir__list a {
+        display: grid;
+        /* The idiom sits in its own track, not pushed to the far edge — a flush
+           right column would be the page's second right-aligned text (STYLE §2). */
+        grid-template-columns: 40px 200px minmax(0, 1fr);
+        align-items: center;
+        gap: 16px;
+        padding-block: 12px;
+        border-bottom: 1px solid rgb(255 255 255 / 0.06);
+        font-family: var(--font-mono);
+        font-size: 10px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        transition: background-color 0.15s ease, padding 0.15s ease;
+      }
+      .v-dir__list i { font-style: normal; color: rgb(255 255 255 / 0.3); }
+      .v-dir__list b { font-weight: 400; color: rgb(255 255 255 / 0.82); }
+      .v-dir__list em { font-style: normal; font-size: 9px; color: rgb(255 255 255 / 0.34); }
+      .v-dir__list a:hover { background: rgb(255 255 255 / 0.02); padding-inline: 10px; }
+      .v-dir__list a:hover i { color: var(--color-accent); }
+      .v-dir__list a:hover em { color: rgb(255 255 255 / 0.6); }
+      .v-dir__list a[aria-current] i,
+      .v-dir__list a[aria-current] b { color: var(--color-accent); }
+      @media (max-width: 759px) {
+        .v-dir__list em { display: none; }
+        .v-dir__list a { padding-block: 10px; }
+      }
+
+      /* ═══════════════════════════════════════════════════════════════
+         PROTOTYPE TOOLBAR — not part of the design
+         ═══════════════════════════════════════════════════════════════ */
+      .switcher {
+        position: fixed;
+        z-index: 90;
+        left: 50%;
+        bottom: 16px;
+        transform: translateX(-50%);
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        max-width: calc(100vw - 32px);
+        gap: 4px;
+        padding: 5px;
+        border: 1px solid var(--line);
+        background: rgb(8 8 18 / 0.92);
+        backdrop-filter: blur(16px);
+      }
+      .switcher button {
+        padding: 9px 11px;
+        border: 0;
+        background: none;
+        color: rgb(255 255 255 / 0.45);
+        font-family: var(--font-mono);
+        font-size: 10px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        cursor: pointer;
+      }
+      .switcher button:hover { color: #fff; }
+      .switcher button[aria-current='true'] { background: var(--color-accent); color: var(--color-ink); }
+      .switcher button[data-new]::after {
+        content: '•';
+        margin-left: 6px;
+        color: var(--color-accent);
+      }
+      .switcher button[aria-current='true']::after { color: var(--color-ink); }
+      .note {
+        position: fixed;
+        z-index: 90;
+        right: 16px;
+        bottom: 16px;
+        max-width: 290px;
+        padding: 12px 14px;
+        border: 1px solid var(--line);
+        background: rgb(8 8 18 / 0.92);
+        backdrop-filter: blur(16px);
+        font-family: var(--font-mono);
+        font-size: 9px;
+        line-height: 1.7;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: rgb(255 255 255 / 0.55);
+      }
+      .note b { color: var(--color-accent); font-weight: 400; }
+      /* The toolbar sits on top of the design it is meant to show. Press H, or
+         hit the toggle, to get an unobstructed frame. */
+      body.chrome-off .switcher,
+      body.chrome-off .note { display: none; }
+      .chrome-toggle {
+        position: fixed;
+        z-index: 91;
+        left: 16px;
+        bottom: 16px;
+        padding: 9px 12px;
+        border: 1px solid var(--line);
+        background: rgb(8 8 18 / 0.92);
+        backdrop-filter: blur(16px);
+        color: rgb(255 255 255 / 0.45);
+        font-family: var(--font-mono);
+        font-size: 10px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        cursor: pointer;
+      }
+      .chrome-toggle:hover { color: var(--color-accent); }
+      .variant { display: none; }
+      .v-mast.is-active,
+      .v-ledger.is-active,
+      .v-scope.is-active,
+      .v-hung.is-active,
+      .v-dir.is-active { display: flex; }
+      @media (max-width: 1050px) { .note { display: none; } }
+
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+          animation-duration: 0.001ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.001ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ══════════ SHELL ══════════ -->
+    <aside class="rail">
+      <a href="#home" aria-label="Gamegabyte home" class="rail__logo">
+        <img src="/src/assets/logo.svg" alt="Gamegabyte" style="width: 100%; height: auto" />
+      </a>
+      <nav class="rail__nav" aria-label="Command sections" id="rail-nav"></nav>
+      <span class="rail__status">Online</span>
+    </aside>
+
+    <header class="topbar">
+      <span class="topbar__status">
+        <span class="status-dot" aria-hidden="true"></span>
+        Studio network online
+      </span>
+      <a class="topbar__cta" href="#contact">
+        Open channel
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true">
+          <path d="M4 12 12 4" /><path d="M5.5 4H12v6.5" />
+        </svg>
+      </a>
+    </header>
+
+    <header class="mobilebar">
+      <a href="#home">Gamegabyte / OS</a>
+      <button type="button" aria-expanded="false">Menu</button>
+    </header>
+
+    <div class="frame">
+      <main id="main">
+        <!-- ══════════ 11 — MASTHEAD ══════════ -->
+        <section class="variant hero v-mast hud-grid" data-variant="11" id="home">
+          <div class="v-mast__strip">
+            <div class="container">
+              <span class="lime">Gamegabyte / OS</span>
+              <span>Founded <b>2024 — Studio</b></span>
+              <span>Shipped <b>25+ projects</b></span>
+              <span>Focus <b>AAA &amp; mobile titles</b></span>
+            </div>
+          </div>
+
+          <div class="container v-mast__body">
+            <p class="eyebrow"><i>[01]</i> Game growth systems</p>
+            <h1 class="h1" style="margin-top: 30px">
+              <span>We are the game</span>
+              <span class="accent">Marketing</span>
+              <span>Studio.</span>
+            </h1>
+            <div class="v-mast__lede">
+              <p class="sub">From immersive websites to powerful digital strategies — we help your game win the market.</p>
+              <div class="btn-row">
+                <a class="btn btn--accent" href="#portfolio">
+                  Case Study
+                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true">
+                    <path d="M4 12 12 4" /><path d="M5.5 4H12v6.5" />
+                  </svg>
+                </a>
+                <a class="btn btn--ghost" href="#contact">Connect with us</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- The contents bar. Six real disciplines, full-bleed, one cell each. -->
+          <ul class="v-mast__index" aria-label="Available system nodes">
+            <li><i>01 / Web</i><span>Game Landing Pages</span></li>
+            <li><i>02 / Product</i><span>UI/UX Design</span></li>
+            <li><i>03 / Data</i><span>Marketing Systems</span></li>
+            <li><i>04 / Code</i><span>Development</span></li>
+            <li><i>05 / Device</i><span>Responsive Design</span></li>
+            <li><i>06 / Players</i><span>Community Features</span></li>
+          </ul>
+        </section>
+
+        <!-- ══════════ 12 — LEDGER ══════════ -->
+        <section class="variant hero v-ledger hud-grid" data-variant="12">
+          <div class="container v-ledger__head">
+            <p class="eyebrow"><i>[01]</i> Game growth systems</p>
+          </div>
+
+          <div class="v-ledger__row">
+            <div class="container">
+              <h1 class="h1"><span>We are the game</span></h1>
+              <dl class="v-ledger__meta">
+                <dt>Founded</dt>
+                <dd>2024 — Studio</dd>
+              </dl>
+            </div>
+          </div>
+
+          <div class="v-ledger__row">
+            <div class="container">
+              <p class="h1" style="margin: 0"><span class="accent">Marketing</span></p>
+              <dl class="v-ledger__meta">
+                <dt>Shipped</dt>
+                <dd>25+ projects</dd>
+              </dl>
+            </div>
+          </div>
+
+          <div class="v-ledger__row">
+            <div class="container">
+              <p class="h1" style="margin: 0"><span>Studio.</span></p>
+              <dl class="v-ledger__meta">
+                <dt>Focus</dt>
+                <dd>AAA &amp; mobile titles</dd>
+              </dl>
+            </div>
+          </div>
+
+          <div class="v-ledger__foot">
+            <div class="container">
+              <p class="sub">From immersive websites to powerful digital strategies — we help your game win the market.</p>
+              <div class="btn-row">
+                <a class="btn btn--accent" href="#portfolio">
+                  Case Study
+                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true">
+                    <path d="M4 12 12 4" /><path d="M5.5 4H12v6.5" />
+                  </svg>
+                </a>
+                <a class="btn btn--ghost" href="#contact">Connect with us</a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ══════════ 13 — SCOPE ══════════ -->
+        <section class="variant hero v-scope hud-grid" data-variant="13">
+          <div class="container">
+            <p class="eyebrow"><i>[01]</i> Game growth systems</p>
+          </div>
+
+          <div class="container">
+            <div class="v-scope__frame ticks">
+              <img src="/assets/img/backgrounds/hero-fantasy-battlefield-v1.png" alt="" aria-hidden="true" />
+              <div class="v-scope__cross" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+              <span class="v-scope__edge tl">Source / key visual</span>
+              <span class="v-scope__edge tr">Focus / AAA + Mobile</span>
+              <span class="v-scope__edge bl">Gamegabyte / studio</span>
+              <span class="v-scope__edge br">Online</span>
+            </div>
+          </div>
+
+          <div class="container v-scope__lede">
+            <h1 class="h1">
+              <span>We are the game</span>
+              <span class="accent">Marketing</span>
+              <span>Studio.</span>
+            </h1>
+            <div>
+              <p class="sub">From immersive websites to powerful digital strategies — we help your game win the market.</p>
+              <div class="btn-row">
+                <a class="btn btn--accent" href="#portfolio">
+                  Case Study
+                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true">
+                    <path d="M4 12 12 4" /><path d="M5.5 4H12v6.5" />
+                  </svg>
+                </a>
+                <a class="btn btn--ghost" href="#contact">Connect with us</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="container">
+            <dl class="creds" style="border-top: 1px solid var(--line); padding-top: 22px">
+              <div><dt>Founded</dt><dd>2024 — Studio</dd></div>
+              <div><dt>Shipped</dt><dd>25+ projects</dd></div>
+              <div><dt>Focus</dt><dd>AAA &amp; mobile titles</dd></div>
+            </dl>
+          </div>
+        </section>
+
+        <!-- ══════════ 14 — HUNG ══════════ -->
+        <section class="variant hero v-hung hud-grid" data-variant="14">
+          <div class="v-hung__top">
+            <div class="container">
+              <p class="eyebrow"><i>[01]</i> Game growth systems</p>
+              <span class="label">Available system nodes / 06</span>
+            </div>
+          </div>
+
+          <!-- The void. Not empty — measured. -->
+          <div class="v-hung__void" aria-hidden="true">
+            <div class="container v-hung__spine">
+              <div>
+                <span class="line"></span>
+                <span class="tick" style="top: 22%"></span>
+                <span class="tick" style="top: 42%"></span>
+                <span class="tick" style="top: 62%"></span>
+                <span class="tick lit" style="top: 82%"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="v-hung__base">
+            <div class="container">
+              <h1 class="h1">
+                <span>We are the game</span>
+                <span class="accent">Marketing</span>
+                <span>Studio.</span>
+              </h1>
+              <div class="v-hung__figure">
+                <span class="label">Studio projects</span>
+                <span class="readout" data-countup="25+">25+</span>
+              </div>
+            </div>
+            <div class="v-hung__rule">
+              <div class="container">
+                <p class="sub">From immersive websites to powerful digital strategies — we help your game win the market.</p>
+                <div class="btn-row">
+                  <a class="btn btn--accent" href="#portfolio">
+                    Case Study
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true">
+                      <path d="M4 12 12 4" /><path d="M5.5 4H12v6.5" />
+                    </svg>
+                  </a>
+                  <a class="btn btn--ghost" href="#contact">Connect with us</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ══════════ 15 — DIRECTORY ══════════ -->
+        <section class="variant hero v-dir hud-grid" data-variant="15">
+          <div class="container v-dir__head">
+            <div>
+              <p class="eyebrow"><i>[01]</i> Game growth systems</p>
+              <h1 class="h1" style="margin-top: 18px">
+                <span>We are the game </span><span class="accent">Marketing </span><span>Studio.</span>
+              </h1>
+              <p class="sub" style="margin-top: 16px; max-width: 52ch">
+                From immersive websites to powerful digital strategies — we help your game win the market.
+              </p>
+            </div>
+            <div class="btn-row">
+              <a class="btn btn--accent" href="#portfolio">
+                Case Study
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true">
+                  <path d="M4 12 12 4" /><path d="M5.5 4H12v6.5" />
+                </svg>
+              </a>
+              <a class="btn btn--ghost" href="#contact">Connect with us</a>
+            </div>
+          </div>
+
+          <div class="container">
+            <ul class="v-dir__list" id="dir-list" aria-label="Command sections"></ul>
+          </div>
+        </section>
+        <section class="next" id="reel">
+          <div class="hud-grid hud-grid--masked" aria-hidden="true" style="position: absolute; inset: 0; pointer-events: none"></div>
+          <div class="container next__inner">
+            <p class="eyebrow"><i>[02]</i> Visual transmission</p>
+            <div>
+              <h2 class="h2">Showreel 2025</h2>
+              <p class="sub" style="margin-top: 24px">
+                A minute of interface design, campaign pages and launch art shipped for game teams.
+              </p>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- ══════════ PROTOTYPE TOOLBAR ══════════ -->
+    <nav class="switcher" aria-label="Hero variants — round 4">
+      <button data-v="11" type="button">11 Masthead</button>
+      <button data-v="12" type="button">12 Ledger</button>
+      <button data-v="13" type="button">13 Scope</button>
+      <button data-v="14" type="button">14 Hung</button>
+      <button data-v="15" type="button">15 Directory</button>
+    </nav>
+    <p class="note" id="note"></p>
+    <button class="chrome-toggle" type="button" id="chrome-toggle" title="Hide the prototype toolbar (H)">Hide UI · H</button>
+
+    <script>
+      // The twelve-section registry the app generates its rail from, plus the
+      // structural idiom each section actually uses (STYLE.md §1). Variant 15
+      // prints both columns; the rail prints the first.
+      const SECTIONS = [
+        ['home', 'Command', 'Split dashboard'],
+        ['reel', 'Transmission', 'Monitored feed'],
+        ['telemetry', 'Telemetry', 'Readout board'],
+        ['services', 'Services', 'Input / output matrix'],
+        ['process', 'Process', 'Orbital sequence'],
+        ['about', 'Advantages', 'Parallel attribute nodes'],
+        ['portfolio', 'Archive', 'Asymmetric archive'],
+        ['case-study', 'Dossier', 'Dossier with record rail'],
+        ['testimonials', 'Logs', 'Communication log'],
+        ['academy', 'Academy', 'External terminal'],
+        ['faq', 'Diagnostics', 'Diagnostic records'],
+        ['contact', 'Channel', 'Open channel'],
+      ]
+      document.getElementById('rail-nav').innerHTML = SECTIONS.map(
+        ([id, label], i) => `<a href="#${id}" aria-label="${label}"${i === 0 ? ' aria-current="true"' : ''}><i></i></a>`
+      ).join('')
+      document.getElementById('dir-list').innerHTML = SECTIONS.map(
+        ([id, label, idiom], i) =>
+          `<li><a href="#${id}"${i === 0 ? ' aria-current="true"' : ''}>` +
+          `<i>${String(i + 1).padStart(2, '0')}</i><b>${label}</b><em>${idiom}</em></a></li>`
+      ).join('')
+
+      const NOTES = {
+        11: 'MASTHEAD — the right column is gone. Type takes the full 1320 measure at 132px (vs 104 today). Credentials become the strip above, the six real disciplines the contents bar below. Two full-bleed rules frame the fold; nothing is boxed.',
+        12: 'LEDGER — the headline becomes a table. Three ruled rows, each carrying its own reading in the second column. This is the faq record idiom read at hero scale: no panel, no art, structure entirely from hairlines.',
+        13: 'SCOPE — art and type stop overlapping. The plate is windowed in an instrument frame with corner ticks, crosshair stubs and edge readouts; the headline sits below it on bare ink, so nothing needs a scrim to stay legible.',
+        14: 'HUNG — the pinned-panel pattern applied to the fold itself. Status at the top edge, everything else hanging off the bottom, measured void between with a ticked spine. The gauge argument from STYLE §3, at full-page scale.',
+        15: 'DIRECTORY — the aggressive one. The twelve sections ARE the hero and the headline drops to a name in the corner. Each row prints the idiom that section really uses, so the fold doubles as the table of contents for the OS.',
+      }
+      const buttons = [...document.querySelectorAll('.switcher button')]
+      const note = document.getElementById('note')
+
+      const toggle = document.getElementById('chrome-toggle')
+      const flipChrome = () => {
+        const off = document.body.classList.toggle('chrome-off')
+        toggle.textContent = off ? 'Show UI · H' : 'Hide UI · H'
+      }
+      toggle.addEventListener('click', flipChrome)
+
+      // CountUp.tsx — figures settle rather than stopping dead (ease-out cubic).
+      function countUp(el) {
+        const match = el.dataset.countup.match(/^(\d+)(.*)$/)
+        if (!match || matchMedia('(prefers-reduced-motion: reduce)').matches) return
+        const target = Number(match[1])
+        const started = performance.now()
+        const tick = (now) => {
+          const p = Math.min((now - started) / 1100, 1)
+          el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3))) + match[2]
+          if (p < 1) requestAnimationFrame(tick)
+        }
+        requestAnimationFrame(tick)
+      }
+
+      function show(v) {
+        document.querySelectorAll('.variant').forEach((s) => s.classList.toggle('is-active', s.dataset.variant === v))
+        buttons.forEach((b) => b.setAttribute('aria-current', String(b.dataset.v === v)))
+        note.innerHTML = '<b>' + v + '</b> — ' + NOTES[v]
+        history.replaceState(null, '', '?v=' + v)
+        window.scrollTo(0, 0)
+        document.querySelectorAll('.variant.is-active [data-countup]').forEach(countUp)
+      }
+
+      const KEYS = buttons.map((b) => b.dataset.v)
+      const step = (d) => show(KEYS[(KEYS.indexOf(current()) + d + KEYS.length) % KEYS.length])
+      const current = () => new URLSearchParams(location.search).get('v') || KEYS[0]
+
+      buttons.forEach((b) => b.addEventListener('click', () => show(b.dataset.v)))
+      addEventListener('keydown', (e) => {
+        if (/^(INPUT|TEXTAREA)$/.test(document.activeElement.tagName) || document.activeElement.isContentEditable) return
+        if (e.key === 'ArrowLeft') step(-1)
+        else if (e.key === 'ArrowRight') step(1)
+        else if (e.key.toLowerCase() === 'h') flipChrome()
+      })
+
+      show(KEYS.includes(current()) ? current() : KEYS[0])
+    </script>
+  </body>
+</html>

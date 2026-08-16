@@ -1,0 +1,403 @@
+<!doctype html>
+<!--
+  Ten motions that live *inside* the active tick — light travelling along the
+  bar itself, not the bar arriving. Everything around them (the 44px reading,
+  the +10/+4 swell, the 26ms stagger, RISE_EASE at 400ms) is the shipped ruler
+  from src/components/shell/CommandRail.tsx and is identical in every card.
+-->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark" />
+    <title>Gamegabyte — Active tick / 10 sweeps</title>
+    <style>
+      @font-face {
+        font-family: Schibsted;
+        src: url('/fonts/SchibstedGrotesk_wght__1/SchibstedGrotesk_wght__1-english.woff2') format('woff2');
+        font-weight: 400 700;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: Roboto;
+        src: url('/fonts/Roboto_wdth_wght__2/Roboto_wdth_wght__2-english.woff2') format('woff2');
+        font-display: swap;
+      }
+
+      :root {
+        --ink: #05050c;
+        --ink-2: #0a0a14;
+        --lime: #b6e802;
+        --lime-bright: #d4ff00;
+        --white: #f6f5fb;
+        --muted: #a6a3b7;
+        --line: rgb(255 255 255 / 0.11);
+        --display: Schibsted, system-ui, sans-serif;
+        --body: Roboto, system-ui, sans-serif;
+        --mono: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
+        --ease: cubic-bezier(0.22, 1, 0.36, 1);
+        /*
+         * RISE_EASE is an arrival curve: it spends ~85% of its time in the last
+         * few percent of the distance. That is right for a tick landing on its
+         * length and wrong for light crossing a bar — under it the band clears
+         * the 44px in the first sixth of its duration and the rest of the
+         * animation is empty. Travelling light gets an even curve instead.
+         */
+        --travel: cubic-bezier(0.4, 0.05, 0.5, 0.95);
+        /* The tick takes 400ms to reach 44px. Starting the sweep before that
+           runs it across a bar that is still growing. */
+        --after-grow: 240ms;
+        /* Multiplier behind every duration on the page, so Slow-mo can stretch
+           all ten options at once without touching their keyframes. */
+        --t: 1;
+      }
+
+      * { box-sizing: border-box; }
+      body { margin: 0; background: var(--ink); color: var(--white); font-family: var(--body); }
+      button { border: 0; background: none; color: inherit; font: inherit; cursor: pointer; }
+      :where(a, button):focus-visible { outline: 2px solid var(--lime-bright); outline-offset: 2px; }
+
+      .chrome {
+        position: fixed;
+        inset: 0 0 auto 0;
+        z-index: 20;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 10px 18px;
+        border-bottom: 1px solid var(--line);
+        background: rgb(5 5 12 / 0.93);
+        backdrop-filter: blur(18px);
+        font-family: var(--mono);
+        font-size: 10px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+      .chrome b { font-weight: 500; }
+      .muted { color: var(--muted); }
+      .spacer { flex: 1; }
+      .chip { padding: 5px 10px; border: 1px solid var(--line); color: var(--muted); }
+      .chip:hover { border-color: rgb(255 255 255 / 0.4); color: var(--white); }
+      .chip[aria-pressed='true'] { border-color: var(--lime); background: var(--lime); color: var(--ink); }
+
+      .intro { max-width: 730px; padding: 74px 26px 16px; }
+      .intro h1 { margin: 0 0 10px; font-family: var(--display); font-size: 25px; font-weight: 700; }
+      .intro p { margin: 0 0 8px; color: var(--muted); font-size: 14px; line-height: 1.6; }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(206px, 1fr));
+        gap: 18px;
+        padding: 14px 26px 60px;
+      }
+      .card { border: 1px solid var(--line); background: linear-gradient(180deg, var(--ink-2), var(--ink)); }
+      .card__stage {
+        height: 250px;
+        padding: 12px 0;
+        border-bottom: 1px solid var(--line);
+        background-image:
+          linear-gradient(to right, rgb(255 255 255 / 0.03) 1px, transparent 1px),
+          linear-gradient(to bottom, rgb(255 255 255 / 0.03) 1px, transparent 1px);
+        background-size: 34px 34px;
+      }
+      .card__meta { padding: 12px 14px 14px; }
+      .card__name {
+        display: flex;
+        align-items: baseline;
+        gap: 8px;
+        font-family: var(--mono);
+        font-size: 10px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+      }
+      .card__name i { color: var(--lime); font-style: normal; }
+      .card__note { margin: 8px 0 0; color: var(--muted); font-size: 12px; line-height: 1.5; }
+
+      /* ------------------------------------------------------- the ruler ---- */
+      .ruler { display: flex; flex-direction: column; padding-left: 20px; }
+      .row { display: flex; height: 18px; align-items: center; }
+      .tick {
+        position: relative;
+        /* Clips the travelling band to the bar, which is what keeps every one of
+           these a motion *inside* the tick rather than across the rail. */
+        overflow: hidden;
+        height: 1px;
+        background: rgb(255 255 255 / 0.3);
+        transform-origin: left center;
+        transition: width 0.4s var(--ease), height 0.4s var(--ease), background-color 0.4s var(--ease);
+        transition-delay: var(--d, 0ms);
+      }
+      .row[data-on] .tick { height: 2px; background: var(--lime); box-shadow: 0 0 12px var(--lime); }
+      .num {
+        margin-left: 6px;
+        font-family: var(--mono);
+        font-size: 8px;
+        letter-spacing: 0.1em;
+        color: var(--lime);
+        opacity: 0;
+        transition: opacity 0.3s var(--ease);
+      }
+      .row[data-on] .num { opacity: 1; transition-delay: 150ms; }
+
+      /* The travelling band, shared by every option that moves light along the
+         bar. Each option below only says how it travels. */
+      .row[data-on] .tick::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        width: 45%;
+        /*
+         * A white core, not lime-bright. On a 2px lime bar the two limes are
+         * nearly the same value, so the band was travelling correctly and still
+         * reading as nothing at all.
+         */
+        background: linear-gradient(90deg, transparent, #fff, transparent);
+        translate: -70%;
+      }
+
+      /* ---- 01 Sweep → ------------------------------------------------------ */
+      .m-lr .row[data-on] .tick::after {
+        animation: passRight calc(0.62s * var(--t)) var(--travel) calc(var(--after-grow) * var(--t));
+      }
+      @keyframes passRight { from { translate: -70%; } to { translate: 125%; } }
+
+      /* ---- 02 Sweep ← ------------------------------------------------------ */
+      .m-rl .row[data-on] .tick::after {
+        animation: passLeft calc(0.62s * var(--t)) var(--travel) calc(var(--after-grow) * var(--t));
+      }
+      @keyframes passLeft { from { translate: 125%; } to { translate: -70%; } }
+
+      /* ---- 03 Double pass --------------------------------------------------- */
+      .m-twice .row[data-on] .tick::after {
+        animation: passTwice calc(1.05s * var(--t)) linear calc(var(--after-grow) * var(--t));
+      }
+      @keyframes passTwice {
+        0% { translate: -70%; }
+        32% { translate: 125%; }
+        33% { translate: -70%; }
+        100% { translate: 125%; }
+      }
+
+      /* ---- 04 Fill → ------------------------------------------------------- */
+      /* The bar starts inert and lime arrives across it, so the sweep leaves the
+         tick lit rather than passing over an already-lit bar. */
+      .m-fill .row[data-on] .tick { background: rgb(255 255 255 / 0.28); box-shadow: none; }
+      .m-fill .row[data-on] .tick::after {
+        width: 100%;
+        background: var(--lime);
+        translate: 0;
+        transform-origin: left center;
+        scale: 0 1;
+        animation: fillIn calc(0.5s * var(--t)) ease-out calc(var(--after-grow) * var(--t)) forwards;
+      }
+      @keyframes fillIn { to { scale: 1 1; } }
+
+      /* ---- 05 Fill from centre --------------------------------------------- */
+      .m-centre .row[data-on] .tick { background: rgb(255 255 255 / 0.28); box-shadow: none; }
+      .m-centre .row[data-on] .tick::after {
+        width: 100%;
+        background: var(--lime);
+        translate: 0;
+        transform-origin: center;
+        scale: 0 1;
+        animation: fillIn calc(0.5s * var(--t)) ease-out calc(var(--after-grow) * var(--t)) forwards;
+      }
+
+      /* ---- 06 Stepped fill -------------------------------------------------- */
+      .m-steps .row[data-on] .tick { background: rgb(255 255 255 / 0.28); box-shadow: none; }
+      .m-steps .row[data-on] .tick::after {
+        width: 100%;
+        background: repeating-linear-gradient(90deg, var(--lime) 0 22%, transparent 22% 25%);
+        translate: 0;
+        transform-origin: left center;
+        scale: 0 1;
+        animation: fillIn calc(0.56s * var(--t)) steps(4, end) calc(var(--after-grow) * var(--t)) forwards;
+      }
+
+      /* ---- 07 Head runner ---------------------------------------------------- */
+      /* The band stops at the tip instead of leaving, so the tick keeps a bright
+         head — the one option that changes the resting state of the reading. */
+      .m-head .row[data-on] .tick::after {
+        width: 22%;
+        background: #fff;
+        animation: runToTip calc(0.6s * var(--t)) var(--travel) calc(var(--after-grow) * var(--t)) forwards;
+      }
+      @keyframes runToTip { from { translate: -70%; } to { translate: 78%; } }
+
+      /* ---- 08 Bounce --------------------------------------------------------- */
+      .m-bounce .row[data-on] .tick::after {
+        animation: bounce calc(0.9s * var(--t)) var(--travel) calc(var(--after-grow) * var(--t));
+      }
+      @keyframes bounce {
+        0% { translate: -70%; }
+        55% { translate: 125%; }
+        75% { translate: 62%; }
+        100% { translate: 125%; }
+      }
+
+      /* ---- 09 Charge --------------------------------------------------------- */
+      /* No travel at all — the control for this set. Worth keeping in the
+         comparison, because half of what the sweeps read as is just brightness. */
+      .m-charge .row[data-on] .tick::after { display: none; }
+      .m-charge .row[data-on] .tick { animation: charge calc(0.65s * var(--t)) ease-out; }
+      @keyframes charge {
+        0% { background: rgb(255 255 255 / 0.45); box-shadow: none; }
+        55% { background: var(--lime-bright); box-shadow: 0 0 24px var(--lime-bright); }
+        100% { background: var(--lime); box-shadow: 0 0 12px var(--lime); }
+      }
+
+      /* ---- 10 Trace ---------------------------------------------------------- */
+      /* The bar is drawn out of nothing, so the light and the length arrive
+         together instead of the light crossing a bar that is already there. */
+      .m-trace .row[data-on] .tick::after { display: none; }
+      .m-trace .row[data-on] .tick { animation: trace calc(0.5s * var(--t)) var(--ease); }
+      @keyframes trace {
+        from { scale: 0 1; background: var(--lime-bright); }
+        to { scale: 1 1; background: var(--lime); }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+          animation-duration: 0.001ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.001ms !important;
+          transition-delay: 0ms !important;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header class="chrome">
+      <span><b>Active tick</b> <span class="muted">· 10 sweeps · inside the bar</span></span>
+      <span class="spacer"></span>
+      <button class="chip" id="step">Step once</button>
+      <button class="chip" id="auto" aria-pressed="true">Auto</button>
+      <button class="chip" id="slow" aria-pressed="false">Slow-mo 4×</button>
+      <span class="muted" id="reading">03</span>
+    </header>
+
+    <div class="intro">
+      <h1>Light travelling along the reading</h1>
+      <p>
+        Every card shows the same shipped ruler; the only difference is what happens
+        <b>inside the 44px active tick</b> once it is live. All ten are one-shot — they
+        play on arrival and stop, so none of them spends the page's continuous-animation
+        budget.
+      </p>
+      <p>
+        The bar is 2px tall, so at real speed several of these read as the same flicker.
+        <b>Slow-mo 4×</b> is the honest way to tell them apart, then switch it off to
+        check the difference still survives at shipping speed.
+      </p>
+    </div>
+
+    <div class="grid" id="grid"></div>
+
+    <script type="module">
+      const SECTIONS = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+
+      const SWEEPS = [
+        { key: 'lr', name: 'Sweep →', note: 'A bright band crosses once, rail edge to tip. The plainest reading of "the instrument just took this measurement".' },
+        { key: 'rl', name: 'Sweep ←', note: 'The same band running back toward the rail. Points the eye at the page edge rather than out at the copy.' },
+        { key: 'twice', name: 'Double pass', note: 'One fast pass, then a slower one. Reads as a scanner confirming rather than announcing — the most "checked" of the ten.' },
+        { key: 'fill', name: 'Fill →', note: 'The bar starts inert and lime arrives across it. The sweep leaves the tick lit instead of passing over an already-lit bar.' },
+        { key: 'centre', name: 'Fill from centre', note: 'Lime opens outward from the middle to both ends. Symmetrical, so it reads as the tick opening rather than something travelling.' },
+        { key: 'steps', name: 'Stepped fill', note: 'Lime arrives in four discrete blocks. The only one with a mechanical, quantised feel — closest to a loading readout.' },
+        { key: 'head', name: 'Head runner', note: 'The band runs to the tip and parks there. The one option that changes the tick’s resting look, giving the reading a bright head.' },
+        { key: 'bounce', name: 'Bounce', note: 'Runs past the tip, pulls back, settles. Adds a moment of physics; also the longest at 0.95s.' },
+        { key: 'charge', name: 'Charge', note: 'No travel at all — the whole bar ramps to accent-bright and falls back. The control: much of what a sweep reads as is simply brightness.' },
+        { key: 'trace', name: 'Trace', note: 'The bar is drawn out of nothing, bright at first. Light and length arrive together rather than light crossing an existing bar.' },
+      ]
+
+      /** The shipped rule, copied deliberately so the cards cannot drift from it. */
+      function tickWidth(distance, isMajor) {
+        if (distance === 0) return 44
+        const rest = isMajor ? 20 : 12
+        if (distance === 1) return rest + 10
+        if (distance === 2) return rest + 4
+        return rest
+      }
+
+      document.getElementById('grid').innerHTML = SWEEPS.map(
+        (m, i) => `<article class="card">
+          <div class="card__stage">
+            <div class="ruler m-${m.key}" data-motion="${m.key}">
+              ${SECTIONS.map(
+                (n, j) => `<span class="row" data-i="${j}"><span class="tick"></span><span class="num">${n}</span></span>`,
+              ).join('')}
+            </div>
+          </div>
+          <div class="card__meta">
+            <h2 class="card__name"><i>${String(i + 1).padStart(2, '0')}</i> ${m.name}</h2>
+            <p class="card__note">${m.note}</p>
+          </div>
+        </article>`,
+      ).join('')
+
+      const rulers = [...document.querySelectorAll('.ruler')]
+      let active = 2
+
+      function paint() {
+        for (const ruler of rulers) {
+          const rows = [...ruler.querySelectorAll('.row')]
+          rows.forEach((row, i) => {
+            const distance = Math.abs(i - active)
+            const tick = row.querySelector('.tick')
+            tick.style.width = `${tickWidth(distance, i % 3 === 0)}px`
+            tick.style.setProperty('--d', `${Math.min(distance, 3) * 26}ms`)
+            row.toggleAttribute('data-on', i === active)
+          })
+          // A keyframe animation replays only if the browser sees it start
+          // fresh, which a forced reflow between removal and restore guarantees.
+          const live = rows[active].querySelector('.tick')
+          live.style.animation = 'none'
+          void live.offsetWidth
+          live.style.animation = ''
+        }
+        document.getElementById('reading').textContent = SECTIONS[active]
+      }
+
+      const autoBtn = document.getElementById('auto')
+      const slowBtn = document.getElementById('slow')
+      let timer = null
+
+      function restart() {
+        clearInterval(timer)
+        timer = null
+        if (autoBtn.getAttribute('aria-pressed') === 'true') {
+          // Long jumps, so the reading crosses the scale and the sweep is seen
+          // on a tick that genuinely just grew.
+          timer = setInterval(() => {
+            active = (active + 7) % SECTIONS.length
+            paint()
+          }, slowBtn.getAttribute('aria-pressed') === 'true' ? 3400 : 1900)
+        }
+      }
+
+      autoBtn.addEventListener('click', () => {
+        autoBtn.setAttribute('aria-pressed', String(autoBtn.getAttribute('aria-pressed') !== 'true'))
+        restart()
+      })
+      slowBtn.addEventListener('click', () => {
+        const on = slowBtn.getAttribute('aria-pressed') !== 'true'
+        slowBtn.setAttribute('aria-pressed', String(on))
+        document.documentElement.style.setProperty('--t', on ? 4 : 1)
+        restart()
+      })
+      document.getElementById('step').addEventListener('click', () => {
+        active = (active + 7) % SECTIONS.length
+        paint()
+      })
+      document.getElementById('grid').addEventListener('click', (e) => {
+        const row = e.target.closest('.row')
+        if (!row) return
+        active = Number(row.dataset.i)
+        paint()
+      })
+
+      paint()
+      restart()
+    </script>
+  </body>
+</html>

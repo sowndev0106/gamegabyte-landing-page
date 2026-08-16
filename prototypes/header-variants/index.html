@@ -1,0 +1,566 @@
+<!doctype html>
+<!--
+  Ten header directions for gamegabyte-web.
+
+  The question this prototype answers: the page's desktop navigation currently
+  lives in the LEFT RAIL as twelve unlabelled tick marks, and the topbar carries
+  only a status line and the CTA. Putting text nav back in the topbar means
+  deciding what the rail is then FOR — so each variant below states its rail
+  verdict alongside the header itself, and the rail is drawn at true width so
+  the two can be judged as one frame.
+
+  Twelve sections are grouped into five nav items (see NAV). Every token is
+  verbatim from src/index.css @theme; every type step is one of the four mono
+  roles in STYLE.md §2. Nothing here is production code.
+
+  Throwaway. Open with `npm run dev` → /prototypes/header-variants/index.html
+-->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark" />
+    <title>Gamegabyte — Header Variants</title>
+    <style>
+      /* ═══════════════════════════════════════════════════════════
+         TOKENS — verbatim from src/index.css @theme
+         ═══════════════════════════════════════════════════════════ */
+      @font-face {
+        font-family: 'Schibsted Grotesk';
+        src: url('/fonts/SchibstedGrotesk_wght__1/SchibstedGrotesk_wght__1-english.woff2') format('woff2');
+        font-weight: 400 700;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: Roboto;
+        src: url('/fonts/Roboto_wdth_wght__2/Roboto_wdth_wght__2-english.woff2') format('woff2');
+        font-weight: 400 500;
+        font-display: swap;
+      }
+
+      :root {
+        --color-accent: #b6e802;
+        --color-accent-bright: #d4ff00;
+        --color-brand: #601feb;
+        --color-ink: #05050c;
+
+        --font-display: 'Schibsted Grotesk', system-ui, sans-serif;
+        --font-sans: Roboto, system-ui, sans-serif;
+        --font-mono: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
+
+        /* Shell geometry — w-23 / h-18 / pl-11 / w-15 in the app. */
+        --rail: 92px;
+        --topbar: 72px;
+        --pad: 44px;
+
+        --line: rgb(255 255 255 / 0.11); /* the one hairline */
+        --panel: rgb(255 255 255 / 0.015); /* the one lift above ink */
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        background: var(--color-ink);
+        color: #e7e7ee;
+        font-family: var(--font-sans);
+        -webkit-font-smoothing: antialiased;
+      }
+
+      a { color: inherit; text-decoration: none; }
+      button { background: none; border: 0; color: inherit; font: inherit; cursor: pointer; }
+
+      /* STYLE.md §2 — the four mono roles, nothing between. */
+      .mono-eyebrow { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; }
+      .mono-label   { font-family: var(--font-mono); font-size: 9px;  letter-spacing: 0.22em; text-transform: uppercase; }
+      .mono-nav     { font-family: var(--font-mono); font-size: 9px;  letter-spacing: 0.16em; text-transform: uppercase; }
+      .mono-micro   { font-family: var(--font-mono); font-size: 8px;  letter-spacing: 0.18em; text-transform: uppercase; }
+
+      .hud-grid {
+        background-image:
+          linear-gradient(to right, rgb(255 255 255 / 0.035) 1px, transparent 1px),
+          linear-gradient(to bottom, rgb(255 255 255 / 0.035) 1px, transparent 1px);
+        background-size: 72px 72px;
+      }
+
+      /* ═══════════════════════════════════════════════════════════
+         PROTOTYPE CHROME — not part of any design
+         ═══════════════════════════════════════════════════════════ */
+      .doc-head { padding: 40px 32px 24px; border-bottom: 1px solid var(--line); }
+      .doc-head h1 { font-family: var(--font-display); font-size: 28px; font-weight: 800; text-transform: uppercase; letter-spacing: -0.02em; margin: 0 0 10px; }
+      .doc-head p { max-width: 70ch; margin: 0; font-size: 14px; line-height: 1.6; color: rgb(255 255 255 / 0.7); }
+
+      .jump { position: sticky; top: 0; z-index: 60; display: flex; flex-wrap: wrap; gap: 0;
+              border-bottom: 1px solid var(--line); background: rgb(5 5 12 / 0.94); backdrop-filter: blur(18px); }
+      .jump a { padding: 12px 14px; border-right: 1px solid var(--line); color: rgb(255 255 255 / 0.48); }
+      .jump a:hover { color: var(--color-accent); }
+
+      .stage { border-bottom: 1px solid var(--line); }
+      .stage-head { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; padding: 30px 32px 18px; }
+      .stage-head .n { color: var(--color-accent); }
+      .stage-head h2 { font-family: var(--font-display); font-size: 22px; font-weight: 700; text-transform: uppercase; letter-spacing: -0.01em; margin: 0; }
+      .stage-head .why { flex: 1 1 460px; font-size: 13px; line-height: 1.6; color: rgb(255 255 255 / 0.7); }
+      .stage-head .verdict { color: rgb(255 255 255 / 0.48); border: 1px solid var(--line); padding: 5px 9px; }
+
+      /* The frame the header is judged inside: true rail width, real ground. */
+      .frame { position: relative; height: 300px; overflow: hidden; border-top: 1px solid var(--line); background: var(--color-ink); }
+      .frame .body { position: absolute; inset: 0 0 0 var(--rail); }
+      .frame .below { position: absolute; inset: var(--topbar) 0 0 0; padding: 54px var(--pad); }
+
+      /* A fragment of the hero, so the header is never judged against nothing. */
+      .hero-eyebrow { color: var(--color-accent); }
+      .hero-h1 { font-family: var(--font-display); font-size: 58px; font-weight: 800; text-transform: uppercase;
+                 letter-spacing: -0.03em; line-height: 0.86; margin: 14px 0 0; color: rgb(255 255 255 / 0.16); }
+
+      /* ── the real rail, ported from CommandRail.tsx ───────────── */
+      .rail { position: absolute; inset: 0 auto 0 0; width: var(--rail); display: flex; flex-direction: column;
+              align-items: center; justify-content: space-between; padding: 24px 0;
+              border-right: 1px solid var(--line); background: rgb(5 5 12 / 0.95); z-index: 40; }
+      .rail .logo { width: 60px; }
+      .rail .logo svg { width: 100%; height: auto; }
+      .rail nav { display: flex; flex-direction: column; width: 100%; padding-left: 20px; }
+      .rail .tick { display: flex; align-items: center; height: 24px; }
+      .rail .tick i { display: block; height: 1px; background: rgb(255 255 255 / 0.3); transition: width .4s, height .4s, background-color .4s; }
+      .rail .tick.on i { height: 2px; background: var(--color-accent); box-shadow: 0 0 12px var(--color-accent); }
+      .rail .tick b { margin-left: 6px; font-family: var(--font-mono); font-size: 8px; letter-spacing: 0.1em;
+                      color: var(--color-accent); opacity: 0; transition: opacity .3s; }
+      .rail .tick.on b { opacity: 1; }
+      .rail .online { font-family: var(--font-mono); font-size: 8px; letter-spacing: 0.18em; text-transform: uppercase;
+                      color: var(--color-accent); writing-mode: vertical-rl; }
+      /* Rail stripped of its navigation job — logo and status only. */
+      .rail.quiet nav { display: none; }
+
+      /* ── shared header parts ──────────────────────────────────── */
+      .bar { position: absolute; inset: 0 0 auto 0; height: var(--topbar); display: flex; align-items: center;
+             border-bottom: 1px solid var(--line); background: rgb(5 5 12 / 0.9); backdrop-filter: blur(18px); z-index: 30; }
+
+      .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--color-accent);
+             box-shadow: 0 0 14px var(--color-accent); animation: pulse 2.6s ease-in-out infinite; }
+      @keyframes pulse { 50% { opacity: .35; transform: scale(.7); } }
+      .status { display: flex; align-items: center; gap: 12px; color: rgb(255 255 255 / 0.7); }
+
+      .cta { display: flex; align-items: center; gap: 8px; align-self: stretch; padding: 0 var(--pad);
+             background: var(--color-accent); color: var(--color-ink);
+             font-family: var(--font-display); font-size: 14px; font-weight: 700; text-transform: uppercase; }
+      .cta:hover { background: var(--color-accent-bright); }
+      .cta svg { width: 13px; height: 13px; }
+
+      /* Nav items share one voice; only the ACTIVE TREATMENT differs per variant. */
+      .navlist { display: flex; align-items: center; }
+      .navlist a { display: flex; align-items: center; gap: 7px; color: rgb(255 255 255 / 0.7); }
+      .navlist a:hover { color: #fff; }
+      .navlist a .ix { color: rgb(255 255 255 / 0.3); font-size: 8px; letter-spacing: 0.18em; }
+      .navlist a.on { color: #fff; }
+      .navlist a.on .ix { color: var(--color-accent); }
+
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important;
+                                 transition-duration: .001ms !important; transition-delay: 0ms !important; }
+      }
+
+      /* ═══════════════════════════════════════════════════════════
+         PER-VARIANT
+         ═══════════════════════════════════════════════════════════ */
+
+      /* 01 — indexed inline: short hairline ticks between items. */
+      .v1 .navlist { padding-left: var(--pad); }
+      .v1 .navlist a { padding: 0 16px; }
+      .v1 .navlist a + a { border-left: 1px solid var(--line); }
+      .v1 .right { margin-left: auto; display: flex; align-items: center; gap: 28px; align-self: stretch; }
+
+      /* 02 — matrix cells: every slot is a cell of the page's own grid. */
+      .v2 .navlist { align-self: stretch; }
+      .v2 .navlist a { align-self: stretch; padding: 0 24px; border-right: 1px solid var(--line);
+                       border-top: 2px solid transparent; }
+      .v2 .navlist a:first-child { border-left: 1px solid var(--line); }
+      .v2 .navlist a.on { border-top-color: var(--color-accent); background: var(--panel); }
+      .v2 .right { margin-left: auto; align-self: stretch; display: flex; align-items: center; }
+      .v2 .right .status { padding: 0 28px; border-left: 1px solid var(--line); align-self: stretch; }
+
+      /* 03 — two tiers: status keeps its line, nav gets its own. */
+      .v3 .stack { flex: 1; align-self: stretch; display: flex; flex-direction: column; }
+      .v3 .tier1 { flex: 0 0 30px; display: flex; align-items: center; justify-content: space-between;
+                   padding: 0 var(--pad); border-bottom: 1px solid var(--line); }
+      .v3 .tier2 { flex: 1; display: flex; align-items: center; padding: 0 var(--pad); }
+      .v3 .navlist a { padding-right: 26px; }
+      .v3 .navlist a.on { color: var(--color-accent); }
+
+      /* 04 — one left edge: everything packs left, the right half stays void. */
+      .v4 .navlist { padding-left: var(--pad); }
+      .v4 .navlist a { padding-right: 24px; }
+      .v4 .navlist a.on { color: var(--color-accent); }
+      .v4 .ghost-cta { display: flex; align-items: center; gap: 8px; margin-left: 8px; padding: 11px 18px; white-space: nowrap;
+                       border: 1px solid var(--color-accent); color: var(--color-accent); }
+      .v4 .ghost-cta:hover { background: var(--color-accent); color: var(--color-ink); }
+      .v4 .status { margin-left: 32px; }
+
+      /* 05 — the header takes over the rail's job of measuring position. */
+      .v5 .navlist { padding-left: var(--pad); }
+      .v5 .navlist a { padding-right: 28px; }
+      .v5 .navlist a.on { color: var(--color-accent); }
+      .v5 .right { margin-left: auto; display: flex; align-items: center; gap: 28px; align-self: stretch; }
+      .v5 .scrub { position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: rgb(255 255 255 / 0.11); }
+      .v5 .scrub i { display: block; height: 100%; background: var(--color-accent);
+                     box-shadow: 0 0 10px var(--color-accent); transition: width .5s cubic-bezier(.16,1,.3,1); }
+
+      /* 06 — no rules at all; a marker travels along the top edge. */
+      .v6 .navlist { padding-left: var(--pad); }
+      .v6 .navlist a { padding: 0 18px; color: rgb(255 255 255 / 0.48); }
+      .v6 .navlist a.on { color: #fff; }
+      /* Sits on the bar's own top edge, so `.bar` must be the offset parent the
+         script measures against — not the nav list, which is only text-high. */
+      .v6 .marker { position: absolute; top: 0; height: 2px; background: var(--color-accent);
+                    box-shadow: 0 0 12px var(--color-accent); transition: left .45s cubic-bezier(.16,1,.3,1), width .45s cubic-bezier(.16,1,.3,1); }
+      .v6 .right { margin-left: auto; display: flex; align-items: center; gap: 28px; align-self: stretch; }
+
+      /* 07 — the active item is a prompt line, not a highlighted word. */
+      .v7 .navlist { padding-left: var(--pad); }
+      .v7 .navlist a { padding-right: 26px; color: rgb(255 255 255 / 0.48); }
+      .v7 .navlist a .caret { color: var(--color-accent); opacity: 0; }
+      .v7 .navlist a.on { color: #fff; }
+      .v7 .navlist a.on .caret { opacity: 1; }
+      .v7 .right { margin-left: auto; display: flex; align-items: center; gap: 28px; align-self: stretch; }
+      .v7 .prompt { color: rgb(255 255 255 / 0.48); }
+      .v7 .prompt b { color: var(--color-accent); font-weight: 400; }
+
+      /* 08 — nav folded behind one key; the panel holds all twelve. */
+      .v8 .key { display: flex; align-items: center; gap: 10px; margin-left: var(--pad);
+                 padding: 10px 15px; border: 1px solid var(--line); color: rgb(255 255 255 / 0.7); }
+      .v8 .key:hover, .v8 .key[aria-expanded='true'] { border-color: var(--color-accent); color: var(--color-accent); }
+      .v8 .key .bars { display: flex; flex-direction: column; gap: 3px; }
+      .v8 .key .bars i { width: 12px; height: 1px; background: currentColor; }
+      .v8 .status { margin-left: 28px; }
+      .v8 .right { margin-left: auto; align-self: stretch; display: flex; }
+      /* The panel is a SIBLING of `.bar`, not a descendant — so it carries its
+         own class rather than being reached through `.v8`. */
+      .v8-sheet { position: absolute; inset: var(--topbar) 0 auto 0; z-index: 29;
+                  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+                  border-bottom: 1px solid var(--line); background: rgb(5 5 12 / 0.98); backdrop-filter: blur(18px); }
+      .v8-sheet[hidden] { display: none; }
+      .v8-sheet a { padding: 18px 22px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line);
+                    color: rgb(255 255 255 / 0.7); }
+      .v8-sheet a:hover { background: var(--panel); color: #fff; }
+      .v8-sheet a .ix { color: rgb(255 255 255 / 0.3); }
+      .v8-sheet a:hover .ix { color: var(--color-accent); }
+
+      /* 09 — five parents, twelve destinations. */
+      .v9 .navlist { padding-left: var(--pad); }
+      .v9 .navlist a { padding: 0 18px; }
+      .v9 .navlist a[aria-expanded='true'] { color: var(--color-accent); }
+      .v9 .navlist a .cnt { color: rgb(255 255 255 / 0.3); font-size: 8px; }
+      .v9 .right { margin-left: auto; align-self: stretch; display: flex; align-items: center; }
+      /* Sibling of `.bar`, same as .v8-sheet. Left inset is 0, not --rail: the
+         panel already sits inside `.body`, which starts where the rail ends. */
+      .v9-mega { position: absolute; inset: var(--topbar) 0 auto 0; z-index: 29;
+                 display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+                 border-bottom: 1px solid var(--line); background: rgb(5 5 12 / 0.98); backdrop-filter: blur(18px); }
+      .v9-mega[hidden] { display: none; }
+      .v9-mega a { padding: 20px 24px; border-right: 1px solid var(--line); }
+      .v9-mega a .ix { display: block; color: var(--color-accent); margin-bottom: 8px; }
+      .v9-mega a .nm { display: block; font-family: var(--font-display); font-size: 18px; font-weight: 700;
+                       text-transform: uppercase; letter-spacing: -0.01em; }
+      .v9-mega a .ds { display: block; margin-top: 6px; font-size: 12px; line-height: 1.5; color: rgb(255 255 255 / 0.48); }
+      .v9-mega a:hover { background: var(--panel); }
+
+      /* 10 — nav plus a jump field; the OS reading of a header. */
+      .v10 .navlist { padding-left: var(--pad); }
+      .v10 .navlist a { padding-right: 24px; }
+      .v10 .navlist a.on { color: var(--color-accent); }
+      .v10 .right { margin-left: auto; align-self: stretch; display: flex; align-items: center; }
+      .v10 .field { position: relative; display: flex; align-items: center; gap: 10px; margin-right: 24px;
+                    padding: 10px 14px; min-width: 230px; border: 1px solid var(--line); color: rgb(255 255 255 / 0.48); }
+      .v10 .field:focus-within { border-color: var(--color-accent); }
+      .v10 .field input { flex: 1; min-width: 0; background: none; border: 0; outline: 0; color: #fff;
+                          font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; }
+      .v10 .field input::placeholder { color: rgb(255 255 255 / 0.3); }
+      .v10 .field kbd { padding: 3px 6px; border: 1px solid var(--line); font-family: var(--font-mono); font-size: 8px; }
+      .v10 .results { position: absolute; top: calc(var(--topbar) - 1px); right: 0; width: 340px; z-index: 29;
+                      border: 1px solid var(--line); background: rgb(5 5 12 / 0.98); backdrop-filter: blur(18px); }
+      .v10 .results[hidden] { display: none; }
+      .v10 .results a { display: flex; gap: 12px; padding: 11px 16px; color: rgb(255 255 255 / 0.7); }
+      .v10 .results a + a { border-top: 1px solid var(--line); }
+      .v10 .results a:hover { background: var(--panel); color: #fff; }
+      .v10 .results a .ix { color: rgb(255 255 255 / 0.3); }
+      .v10 .results a:hover .ix { color: var(--color-accent); }
+      .v10 .results .none { padding: 14px 16px; color: rgb(255 255 255 / 0.3); }
+    </style>
+  </head>
+
+  <body>
+    <header class="doc-head">
+      <h1>Header — 10 hướng</h1>
+      <p>
+        Mười cách đưa nav chữ trở lại topbar. Mỗi khung vẽ rail ở đúng bề rộng thật (92px) và
+        header ở đúng chiều cao thật (72px), vì câu hỏi thật sự không phải &ldquo;nav trông thế nào&rdquo;
+        mà là <strong>rail còn để làm gì</strong> khi header đã có nav. Bấm vào một mục nav bất kỳ để
+        thấy trạng thái active của hướng đó phản ứng ra sao. Prototype dùng một lần — không phải code production.
+      </p>
+    </header>
+
+    <nav class="jump mono-nav" id="jump"></nav>
+
+    <main id="stages"></main>
+
+    <script>
+      /* ── the wordmark, inlined so the file works without the dev server ── */
+      const LOGO = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 277 99" aria-hidden="true"><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M0 0H68.6308L60.5942 24.729H23.2219L21.3204 25.5395V27.2332H23.2219V31.7885L20.5285 45.7061L31.4876 44.7332L32.3825 37.9829H34.6174L37.6283 33.7858H57.6508L46.2684 68.8104L32.6306 61.1849H0V0ZM32.5886 36.4288L33.0567 33.7858H33.925H37.0172L32.5167 36.9708L32.5886 36.4288Z"/><path fill="#fff" d="M223.451 59.9497V42.9612L228.56 41.9819V17.8404L223.451 16.8611V0.000364064H276.077V21.8001H270.244C268.342 20.3809 266.014 19.2455 263.261 18.3939C260.508 17.5424 257.485 17.1166 254.192 17.1166V26.3559L265.986 23.8438V35.9785L254.192 33.4238V42.8335C257.513 42.8335 260.55 42.4219 263.304 41.5987C266.085 40.7756 268.399 39.626 270.244 38.1499H276.077V59.9497H223.451Z"/><path fill="#fff" d="M130.546 59.9497V42.9612L135.656 41.9819V17.7552L130.546 16.776V0.000364064H161.245L174.146 22.9071L186.919 0.000364064H217.618V16.776L212.508 17.7552V41.9819L217.618 42.9612V59.9497H186.919V30.6137L174.146 52.2431L161.245 30.6137V59.9497H130.546Z"/><path fill="#fff" d="M58.6756 59.9496V40.1936L63.6146 39.2143L75.4086 0.000327195H108.449L120.328 39.2143L125.224 40.1936V59.9496H102.445L100.317 49.8588H83.5835L81.4546 59.9496H58.6756ZM86.1807 36.4042H97.7193L91.9287 12.8588L86.1807 36.4042Z"/><path fill="#fff" d="M14.1004 98.9912C9.72655 98.9912 6.28315 97.8948 3.77023 95.7019C1.25731 93.4972 0.000856804 90.2019 0.000856804 85.8162C0.000856804 82.8647 0.575746 80.4407 1.72552 78.5441C2.88715 76.6476 4.53477 75.243 6.66838 74.3303C8.81384 73.4176 11.3564 72.9612 14.296 72.9612C16.4178 72.9612 18.3262 73.1509 20.0212 73.5302C21.7281 73.8976 23.2809 74.3955 24.6796 75.0237V82.758H19.6478C19.1974 82.0942 18.6818 81.549 18.101 81.1222C17.532 80.6837 16.7023 80.4644 15.6118 80.4644C13.9997 80.4644 12.7788 80.9444 11.9491 81.9046C11.1312 82.8647 10.7222 84.1686 10.7222 85.8162C10.7222 87.7483 11.0838 89.1944 11.8068 90.1545C12.5417 91.1028 13.8575 91.5769 15.754 91.5769C16.2874 91.5769 16.7734 91.5414 17.212 91.4702C17.6624 91.3991 18.1128 91.2924 18.5632 91.1502V89.1233H14.9895V84.7494H25.3908V96.5553C23.7787 97.231 22.0541 97.8059 20.2168 98.28C18.3795 98.7541 16.3407 98.9912 14.1004 98.9912Z"/><path fill="#fff" d="M48.6235 98.4932V90.2433L50.6859 89.8343L55.611 73.4589H69.4084L74.369 89.8343L76.4137 90.2433V98.4932H66.9014L66.0124 94.2794H59.0248L58.1358 98.4932H48.6235ZM60.1094 88.6608H64.9278L62.5097 78.8285L60.1094 88.6608Z"/><path fill="#fff" d="M99.6456 98.4932V91.399L101.779 90.99V80.2687L99.6456 79.8597V73.4589H121.231C122.783 73.8263 124.046 74.4368 125.018 75.2902C125.99 76.1437 126.476 77.4594 126.476 79.2374C126.476 79.8538 126.411 80.5235 126.28 81.2466C126.162 81.9696 125.93 82.6571 125.587 83.3091C125.243 83.9491 124.751 84.4885 124.111 84.927C123.471 85.3538 122.635 85.5908 121.604 85.6382C122.789 85.6975 123.88 85.9109 124.876 86.2783C125.871 86.6339 126.671 87.191 127.276 87.9496C127.88 88.7083 128.183 89.7217 128.183 90.99C128.183 92.8392 127.815 94.3149 127.08 95.4173C126.357 96.5078 125.314 97.296 123.951 97.782C122.588 98.2562 120.952 98.4932 119.044 98.4932H99.6456ZM112.483 83.878H114.047C115.15 83.878 115.997 83.7239 116.59 83.4157C117.183 83.0957 117.479 82.3726 117.479 81.2466C117.479 80.1798 117.171 79.51 116.554 79.2374C115.938 78.9648 115.102 78.8285 114.047 78.8285H112.483V83.878ZM112.483 92.4124H114.047C115.15 92.4124 115.997 92.2524 116.59 91.9324C117.183 91.6123 117.479 90.8893 117.479 89.7632C117.479 88.6964 117.171 88.0326 116.554 87.7718C115.938 87.4992 115.102 87.3629 114.047 87.3629H112.483V92.4124Z"/><path fill="#fff" d="M159.327 98.4932V91.4345L161.461 90.9011L154.118 80.8554L151.415 80.4642V73.4589H165.692V80.4642L164.021 80.8554L167.417 85.9938L170.795 80.8554L169.124 80.4642V73.4589H183.384V80.4642L180.699 80.8554L173.356 90.9011L175.507 91.4345V98.4932H159.327Z"/><path fill="#fff" d="M211.257 98.4932V91.399L213.391 90.99V80.0731C212.81 80.0731 212.223 80.1679 211.63 80.3576C211.049 80.5472 210.564 80.8258 210.172 81.1932C209.781 81.5607 209.586 82.017 209.586 82.5623H206.616V73.4589H230.868V82.5623H227.899C227.899 82.017 227.698 81.5607 227.295 81.1932C226.903 80.8258 226.417 80.5472 225.837 80.3576C225.256 80.1679 224.675 80.0731 224.094 80.0731V90.99L226.228 91.399V98.4932H211.257Z"/><path fill="#fff" d="M254.101 98.4932V91.399L256.234 90.99V80.9087L254.101 80.4998V73.4589H276.077V82.5623H273.641C272.847 81.9696 271.875 81.4955 270.725 81.1399C269.575 80.7843 268.313 80.6065 266.938 80.6065V84.4648L271.863 83.4157V88.483L266.938 87.4162V91.3456C268.325 91.3456 269.593 91.1738 270.743 90.83C271.905 90.4863 272.871 90.0062 273.641 89.3898H276.077V98.4932H254.101Z"/></svg>`
+
+      const ARROW = `<svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 9L9 3M9 3H4M9 3V8" stroke="currentColor" stroke-width="1.6"/></svg>`
+
+      /* ── src/content/sections.ts, verbatim ─────────────────────── */
+      const SECTIONS = [
+        ['01', 'Command'], ['02', 'Transmission'], ['03', 'Telemetry'], ['04', 'Services'],
+        ['05', 'Process'],  ['06', 'Advantages'],   ['07', 'Archive'],   ['08', 'Dossier'],
+        ['09', 'Logs'],     ['10', 'Academy'],      ['11', 'Diagnostics'], ['12', 'Channel'],
+      ]
+
+      /*
+        Twelve sections do not fit a horizontal bar at 9px/0.16em — the tracking
+        that makes a two-word label read as an instrument is exactly what makes
+        twelve of them overflow. So the bar carries five groups, and the number
+        shown is the group's FIRST section, which is where the link lands.
+      */
+      const NAV = [
+        { ix: '02', label: 'Work',     children: [['02', 'Transmission', 'Showreel 2025'], ['07', 'Archive', 'Selected builds'], ['08', 'Dossier', 'Seedify mission']] },
+        { ix: '04', label: 'Services', children: [['04', 'Services', 'Systems matrix'], ['05', 'Process', 'Mission sequence']] },
+        { ix: '03', label: 'Studio',   children: [['03', 'Telemetry', 'Studio readout'], ['06', 'Advantages', 'Operational edge'], ['09', 'Logs', 'Client transmissions']] },
+        { ix: '10', label: 'Academy',  children: [['10', 'Academy', 'Training subsystem']] },
+        { ix: '11', label: 'FAQ',      children: [['11', 'Diagnostics', 'System diagnostics']] },
+      ]
+
+      const VARIANTS = [
+        { n: '01', key: 'v1',  name: 'Indexed inline',
+          rail: 'Rail giữ nguyên 12 tick',
+          why: 'Bước tiến hoá ngắn nhất từ topbar hiện tại: nav sang trái, status theo CTA sang phải, mỗi mục mang sẵn số section. Rủi ro duy nhất — rail và header cùng nói một chuyện.' },
+        { n: '02', key: 'v2',  name: 'Matrix cells',
+          rail: 'Rail giữ nguyên 12 tick',
+          why: 'Mỗi mục là một ô cao hết header có vạch dọc ngăn — header trở thành một hàng của chính lưới mà Services đang dùng. Active = mép trên lime + nền panel.' },
+        { n: '03', key: 'v3',  name: 'Two-tier',
+          rail: 'Rail giữ nguyên 12 tick',
+          why: 'Vẫn 72px nhưng chẻ đôi: tầng trên giữ status như cũ, tầng dưới là nav. Không phải chọn giữa hai thứ, nhưng chiều cao mỗi tầng chỉ còn ~36px.' },
+        { n: '04', key: 'v4',  name: 'One left edge',
+          rail: 'Rail giữ nguyên 12 tick',
+          why: 'Trung thành nhất với luật &ldquo;mọi thứ đọc từ một mép trái&rdquo;: nav, status và CTA đều dồn trái, nửa phải để trống có chủ ý — đúng logic khoảng trống của pinned-panel. Đổi lại CTA mất khối lime đặc.' },
+        { n: '05', key: 'v5',  name: 'Scrub progress',
+          rail: 'Rail rút còn logo + status',
+          why: 'Header nhận luôn việc đo vị trí của rail: một vạch lime chạy dọc mép dưới báo tiến độ trang. Rail hết lý do giữ 12 tick, nên rút gọn — hết trùng lặp.' },
+        { n: '06', key: 'v6',  name: 'Travelling marker',
+          rail: 'Rail rút còn logo + status',
+          why: 'Không một vạch ngăn nào. Một marker lime 2px trượt dọc mép trên tới mục đang đọc — mượn đúng chuyển động &ldquo;kim chỉ&rdquo; của rail nhưng nằm ngang.' },
+        { n: '07', key: 'v7',  name: 'Terminal prompt',
+          rail: 'Rail giữ nguyên 12 tick',
+          why: 'Mục active in ra thành dòng lệnh <code>&gt; WORK</code>, các mục khác lùi về white/48. Chất OS đậm nhất mà không thêm một hình khối nào.' },
+        { n: '08', key: 'v8',  name: 'Menu key',
+          rail: 'Rail giữ nguyên 12 tick',
+          why: 'Header gần như không đổi — thêm một phím <code>MENU [12]</code>. Bấm vào bung panel full-width đủ 12 section trên lưới hairline. Không phải gom nhóm, không phải cắt bớt.' },
+        { n: '09', key: 'v9',  name: 'Hover mega-row',
+          rail: 'Rail giữ nguyên 12 tick',
+          why: 'Năm mục cha, hover thì thả panel con kèm số và một dòng mô tả. Năm mục nhưng với tới đủ 12 — cách duy nhất vừa gọn vừa không giấu gì.' },
+        { n: '10', key: 'v10', name: 'Command palette',
+          rail: 'Rail rút còn logo + status',
+          why: 'Nav cộng một ô nhảy nhanh <code>⌘K</code> lọc theo tên section. Đúng chất &ldquo;một hệ điều hành&rdquo; nhất, cũng là hướng phải nuôi thêm code nhất.' },
+      ]
+
+      /* ── builders ─────────────────────────────────────────────── */
+      const el = (html) => { const t = document.createElement('template'); t.innerHTML = html.trim(); return t.content.firstElementChild }
+
+      function railHtml(quiet, activeIx) {
+        const ticks = quiet ? '' : `<nav>${SECTIONS.map((s, i) => {
+          const on = i === activeIx
+          const major = i % 3 === 0
+          const d = Math.abs(i - activeIx)
+          const w = d === 0 ? 44 : d === 1 ? (major ? 30 : 22) : d === 2 ? (major ? 24 : 16) : (major ? 20 : 12)
+          return `<span class="tick${on ? ' on' : ''}"><i style="width:${w}px"></i><b>${s[0]}</b></span>`
+        }).join('')}</nav>`
+        return `<aside class="rail${quiet ? ' quiet' : ''}">
+          <span class="logo">${LOGO}</span>${ticks}<span class="online">Online</span></aside>`
+      }
+
+      const statusHtml = `<span class="status mono-label"><span class="dot"></span>Studio network online</span>`
+      const ctaHtml = `<a href="#" class="cta">Open channel ${ARROW}</a>`
+      const navItems = (extra = '') => NAV.map((g, i) =>
+        `<a href="#" data-i="${i}"><span class="ix mono-micro">[${g.ix}]</span>${g.label}${extra}</a>`).join('')
+
+      /* Each variant returns the contents of `.body` — rail is added separately. */
+      const BUILD = {
+        v1: () => `<div class="bar v1">
+            <div class="navlist mono-nav">${navItems()}</div>
+            <div class="right">${statusHtml}${ctaHtml}</div>
+          </div>`,
+
+        v2: () => `<div class="bar v2">
+            <div class="navlist mono-nav">${navItems()}</div>
+            <div class="right">${statusHtml}${ctaHtml}</div>
+          </div>`,
+
+        v3: () => `<div class="bar v3">
+            <div class="stack">
+              <div class="tier1">
+                ${statusHtml}
+                <span class="mono-micro" style="color:rgb(255 255 255 / .3)">12 sections</span>
+              </div>
+              <div class="tier2"><div class="navlist mono-nav">${navItems()}</div></div>
+            </div>
+            ${ctaHtml}
+          </div>`,
+
+        v4: () => `<div class="bar v4">
+            <div class="navlist mono-nav">${navItems()}</div>
+            <a href="#" class="ghost-cta mono-nav">Open channel ${ARROW}</a>
+            ${statusHtml}
+          </div>`,
+
+        v5: () => `<div class="bar v5">
+            <div class="navlist mono-nav">${navItems()}</div>
+            <div class="right">${statusHtml}${ctaHtml}</div>
+            <span class="scrub"><i style="width:18%"></i></span>
+          </div>`,
+
+        v6: () => `<div class="bar v6">
+            <div class="navlist mono-nav">${navItems()}</div>
+            <div class="right">${statusHtml}${ctaHtml}</div>
+            <span class="marker"></span>
+          </div>`,
+
+        v7: () => `<div class="bar v7">
+            <div class="navlist mono-nav">${NAV.map((g, i) =>
+              `<a href="#" data-i="${i}"><span class="caret">&gt;</span>${g.label}</a>`).join('')}</div>
+            <div class="right">
+              <span class="prompt mono-nav">gamegabyte:~$ <b>online</b></span>${ctaHtml}
+            </div>
+          </div>`,
+
+        v8: () => `<div class="bar v8">
+            <button class="key mono-nav" aria-expanded="false" aria-controls="v8-sheet">
+              <span class="bars"><i></i><i></i><i></i></span>Menu <span style="color:var(--color-accent)">[12]</span>
+            </button>
+            ${statusHtml}
+            <div class="right">${ctaHtml}</div>
+          </div>
+          <nav id="v8-sheet" class="v8-sheet mono-nav" hidden>${SECTIONS.map(
+            (s) => `<a href="#"><span class="ix mono-micro">[${s[0]}]</span> ${s[1]}</a>`).join('')}</nav>`,
+
+        v9: () => `<div class="bar v9">
+            <div class="navlist mono-nav">${NAV.map((g, i) =>
+              `<a href="#" data-i="${i}" aria-expanded="false"><span class="ix mono-micro">[${g.ix}]</span>${g.label}<span class="cnt">${g.children.length}</span></a>`).join('')}</div>
+            <div class="right">${statusHtml}${ctaHtml}</div>
+          </div>
+          <div class="v9-mega" hidden></div>`,
+
+        v10: () => `<div class="bar v10">
+            <div class="navlist mono-nav">${navItems()}</div>
+            <div class="right">
+              <label class="field mono-nav">
+                <span style="color:var(--color-accent)">&#9906;</span>
+                <input type="text" placeholder="Jump to section" aria-label="Jump to section" />
+                <kbd>&#8984;K</kbd>
+              </label>
+              ${ctaHtml}
+            </div>
+            <div class="results mono-nav" hidden></div>
+          </div>`,
+      }
+
+      /* ── render ───────────────────────────────────────────────── */
+      const stages = document.getElementById('stages')
+      const jump = document.getElementById('jump')
+
+      VARIANTS.forEach((v) => {
+        jump.appendChild(el(`<a href="#${v.key}">${v.n} ${v.name}</a>`))
+
+        const quiet = /logo/.test(v.rail)
+        const stage = el(`<section class="stage" id="${v.key}">
+          <div class="stage-head">
+            <span class="n mono-eyebrow">[${v.n}]</span>
+            <h2>${v.name}</h2>
+            <p class="why">${v.why}</p>
+            <span class="verdict mono-micro">${v.rail}</span>
+          </div>
+          <div class="frame">
+            ${railHtml(quiet, 3)}
+            <div class="body">
+              ${BUILD[v.key]()}
+              <div class="below">
+                <span class="hero-eyebrow mono-eyebrow">[01] Game growth systems</span>
+                <p class="hero-h1">We are the game<br />marketing studio.</p>
+              </div>
+            </div>
+          </div>
+        </section>`)
+
+        stages.appendChild(stage)
+        wire(v.key, stage)
+      })
+
+      /* ── per-variant behaviour ────────────────────────────────── */
+      function wire(key, stage) {
+        const list = stage.querySelector('.navlist')
+
+        // Shared: clicking a nav item makes it the active reading.
+        if (list) {
+          const links = [...list.querySelectorAll('a')]
+          const setActive = (i) => {
+            links.forEach((a, j) => a.classList.toggle('on', j === i))
+            if (key === 'v5') {
+              // The scrub reads position in the document, so the group's first
+              // section index is what drives it — not the nav item's ordinal.
+              const ix = Number(NAV[i].ix)
+              stage.querySelector('.scrub i').style.width = `${(ix / 12) * 100}%`
+            }
+            if (key === 'v6') {
+              const a = links[i], marker = stage.querySelector('.marker')
+              marker.style.left = `${a.offsetLeft}px`
+              marker.style.width = `${a.offsetWidth}px`
+            }
+          }
+          links.forEach((a, i) => a.addEventListener('click', (e) => { e.preventDefault(); setActive(i) }))
+          if (key !== 'v6') setActive(0)
+          // v6's marker needs laid-out geometry, so it waits a frame.
+          else requestAnimationFrame(() => setActive(0))
+        }
+
+        if (key === 'v8') {
+          const btn = stage.querySelector('.key'), sheet = stage.querySelector('.v8-sheet')
+          btn.addEventListener('click', () => {
+            const open = btn.getAttribute('aria-expanded') === 'true'
+            btn.setAttribute('aria-expanded', String(!open))
+            sheet.hidden = open
+          })
+        }
+
+        if (key === 'v9') {
+          const mega = stage.querySelector('.v9-mega')
+          const links = [...stage.querySelectorAll('.navlist a')]
+          const open = (i) => {
+            links.forEach((a, j) => a.setAttribute('aria-expanded', String(j === i)))
+            mega.innerHTML = NAV[i].children.map(([ix, nm, ds]) =>
+              `<a href="#"><span class="ix mono-micro">[${ix}]</span><span class="nm">${nm}</span><span class="ds">${ds}</span></a>`).join('')
+            mega.hidden = false
+          }
+          const close = () => { links.forEach((a) => a.setAttribute('aria-expanded', 'false')); mega.hidden = true }
+          links.forEach((a, i) => {
+            a.addEventListener('mouseenter', () => open(i))
+            a.addEventListener('focus', () => open(i))
+          })
+          stage.querySelector('.frame').addEventListener('mouseleave', close)
+          open(0) // shown open on load, otherwise the direction is invisible at a glance
+        }
+
+        if (key === 'v10') {
+          const input = stage.querySelector('.field input'), out = stage.querySelector('.results')
+          const draw = () => {
+            const q = input.value.trim().toLowerCase()
+            const hits = SECTIONS.filter(([ix, nm]) => !q || nm.toLowerCase().includes(q) || ix.includes(q))
+            out.innerHTML = hits.length
+              ? hits.map(([ix, nm]) => `<a href="#"><span class="ix mono-micro">[${ix}]</span>${nm}</a>`).join('')
+              : `<p class="none mono-nav">No section matches</p>`
+            out.hidden = false
+          }
+          input.addEventListener('focus', draw)
+          input.addEventListener('input', draw)
+          input.addEventListener('blur', () => setTimeout(() => { out.hidden = true }, 140))
+        }
+      }
+    </script>
+  </body>
+</html>
