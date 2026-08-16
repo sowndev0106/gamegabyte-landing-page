@@ -26,7 +26,7 @@ export function Testimonials() {
               <span className="font-mono text-[9px] uppercase leading-relaxed tracking-[0.22em] text-accent">
                 Log 01 / Human intelligence
               </span>
-              <span className="mt-8 flex items-center gap-2.5 font-mono text-[9px] uppercase tracking-[0.18em] text-white/60">
+              <span className="mt-8 flex items-center gap-2.5 font-mono text-[9px] uppercase tracking-[0.22em] text-white/60">
                 <span aria-hidden="true" className="command-status-dot h-1.5 w-1.5 rounded-full bg-accent" />
                 {log.role.replace(/^CEO of /, '')}
               </span>

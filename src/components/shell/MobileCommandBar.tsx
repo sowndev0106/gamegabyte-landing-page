@@ -35,7 +35,7 @@ export function MobileCommandBar({ active }: { active: string }) {
           aria-expanded={open}
           aria-controls="mobile-menu"
           onClick={() => setOpen((value) => !value)}
-          className="min-h-10.5 min-w-12 cursor-pointer border border-white/11 font-mono text-[8px] uppercase tracking-[0.14em]"
+          className="min-h-10.5 min-w-12 cursor-pointer border border-white/11 font-mono text-[8px] uppercase tracking-[0.18em]"
         >
           {content.shell.menu}
         </button>
@@ -53,7 +53,7 @@ export function MobileCommandBar({ active }: { active: string }) {
             href={`#${section.id}`}
             aria-current={active === section.id ? 'true' : undefined}
             onClick={() => setOpen(false)}
-            className="border-b border-r border-white/11 px-4.5 py-4 font-mono text-[9px] uppercase tracking-[0.12em] text-white/70"
+            className="border-b border-r border-white/11 px-4.5 py-4 font-mono text-[9px] uppercase tracking-[0.16em] text-white/70"
           >
             {section.index} / {section.label}
           </a>

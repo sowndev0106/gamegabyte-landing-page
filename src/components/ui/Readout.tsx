@@ -35,7 +35,7 @@ export function Readout({
         <p className="mt-5 font-display text-[13px] font-bold uppercase tracking-[0.13em] text-white">{title}</p>
       )}
       {note && (
-        <p className="mt-3 font-mono text-[10px] uppercase leading-relaxed tracking-[0.105em] text-white/60">{note}</p>
+        <p className="mt-3 font-mono text-[9px] uppercase leading-relaxed tracking-[0.16em] text-white/60">{note}</p>
       )}
     </div>
   )

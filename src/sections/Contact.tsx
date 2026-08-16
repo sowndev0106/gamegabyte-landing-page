@@ -65,12 +65,12 @@ export function Contact() {
           description={content.contact.body}
         />
 
-        <div className="grid items-end gap-8 lg:grid-cols-[minmax(0,2fr)_minmax(280px,1fr)] lg:gap-12">
+        <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,2fr)_minmax(280px,1fr)] lg:gap-12">
           <Reveal>
             <form className="flex max-w-2xl flex-col gap-6" onSubmit={handleSubmit}>
             <div className="grid gap-6 sm:grid-cols-2">
               <div className="flex flex-col gap-2">
-                <label htmlFor="contact-name" className="font-mono text-[11px] uppercase tracking-[0.2em] text-white/60">
+                <label htmlFor="contact-name" className="font-mono text-[9px] uppercase tracking-[0.22em] text-white/60">
                   {content.contact.fields.name}
                 </label>
                 <input
@@ -85,7 +85,7 @@ export function Contact() {
               </div>
 
               <div className="flex flex-col gap-2">
-                <label htmlFor="contact-email" className="font-mono text-[11px] uppercase tracking-[0.2em] text-white/60">
+                <label htmlFor="contact-email" className="font-mono text-[9px] uppercase tracking-[0.22em] text-white/60">
                   {content.contact.fields.email}
                 </label>
                 <input
@@ -101,7 +101,7 @@ export function Contact() {
             </div>
 
             <div className="flex flex-col gap-2">
-              <label htmlFor="contact-message" className="font-mono text-[11px] uppercase tracking-[0.2em] text-white/60">
+              <label htmlFor="contact-message" className="font-mono text-[9px] uppercase tracking-[0.22em] text-white/60">
                 {content.contact.fields.message}
               </label>
               <textarea
@@ -141,10 +141,10 @@ export function Contact() {
 
           <Reveal delay={0.12}>
             <Panel as="aside" className="p-7 sm:p-8" aria-label="Open channel response status">
-              <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-accent">
+              <p className="font-mono text-[9px] uppercase tracking-[0.22em] text-accent">
                 {content.contact.response.status}
               </p>
-              <h3 className="mt-5 font-display text-2xl font-bold text-white sm:text-[28px]">
+              <h3 className="mt-5 font-display text-[28px] font-bold text-white">
                 {content.contact.response.title}
               </h3>
               <p className="mt-3 text-base leading-relaxed text-white/70">{content.contact.response.body}</p>

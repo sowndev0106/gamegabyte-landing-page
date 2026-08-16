@@ -38,11 +38,11 @@ export function Faq() {
                   aria-controls={`faq-panel-${index}`}
                   className="group grid w-full cursor-pointer grid-cols-[38px_1fr_auto] items-center gap-2.5 py-6 text-left md:grid-cols-[5.625rem_1fr_auto] md:gap-6"
                 >
-                  <span className="font-mono text-[11px] tracking-[0.24em] text-accent">
+                  <span className="font-mono text-[9px] tracking-[0.22em] text-accent">
                     {String(index + 1).padStart(2, '0')}
                   </span>
                   <span
-                    className={`font-display text-lg font-bold transition-colors md:text-2xl ${
+                    className={`font-display text-lg font-bold transition-colors md:text-[28px] ${
                       isOpen ? 'text-accent' : 'text-white group-hover:text-accent'
                     }`}
                   >

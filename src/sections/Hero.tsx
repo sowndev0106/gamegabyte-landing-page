@@ -84,7 +84,7 @@ export function Hero() {
             <span className="font-mono text-[9px] uppercase tracking-[0.22em] text-white/48">
               {content.hero.dashboard.projectsLabel}
             </span>
-            <strong className="font-display text-3xl leading-none font-bold text-accent">{projects.value}</strong>
+            <strong className="font-display text-[28px] leading-none font-bold text-accent">{projects.value}</strong>
           </div>
           <div aria-hidden="true" className="mt-5 flex h-19.5 items-end gap-1.75">
             {BAR_HEIGHTS.map((height, i) => (
@@ -103,7 +103,7 @@ export function Hero() {
               <span className="font-mono text-[9px] uppercase tracking-[0.22em] text-white/48">
                 {content.hero.dashboard.focusLabel}
               </span>
-              <strong className="mt-3 block font-display text-3xl leading-none font-bold text-white">
+              <strong className="mt-3 block font-display text-[28px] leading-none font-bold text-white">
                 {content.hero.dashboard.focusValue}
               </strong>
             </div>

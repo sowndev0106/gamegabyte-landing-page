@@ -176,8 +176,10 @@ export const content = {
     title: 'GaByte Academy',
     body: 'Training and resources for game studios.',
     cta: 'Learn more',
+    destination: 'Destination / external',
     // The course lives off-site; this was the only external destination in the
-    // old nav list, so it moved here when the rail replaced that list.
+    // old nav list, so it moved here when the rail replaced that list. The
+    // panel prints this host, derived from the URL rather than retyped.
     href: 'https://game-uxui-fundamentals.gamegabyte.com/',
   },
   faqSection: {

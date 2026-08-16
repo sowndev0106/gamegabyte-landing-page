@@ -31,7 +31,7 @@ export function CaseStudy() {
               <span className="font-mono text-[9px] uppercase tracking-[0.22em] text-accent">
                 Client / {study.client}
               </span>
-              <strong className="mt-5 font-display text-3xl leading-none font-bold text-white">
+              <strong className="mt-5 font-display text-[28px] leading-none font-bold text-white">
                 {study.systemTitle}
               </strong>
               <p className="mt-4 leading-relaxed text-white/70">{study.systemBody}</p>
@@ -43,7 +43,7 @@ export function CaseStudy() {
 
             <figure data-dossier-feature className="relative aspect-video overflow-hidden border border-white/11">
               <img src={primary.src} alt={primary.label} loading="lazy" className="h-full w-full object-cover" />
-              <figcaption className="absolute right-4.5 bottom-4.5 bg-accent px-2.75 py-2 font-mono text-[8px] uppercase tracking-[0.14em] text-ink">
+              <figcaption className="absolute right-4.5 bottom-4.5 bg-accent px-2.75 py-2 font-mono text-[8px] uppercase tracking-[0.18em] text-ink">
                 {study.recordLabel}
               </figcaption>
             </figure>

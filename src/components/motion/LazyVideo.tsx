@@ -142,7 +142,7 @@ export function LazyVideo({
           type="button"
           onClick={toggle}
           aria-label={playing ? 'Pause showreel' : 'Play showreel'}
-          className="min-h-10.5 shrink-0 cursor-pointer border border-white/11 px-3.5 font-mono text-[9px] uppercase tracking-[0.14em] text-white transition-colors hover:border-accent hover:text-accent"
+          className="min-h-10.5 shrink-0 cursor-pointer border border-white/11 px-3.5 font-mono text-[9px] uppercase tracking-[0.16em] text-white transition-colors hover:border-accent hover:text-accent"
         >
           {playing ? labels.pause : labels.play}
         </button>
@@ -151,7 +151,7 @@ export function LazyVideo({
           type="button"
           onClick={toggleMute}
           aria-label={muted ? 'Unmute showreel' : 'Mute showreel'}
-          className="min-h-10.5 shrink-0 cursor-pointer border border-white/11 px-3.5 font-mono text-[9px] uppercase tracking-[0.14em] text-white transition-colors hover:border-accent hover:text-accent"
+          className="min-h-10.5 shrink-0 cursor-pointer border border-white/11 px-3.5 font-mono text-[9px] uppercase tracking-[0.16em] text-white transition-colors hover:border-accent hover:text-accent"
         >
           {muted ? labels.muteOn : labels.muteOff}
         </button>

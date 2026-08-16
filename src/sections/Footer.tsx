@@ -30,11 +30,11 @@ export function Footer() {
         </Stagger>
 
         <div className="mt-14 flex flex-col gap-6 border-t border-white/11 pt-8 md:flex-row md:items-center md:justify-between">
-          <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-white/50">
+          <p className="font-mono text-[9px] uppercase tracking-[0.22em] text-white/50">
             © {new Date().getFullYear()} Gamegabyte — All rights reserved
           </p>
           <nav aria-label="Social media" className="flex flex-wrap items-center gap-x-6 gap-y-1">
-            <span className="font-mono text-[9px] uppercase tracking-[0.18em] text-white/40">
+            <span className="font-mono text-[9px] uppercase tracking-[0.22em] text-white/40">
               {content.footer.tagline}
             </span>
             {content.footer.social.map((item) => (
@@ -42,7 +42,7 @@ export function Footer() {
                 key={item.label}
                 href={item.href}
                 data-footer-social
-                className="inline-flex min-h-11 items-center font-mono text-[9px] uppercase tracking-[0.18em] text-white/70 transition hover:text-accent"
+                className="inline-flex min-h-11 items-center font-mono text-[9px] uppercase tracking-[0.22em] text-white/70 transition hover:text-accent"
               >
                 {item.label}
               </a>

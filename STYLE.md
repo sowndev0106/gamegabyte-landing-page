@@ -86,13 +86,16 @@ Three voices, no fourth.
 - Panel title — 28px.
 - Grid-cell title — 22px.
 
-**Mono scale** — three steps, nothing between:
+**Mono scale** — four roles, nothing between. Tracking is part of the step, not
+a free choice: wide tracking makes a two-word label read as an instrument, and
+makes a full sentence unreadable.
 
-| Size | Tracking | Use |
+| Size | Tracking | Role |
 |---|---|---|
-| 11px | `0.22em` | Section eyebrow (`[04] SYSTEMS MATRIX`) — this size appears nowhere else. |
-| 9px | `0.22em` | Panel and readout labels. |
-| 8px | `0.18em` | Footnote meta, credentials. |
+| 11px | `0.22em` | Section eyebrow (`[04] SYSTEMS MATRIX`). Used by `SectionHeader` and the hero only. |
+| 9px | `0.22em` | Panel label — short, one to three words. |
+| 9px | `0.16em` | Mono sentence: caption, control label, nav item, readout note. |
+| 8px | `0.18em` | Micro meta — credentials, badges, the rail status. |
 
 ### Space
 
@@ -229,19 +232,29 @@ Always `aspect-[16/9]` (or `4/5`, `16/10`) with `object-cover`.
 
 Honest ledger of where the code does not yet match the rules above.
 
+Measured at 1440×1000. The header grid now resolves to `240px 936px` with the
+eyebrow at **x=154** and the heading at **x=442**, at **84px**, in **eleven of
+twelve** sections.
+
 | Where | Deviation | Verdict |
 |---|---|---|
-| `home` | Eyebrow and heading at x=140, heading 104px, outside the `SectionHeader` grid | **Intentional.** The hero is the only full-bleed section; it opens the page rather than taking a place in the sequence. |
-| `academy` | No `SectionHeader` at all. Eyebrow and heading at x=814, heading 64px, inside the panel | **Outlier to fix.** Inherited from the prototype, where Academy was a standalone terminal. In a page where ten sections share one spine, it reads as a mistake rather than a choice. |
-| `portfolio` | Item title 27px | Should be 28px, the panel-title step. |
-| `faq` | Question 24px, eyebrow tracking `0.24em` | Should be 28px and `0.22em`. |
-| `contact` | Field labels 11px — the size reserved for section eyebrows | Should be 9px. |
-| `case-study`, `footer`, `services`, `testimonials` | Stray mono trackings `0.14em`, `0.18em`, `0.12em` at 9px | Should be `0.22em` at 9px. |
-| `testimonials` | Meta column has ~350px of empty space between its top and bottom labels at desktop | Reads as unresolved rather than instrumental; wants a middle element or a shorter column. |
-| `contact` | Response card sits low and alone because the grid is `items-end` | Wants `items-start` or a filled second column. |
+| `home` | Eyebrow and heading at x=140, heading 104px, outside the `SectionHeader` grid | **Intentional and permanent.** The hero is the only full-bleed section; it opens the page rather than taking a place in the sequence. |
+| `testimonials` | Meta column has ~350px of empty space between its top and bottom labels at desktop | **Open.** Reads as unresolved rather than instrumental; wants a middle element or a shorter column. |
 
-None of these break a build or a test. They are the difference between a page
-that is consistent and a page that is merely finished.
+### Resolved
+
+- `academy` now opens with `SectionHeader` on the standard grid. Its panel's right
+  column prints the real destination host, derived from `academy.href` so the
+  stated destination cannot drift from the actual one.
+- Mono scale normalised across 13 files to the four roles above.
+- Heading scale normalised to two steps: 22px for a cell in a grid of peers,
+  28px for a singular panel or step title.
+- `contact` response card was bottom-aligned (`items-end`) and floated below the
+  form; now `items-start`. Its status message was centred at 12px — the only
+  centred body text on the page — now left at 9px/`0.22em`.
+
+Nothing in this list broke a build or a test. That is the point: they are the
+difference between a page that is consistent and a page that is merely finished.
 
 ---
 

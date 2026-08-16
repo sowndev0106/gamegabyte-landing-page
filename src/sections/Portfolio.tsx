@@ -39,7 +39,7 @@ export function Portfolio() {
                   <span className="flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.22em] text-accent">
                     {String(i + 1).padStart(2, '0')} / {item.tag}
                   </span>
-                  <h3 className="mt-2.5 flex items-center gap-2 font-display text-[27px] leading-none font-bold text-white">
+                  <h3 className="mt-2.5 flex items-center gap-2 font-display text-[28px] leading-none font-bold text-white">
                     {item.title}
                     <ArrowUpRight className="h-4 w-4 opacity-0 transition-opacity group-hover:opacity-100" />
                   </h3>

@@ -18,7 +18,7 @@ export function CommandShell({ children, footer }: { children: ReactNode; footer
     <>
       <a
         href="#main"
-        className="fixed left-3 top-3 z-100 -translate-y-[160%] bg-accent px-5 py-3 font-mono text-xs uppercase tracking-[0.18em] text-ink focus:translate-y-0"
+        className="fixed left-3 top-3 z-100 -translate-y-[160%] bg-accent px-5 py-3 font-mono text-[9px] uppercase tracking-[0.16em] text-ink focus:translate-y-0"
       >
         Skip to content
       </a>

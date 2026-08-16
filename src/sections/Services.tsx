@@ -61,7 +61,7 @@ export function Services() {
           <div className="mt-7 grid grid-cols-2 border-t border-white/11 md:grid-cols-4">
             {content.technology.map((item) => (
               <div key={item.title} className="pt-5.5 pr-5.5">
-                <strong className="font-mono text-[9px] font-normal uppercase tracking-[0.18em] text-accent">
+                <strong className="font-mono text-[9px] font-normal uppercase tracking-[0.22em] text-accent">
                   {item.title}
                 </strong>
                 <p className="mt-2 text-sm text-white/70">{item.body}</p>

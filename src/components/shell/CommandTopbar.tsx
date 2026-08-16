@@ -5,7 +5,7 @@ import { ArrowUpRight } from '../ui/ArrowUpRight'
 export function CommandTopbar() {
   return (
     <header className="fixed inset-x-0 left-23 top-0 z-30 hidden h-18 items-center justify-between border-b border-white/11 bg-ink/90 pl-11 backdrop-blur-xl md:flex">
-      <span className="flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.18em] text-white/70">
+      <span className="flex items-center gap-3 font-mono text-[9px] uppercase tracking-[0.22em] text-white/70">
         <span aria-hidden="true" className="command-status-dot h-1.5 w-1.5 rounded-full bg-accent" />
         {content.shell.status}
       </span>

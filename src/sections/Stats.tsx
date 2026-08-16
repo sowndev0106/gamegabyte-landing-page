@@ -19,7 +19,7 @@ export function Stats() {
         <Reveal>
           <div className="grid border border-white/11 lg:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)]">
             <article className="relative flex min-h-85 flex-col justify-between overflow-hidden border-b border-white/11 p-7 lg:min-h-107.5 lg:border-r lg:border-b-0 lg:p-12">
-              <span className="flex items-center gap-2.5 font-mono text-[10px] uppercase tracking-[0.18em] text-accent">
+              <span className="flex items-center gap-2.5 font-mono text-[9px] uppercase tracking-[0.22em] text-accent">
                 <span aria-hidden="true" className="command-status-dot h-1.75 w-1.75 rounded-full bg-accent" />
                 Studio signal / active
               </span>

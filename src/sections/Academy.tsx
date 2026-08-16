@@ -2,14 +2,17 @@ import { content, assets } from '../content/content'
 import { Reveal } from '../components/motion/Reveal'
 import { Container } from '../components/ui/Container'
 import { Section } from '../components/ui/Section'
+import { SectionHeader } from '../components/ui/SectionHeader'
 import { ArrowUpRight } from '../components/ui/ArrowUpRight'
-import { sectionById } from '../content/sections'
 
-const { index, eyebrow } = sectionById('academy')
+// Derived from the href so the stated destination can never drift from the
+// actual one.
+const destinationHost = new URL(content.academy.href).host
 
 /**
- * The training subsystem is the one node that lives off-site, so it reads as a
- * terminal handing off to an external destination rather than as page content.
+ * The training subsystem is the one node that lives off-site, so the panel
+ * reads as a hand-off: the artwork on one side, the destination and its
+ * outbound control on the other.
  *
  * The prototype showed four course tags. They were invented for the mock and
  * were never checked against the real curriculum, so they are deliberately not
@@ -19,9 +22,11 @@ export function Academy() {
   return (
     <Section id="academy">
       <Container>
+        <SectionHeader id="academy" title={content.academy.title} description={content.academy.body} />
+
         <Reveal>
-          <div className="grid overflow-hidden border border-white/11 lg:min-h-127.5 lg:grid-cols-2">
-            <div className="relative min-h-70">
+          <div className="grid overflow-hidden border border-white/11 lg:grid-cols-2">
+            <div className="relative min-h-70 lg:min-h-95">
               <img
                 src={assets.backgrounds.battlefield}
                 alt=""
@@ -35,22 +40,23 @@ export function Academy() {
               />
             </div>
 
-            <div className="flex flex-col justify-center p-7 lg:p-12">
-              <p className="font-mono text-[11px] uppercase leading-relaxed tracking-[0.22em] text-accent">
-                <span aria-hidden="true" className="text-white/45">
-                  [{index}]
-                </span>{' '}
-                {eyebrow}
-              </p>
-              <h2 className="mt-6 font-display text-[clamp(34px,4.6vw,64px)] leading-[0.9] font-extrabold uppercase tracking-tighter text-white">
-                {content.academy.title}
-              </h2>
-              <p className="mt-5 leading-relaxed text-white/70">{content.academy.body}</p>
+            <div className="flex flex-col justify-between gap-10 p-7 lg:p-12">
+              <div>
+                <span className="font-mono text-[9px] uppercase tracking-[0.22em] text-white/48">
+                  {content.academy.destination}
+                </span>
+                {/* A 37-character host does not fit the panel-title step, and a
+                    URL is data rather than a title — the grid-cell step suits it. */}
+                <p className="mt-4 font-display text-[22px] leading-tight font-bold break-all text-white">
+                  {destinationHost}
+                </p>
+              </div>
+
               <a
                 href={content.academy.href}
                 target="_blank"
                 rel="noreferrer"
-                className="mt-9 flex min-h-14 items-center justify-center gap-2 bg-accent px-8 font-display text-base font-bold uppercase text-ink transition-colors hover:bg-accent-bright"
+                className="flex min-h-14 items-center justify-center gap-2 bg-accent px-8 font-display text-base font-bold uppercase text-ink transition-colors hover:bg-accent-bright"
               >
                 {content.academy.cta}
                 <ArrowUpRight className="h-4 w-4" />
