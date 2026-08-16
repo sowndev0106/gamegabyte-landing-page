@@ -6,7 +6,6 @@ import { Services } from './sections/Services'
 import { WorkProcess } from './sections/WorkProcess'
 import { WhyChooseUs } from './sections/WhyChooseUs'
 import { Portfolio } from './sections/Portfolio'
-import { CaseStudy } from './sections/CaseStudy'
 import { Testimonials } from './sections/Testimonials'
 import { Academy } from './sections/Academy'
 import { Faq } from './sections/Faq'
@@ -27,7 +26,6 @@ function App() {
       <WorkProcess />
       <WhyChooseUs />
       <Portfolio />
-      <CaseStudy />
       <Testimonials />
       <Academy />
       <Faq />

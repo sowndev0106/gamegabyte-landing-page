@@ -1,5 +1,5 @@
 /**
- * The page's twelve sections in document order. Section numbering shows up in
+ * The page's eleven sections in document order. Section numbering shows up in
  * the rail, the mobile menu and every section heading — this array is the only
  * place it is written down, so reordering the page is a one-line edit.
  */
@@ -11,11 +11,10 @@ export const SECTIONS = [
   { id: 'process', index: '05', label: 'Process', eyebrow: 'Mission sequence' },
   { id: 'about', index: '06', label: 'Advantages', eyebrow: 'Operational advantages' },
   { id: 'portfolio', index: '07', label: 'Archive', eyebrow: 'Archive / 03 files' },
-  { id: 'case-study', index: '08', label: 'Dossier', eyebrow: 'Mission dossier / Seedify' },
-  { id: 'testimonials', index: '09', label: 'Logs', eyebrow: 'Communication logs' },
-  { id: 'academy', index: '10', label: 'Academy', eyebrow: 'Training subsystem / external node' },
-  { id: 'faq', index: '11', label: 'Diagnostics', eyebrow: 'System diagnostics' },
-  { id: 'contact', index: '12', label: 'Channel', eyebrow: 'Open channel' },
+  { id: 'testimonials', index: '08', label: 'Logs', eyebrow: 'Communication logs' },
+  { id: 'academy', index: '09', label: 'Academy', eyebrow: 'Training subsystem / external node' },
+  { id: 'faq', index: '10', label: 'Diagnostics', eyebrow: 'System diagnostics' },
+  { id: 'contact', index: '11', label: 'Channel', eyebrow: 'Open channel' },
 ] as const
 
 export type SectionId = (typeof SECTIONS)[number]['id']
@@ -30,17 +29,17 @@ export function sectionById(id: SectionId): SectionMeta {
 /**
  * The five groups the topbar prints, in document order.
  *
- * Twelve sections do not fit a horizontal bar at the mono nav step — the wide
+ * Eleven sections do not fit a horizontal bar at the mono nav step — the wide
  * tracking that makes a two-word label read as an instrument is exactly what
- * makes twelve of them overflow. So the bar carries groups and the rail keeps
- * the full twelve; the two are different resolutions of one list, not two
+ * makes eleven of them overflow. So the bar carries groups and the rail keeps
+ * the full eleven; the two are different resolutions of one list, not two
  * different navigations.
  *
  * `home` and `contact` are deliberately absent: the logo is the way back to
- * one, and the CTA is the way to twelve. A group links to its first section.
+ * one, and the CTA is the way to the last. A group links to its first section.
  */
 export const NAV_GROUPS = [
-  { id: 'work', label: 'Work', sections: ['reel', 'portfolio', 'case-study'] },
+  { id: 'work', label: 'Work', sections: ['reel', 'portfolio'] },
   { id: 'services', label: 'Services', sections: ['services', 'process'] },
   { id: 'studio', label: 'Studio', sections: ['telemetry', 'about', 'testimonials'] },
   { id: 'academy', label: 'Academy', sections: ['academy'] },

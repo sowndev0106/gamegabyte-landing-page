@@ -16,7 +16,7 @@ export function Portfolio() {
   return (
     <Section id="portfolio">
       <Container>
-        <SectionSplit id="portfolio" title={content.portfolio.title} description={content.portfolio.intro} >
+        <SectionSplit layout="stacked" id="portfolio" title={content.portfolio.title} description={content.portfolio.intro} >
 
           <Reveal>
             <div className="grid grid-cols-1 grid-rows-[460px_280px_280px] gap-3.5 lg:grid-cols-[1.2fr_0.8fr] lg:grid-rows-[330px_330px]">

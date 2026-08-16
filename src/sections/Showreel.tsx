@@ -11,7 +11,7 @@ export function Showreel() {
   return (
     <Section id="reel">
       <Container>
-        <SectionSplit id="reel" title={content.reel.title} description={content.reel.intro} >
+        <SectionSplit layout="stacked" id="reel" title={content.reel.title} description={content.reel.intro} >
 
           <Reveal>
             {/* Ticks at opposite corners frame the player as a monitored feed

@@ -13,7 +13,7 @@ plainly in [Known deviations](#known-deviations) rather than quietly smoothed ov
 ## 1. What the design is
 
 **Command OS.** The page presents the studio as an instrument you are reading,
-not a brochure you are scrolling. Twelve numbered sections behave like panels of
+not a brochure you are scrolling. Eleven numbered sections behave like panels of
 one operating system: a persistent rail on the left, a command bar across the
 top, a single dark ground, and hairline rules instead of boxes.
 
@@ -68,11 +68,10 @@ component names and commits.
 | 05 `process` | Orbital sequence on a signal path | Mission sequence |
 | 06 `about` | Parallel attribute nodes | Operational advantages |
 | 07 `portfolio` | Asymmetric archive | Archive |
-| 08 `case-study` | Dossier with a scrolling record rail | Mission dossier |
-| 09 `testimonials` | Communication log | Logs |
-| 10 `academy` | External terminal | Training subsystem |
-| 11 `faq` | Diagnostic records | System diagnostics |
-| 12 `contact` | Open channel | Channel |
+| 08 `testimonials` | Communication log | Logs |
+| 09 `academy` | External terminal | Training subsystem |
+| 10 `faq` | Diagnostic records | System diagnostics |
+| 11 `contact` | Open channel | Channel |
 
 ---
 
@@ -257,9 +256,22 @@ and a sixth group would spend it.
 
 ## 4. The section contract
 
-Every section except the hero **must** be built with `SectionSplit`:
+Every section except the hero **must** be built with `SectionSplit`, in one of
+its two arrangements — `split` (default) or `stacked`. Two, and only two: a
+section picks one, it does not invent a third.
+
+| Arrangement | Where | Why |
+|---|---|---|
+| `split` | telemetry, services, process, about, logs, academy, diagnostics, channel | Bodies made of cells and readings. The title is a label for a system, so it sits beside it and holds station while the body scrolls. |
+| `stacked` | reel, archive | Bodies that are imagery. A 70% column wastes them, so the title banners above and the content takes the full measure. |
+
+`stacked` is for content that needs the width, not an escape hatch for a split
+that feels awkward. The heading size is the same in both: a stacked section has
+room for a larger one, but two heading sizes on one page read as two levels of
+importance that do not exist.
 
 ```tsx
+
 <Section id="services" grid>
   <Container>
     <SectionSplit id="services" title={…} description={…}>
@@ -269,9 +281,9 @@ Every section except the hero **must** be built with `SectionSplit`:
 </Section>
 ```
 
-`SectionSplit` is a **sidehead**: the title sits in a column beside its content
-rather than above it, and stays sticky so a tall body cannot scroll its own
-title out of view.
+The `split` arrangement is a **sidehead**: the title sits in a column beside its
+content rather than above it, and stays sticky so a tall body cannot scroll its
+own title out of view.
 
 **The 30/70 split and the heading size are one decision.** The widest
 unbreakable line on the page is `CAPABILITIES.` — 418px at 60px type, 359px at
