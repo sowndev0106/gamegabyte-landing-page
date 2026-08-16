@@ -45,7 +45,7 @@ Every section task must open the matching prototype markup before writing JSX. T
 **Interfaces:**
 - Produces: `SECTIONS`, a readonly array of `{ id, index, label, eyebrow }`; the type `SectionId`; and the helper `sectionById(id: SectionId)`. Tasks 2–17 all consume these.
 
-- [ ] **Step 1: Create the section registry**
+- [x] **Step 1: Create the section registry**
 
 ```ts
 // src/content/sections.ts
@@ -80,7 +80,7 @@ export function sectionById(id: SectionId): SectionMeta {
 }
 ```
 
-- [ ] **Step 2: Verify the registry compiles and is exhaustive**
+- [x] **Step 2: Verify the registry compiles and is exhaustive**
 
 Run: `npx tsc --noEmit -p tsconfig.app.json`
 Expected: exit 0.
@@ -94,7 +94,7 @@ const src = await import('./src/content/sections.ts').catch(() => null)
 ```
 Expected: `12`.
 
-- [ ] **Step 3: Update the theme tokens**
+- [x] **Step 3: Update the theme tokens**
 
 In `src/index.css`, inside the existing `@theme` block, change the ink token and add the two breakpoints:
 
@@ -121,13 +121,13 @@ In `src/index.css`, inside the existing `@theme` block, change the ink token and
 
 Leave the rest of `index.css` alone in this task.
 
-- [ ] **Step 4: Remove `content.nav` and the dead heading primitive**
+- [x] **Step 4: Remove `content.nav` and the dead heading primitive**
 
 `content.nav` exists only for `Header`, which Task 2 deletes; the rail reads `SECTIONS` instead. Delete the whole `nav: [...] as const,` entry from `src/content/content.ts` including its two explanatory comment lines above it.
 
 Delete `src/components/ui/SectionHeading.tsx` — nothing imports it.
 
-- [ ] **Step 5: Verify nothing else referenced them**
+- [x] **Step 5: Verify nothing else referenced them**
 
 Run:
 
@@ -139,7 +139,7 @@ Expected: `clean`. If `Header.tsx` still shows up, that is expected only until T
 Run: `npm run build && npm run lint`
 Expected: both exit 0.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add src/content/sections.ts src/index.css src/content/content.ts
@@ -166,7 +166,7 @@ git commit -m "feat: add section registry, command OS tokens and breakpoints"
 - Consumes: `SECTIONS`, `SectionId` from Task 1.
 - Produces: `<CommandShell>{children}</CommandShell>`, which renders the skip link, rail, topbar, mobile bar and `<main id="main">`; and `useActiveSection(ids: readonly string[]): string`, returning the id of the section currently owning the viewport.
 
-- [ ] **Step 1: Add the shell copy to content.ts**
+- [x] **Step 1: Add the shell copy to content.ts**
 
 Add to the `content` object, after `hero`:
 
@@ -179,7 +179,7 @@ Add to the `content` object, after `hero`:
   },
 ```
 
-- [ ] **Step 2: Lift the active-section hook out of Header**
+- [x] **Step 2: Lift the active-section hook out of Header**
 
 Create `src/components/shell/useActiveSection.ts` with the observer currently living at `src/sections/Header.tsx:13-36`, changed to take and return bare ids rather than hash hrefs:
 
@@ -213,7 +213,7 @@ export function useActiveSection(ids: readonly string[]): string {
 }
 ```
 
-- [ ] **Step 3: Build the rail**
+- [x] **Step 3: Build the rail**
 
 Create `src/components/shell/CommandRail.tsx`. The rail is 92px wide, fixed, full height, hidden below `md`. Each entry shows only its two-digit index, so the accessible name comes from the registry label:
 
@@ -253,7 +253,7 @@ export function CommandRail({ active }: { active: string }) {
 
 Note: with twelve entries the rail is denser than the prototype's five. If the column overflows at 1000px viewport height, reduce the gap to `gap-3` — do not drop entries.
 
-- [ ] **Step 4: Build the topbar and the mobile command bar**
+- [x] **Step 4: Build the topbar and the mobile command bar**
 
 `src/components/shell/CommandTopbar.tsx` — fixed, starts after the rail (`left-[92px]`), hidden below `md`, carries the pulsing status dot with `content.shell.status` and a `Button href="#contact"` labelled `content.shell.cta`.
 
@@ -322,7 +322,7 @@ export function MobileCommandBar({ active }: { active: string }) {
 }
 ```
 
-- [ ] **Step 5: Compose the shell and rewrite App.tsx**
+- [x] **Step 5: Compose the shell and rewrite App.tsx**
 
 `CommandShell` renders skip link, rail, topbar, mobile bar and `<main id="main">`, offsetting the content by the rail width (`md:ml-[92px]`). `App.tsx` becomes:
 
@@ -367,11 +367,11 @@ export default App
 
 The three previously parked sections come back **in their existing styling** — Tasks 12, 13 and 14 restyle them. The page must be coherent and shippable at every commit boundary, not correct only at the end.
 
-- [ ] **Step 6: Give Stats its missing id**
+- [x] **Step 6: Give Stats its missing id**
 
 `src/sections/Stats.tsx:13` currently passes only `data-export="stats"`. Add `id="telemetry"` so all twelve registry ids resolve in the DOM.
 
-- [ ] **Step 7: Delete Header and verify**
+- [x] **Step 7: Delete Header and verify**
 
 Run:
 
@@ -384,7 +384,7 @@ Expected: `clean`, both commands exit 0.
 
 Then start the dev server and confirm in the browser at 1440 wide that the rail is visible, the topbar clears it, and clicking rail entry `07` scrolls to the portfolio.
 
-- [ ] **Step 8: Commit**
+- [x] **Step 8: Commit**
 
 ```bash
 git add src/components/shell src/App.tsx src/content/content.ts src/sections/Stats.tsx
@@ -403,7 +403,7 @@ git commit -m "feat: replace header with command OS shell"
 **Interfaces:**
 - Produces: `npm run qa`, exiting non-zero on any failed check and writing per-section screenshots to `.qa/`. Tasks 4–18 each add checks to the `CHECKS` array in this file.
 
-- [ ] **Step 1: Write the harness**
+- [x] **Step 1: Write the harness**
 
 Create `scripts/qa.mjs`. It boots Vite through its JS API so no port coordination is needed:
 
@@ -510,7 +510,7 @@ process.exit(failed ? 1 : 0)
 
 If importing `sections.ts` from Node fails on the TypeScript syntax, run the script through Vite's loader instead by changing the `qa` script to `vite-node scripts/qa.mjs`, or inline the twelve ids as a plain array in the harness — do not weaken the twelve-section assertion.
 
-- [ ] **Step 2: Wire the script and ignore the output**
+- [x] **Step 2: Wire the script and ignore the output**
 
 In `package.json`, add to `scripts`, without touching the others:
 
@@ -525,12 +525,12 @@ Append to `.gitignore`:
 .qa/
 ```
 
-- [ ] **Step 3: Run it and read the failures**
+- [x] **Step 3: Run it and read the failures**
 
 Run: `npm run qa`
 Expected: all twelve `#id exists` checks pass (Task 2 wired every section). The clipping and console checks should pass. If `no horizontal overflow` fails on mobile, that is a real defect from Task 2 — fix it before committing.
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add scripts/qa.mjs package.json .gitignore
@@ -559,7 +559,7 @@ git commit -m "test: add playwright QA harness for the command OS page"
 
 The spec also listed an `Eyebrow` primitive. It is deliberately dropped: `SectionHeader` already renders the only eyebrow on the page, and a second component with no consumer is dead code on arrival.
 
-- [ ] **Step 1: Rewrite SectionHeader against the registry**
+- [x] **Step 1: Rewrite SectionHeader against the registry**
 
 The current signature takes `index` and `eyebrow` as free strings, which is how numbering drifts. Change it to take the section id and look both up:
 
@@ -600,13 +600,13 @@ export function SectionHeader({
 }
 ```
 
-- [ ] **Step 2: Rewrite Section and widen Container**
+- [x] **Step 2: Rewrite Section and widen Container**
 
 `Section`: drop `border-t border-white/8`, keep the `grid` backdrop option and the `backdrop` slot with its existing comment about paint order, and set the Command OS rhythm `py-[78px] md:py-28 lg:py-32`. Type `id` as `SectionId` so a typo cannot silently break the rail.
 
 `Container`: change `max-w-6xl` to `max-w-[1320px]` and padding to `px-[18px] md:px-12`.
 
-- [ ] **Step 3: Add Panel, Readout and Eyebrow**
+- [x] **Step 3: Add Panel, Readout and Eyebrow**
 
 ```tsx
 // src/components/ui/Panel.tsx
@@ -653,7 +653,7 @@ export function Readout({
 
 Two files only. The mono-label voice needed outside these primitives is a short utility string, not a third component.
 
-- [ ] **Step 4: Update every call site of SectionHeader**
+- [x] **Step 4: Update every call site of SectionHeader**
 
 Nine sections pass `index`/`eyebrow` today. Change each to pass `id` instead — the same id the section already gives its `<Section>`. Find them with:
 
@@ -661,12 +661,12 @@ Nine sections pass `index`/`eyebrow` today. Change each to pass `id` instead —
 grep -rln "SectionHeader" src/sections/
 ```
 
-- [ ] **Step 5: Verify**
+- [x] **Step 5: Verify**
 
 Run: `npm run build && npm run lint && npm run qa`
 Expected: all three exit 0. The section numbering visible in the browser must now read `[01]`–`[12]` in document order, which it did not before — Showreel previously showed `[01]` while sitting second.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add src/components/ui src/sections
@@ -681,13 +681,13 @@ Every section task follows the same shape. Rather than repeating boilerplate twe
 
 **Shared procedure for each section task:**
 
-- [ ] **Step A: Read the prototype markup** for this section in the reference file, including its `@media(max-width:1050px)` and `@media(max-width:760px)` overrides. Those two blocks hold the responsive layout and are easy to miss.
-- [ ] **Step B: Add the QA check** for this section to the `CHECKS` in `scripts/qa.mjs` (the check is given per task below), then run `npm run qa` and confirm it **fails**. A check that passes before the work is written is not testing anything — fix the check.
-- [ ] **Step C: Rewrite the section component** in Tailwind utilities on top of the Task 4 primitives.
-- [ ] **Step D: Delete any now-dead CSS** for this section from `index.css` (named per task).
-- [ ] **Step E: Run `npm run qa`** and confirm the new check passes and no previously passing check regressed.
-- [ ] **Step F: Compare against the prototype** — open both at 1440 and 390 and check the section for clipping, cropped imagery and hierarchy. Fix inside the section only.
-- [ ] **Step G: Run `npm run build && npm run lint`, then commit** with `feat: rebuild <section> as command OS`.
+- [x] **Step A: Read the prototype markup** for this section in the reference file, including its `@media(max-width:1050px)` and `@media(max-width:760px)` overrides. Those two blocks hold the responsive layout and are easy to miss.
+- [x] **Step B: Add the QA check** for this section to the `CHECKS` in `scripts/qa.mjs` (the check is given per task below), then run `npm run qa` and confirm it **fails**. A check that passes before the work is written is not testing anything — fix the check.
+- [x] **Step C: Rewrite the section component** in Tailwind utilities on top of the Task 4 primitives.
+- [x] **Step D: Delete any now-dead CSS** for this section from `index.css` (named per task).
+- [x] **Step E: Run `npm run qa`** and confirm the new check passes and no previously passing check regressed.
+- [x] **Step F: Compare against the prototype** — open both at 1440 and 390 and check the section for clipping, cropped imagery and hierarchy. Fix inside the section only.
+- [x] **Step G: Run `npm run build && npm run lint`, then commit** with `feat: rebuild <section> as command OS`.
 
 ---
 
@@ -1011,7 +1011,7 @@ check(`${viewport.label}: footer has four social links`, (await page.locator('fo
 - Modify: `src/index.css`
 - Modify: `README.md` if it documents the old header (check first)
 
-- [ ] **Step 1: Find what is left unreferenced**
+- [x] **Step 1: Find what is left unreferenced**
 
 ```bash
 for name in hud-surface hud-surface-interactive hud-portrait hud-grid pointer-glow; do
@@ -1022,7 +1022,7 @@ done
 
 Any utility reporting `0` is dead. Delete it from `index.css`, along with `src/components/ui/PointerGlow.tsx` if `pointer-glow` is dead and nothing imports the component.
 
-- [ ] **Step 2: Confirm index.css holds only what the spec allows**
+- [x] **Step 2: Confirm index.css holds only what the spec allows**
 
 Read the file top to bottom. It should contain `@import "tailwindcss"`, the `@theme` block, `@font-face` rules, any `@keyframes` still in use, the `html`/`body` rules, the scroll-margin rule, the focus-visible rule and the reduced-motion block. Anything else is a leftover — delete it.
 
@@ -1033,7 +1033,7 @@ wc -l src/index.css
 ```
 Expected: fewer than the 406 lines it started at.
 
-- [ ] **Step 3: Full verification**
+- [x] **Step 3: Full verification**
 
 Run:
 
@@ -1044,18 +1044,18 @@ npm run qa
 ```
 Expected: all three exit 0, with every QA check passing.
 
-- [ ] **Step 4: Visual comparison against the prototype**
+- [x] **Step 4: Visual comparison against the prototype**
 
 Open the production dev server and the prototype side by side at 1440×1000 and 390×844. Walk all twelve sections. Confirm no clipped text, no cropped interface art, and that section numbering reads `[01]`–`[12]` in order. Fix anything found before committing.
 
-- [ ] **Step 5: Confirm the prototypes were not touched**
+- [x] **Step 5: Confirm the prototypes were not touched**
 
 ```bash
 git diff --stat main -- prototypes/
 ```
 Expected: empty.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add src/index.css
