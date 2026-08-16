@@ -1,0 +1,260 @@
+<!doctype html>
+<!--
+  The topbar prompt cursor, in isolation.
+
+  Shipped code already blinks (`.command-cursor`, 1.1s `step-end`) — this page
+  exists because a blink cannot be judged from a screenshot, only watched. The
+  top frame is the real bar at 1440; the strip below runs seven cursor
+  treatments side by side so the *feel* can be compared rather than described.
+
+  Geometry, tokens and type are ported verbatim from CommandTopbar.tsx and
+  src/index.css. Click a nav group to `cd` — the path readout is live, same as
+  production.
+
+  Throwaway. Open with `npm run prototype:cursor`.
+-->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark" />
+    <title>Gamegabyte — Cursor Blink</title>
+    <style>
+      @font-face {
+        font-family: 'Schibsted Grotesk';
+        src: url('/fonts/SchibstedGrotesk_wght__1/SchibstedGrotesk_wght__1-english.woff2') format('woff2');
+        font-weight: 400 700;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: Roboto;
+        src: url('/fonts/Roboto_wdth_wght__2/Roboto_wdth_wght__2-english.woff2') format('woff2');
+        font-weight: 400 500;
+        font-display: swap;
+      }
+
+      :root {
+        --color-accent: #b6e802;
+        --color-accent-bright: #d4ff00;
+        --color-ink: #05050c;
+        --font-display: 'Schibsted Grotesk', system-ui, sans-serif;
+        --font-sans: Roboto, system-ui, sans-serif;
+        --font-mono: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
+
+        --rail: 92px;
+        --topbar: 72px;
+        --pad: 44px;
+        --line: rgb(255 255 255 / 0.11);
+      }
+
+      * { box-sizing: border-box; }
+      body { margin: 0; background: var(--color-ink); color: #e7e7ee; font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+      a { color: inherit; text-decoration: none; }
+      button { background: none; border: 0; color: inherit; font: inherit; cursor: pointer; }
+
+      .mono { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; }
+      .micro { font-family: var(--font-mono); font-size: 8px; letter-spacing: 0.18em; text-transform: uppercase; }
+
+      /* ── prototype chrome ─────────────────────────────────────── */
+      .doc { padding: 36px 32px 20px; border-bottom: 1px solid var(--line); }
+      .doc h1 { font-family: var(--font-display); font-size: 26px; font-weight: 800; text-transform: uppercase; letter-spacing: -0.02em; margin: 0 0 10px; }
+      .doc p { max-width: 74ch; margin: 0 0 6px; font-size: 13.5px; line-height: 1.65; color: rgb(255 255 255 / 0.7); }
+      .doc code { color: var(--color-accent); }
+
+      /* ── the real bar ─────────────────────────────────────────── */
+      .frame { position: relative; height: 190px; overflow: hidden; border-bottom: 1px solid var(--line); }
+      .rail { position: absolute; inset: 0 auto 0 0; width: var(--rail); border-right: 1px solid var(--line);
+              display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 22px 0; }
+      .rail .logo { font-family: var(--font-display); font-size: 11px; font-weight: 800; line-height: 1; text-align: center; letter-spacing: -0.02em; }
+      .rail .online { font-family: var(--font-mono); font-size: 8px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-accent); writing-mode: vertical-rl; }
+      .rail .ticks { display: flex; flex-direction: column; gap: 11px; width: 100%; padding-left: 20px; }
+      .rail .ticks i { height: 1px; width: 12px; background: rgb(255 255 255 / 0.3); }
+      .rail .ticks i.on { width: 44px; height: 2px; background: var(--color-accent); box-shadow: 0 0 12px var(--color-accent); }
+
+      .bar { position: absolute; inset: 0 0 auto var(--rail); height: var(--topbar);
+             display: flex; align-items: center; border-bottom: 1px solid var(--line); }
+      .bar nav { display: flex; align-items: center; padding-left: var(--pad); }
+      .bar nav a { display: flex; align-items: center; gap: 6px; padding-right: 28px; color: rgb(255 255 255 / 0.48); }
+      .bar nav a.on { color: #fff; }
+      .bar nav a .caret { color: var(--color-accent); opacity: 0; }
+      .bar nav a.on .caret { opacity: 1; }
+
+      .right { margin-left: auto; display: flex; align-items: center; align-self: stretch; }
+      .readout { display: flex; align-items: center; padding-right: 32px; }
+      .readout .host { color: rgb(255 255 255 / 0.3); }
+      .readout .path { color: rgb(255 255 255 / 0.7); }
+      .cta { display: flex; align-items: center; gap: 8px; align-self: stretch; padding: 0 var(--pad);
+             background: var(--color-accent); color: var(--color-ink);
+             font-family: var(--font-display); font-size: 14px; font-weight: 700; text-transform: uppercase; }
+
+      .hint { position: absolute; left: calc(var(--rail) + var(--pad)); top: 116px; color: rgb(255 255 255 / 0.3); }
+
+      /* ═══════════════════════════════════════════════════════════
+         THE CURSORS
+
+         Every variant is the same 6×12 lime block unless the row says
+         otherwise. What changes is only how it turns on and off.
+         ═══════════════════════════════════════════════════════════ */
+      .cur { display: block; width: 6px; height: 12px; margin-left: 8px; background: var(--color-accent);
+             box-shadow: 0 0 10px var(--color-accent); }
+
+      /* A — shipped. Square wave: on 550ms, off 550ms. */
+      .cur-a { animation: blink-hard 1.1s step-end infinite; }
+
+      /* B — the rate a VT100 actually blinked at, and what xterm still uses. */
+      .cur-b { animation: blink-hard 1.06s step-end infinite; }
+
+      /* C — faster. Reads busy rather than waiting. */
+      .cur-c { animation: blink-hard 0.7s step-end infinite; }
+
+      /* D — asymmetric: lit 70% of the cycle. Calmer, because the eye spends
+             more time on a solid mark than on a gap. */
+      .cur-d { animation: blink-asym 1.2s step-end infinite; }
+
+      /* E — eased fade, the treatment the old status dot used. Included as the
+             thing to compare against: it reads as a light, not a prompt. */
+      .cur-e { animation: blink-fade 1.2s ease-in-out infinite; }
+
+      /* F — underscore instead of block. */
+      .cur-f { height: 2px; width: 9px; align-self: flex-end; margin-bottom: 3px; animation: blink-hard 1.1s step-end infinite; }
+
+      /* G — hollow block, the shape a terminal shows when its window is not
+             focused. Here it never fills, so it reads as idle rather than armed. */
+      .cur-g { background: none; border: 1px solid var(--color-accent); box-shadow: none;
+               animation: blink-hard 1.1s step-end infinite; }
+
+      @keyframes blink-hard { 50% { opacity: 0; } }
+      @keyframes blink-asym { 70% { opacity: 1; } 70.01%, 100% { opacity: 0; } }
+      @keyframes blink-fade { 50% { opacity: 0.15; } }
+
+      /* ── comparison strip ─────────────────────────────────────── */
+      .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); }
+      .cell { padding: 20px 24px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+      .cell.pick { background: rgb(182 232 2 / 0.04); }
+      .cell h3 { display: flex; align-items: baseline; gap: 10px; margin: 0 0 4px; font-family: var(--font-display);
+                 font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: -0.01em; }
+      .cell h3 .k { color: var(--color-accent); font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.18em; }
+      .cell h3 .shipped { color: var(--color-accent); font-family: var(--font-mono); font-size: 8px; letter-spacing: 0.18em; }
+      .cell .note { margin: 0 0 16px; font-size: 12.5px; line-height: 1.55; color: rgb(255 255 255 / 0.48); }
+      .cell .line { display: flex; align-items: center; padding: 14px 16px; border: 1px solid var(--line); }
+      .cell .line .host { color: rgb(255 255 255 / 0.3); }
+      .cell .line .path { color: rgb(255 255 255 / 0.7); }
+
+      @media (prefers-reduced-motion: reduce) {
+        .warn { display: block !important; }
+      }
+      .warn { display: none; margin: 0; padding: 14px 32px; background: rgb(182 232 2 / 0.1);
+              border-bottom: 1px solid var(--line); color: var(--color-accent); }
+    </style>
+  </head>
+
+  <body>
+    <header class="doc">
+      <h1>Con trỏ prompt — 7 kiểu chớp</h1>
+      <p>
+        Con trỏ đang chạy trên production là <strong>A</strong>: sóng vuông 1.1s, sáng 550ms rồi tắt 550ms.
+        Trang này để <em>nhìn</em> chứ không để đọc mô tả — screenshot không thể hiện được nhịp chớp.
+      </p>
+      <p>
+        Khung trên là thanh thật ở 1440. <strong>Bấm vào một mục nav</strong> để <code>cd</code> —
+        đường dẫn đổi y như production. Dải bên dưới chạy cả 7 kiểu cùng lúc để so nhịp.
+      </p>
+    </header>
+
+    <p class="warn mono">
+      Hệ điều hành của bạn đang bật &ldquo;giảm chuyển động&rdquo; — mọi con trỏ dưới đây sẽ đứng yên,
+      sáng thường trực. Đó là hành vi đúng theo thiết kế, không phải lỗi.
+    </p>
+
+    <section class="frame">
+      <aside class="rail">
+        <span class="logo">GAME<br />GABYTE</span>
+        <span class="ticks" id="ticks"></span>
+        <span class="online">Online</span>
+      </aside>
+
+      <div class="bar">
+        <nav class="mono" id="nav"></nav>
+        <div class="right">
+          <span class="readout mono">
+            <span class="host">gamegabyte:</span>
+            <span class="path" id="path">~</span>
+            <span class="cur cur-a"></span>
+          </span>
+          <a href="#" class="cta">Open channel ↗</a>
+        </div>
+      </div>
+
+      <span class="hint micro">Bấm một mục nav để cd</span>
+    </section>
+
+    <section class="grid" id="grid"></section>
+
+    <script>
+      /* Mirrors NAV_GROUPS and sectionPath() in src/content/sections.ts. */
+      const NAV = [
+        { id: 'work',     label: 'Work',     sections: ['reel', 'portfolio', 'case-study'] },
+        { id: 'services', label: 'Services', sections: ['services', 'process'] },
+        { id: 'studio',   label: 'Studio',   sections: ['telemetry', 'about', 'testimonials'] },
+        { id: 'academy',  label: 'Academy',  sections: ['academy'] },
+        { id: 'faq',      label: 'FAQ',      sections: ['faq'] },
+      ]
+
+      const sectionPath = (section) => {
+        if (!section || section === 'home') return '~'
+        const g = NAV.find((entry) => entry.sections.includes(section))
+        if (!g) return `~/${section}`
+        return g.id === section ? `~/${g.id}` : `~/${g.id}/${section}`
+      }
+
+      const VARIANTS = [
+        { k: 'A', cls: 'cur-a', name: 'Hard 1.1s', shipped: true,
+          note: 'Sóng vuông, sáng 550ms / tắt 550ms. Dứt khoát — mắt đọc ra là “đang chờ gõ”.' },
+        { k: 'B', cls: 'cur-b', name: 'Hard 1.06s',
+          note: 'Đúng nhịp VT100 ngày xưa, xterm tới giờ vẫn dùng. Nhanh hơn A một chút, gần như không phân biệt được.' },
+        { k: 'C', cls: 'cur-c', name: 'Hard 0.7s',
+          note: 'Nhanh hơn hẳn. Đọc ra là “đang bận” chứ không phải “đang chờ” — và ở header nó dễ gây khó chịu.' },
+        { k: 'D', cls: 'cur-d', name: 'Asymmetric 70/30',
+          note: 'Sáng 70% chu kỳ, tắt 30%. Êm hơn A vì mắt ở trên vệt đặc lâu hơn là trên khoảng trống.' },
+        { k: 'E', cls: 'cur-e', name: 'Fade (eased)',
+          note: 'Kiểu của status dot cũ. Để đây làm mốc so sánh: nó đọc ra là “đèn còn sống”, không phải “prompt đang chờ”.' },
+        { k: 'F', cls: 'cur-f', name: 'Underscore',
+          note: 'Gạch dưới thay vì khối. Nhẹ hơn, nhưng ở 9px nó mảnh tới mức gần như biến mất.' },
+        { k: 'G', cls: 'cur-g', name: 'Hollow block',
+          note: 'Khối rỗng — hình terminal hiện khi cửa sổ mất focus. Đọc ra là “nhàn rỗi” chứ không phải “sẵn sàng”.' },
+      ]
+
+      /* ── the real bar ─────────────────────────────────────────── */
+      const ticks = document.getElementById('ticks')
+      ticks.innerHTML = Array.from({ length: 12 }, (_, i) => `<i${i === 6 ? ' class="on"' : ''}></i>`).join('')
+
+      const nav = document.getElementById('nav')
+      const path = document.getElementById('path')
+      nav.innerHTML = NAV.map((g, i) =>
+        `<a href="#" data-i="${i}"><span class="caret">&gt;</span>${g.label}</a>`).join('')
+
+      const links = [...nav.querySelectorAll('a')]
+      links.forEach((a, i) => a.addEventListener('click', (e) => {
+        e.preventDefault()
+        links.forEach((x, j) => x.classList.toggle('on', j === i))
+        // Walk the group's own sections so repeated clicks show the deeper paths
+        // too, not just the group root.
+        const g = NAV[i]
+        const seen = Number(a.dataset.seen ?? 0) % g.sections.length
+        a.dataset.seen = seen + 1
+        path.textContent = sectionPath(g.sections[seen])
+      }))
+
+      /* ── comparison strip ─────────────────────────────────────── */
+      document.getElementById('grid').innerHTML = VARIANTS.map((v) => `
+        <div class="cell${v.shipped ? ' pick' : ''}">
+          <h3><span class="k">${v.k}</span>${v.name}${v.shipped ? '<span class="shipped">← đang chạy</span>' : ''}</h3>
+          <p class="note">${v.note}</p>
+          <p class="line mono">
+            <span class="host">gamegabyte:</span><span class="path">~/work/portfolio</span>
+            <span class="cur ${v.cls}"></span>
+          </p>
+        </div>`).join('')
+    </script>
+  </body>
+</html>

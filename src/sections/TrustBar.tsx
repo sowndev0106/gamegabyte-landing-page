@@ -9,7 +9,7 @@ export function TrustBar() {
   return (
     <Reveal className="mt-14">
       <p className="font-mono text-[9px] uppercase tracking-[0.22em] text-white/48">{content.reel.trust}</p>
-      <div className="mt-4.5 grid grid-cols-2 border border-white/11 md:grid-cols-4">
+      <div className="mt-4.5 grid grid-cols-2 border border-white/11">
         {assets.clients.map((client, i) => (
           <div
             key={client.name}

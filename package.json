@@ -8,6 +8,7 @@
     "prototype:ui": "vite --host 127.0.0.1 --open /prototypes/cinematic-tech-hud/index.html?variant=A",
     "prototype:rail": "vite --host 127.0.0.1 --open /prototypes/command-rail-variants/index.html",
     "prototype:header": "vite --host 127.0.0.1 --open /prototypes/header-variants/index.html",
+    "prototype:cursor": "vite --host 127.0.0.1 --open /prototypes/cursor-blink/index.html",
     "prototype:header-arch": "vite --host 127.0.0.1 --open /prototypes/header-architectures/index.html?variant=A",
     "prototype:hero": "vite --host 127.0.0.1 --open /prototypes/hero-round-4/index.html?v=11",
     "build": "tsc -b && vite build",

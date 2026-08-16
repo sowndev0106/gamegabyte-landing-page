@@ -4,7 +4,7 @@ import { Reveal } from '../components/motion/Reveal'
 import { Container } from '../components/ui/Container'
 import { Section, GlowSpot } from '../components/ui/Section'
 import { Panel } from '../components/ui/Panel'
-import { SectionHeader } from '../components/ui/SectionHeader'
+import { SectionSplit } from '../components/ui/SectionSplit'
 
 type Status = 'idle' | 'submitting' | 'success' | 'mail' | 'error'
 
@@ -59,98 +59,99 @@ export function Contact() {
       backdrop={<GlowSpot className="top-[20%] left-1/2 h-90 w-160 -translate-x-1/2" />}
     >
       <Container>
-        <SectionHeader
+        <SectionSplit
           id="contact"
           title={content.contact.title}
           description={content.contact.body}
-        />
+        >
 
-        <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,2fr)_minmax(280px,1fr)] lg:gap-12">
-          <Reveal>
-            <form className="flex max-w-2xl flex-col gap-6" onSubmit={handleSubmit}>
-            <div className="grid gap-6 sm:grid-cols-2">
-              <div className="flex flex-col gap-2">
-                <label htmlFor="contact-name" className="font-mono text-[9px] uppercase tracking-[0.22em] text-white/60">
-                  {content.contact.fields.name}
-                </label>
-                <input
-                  id="contact-name"
-                  type="text"
-                  required
-                  autoComplete="name"
-                  value={formData.name}
-                  onChange={(e) => setFormData((prev) => ({ ...prev, name: e.target.value }))}
-                  className={fieldClass}
-                />
+          <div className="grid items-start gap-8">
+            <Reveal>
+              <form className="flex max-w-2xl flex-col gap-6" onSubmit={handleSubmit}>
+              <div className="grid gap-6 sm:grid-cols-2">
+                <div className="flex flex-col gap-2">
+                  <label htmlFor="contact-name" className="font-mono text-[9px] uppercase tracking-[0.22em] text-white/60">
+                    {content.contact.fields.name}
+                  </label>
+                  <input
+                    id="contact-name"
+                    type="text"
+                    required
+                    autoComplete="name"
+                    value={formData.name}
+                    onChange={(e) => setFormData((prev) => ({ ...prev, name: e.target.value }))}
+                    className={fieldClass}
+                  />
+                </div>
+
+                <div className="flex flex-col gap-2">
+                  <label htmlFor="contact-email" className="font-mono text-[9px] uppercase tracking-[0.22em] text-white/60">
+                    {content.contact.fields.email}
+                  </label>
+                  <input
+                    id="contact-email"
+                    type="email"
+                    required
+                    autoComplete="email"
+                    value={formData.email}
+                    onChange={(e) => setFormData((prev) => ({ ...prev, email: e.target.value }))}
+                    className={fieldClass}
+                  />
+                </div>
               </div>
 
               <div className="flex flex-col gap-2">
-                <label htmlFor="contact-email" className="font-mono text-[9px] uppercase tracking-[0.22em] text-white/60">
-                  {content.contact.fields.email}
+                <label htmlFor="contact-message" className="font-mono text-[9px] uppercase tracking-[0.22em] text-white/60">
+                  {content.contact.fields.message}
                 </label>
-                <input
-                  id="contact-email"
-                  type="email"
+                <textarea
+                  id="contact-message"
                   required
-                  autoComplete="email"
-                  value={formData.email}
-                  onChange={(e) => setFormData((prev) => ({ ...prev, email: e.target.value }))}
-                  className={fieldClass}
+                  rows={6}
+                  value={formData.message}
+                  onChange={(e) => setFormData((prev) => ({ ...prev, message: e.target.value }))}
+                  className={`${fieldClass} resize-y`}
                 />
               </div>
-            </div>
 
-            <div className="flex flex-col gap-2">
-              <label htmlFor="contact-message" className="font-mono text-[9px] uppercase tracking-[0.22em] text-white/60">
-                {content.contact.fields.message}
-              </label>
-              <textarea
-                id="contact-message"
-                required
-                rows={6}
-                value={formData.message}
-                onChange={(e) => setFormData((prev) => ({ ...prev, message: e.target.value }))}
-                className={`${fieldClass} resize-y`}
-              />
-            </div>
+              <button
+                type="submit"
+                disabled={status === 'submitting'}
+                className="mt-2 inline-flex min-h-14 cursor-pointer items-center justify-center gap-3 border border-accent bg-accent px-8 py-4 text-base font-bold uppercase text-ink shadow-[0_0_28px_rgba(182,232,2,0.18)] transition-transform duration-150 hover:-translate-y-0.5 active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                {status === 'submitting' && (
+                  <span
+                    aria-hidden="true"
+                    className="h-4 w-4 animate-spin rounded-full border-2 border-ink/30 border-t-ink"
+                  />
+                )}
+                {status === 'submitting' ? 'Sending' : content.contact.cta}
+              </button>
 
-            <button
-              type="submit"
-              disabled={status === 'submitting'}
-              className="mt-2 inline-flex min-h-14 cursor-pointer items-center justify-center gap-3 border border-accent bg-accent px-8 py-4 text-base font-bold uppercase text-ink shadow-[0_0_28px_rgba(182,232,2,0.18)] transition-transform duration-150 hover:-translate-y-0.5 active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-60"
-            >
-              {status === 'submitting' && (
-                <span
-                  aria-hidden="true"
-                  className="h-4 w-4 animate-spin rounded-full border-2 border-ink/30 border-t-ink"
-                />
-              )}
-              {status === 'submitting' ? 'Sending' : content.contact.cta}
-            </button>
-
-            <p
-              aria-live="polite"
-              className={`min-h-6 font-mono text-[9px] uppercase tracking-[0.22em] ${
-                status === 'error' ? 'text-red-400' : 'text-accent'
-              }`}
-            >
-              {message}
-            </p>
-            </form>
-          </Reveal>
-
-          <Reveal delay={0.12}>
-            <Panel as="aside" className="p-7 sm:p-8" aria-label="Open channel response status">
-              <p className="font-mono text-[9px] uppercase tracking-[0.22em] text-accent">
-                {content.contact.response.status}
+              <p
+                aria-live="polite"
+                className={`min-h-6 font-mono text-[9px] uppercase tracking-[0.22em] ${
+                  status === 'error' ? 'text-red-400' : 'text-accent'
+                }`}
+              >
+                {message}
               </p>
-              <h3 className="mt-5 font-display text-[28px] font-bold text-white">
-                {content.contact.response.title}
-              </h3>
-              <p className="mt-3 text-base leading-relaxed text-white/70">{content.contact.response.body}</p>
-            </Panel>
-          </Reveal>
-        </div>
+              </form>
+            </Reveal>
+
+            <Reveal delay={0.12}>
+              <Panel as="aside" className="p-7 sm:p-8" aria-label="Open channel response status">
+                <p className="font-mono text-[9px] uppercase tracking-[0.22em] text-accent">
+                  {content.contact.response.status}
+                </p>
+                <h3 className="mt-5 font-display text-[28px] font-bold text-white">
+                  {content.contact.response.title}
+                </h3>
+                <p className="mt-3 text-base leading-relaxed text-white/70">{content.contact.response.body}</p>
+              </Panel>
+            </Reveal>
+          </div>
+        </SectionSplit>
       </Container>
     </Section>
   )
