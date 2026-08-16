@@ -59,8 +59,17 @@ export const content = {
   },
   reel: {
     title: 'Showreel 2025',
+    intro: 'A minute of interface design, campaign pages and launch art shipped for game teams.',
     ariaLabel: 'Gamegabyte Studio Reel 2025',
     src: assets.video,
+    status: 'Transmission ready',
+    trust: 'Trusted by teams at',
+    controls: {
+      play: 'Play signal',
+      pause: 'Pause signal',
+      muteOn: 'Mute: on',
+      muteOff: 'Mute: off',
+    },
   },
   trust: {
     title: 'Growing with Game Studios Worldwide',

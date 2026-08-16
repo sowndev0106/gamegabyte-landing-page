@@ -15,11 +15,17 @@ export function LazyVideo({
   src,
   poster,
   className,
+  status,
+  labels,
   'aria-label': ariaLabel,
 }: {
   src: string
   poster?: string
   className?: string
+  /** Status line shown at the left of the control bar. */
+  status?: string
+  /** Visible button text. The `aria-label`s stay fixed and descriptive. */
+  labels: { play: string; pause: string; muteOn: string; muteOff: string }
   'aria-label'?: string
 }) {
   const ref = useRef<HTMLVideoElement>(null)
@@ -98,7 +104,7 @@ export function LazyVideo({
           aria-label="Play showreel"
           className="absolute inset-0 flex cursor-pointer items-center justify-center bg-ink/30 transition-colors hover:bg-ink/20"
         >
-          <span className="flex h-20 w-20 items-center justify-center rounded-full bg-accent text-ink shadow-[0_0_40px_rgba(182,232,2,0.35)] transition-transform duration-200 group-hover/player:scale-105">
+          <span className="flex h-20 w-20 items-center justify-center bg-accent text-ink shadow-[0_0_40px_rgba(182,232,2,0.35)] transition-transform duration-200 group-hover/player:scale-105">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className="ml-1 h-8 w-8">
               <path d="M8 5v14l11-7z" />
             </svg>
@@ -106,17 +112,13 @@ export function LazyVideo({
         </button>
       )}
 
-      <div className="absolute inset-x-0 bottom-0 flex items-center gap-4 bg-linear-to-t from-ink/90 to-transparent px-4 py-3 sm:px-6">
-        <button
-          type="button"
-          onClick={toggle}
-          aria-label={playing ? 'Pause showreel' : 'Play showreel'}
-          className="flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center text-white transition-colors hover:text-accent"
-        >
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className="h-5 w-5">
-            {playing ? <path d="M6 5h4v14H6zM14 5h4v14h-4z" /> : <path d="M8 5v14l11-7z" />}
-          </svg>
-        </button>
+      <div className="absolute inset-x-0 bottom-0 flex items-center gap-3 border-t border-white/11 bg-ink/85 px-4 py-3 backdrop-blur-sm sm:gap-4 sm:px-5">
+        {status && (
+          <span className="hidden shrink-0 items-center gap-2 font-mono text-[9px] uppercase tracking-[0.16em] text-accent sm:flex">
+            <span aria-hidden="true" className="command-status-dot h-1.5 w-1.5 rounded-full bg-accent" />
+            {status}
+          </span>
+        )}
 
         <input
           type="range"
@@ -132,23 +134,26 @@ export function LazyVideo({
           }}
         />
 
-        <span className="hidden shrink-0 font-mono text-xs tabular-nums text-white/80 sm:block">
+        <span className="hidden shrink-0 font-mono text-[10px] tabular-nums text-white/70 sm:block">
           {formatTime((progress / 100) * duration)} / {formatTime(duration)}
         </span>
 
         <button
           type="button"
+          onClick={toggle}
+          aria-label={playing ? 'Pause showreel' : 'Play showreel'}
+          className="min-h-10.5 shrink-0 cursor-pointer border border-white/11 px-3.5 font-mono text-[9px] uppercase tracking-[0.14em] text-white transition-colors hover:border-accent hover:text-accent"
+        >
+          {playing ? labels.pause : labels.play}
+        </button>
+
+        <button
+          type="button"
           onClick={toggleMute}
           aria-label={muted ? 'Unmute showreel' : 'Mute showreel'}
-          className="flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center text-white transition-colors hover:text-accent"
+          className="min-h-10.5 shrink-0 cursor-pointer border border-white/11 px-3.5 font-mono text-[9px] uppercase tracking-[0.14em] text-white transition-colors hover:border-accent hover:text-accent"
         >
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className="h-5 w-5">
-            {muted ? (
-              <path d="M4 9v6h4l5 5V4L8 9H4zm12.5 3 2.5 2.5-1 1L15.5 13 13 15.5l-1-1L14.5 12 12 9.5l1-1 2.5 2.5L18 8.5l1 1L16.5 12z" />
-            ) : (
-              <path d="M4 9v6h4l5 5V4L8 9H4zm11.5 3a4 4 0 0 0-2-3.46v6.92A4 4 0 0 0 15.5 12zM13 3.23v2.06a7 7 0 0 1 0 13.42v2.06a9 9 0 0 0 0-17.54z" />
-            )}
-          </svg>
+          {muted ? labels.muteOn : labels.muteOff}
         </button>
       </div>
     </div>

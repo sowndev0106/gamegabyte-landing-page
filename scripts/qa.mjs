@@ -95,6 +95,22 @@ for (const viewport of VIEWPORTS) {
   })
   check(`${viewport.label}: hero headline fits the viewport`, heroFits)
 
+  // The reel's controls are restyled, not reimplemented — this guards the
+  // wiring surviving the restyle.
+  {
+    const muteBtn = page.locator('#reel button[aria-label*="ute showreel"]').first()
+    await page.locator('#reel').scrollIntoViewIfNeeded()
+    await page.waitForTimeout(300)
+    const before = await page.evaluate(() => document.querySelector('#reel video')?.muted)
+    await muteBtn.click()
+    await page.waitForTimeout(200)
+    const after = await page.evaluate(() => document.querySelector('#reel video')?.muted)
+    check(`${viewport.label}: reel mute toggles`, before !== after, `${before} -> ${after}`)
+    await muteBtn.click()
+    await page.evaluate(() => window.scrollTo(0, 0))
+    await page.waitForTimeout(300)
+  }
+
   for (const section of SECTIONS) {
     const el = page.locator(`#${section.id}`)
     const count = await el.count()
