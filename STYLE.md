@@ -167,8 +167,15 @@ takes no `index` or `eyebrow` prop — free-string arguments are exactly how
 numbering drifted out of order in the previous design, where `case-study` and
 `faq` were both `[07]`.
 
-Measured result of that contract at 1440: eyebrow at **x=154**, heading at
-**x=442**, heading **84px**, in eleven of twelve sections. That alignment is the
+The marker sits directly above the heading and both are flush to the page's
+left edge; the supporting sentence sits in a capped 360px column to the right,
+resting on the heading's baseline. An earlier revision hung the marker in its
+own 240px margin column, which pushed every heading 288px inwards — the page's
+largest type then read as drifting toward the centre while the hero stayed at
+the edge.
+
+Measured result of that contract at 1440: eyebrow and heading both at
+**x=154**, heading **84px**, in eleven of twelve sections. That alignment is the
 page's spine. Do not break it to make one section look better.
 
 ### The pinned-panel pattern
@@ -269,12 +276,25 @@ Always `aspect-[16/9]` (or `4/5`, `16/10`) with `object-cover`.
 Honest ledger of where the code does not yet match the rules above.
 
 Measured at 1440×1000. The header grid now resolves to `240px 936px` with the
-eyebrow at **x=154** and the heading at **x=442**, at **84px**, in **eleven of
+the eyebrow and the heading both at **x=154**, at **84px**, in **eleven of
 twelve** sections.
 
 | Where | Deviation | Verdict |
 |---|---|---|
-| `home` | Eyebrow and heading at x=140, heading 104px, outside the `SectionHeader` grid | **Intentional and permanent.** The hero is the only full-bleed section; it opens the page rather than taking a place in the sequence. |
+| `home` | Eyebrow and heading at x=140, heading 104px, outside the `SectionHeader` grid | **Intentional** as a layout — the hero is the only full-bleed section. **But its left edge does not match the rest of the page**, and the mismatch grows with the viewport: 14px at 1440, 221px at 1853, 574px at 2560, because the hero is pinned to the rail while every section sits in a centred 1320px measure. Unresolved; see below. |
+
+**The open question.** Two ways to close that gap, both measured in
+`prototypes/section-header-alignment/`:
+
+| Fix | 1440 | 1853 | 2560 |
+|---|---|---|---|
+| Hero joins the measure | both at 154 | both at 361 | both at 714 |
+| Sections drop the measure | both at 140 | both at 140 | both at 140 |
+
+The first matches the edges but lets the whole page drift rightwards on a wide
+monitor. The second keeps everything hard left at any width, which is what the
+rest of this document argues for — but it removes the reading measure from
+`Container`, which every section shares.
 
 That is the whole list. An earlier revision of this document also flagged the
 empty middle of the `testimonials` meta column as unresolved. Reviewed against
