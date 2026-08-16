@@ -112,6 +112,11 @@ for (const viewport of VIEWPORTS) {
   }
 
   check(
+    `${viewport.label}: three archive items`,
+    (await page.locator('#portfolio [data-archive-item]').count()) === 3,
+  )
+
+  check(
     `${viewport.label}: four advantage nodes`,
     (await page.locator('#about [data-advantage]').count()) === 4,
   )

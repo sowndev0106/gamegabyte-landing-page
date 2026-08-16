@@ -1,93 +1,53 @@
-import { useState } from 'react'
 import { content, assets } from '../content/content'
-import { Stagger, StaggerItem } from '../components/motion/Stagger'
 import { Reveal } from '../components/motion/Reveal'
 import { Container } from '../components/ui/Container'
 import { Section } from '../components/ui/Section'
 import { SectionHeader } from '../components/ui/SectionHeader'
 import { ArrowUpRight } from '../components/ui/ArrowUpRight'
 
-const ALL = 'ALL'
-
+/**
+ * Three files in an asymmetric archive: one held open at full height, two
+ * stacked beside it. The approved design carries no filter control — with three
+ * projects and three distinct tags, each filter would resolve to one item.
+ */
 export function Portfolio() {
-  const [filter, setFilter] = useState<string>(ALL)
-  const filters = [ALL, ...content.portfolio.tags]
-
-  const items = content.portfolio.items
-    .map((item, index) => ({ ...item, image: assets.portfolio[index] }))
-    .filter((item) => filter === ALL || item.tag === filter)
+  const items = content.portfolio.items.map((item, index) => ({ ...item, image: assets.portfolio[index] }))
 
   return (
     <Section id="portfolio">
       <Container>
-        <SectionHeader
-          id="portfolio"
-          title={content.portfolio.title}
-          description={content.portfolio.intro}
-        />
+        <SectionHeader id="portfolio" title={content.portfolio.title} description={content.portfolio.intro} />
 
-        <Reveal className="mb-10">
-          <div
-            className="flex flex-wrap gap-2 lg:justify-end"
-            role="group"
-            aria-label="Filter case studies by discipline"
-          >
-          {filters.map((tag) => {
-            const active = filter === tag
-            return (
-              <button
-                key={tag}
-                type="button"
-                onClick={() => setFilter(tag)}
-                aria-pressed={active}
-                className={`inline-flex min-h-11 cursor-pointer items-center border px-4 font-mono text-[11px] uppercase tracking-[0.18em] transition-colors ${
-                  active
-                    ? 'border-accent bg-accent text-ink'
-                    : 'border-white/12 text-white/70 hover:border-white/40 hover:text-white'
+        <Reveal>
+          <div className="grid grid-cols-1 grid-rows-[460px_280px_280px] gap-3.5 lg:grid-cols-[1.2fr_0.8fr] lg:grid-rows-[330px_330px]">
+            {items.map((item, i) => (
+              <a
+                key={item.title}
+                href={item.href}
+                data-archive-item
+                className={`group relative overflow-hidden border border-white/11 ${
+                  i === 0 ? 'lg:row-span-2' : ''
                 }`}
               >
-                {tag}
-              </button>
-              )
-            })}
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  loading="lazy"
+                  className="h-full w-full object-cover saturate-75 transition duration-500 group-hover:scale-[1.025] group-hover:saturate-125"
+                />
+                <div className="absolute inset-x-0 bottom-0 bg-[linear-gradient(transparent,rgb(3_2_19/0.96))] px-5.5 pt-15.5 pb-5.5">
+                  <span className="flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.22em] text-accent">
+                    {String(i + 1).padStart(2, '0')} / {item.tag}
+                  </span>
+                  <h3 className="mt-2.5 flex items-center gap-2 font-display text-[27px] leading-none font-bold text-white">
+                    {item.title}
+                    <ArrowUpRight className="h-4 w-4 opacity-0 transition-opacity group-hover:opacity-100" />
+                  </h3>
+                </div>
+              </a>
+            ))}
           </div>
         </Reveal>
-
-        {items.length === 0 ? (
-          <p className="hud-surface p-12 text-center font-mono text-sm uppercase tracking-[0.18em] text-white/60">
-            No case studies under this discipline yet.
-          </p>
-        ) : (
-          <Stagger key={filter} className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {items.map((item) => (
-              <StaggerItem key={item.title}>
-                <a
-                  href={item.href}
-                  className="hud-surface hud-surface-interactive group flex h-full flex-col overflow-hidden"
-                >
-                  <div className="relative aspect-16/10 overflow-hidden">
-                    <img
-                      src={item.image}
-                      alt={item.title}
-                      loading="lazy"
-                      className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
-                    />
-                    <div aria-hidden="true" className="absolute inset-0 bg-linear-to-t from-ink via-ink/20 to-transparent" />
-                    <span className="absolute left-4 top-4 border border-white/20 bg-ink/70 px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-accent backdrop-blur-sm">
-                      {item.tag}
-                    </span>
-                  </div>
-                  <div className="flex flex-1 items-end justify-between gap-4 p-6">
-                    <h3 className="font-display text-xl font-bold tracking-tight text-white transition-colors group-hover:text-accent">
-                      {item.title}
-                    </h3>
-                    <ArrowUpRight className="mb-1 h-4 w-4 shrink-0 text-white/30 transition duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent" />
-                  </div>
-                </a>
-              </StaggerItem>
-            ))}
-          </Stagger>
-        )}
       </Container>
     </Section>
   )
