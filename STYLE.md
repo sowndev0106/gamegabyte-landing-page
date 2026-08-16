@@ -257,32 +257,56 @@ and a sixth group would spend it.
 
 ## 4. The section contract
 
-Every section except the hero **must** open with `SectionHeader`:
+Every section except the hero **must** be built with `SectionSplit`:
 
 ```tsx
 <Section id="services" grid>
   <Container>
-    <SectionHeader id="services" title={…} description={…} />
-    …
+    <SectionSplit id="services" title={…} description={…}>
+      …content…
+    </SectionSplit>
   </Container>
 </Section>
 ```
 
-`SectionHeader` reads its index and eyebrow from `src/content/sections.ts`. It
+`SectionSplit` is a **sidehead**: the title sits in a column beside its content
+rather than above it, and stays sticky so a tall body cannot scroll its own
+title out of view.
+
+**The 38/62 split is set by the type, not by taste.** At the heading's 60px the
+widest unbreakable line on the page — `CAPABILITIES.` — measures 418px.
+Measured at 1440:
+
+| Split | Heading column | 60px | 48px | 40px |
+|---|---|---|---|---|
+| 25 / 75 | 313px | 3 headings clip | 1 clips | fits |
+| 33 / 67 | 413px | 1 clips | fits | fits |
+| **38 / 62** | **476px** | **fits** | fits | fits |
+| 45 / 55 | 563px | fits | fits | fits |
+
+Narrowing the heading column means shrinking the heading with it — never one
+without the other. Re-measure when copy changes: a longer word moves that 418px.
+`prototypes/section-split/` outlines any heading that will not fit its column
+and counts them, so the check takes a click.
+
+The content column carries `min-w-0`. Without it a wide child — the dossier
+rail, a long table row — pushes the track past its share and the split silently
+stops holding.
+
+**What the narrow content column costs.** At 1440 the content column is ~740px,
+so grids that ran three or four across came down to two: the systems matrix, the
+advantage nodes, the technology notes, the client marks. In the matrix the axis
+label spans its row rather than taking a cell of its own, and the third
+discipline in each axis spans the row — three items in a two-column grid
+otherwise leave a hole.
+
+`SectionSplit` reads its index and eyebrow from `src/content/sections.ts`. It
 takes no `index` or `eyebrow` prop — free-string arguments are exactly how
 numbering drifted out of order in the previous design, where `case-study` and
 `faq` were both `[07]`.
 
-The marker sits directly above the heading and both are flush to the page's
-left edge; the supporting sentence sits in a capped 360px column to the right,
-resting on the heading's baseline. An earlier revision hung the marker in its
-own 240px margin column, which pushed every heading 288px inwards — the page's
-largest type then read as drifting toward the centre while the hero stayed at
-the edge.
-
-Measured result of that contract at 1440: eyebrow and heading both at
-**x=154**, heading **84px**, in eleven of twelve sections. That alignment is the
-page's spine. Do not break it to make one section look better.
+Every section still starts on the page's single left edge, hero included. That
+alignment is the spine; do not break it to make one section look better.
 
 ### The pinned-panel pattern
 
