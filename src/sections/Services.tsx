@@ -12,8 +12,7 @@ export function Services() {
     <Section id="services" grid className="services-grid-background">
       <Container>
         <SectionHeader
-          index="03"
-          eyebrow="Capabilities"
+          id="services"
           title="Services + Stack"
           description="Six disciplines in one launch system. Technical detail stays compact and supports the work."
         />

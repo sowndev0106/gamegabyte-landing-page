@@ -17,8 +17,7 @@ export function Stats() {
     >
       <Container>
         <SectionHeader
-          index="02"
-          eyebrow="Our numbers"
+          id="telemetry"
           title={content.trust.title}
           description={content.trust.note}
         />

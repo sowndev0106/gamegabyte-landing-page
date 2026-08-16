@@ -59,8 +59,7 @@ export function Contact() {
     >
       <Container>
         <SectionHeader
-          index="08"
-          eyebrow="Contact"
+          id="contact"
           title={content.contact.title}
           description={content.contact.body}
         />

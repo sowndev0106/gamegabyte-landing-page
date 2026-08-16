@@ -12,8 +12,7 @@ export function WorkProcess() {
     <Section id="process" grid>
       <Container>
         <SectionHeader
-          index="04"
-          eyebrow="Transmission path"
+          id="process"
           title="From signal to launch"
           description="A readable process with motion that explains progression rather than decorating it."
         />

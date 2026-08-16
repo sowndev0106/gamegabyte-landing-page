@@ -1,43 +1,43 @@
 import type { ReactNode } from 'react'
 import { Reveal } from '../motion/Reveal'
+import { sectionById, type SectionId } from '../../content/sections'
 
 /**
- * The page's one section-header pattern: a monospaced index + label, a display
- * heading on the left, and the supporting copy set beside it on wide screens.
- * Asymmetric on purpose — a column of centred headings reads as a template.
+ * The page's one section-header pattern: a monospaced marker in a narrow left
+ * column, the display heading beside it.
+ *
+ * The index and eyebrow are read from the section registry rather than passed
+ * in — free-string arguments are how numbering drifts out of order.
  */
 export function SectionHeader({
-  index,
-  eyebrow,
+  id,
   title,
   description,
   action,
 }: {
-  /** Two-digit section marker, e.g. "03". */
-  index: string
-  eyebrow: string
+  id: SectionId
   title: ReactNode
   description?: ReactNode
   action?: ReactNode
 }) {
+  const { index, eyebrow } = sectionById(id)
+
   return (
     <Reveal>
-      <div className="mb-12 grid gap-6 border-b border-white/8 pb-8 lg:mb-16 lg:grid-cols-12 lg:items-end lg:gap-10">
-        <div className="lg:col-span-7">
-          <p className="flex items-center gap-3 font-mono text-xs uppercase tracking-[0.28em] text-accent">
-            <span aria-hidden="true" className="text-white/55">[{index}]</span>
-            {eyebrow}
-          </p>
-          <h2 className="mt-5 font-display text-4xl font-bold uppercase leading-[0.95] tracking-tight text-white sm:text-5xl lg:text-6xl">
+      <div className="mb-10 grid gap-6 lg:mb-14 lg:grid-cols-[minmax(0,240px)_minmax(0,1fr)] lg:gap-12">
+        <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-accent">
+          <span aria-hidden="true" className="text-white/45">
+            [{index}]
+          </span>{' '}
+          {eyebrow}
+        </p>
+        <div>
+          <h2 className="font-display text-[clamp(38px,6vw,84px)] font-extrabold uppercase leading-[0.86] tracking-[-0.05em] text-white">
             {title}
           </h2>
+          {description && <p className="mt-6 max-w-xl text-base leading-relaxed text-white/70">{description}</p>}
+          {action && <div className="mt-8">{action}</div>}
         </div>
-        {(description || action) && (
-          <div className="flex flex-col items-start gap-6 lg:col-span-5 lg:items-end lg:text-right">
-            {description && <p className="max-w-md text-base leading-relaxed text-white/70">{description}</p>}
-            {action}
-          </div>
-        )}
       </div>
     </Reveal>
   )

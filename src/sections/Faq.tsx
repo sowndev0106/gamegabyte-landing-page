@@ -14,8 +14,7 @@ export function Faq() {
     <Section id="faq">
       <Container>
         <SectionHeader
-          index="07"
-          eyebrow="FAQ"
+          id="faq"
           title="Questions, answered"
           description="Everything you need to know before starting a project with us."
           action={

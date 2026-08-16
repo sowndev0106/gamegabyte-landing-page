@@ -23,8 +23,7 @@ export function WhyChooseUs() {
     >
       <Container>
         <SectionHeader
-          index="05"
-          eyebrow="Why choose us"
+          id="about"
           title="Strategic partners, not just an agency"
           description="We work the way an internal team would — inside your milestones, not alongside them."
         />

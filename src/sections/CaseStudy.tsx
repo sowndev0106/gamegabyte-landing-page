@@ -24,8 +24,7 @@ export function CaseStudy() {
     >
       <Container>
         <SectionHeader
-          index="07"
-          eyebrow={`Case study — ${study.client}`}
+          id="case-study"
           title={study.title}
           description={study.intro}
         />

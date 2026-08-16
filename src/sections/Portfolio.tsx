@@ -21,8 +21,7 @@ export function Portfolio() {
     <Section id="portfolio">
       <Container>
         <SectionHeader
-          index="06"
-          eyebrow="Case studies"
+          id="portfolio"
           title={content.portfolio.title}
           description={content.portfolio.intro}
         />

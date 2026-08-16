@@ -20,8 +20,7 @@ export function Testimonials() {
     <Section id="testimonials" grid>
       <Container>
         <SectionHeader
-          index="08"
-          eyebrow="Testimonials"
+          id="testimonials"
           title="Trusted by game teams"
           description="Don't take our word for it — over 100+ people trust us."
         />

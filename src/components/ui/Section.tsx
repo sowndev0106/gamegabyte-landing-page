@@ -1,9 +1,13 @@
 import type { ReactNode } from 'react'
+import type { SectionId } from '../../content/sections'
 
 /**
- * Every section on the page shares one vertical rhythm and one dark ground.
- * Separation comes from the hairline rule and the optional grid texture rather
- * than from flat colour slabs.
+ * Every section shares one vertical rhythm and one dark ground. Separation
+ * comes from the technical grid and the change of internal structure, not from
+ * flat colour slabs or a rule between each one.
+ *
+ * `id` is typed against the section registry so a typo cannot silently break
+ * the rail, the mobile menu and the heading number all at once.
  */
 export function Section({
   id,
@@ -13,7 +17,7 @@ export function Section({
   className = '',
   ...rest
 }: {
-  id?: string
+  id?: SectionId
   children: ReactNode
   /**
    * Absolutely-positioned art, gradients and glows. These MUST go here rather
@@ -28,7 +32,7 @@ export function Section({
   return (
     <section
       id={id}
-      className={`relative overflow-hidden border-t border-white/8 bg-ink py-20 sm:py-28 lg:py-36 ${className}`}
+      className={`relative overflow-hidden bg-ink py-19.5 md:py-28 lg:py-32 ${className}`}
       {...rest}
     >
       {grid && (

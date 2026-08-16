@@ -12,8 +12,7 @@ export function Showreel() {
     <Section id="reel">
       <Container>
         <SectionHeader
-          index="01"
-          eyebrow="Showreel"
+          id="reel"
           title={content.reel.title}
           description="A minute of the work — interface design, campaign pages and launch art shipped for game teams."
         />
