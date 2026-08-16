@@ -5,11 +5,17 @@
   --color-accent: #b6e802;
   --color-accent-bright: #d4ff00;
   --color-purple-light: #8c4fff;
-  --color-ink: #030213;
+  --color-ink: #05050c;
   --color-ink-raised: #17171f;
   --color-surface: #f1f2f9;
   --color-chip: #e8e8fd;
   --color-chip-ink: #5d5c81;
+
+  /* Matched to the approved prototype, which breaks at 760 and 1050 rather
+     than Tailwind's stock 768/1024. The hero's mobile layout fails inside
+     that gap, so the difference is load-bearing, not cosmetic. */
+  --breakpoint-md: 760px;
+  --breakpoint-lg: 1050px;
 
   --font-display: "Schibsted Grotesk", system-ui, sans-serif;
   --font-sans: "Roboto", system-ui, sans-serif;
