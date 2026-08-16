@@ -4,20 +4,21 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "npm run pages && vite",
     "prototype:ui": "vite --host 127.0.0.1 --open /prototypes/cinematic-tech-hud/index.html?variant=A",
     "prototype:rail": "vite --host 127.0.0.1 --open /prototypes/command-rail-variants/index.html",
     "prototype:header": "vite --host 127.0.0.1 --open /prototypes/header-variants/index.html",
     "prototype:cursor": "vite --host 127.0.0.1 --open /prototypes/cursor-blink/index.html",
     "prototype:header-arch": "vite --host 127.0.0.1 --open /prototypes/header-architectures/index.html?variant=A",
     "prototype:hero": "vite --host 127.0.0.1 --open /prototypes/hero-round-4/index.html?v=11",
-    "build": "tsc -b && vite build",
+    "build": "npm run pages && tsc -b && vite build",
     "lint": "eslint .",
     "qa": "node scripts/qa.mjs",
     "preview": "vite preview",
     "deploy": "npm run build && wrangler pages deploy dist --project-name=gamegabyte-web",
     "optimize": "node scripts/optimize-images.mjs",
-    "clone:behance": "node scripts/clone-behance.mjs"
+    "clone:behance": "node scripts/clone-behance.mjs",
+    "pages": "node scripts/generate-pages.mjs"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.1",

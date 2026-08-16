@@ -47,6 +47,27 @@ test('every summary carries the fields a listing needs', () => {
   }
 })
 
+test('the homepage archive has exactly three projects in slots 1-3', () => {
+  // The archive frame is built for three: one tall, two stacked. Two would
+  // leave a hole, four would silently drop one. This also catches a normalize
+  // run that died before writing index.json — the failure that shipped an
+  // empty section once already.
+  const featured = index.filter((item) => item.featured > 0)
+  assert.deepEqual(
+    featured.map((item) => item.featured).sort(),
+    [1, 2, 3],
+    'featured slots must be exactly 1, 2 and 3 — check overrides.json',
+  )
+})
+
+test('overrides.json only names projects that exist', async () => {
+  const overrides = await readJson(path.join(CONTENT, 'overrides.json'))
+  const slugs = new Set(index.map((item) => item.slug))
+  for (const slug of Object.keys(overrides)) {
+    assert.ok(slugs.has(slug), `overrides.json names an unknown project: ${slug}`)
+  }
+})
+
 test('every block is a shape the detail page knows how to render', () => {
   const kinds = new Set(['image', 'video', 'embed', 'text'])
   for (const detail of details) {

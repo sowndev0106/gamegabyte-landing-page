@@ -22,7 +22,7 @@ import { ArrowUpRight } from '../ui/ArrowUpRight'
  *    twelve sections. Groups are a desktop compression; the sheet has room for
  *    the real list.
  */
-export function CommandTopbar({ active }: { active: string }) {
+export function CommandTopbar({ active, base = '' }: { active: string; base?: string }) {
   const activeGroup = activeGroupId(active)
 
   return (
@@ -39,7 +39,7 @@ export function CommandTopbar({ active }: { active: string }) {
           return (
             <a
               key={group.id}
-              href={`#${group.sections[0]}`}
+              href={`${base}#${group.sections[0]}`}
               aria-current={isActive ? 'true' : undefined}
               className={`flex items-center gap-1.5 pr-4 font-mono text-[9px] uppercase tracking-[0.16em] transition-colors lg:pr-7 ${
                 isActive ? 'text-white' : 'text-white/48 hover:text-white'
@@ -97,7 +97,7 @@ export function CommandTopbar({ active }: { active: string }) {
         </span>
 
         <a
-          href="#contact"
+          href={`${base}#contact`}
           className="flex items-center gap-2 self-stretch bg-accent px-6 font-display text-sm font-bold uppercase text-ink transition-colors hover:bg-accent-bright lg:px-11"
         >
           {content.shell.cta}

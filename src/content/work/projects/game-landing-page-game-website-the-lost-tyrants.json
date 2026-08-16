@@ -10,6 +10,7 @@
   ],
   "client": "Gameloft",
   "engagement": "client",
+  "featured": 0,
   "description": "A landing page for The Lost Tyrants, the event that replaced Divine Events in Gameloft's Dragon Mania Legends. It introduces the new Dragon Grid mechanic, the Tyrant element and the event's cast — an in-game storyline retold as a standalone page.",
   "cover": "/assets/img/work/game-landing-page-game-website-the-lost-tyrants/cover.webp",
   "coverWidth": 2048,

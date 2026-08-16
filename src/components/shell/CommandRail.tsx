@@ -41,14 +41,14 @@ function tickWidth(distance: number, isMajor: boolean): number {
  * The ticks carry no text, so each link's accessible name comes from the
  * registry label — without it the whole rail would read as twelve unnamed links.
  */
-export function CommandRail({ active }: { active: string }) {
+export function CommandRail({ active, base = '' }: { active: string; base?: string }) {
   // -1 before any section owns the viewport, which leaves the scale at rest
   // rather than taking a reading on the first section by default.
   const activeIndex = SECTIONS.findIndex((section) => section.id === active)
 
   return (
     <aside className="fixed inset-y-0 left-0 z-40 hidden w-23 flex-col items-center justify-between border-r border-white/11 bg-ink/95 py-6 backdrop-blur-xl md:flex">
-      <a href="#home" aria-label="Gamegabyte home" className="block w-15 shrink-0">
+      <a href={`${base}#home`} aria-label="Gamegabyte home" className="block w-15 shrink-0">
         <GamegabyteLogo className="h-auto w-full" />
       </a>
 
@@ -62,7 +62,7 @@ export function CommandRail({ active }: { active: string }) {
           return (
             <a
               key={section.id}
-              href={`#${section.id}`}
+              href={`${base}#${section.id}`}
               aria-label={section.label}
               aria-current={isActive ? 'true' : undefined}
               // The tick is 1px tall but the target is 24px — a 1px hit area is

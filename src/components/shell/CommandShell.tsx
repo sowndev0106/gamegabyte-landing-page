@@ -10,9 +10,25 @@ import { useActiveSection } from './useActiveSection'
  * The page frame. Everything that persists across the whole document lives
  * here — rail, topbar, mobile bar — so sections stay unaware of navigation.
  */
-export function CommandShell({ children, footer }: { children: ReactNode; footer?: ReactNode }) {
+export function CommandShell({
+  children,
+  footer,
+  base = '',
+}: {
+  children: ReactNode
+  footer?: ReactNode
+  /**
+   * Prefix for every section link. Empty on the homepage, where the sections
+   * are on this document; `/` on the work pages, where `#services` alone would
+   * point at an anchor that is not here.
+   */
+  base?: string
+}) {
   const ids = useMemo(() => SECTIONS.map((section) => section.id), [])
-  const active = useActiveSection(ids)
+  const observed = useActiveSection(ids)
+  // Off the homepage none of those sections exist, so nothing is being read
+  // and the rail shows no active tick rather than a stale one.
+  const active = base ? '' : observed
 
   return (
     <>
@@ -23,9 +39,9 @@ export function CommandShell({ children, footer }: { children: ReactNode; footer
         Skip to content
       </a>
 
-      <CommandRail active={active} />
-      <CommandTopbar active={active} />
-      <MobileCommandBar active={active} />
+      <CommandRail active={active} base={base} />
+      <CommandTopbar active={active} base={base} />
+      <MobileCommandBar active={active} base={base} />
 
       {/* The footer sits beside `main`, not inside it — it is not page content. */}
       <div className="md:ml-23">

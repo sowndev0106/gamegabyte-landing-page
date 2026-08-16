@@ -9,6 +9,7 @@
   ],
   "client": "",
   "engagement": "",
+  "featured": 0,
   "description": "Carnivora, a game website built on a documented component system rather than one-off layouts. Vina Sans and Teachers set the type, a neon pink-and-cyan palette sets the tone, and buttons, cards and navigation are specified before the page is assembled from them.",
   "cover": "/assets/img/work/game-website-design-game-uiux/cover.webp",
   "coverWidth": 2048,

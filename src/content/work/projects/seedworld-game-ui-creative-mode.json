@@ -9,6 +9,7 @@
   ],
   "client": "Seedworld Studio",
   "engagement": "client",
+  "featured": 2,
   "description": "Interface design for Creative Mode, the world-building layer of Seedworld's UGC metaverse. The screens cover island selection, terraforming and painting tools, structure and decoration placement, and the prefab asset library — a builder's toolkit that has to stay readable while the player is mid-edit.",
   "cover": "/assets/img/work/seedworld-game-ui-creative-mode/cover.webp",
   "coverWidth": 2048,

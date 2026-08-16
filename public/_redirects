@@ -1,1 +1,6 @@
-/*    /index.html   200
+# The site is a multi-page build: every route has a real index.html on disk, so
+# Cloudflare Pages resolves /work/<slug>/ on its own. The blanket SPA rewrite
+# that used to live here (/*  /index.html  200) would now shadow all of them and
+# serve the homepage for every project.
+#
+# Keep this file rule-free unless a genuine redirect is needed.

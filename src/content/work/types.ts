@@ -49,6 +49,8 @@ export type WorkSummary = {
   client: string
   /** '' means unclassified, not "client work". See overrides.json. */
   engagement: '' | 'client' | 'concept' | 'challenge'
+  /** Slot in the homepage archive, 1-based. 0 = not featured. */
+  featured: number
   description: string
   cover: string
   coverWidth: number
@@ -68,6 +70,13 @@ import index from './index.json'
 export const workIndex = index as WorkSummary[]
 
 export const workBySlug = new Map(workIndex.map((item) => [item.slug, item]))
+
+/** The homepage archive, in the order `overrides.json` asks for. */
+export const featuredWork = workIndex
+  .filter((item) => item.featured > 0)
+  .sort((a, b) => a.featured - b.featured)
+
+export const workPath = (slug: string) => `/work/${slug}/`
 
 // Detail pages are the long tail of this content — several megabytes of JSON
 // across 16 projects — so they load on demand rather than riding in the bundle.

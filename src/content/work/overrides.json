@@ -3,7 +3,8 @@
     "title": "Seedworld — Creative Mode",
     "client": "Seedworld Studio",
     "engagement": "client",
-    "description": "Interface design for Creative Mode, the world-building layer of Seedworld's UGC metaverse. The screens cover island selection, terraforming and painting tools, structure and decoration placement, and the prefab asset library — a builder's toolkit that has to stay readable while the player is mid-edit."
+    "description": "Interface design for Creative Mode, the world-building layer of Seedworld's UGC metaverse. The screens cover island selection, terraforming and painting tools, structure and decoration placement, and the prefab asset library — a builder's toolkit that has to stay readable while the player is mid-edit.",
+    "featured": 2
   },
   "game-platform-uiux-design-seedworld-quests": {
     "title": "Seedworld Quests",
@@ -20,13 +21,15 @@
   "game-website-design-waterpark-simulator": {
     "title": "Waterpark Simulator",
     "engagement": "client",
-    "description": "The official website for Waterpark Simulator, taken from concept to launch in nineteen days. Bright, high-energy art direction matched to the game, tuned for fast loading under heavy visuals and for both EN and VN audiences. The launch reported 26K active users, 151K event interactions and a top-three Google ranking for the game's name."
+    "description": "The official website for Waterpark Simulator, taken from concept to launch in nineteen days. Bright, high-energy art direction matched to the game, tuned for fast loading under heavy visuals and for both EN and VN audiences. The launch reported 26K active users, 151K event interactions and a top-three Google ranking for the game's name.",
+    "featured": 3
   },
   "gameloft-game-website-design-disney-speedstorm": {
     "title": "Disney Speedstorm",
     "client": "Gameloft",
     "engagement": "client",
-    "description": "The official website for Disney Speedstorm, Gameloft Barcelona's free-to-play kart racer, launched in April 2023 with the Gameloft Saigon web marketing team. It carries the early-access story: character lineup, the three Founder's Pack tiers, pre-orders, Twitch Drops milestones and the news system."
+    "description": "The official website for Disney Speedstorm, Gameloft Barcelona's free-to-play kart racer, launched in April 2023 with the Gameloft Saigon web marketing team. It carries the early-access story: character lineup, the three Founder's Pack tiers, pre-orders, Twitch Drops milestones and the news system.",
+    "featured": 1
   },
   "gaming-website-design-carmen-sandiego": {
     "title": "Carmen Sandiego",

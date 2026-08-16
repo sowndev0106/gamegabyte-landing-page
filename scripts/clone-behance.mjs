@@ -420,6 +420,10 @@ async function normalizeProject(entry, override = {}) {
     // challenge. A studio site that blurs the three is making a claim it cannot
     // support, so the distinction is data rather than tone.
     engagement: override.engagement ?? '',
+    // Position in the homepage archive, 1-based; 0 means "not on the homepage".
+    // Ordering lives in overrides.json so changing the shop window is a data
+    // edit rather than a component edit.
+    featured: override.featured ?? 0,
     description: override.description ?? raw.description ?? '',
     cover: publicPath(cover.file),
     coverWidth: cover.width,

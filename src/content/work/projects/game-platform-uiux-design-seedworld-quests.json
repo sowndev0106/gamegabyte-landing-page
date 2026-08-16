@@ -10,6 +10,7 @@
   ],
   "client": "Seedworld Studio",
   "engagement": "client",
+  "featured": 0,
   "description": "A gamified web platform where players complete quests, battles and community actions to earn points and rewards. Fantasy RPG styling sits over modern web-app usability: landing page, one-time and daily quest boards, progress tracking and social connect flows, built responsive from desktop down to phone.",
   "cover": "/assets/img/work/game-platform-uiux-design-seedworld-quests/cover.webp",
   "coverWidth": 2048,
