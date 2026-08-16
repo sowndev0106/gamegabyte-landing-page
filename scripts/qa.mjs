@@ -112,6 +112,11 @@ for (const viewport of VIEWPORTS) {
   }
 
   check(
+    `${viewport.label}: four advantage nodes`,
+    (await page.locator('#about [data-advantage]').count()) === 4,
+  )
+
+  check(
     `${viewport.label}: four process steps`,
     (await page.locator('#process [data-process-step]').count()) === 4,
   )

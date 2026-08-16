@@ -1,62 +1,53 @@
-import { content, assets } from '../content/content'
-import { Stagger, StaggerItem } from '../components/motion/Stagger'
-import { Container } from '../components/ui/Container'
-import { Section, GlowSpot } from '../components/ui/Section'
-import { SectionHeader } from '../components/ui/SectionHeader'
+import { content } from '../content/content'
 import { PixelSprite } from '../components/brand/PixelSprite'
+import { Reveal } from '../components/motion/Reveal'
+import { Container } from '../components/ui/Container'
+import { Section } from '../components/ui/Section'
+import { SectionHeader } from '../components/ui/SectionHeader'
 
+/**
+ * Four parallel claims, so they sit as equal nodes in one divided system
+ * rather than as a numbered sequence.
+ */
 export function WhyChooseUs() {
+  const { title, intro } = content.advantagesSection
+
   return (
-    <Section
-      id="about"
-      backdrop={
-        <>
-          <img
-            src={assets.backgrounds.pixelTrees}
-            alt=""
-            loading="lazy"
-            className="pointer-events-none absolute inset-x-0 top-0 h-56 w-full object-cover opacity-10"
-          />
-          <GlowSpot className="left-[-6%] bottom-[10%] h-[320px] w-[440px]" />
-        </>
-      }
-    >
+    <Section id="about" grid>
       <Container>
         <SectionHeader
           id="about"
-          title="Strategic partners, not just an agency"
-          description="We work the way an internal team would — inside your milestones, not alongside them."
+          title={title.map((line) => (
+            <span key={line} className="block">
+              {line}
+            </span>
+          ))}
+          description={intro}
         />
 
-        {/*
-          One shared stage rather than four boxed cards: the four characters
-          stand on the same ground line, which is the point the copy is making.
-        */}
-        <Stagger className="hud-portrait grid border border-white/10 sm:grid-cols-2 lg:grid-cols-4">
-          {content.why.map((item) => (
-            <StaggerItem
-              key={item.title}
-              className="group flex flex-col items-center px-6 pb-7 pt-9 text-center transition-colors hover:bg-white/[0.035]"
-            >
-              <div className="relative grid h-[170px] w-full place-items-end justify-center">
-                <PixelSprite
-                  index={item.sprite}
-                  className="h-[150px] w-[150px] transition-transform duration-300 group-hover:-translate-y-2.5"
-                />
-                {/* Light on the ground ties the four figures to one stage. */}
-                <span
-                  aria-hidden="true"
-                  className="absolute inset-x-[8%] bottom-0 h-px bg-linear-to-r from-transparent via-accent/55 to-transparent"
-                />
-              </div>
-              <p className="mt-6 font-mono text-[10px] uppercase tracking-[0.24em] text-accent">{item.tag}</p>
-              <h3 className="mt-2.5 font-display text-lg font-bold capitalize leading-tight text-white transition-colors group-hover:text-accent">
-                {item.title}
-              </h3>
-              <p className="mt-2 text-[13px] leading-relaxed text-white/70">{item.body}</p>
-            </StaggerItem>
-          ))}
-        </Stagger>
+        <Reveal>
+          <div className="grid border border-white/11 md:grid-cols-2 lg:grid-cols-4">
+            {content.why.map((item, i) => (
+              <article
+                key={item.tag}
+                data-advantage
+                className={`relative flex min-h-65 flex-col overflow-hidden p-7 ${
+                  i < content.why.length - 1 ? 'border-b border-white/11' : ''
+                } md:border-b-0 ${i % 2 === 0 ? 'md:border-r md:border-white/11' : ''} ${
+                  i < 2 ? 'md:border-b md:border-white/11' : ''
+                } lg:border-b-0 ${i < 3 ? 'lg:border-r lg:border-white/11' : 'lg:border-r-0'}`}
+              >
+                <span className="font-mono text-[9px] uppercase tracking-[0.22em] text-accent">{item.tag}</span>
+                <PixelSprite index={item.sprite} className="absolute top-6 right-5 h-16 w-16 opacity-65" />
+                <h3 className="mt-auto font-display text-[22px] leading-tight font-bold text-white">{item.title}</h3>
+                <p className="mt-3.5 leading-relaxed text-white/70">{item.body}</p>
+                <span className="mt-6 text-right font-mono text-[8px] uppercase tracking-[0.18em] text-white/30">
+                  {item.meta}
+                </span>
+              </article>
+            ))}
+          </div>
+        </Reveal>
       </Container>
     </Section>
   )

@@ -118,12 +118,18 @@ export const content = {
   // `sprite` indexes the 4×4 pixel-character sheet, left-to-right, top-to-bottom.
   // `tag` names the attribute each point stands for — these four are parallel
   // claims, not a sequence, so they carry a label rather than a step number.
+  // `meta` restates each claim in the page's readout voice; it introduces no
+  // new promise beyond the body copy beside it.
   why: [
-    { tag: 'Turnaround', title: 'Lightning speed delivery', body: 'Fast turnaround without compromise.', sprite: 5 },
-    { tag: 'Value', title: 'Unbeatable Pricing', body: 'Competitive pricing without sacrificing quality, built to maximize ROI.', sprite: 8 },
-    { tag: 'Insight', title: 'Gaming Expertise', body: 'A team of gamers who understand player psychology and what attracts game audiences.', sprite: 0 },
-    { tag: 'Craft', title: 'Design-Led Production', body: 'No templates. No shortcuts. Visually attractive design from concept to final result.', sprite: 6 },
+    { tag: 'Turnaround', title: 'Lightning speed delivery', body: 'Fast turnaround without compromise.', sprite: 5, meta: 'Latency / Low' },
+    { tag: 'Value', title: 'Unbeatable Pricing', body: 'Competitive pricing without sacrificing quality, built to maximize ROI.', sprite: 8, meta: 'Efficiency / High' },
+    { tag: 'Insight', title: 'Gaming Expertise', body: 'A team of gamers who understand player psychology and what attracts game audiences.', sprite: 0, meta: 'Sector / Native' },
+    { tag: 'Craft', title: 'Design-Led Production', body: 'No templates. No shortcuts. Visually attractive design from concept to final result.', sprite: 6, meta: 'Quality / Locked' },
   ],
+  advantagesSection: {
+    title: ['Built as a', 'growth partner.'],
+    intro: 'Four system attributes that protect speed, value, insight and craft.',
+  },
   portfolio: {
     title: 'Project Showcase',
     intro: "Explore the impressive game marketing websites we've created for game developers worldwide.",
