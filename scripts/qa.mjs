@@ -112,6 +112,25 @@ for (const viewport of VIEWPORTS) {
   }
 
   check(
+    `${viewport.label}: nine dossier screens`,
+    (await page.locator('#case-study [data-dossier-screen]').count()) === 9,
+  )
+
+  // A fixed height against 16:9 source art crops the interface it is meant to
+  // show. Assert the ratio rather than trusting the class string.
+  const featureRatio = await page.evaluate(() => {
+    const el = document.querySelector('#case-study [data-dossier-feature]')
+    if (!el) return 0
+    const r = el.getBoundingClientRect()
+    return r.height ? r.width / r.height : 0
+  })
+  check(
+    `${viewport.label}: dossier feature is 16:9`,
+    Math.abs(featureRatio - 16 / 9) < 0.05,
+    featureRatio.toFixed(3),
+  )
+
+  check(
     `${viewport.label}: three archive items`,
     (await page.locator('#portfolio [data-archive-item]').count()) === 3,
   )

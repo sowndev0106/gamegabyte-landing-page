@@ -147,6 +147,10 @@ export const content = {
   caseStudy: {
     client: 'Seedify',
     title: 'Beyond The Keep',
+    systemTitle: 'Interface system',
+    systemBody: 'Nine connected records across onboarding, progression, inventory and live operations.',
+    recordLabel: 'Primary record / 01',
+    railNote: 'Horizontal archive / scroll for all records',
     intro:
       'A full interface system for SeedWorld — onboarding, progression, crafting, maps and live-ops screens built around the Nova Orb.',
     screens: [
