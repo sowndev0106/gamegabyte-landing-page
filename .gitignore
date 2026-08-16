@@ -33,5 +33,8 @@ dist-ssr
 # Playwright QA screenshots
 .qa/
 
+# wrangler local state
+.wrangler/
+
 # generated work page shells (scripts/generate-pages.mjs)
 /work/
