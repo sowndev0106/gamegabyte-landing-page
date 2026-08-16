@@ -1,15 +1,10 @@
 import logoUrl from '../../assets/logo.svg'
 
-type GamegabyteLogoProps = {
-  className?: string
-}
-
-export function GamegabyteLogo({ className = '' }: GamegabyteLogoProps) {
-  return (
-    <img
-      src={logoUrl}
-      className={`h-8 w-auto ${className}`}
-      alt="Gamegabyte Logo"
-    />
-  )
+/**
+ * `className` replaces the sizing rather than merging with it — Tailwind
+ * resolves conflicts by stylesheet order, not attribute order, so a baked-in
+ * `h-8` would beat a caller's height at random.
+ */
+export function GamegabyteLogo({ className = 'h-8 w-auto' }: { className?: string }) {
+  return <img src={logoUrl} className={className} alt="Gamegabyte" />
 }

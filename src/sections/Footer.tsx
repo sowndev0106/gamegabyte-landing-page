@@ -9,7 +9,7 @@ export function Footer() {
       <Container>
         <Stagger className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
           <StaggerItem className="col-span-full flex flex-col gap-5 lg:col-span-1">
-            <GamegabyteLogo className="w-fit" />
+            <GamegabyteLogo className="h-9 w-auto" />
             <p className="max-w-xs text-sm leading-relaxed text-white/60">
               A game marketing studio building launch pages, campaigns and interfaces for game teams.
             </p>
