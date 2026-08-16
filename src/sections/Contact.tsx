@@ -130,7 +130,7 @@ export function Contact() {
 
             <p
               aria-live="polite"
-              className={`min-h-6 text-center font-mono text-xs uppercase tracking-[0.14em] ${
+              className={`min-h-6 font-mono text-[9px] uppercase tracking-[0.22em] ${
                 status === 'error' ? 'text-red-400' : 'text-accent'
               }`}
             >
