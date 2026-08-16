@@ -111,6 +111,19 @@ for (const viewport of VIEWPORTS) {
     await page.waitForTimeout(300)
   }
 
+  const quote = await page.locator('#testimonials blockquote').innerText()
+  check(
+    `${viewport.label}: full testimonial quote present`,
+    quote.includes('strategic partners helping your game succeed'),
+  )
+
+  const academy = page.locator('#academy a[href^="https://game-uxui-fundamentals"]')
+  check(
+    `${viewport.label}: academy link opens externally`,
+    (await academy.getAttribute('target')) === '_blank' &&
+      ((await academy.getAttribute('rel')) ?? '').includes('noreferrer'),
+  )
+
   check(
     `${viewport.label}: nine dossier screens`,
     (await page.locator('#case-study [data-dossier-screen]').count()) === 9,

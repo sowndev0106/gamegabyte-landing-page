@@ -165,6 +165,10 @@ export const content = {
       { src: '/assets/img/portfolio/season-pass-character.webp', label: 'Season pass — Emberborn Saga' },
     ],
   },
+  testimonialsSection: {
+    title: 'Trusted by game teams.',
+    intro: 'Incoming studio transmission / verified partner record.',
+  },
   testimonials: [
     { quote: "We're not just another agency. We're strategic partners helping your game succeed in the fiercely competitive market.", name: 'Mickael Grants', role: 'CEO of Apples to Oranges' },
   ],
