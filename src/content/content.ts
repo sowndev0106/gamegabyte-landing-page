@@ -23,15 +23,15 @@ export const assets = {
 } as const
 
 export const content = {
-  // `external: true` items leave the site and open in a new tab; they are also
-  // skipped by the active-section observer, which only understands hash hrefs.
-  nav: [
-    { label: 'Home', href: '#home' },
-    { label: 'Our Services', href: '#services' },
-    { label: 'GaByte Academy', href: 'https://game-uxui-fundamentals.gamegabyte.com/', external: true },
-    { label: 'Case Studies', href: '#portfolio' },
-    { label: 'About Us', href: '#about' },
-  ] as const,
+  // Navigation lives in `src/content/sections.ts` — the rail and the mobile
+  // menu are both generated from the section registry, so there is no separate
+  // nav list to keep in sync.
+  shell: {
+    status: 'Studio network online',
+    cta: 'Open channel',
+    brand: 'Gamegabyte / OS',
+    menu: 'Menu',
+  },
   hero: {
     headline: ['We Are The Game', 'Marketing Studio'],
     sub: 'From immersive websites to powerful digital strategies — we help your game win the market.',
@@ -125,6 +125,9 @@ export const content = {
     title: 'GaByte Academy',
     body: 'Training and resources for game studios.',
     cta: 'Learn more',
+    // The course lives off-site; this was the only external destination in the
+    // old nav list, so it moved here when the rail replaced that list.
+    href: 'https://game-uxui-fundamentals.gamegabyte.com/',
   },
   faq: [
     { q: 'How long does it take to build a game landing page?', a: 'Typically, a custom game landing page takes 2-4 weeks from initial concept to launch. This includes design, development, revisions, and optimization.' },

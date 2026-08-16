@@ -319,6 +319,17 @@
   .stats-signal-trace polyline { stroke-dashoffset: 0; }
 }
 
+/* The one live signal on the page. Utilities cannot express a keyframe, so it
+   stays here; the global reduced-motion block below disables it. */
+.command-status-dot {
+  box-shadow: 0 0 14px var(--color-accent);
+  animation: command-status-pulse 2.6s ease-in-out infinite;
+}
+
+@keyframes command-status-pulse {
+  50% { opacity: 0.35; transform: scale(0.7); }
+}
+
 @font-face {
   font-family: "Schibsted Grotesk";
   src: url("/fonts/SchibstedGrotesk_wght__1/SchibstedGrotesk_wght__1-english.woff2") format("woff2");

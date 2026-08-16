@@ -10,6 +10,7 @@ export function Stats() {
 
   return (
     <Section
+      id="telemetry"
       data-export="stats"
       grid
       backdrop={<GlowSpot className="left-[10%] top-[10%] h-[300px] w-[500px]" />}
