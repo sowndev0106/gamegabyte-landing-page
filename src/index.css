@@ -81,10 +81,18 @@ body {
   color: #e7e7ee;
 }
 
-button,
-a,
-textarea {
-  font: inherit;
+/*
+ * MUST stay inside `@layer base`. Unlayered rules beat every layered one, so
+ * written bare this `font` shorthand silently overrode `font-mono`/`text-*` on
+ * every link and button on the page — 23 of them, including the whole mobile
+ * menu — while the class names still read correctly in the markup.
+ */
+@layer base {
+  button,
+  a,
+  textarea {
+    font: inherit;
+  }
 }
 
 /* The command topbar is 4.5rem tall; keep anchor targets clear of it. */
