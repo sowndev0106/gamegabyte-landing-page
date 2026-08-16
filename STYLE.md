@@ -97,6 +97,25 @@ makes a full sentence unreadable.
 | 9px | `0.16em` | Mono sentence: caption, control label, nav item, readout note. |
 | 8px | `0.18em` | Micro meta — credentials, badges, the rail status. |
 
+### Alignment
+
+**Everything reads from one left edge.** No centred headings, no centred
+paragraphs, anywhere. A centred block has no edge to align to, so it breaks the
+column structure the rail and the section grid establish — one centred paragraph
+is enough to make the page look like a template again.
+
+Three exceptions, all narrow:
+
+| Exception | Why |
+|---|---|
+| A label inside a `<button>` | The control centres its own label; that is the button's internal layout, not page text. Three on the page. |
+| The caption under the process orbit | It sits beneath the only radially symmetric element on the page, so it centres on that element's axis. |
+| The corner meta in `about` (`Latency / Low` …) | Deliberately right-aligned, pinning a reading to the far corner of each node the way an instrument does. The only right-aligned text on the page — keep it to that one pattern. |
+
+Anything else that is not left-aligned is a mistake. The audit that produces
+this list is four lines of `getComputedStyle(el).textAlign` — run it before
+claiming a section conforms.
+
 ### Space
 
 | Thing | Value |
@@ -149,7 +168,7 @@ numbering drifted out of order in the previous design, where `case-study` and
 `faq` were both `[07]`.
 
 Measured result of that contract at 1440: eyebrow at **x=154**, heading at
-**x=442**, heading **84px**, in ten of twelve sections. That alignment is the
+**x=442**, heading **84px**, in eleven of twelve sections. That alignment is the
 page's spine. Do not break it to make one section look better.
 
 ### Checklist for any new or edited section
