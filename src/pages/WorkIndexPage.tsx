@@ -1,8 +1,8 @@
 import { CommandShell } from '../components/shell/CommandShell'
 import { Container } from '../components/ui/Container'
-import { ArrowUpRight } from '../components/ui/ArrowUpRight'
 import { Footer } from '../sections/Footer'
-import { workIndex, workPath } from '../content/work/types'
+import { WorkCard } from '../components/work/WorkCard'
+import { workIndex } from '../content/work/types'
 
 /**
  * The full archive. The homepage shows three files in an asymmetric frame
@@ -37,40 +37,7 @@ export function WorkIndexPage() {
           <ul className="grid grid-cols-1 gap-3.5 sm:grid-cols-2 xl:grid-cols-3">
             {workIndex.map((item, i) => (
               <li key={item.slug}>
-                <a
-                  href={workPath(item.slug)}
-                  className="group flex h-full flex-col border border-white/11 transition-colors hover:border-accent/40"
-                >
-                  <div className="relative overflow-hidden">
-                    <img
-                      src={item.cover}
-                      alt=""
-                      width={item.coverWidth}
-                      height={item.coverHeight}
-                      loading={i < 3 ? 'eager' : 'lazy'}
-                      decoding="async"
-                      className="aspect-[4/3] w-full object-cover saturate-75 transition duration-500 group-hover:scale-[1.025] group-hover:saturate-125"
-                    />
-                  </div>
-
-                  <div className="flex flex-1 flex-col p-5.5">
-                    <span className="flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.22em] text-accent">
-                      {String(i + 1).padStart(2, '0')} / {item.client || item.tags[0] || 'Project'}
-                    </span>
-                    <h2 className="mt-2.5 flex items-start gap-2 font-display text-[22px] leading-tight font-bold text-white">
-                      {item.title}
-                      <ArrowUpRight className="mt-1 h-3.5 w-3.5 shrink-0 opacity-0 transition-opacity group-hover:opacity-100" />
-                    </h2>
-                    <p className="mt-3 line-clamp-3 text-[13px] leading-relaxed text-white/48">
-                      {item.description}
-                    </p>
-                    <span className="mt-auto pt-5 font-mono text-[9px] uppercase tracking-[0.16em] text-white/30">
-                      {item.publishedOn.slice(0, 4)}
-                      {item.engagement === 'concept' && ' / Concept'}
-                      {item.engagement === 'challenge' && ' / Challenge'}
-                    </span>
-                  </div>
-                </a>
+                <WorkCard item={item} index={i + 1} eager={i < 3} />
               </li>
             ))}
           </ul>

@@ -46,7 +46,7 @@ for (const viewport of VIEWPORTS) {
     innerWidth: window.innerWidth,
   }))
 
-  check(`${viewport.label}: eleven sections`, metrics.sections === 11, String(metrics.sections))
+  check(`${viewport.label}: nine sections`, metrics.sections === 9, String(metrics.sections))
   check(
     `${viewport.label}: no horizontal overflow`,
     metrics.scrollWidth === metrics.innerWidth,
@@ -149,12 +149,6 @@ for (const viewport of VIEWPORTS) {
     await second.click()
   }
 
-  const quote = await page.locator('#testimonials blockquote').innerText()
-  check(
-    `${viewport.label}: full testimonial quote present`,
-    quote.includes('strategic partners helping your game succeed'),
-  )
-
   const academy = page.locator('#academy a[href^="https://game-uxui-fundamentals"]')
   check(
     `${viewport.label}: academy link opens externally`,
@@ -173,17 +167,12 @@ for (const viewport of VIEWPORTS) {
   )
 
   check(
-    `${viewport.label}: four process steps`,
-    (await page.locator('#process [data-process-step]').count()) === 4,
-  )
-
-  check(
-    `${viewport.label}: six service cells`,
-    (await page.locator('#services [data-service-cell]').count()) === 6,
+    `${viewport.label}: four service cells`,
+    (await page.locator('#services [data-service-cell]').count()) === 4,
   )
 
   const readouts = await page.locator('#telemetry [data-readout-value]').allTextContents()
-  check(`${viewport.label}: four telemetry readouts`, readouts.length === 4, readouts.join(','))
+  check(`${viewport.label}: five telemetry readouts`, readouts.length === 5, readouts.join(','))
 
   for (const section of SECTIONS) {
     const el = page.locator(`#${section.id}`)

@@ -3,7 +3,8 @@ import { Container } from '../components/ui/Container'
 import { ArrowUpRight } from '../components/ui/ArrowUpRight'
 import { Footer } from '../sections/Footer'
 import { WorkBlocks } from '../components/work/WorkBlocks'
-import { workIndex, workPath, type WorkDetail } from '../content/work/types'
+import { WorkCard } from '../components/work/WorkCard'
+import { workIndex, type WorkDetail } from '../content/work/types'
 
 const ENGAGEMENT_LABEL: Record<string, string> = {
   client: 'Client work',
@@ -26,8 +27,13 @@ const ENGAGEMENT_LABEL: Record<string, string> = {
  * before learning what they are looking at.
  */
 export function WorkDetailPage({ project }: { project: WorkDetail }) {
+  // Rotated rather than sliced, so the strip is always full and never shows the
+  // file the reader is already on. `findIndex` returning -1 means the project is
+  // not in the index at all, and the unrotated list is the right answer there.
   const position = workIndex.findIndex((item) => item.slug === project.slug)
-  const next = workIndex[(position + 1) % workIndex.length]
+  const related = (
+    position < 0 ? workIndex : [...workIndex.slice(position + 1), ...workIndex.slice(0, position)]
+  ).slice(0, 3)
 
   return (
     <CommandShell base="/" footer={<Footer />}>
@@ -43,12 +49,18 @@ export function WorkDetailPage({ project }: { project: WorkDetail }) {
         />
 
         <Container className="relative z-10">
-          <a
-            href="/work/"
-            className="inline-flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.22em] text-accent hover:text-accent-bright"
-          >
-            <span aria-hidden="true">&lt;</span> Archive
-          </a>
+          {/* Sticky at the rail's own offset, so once both are pinned the exit
+              and the project title read as one row rather than two loose marks.
+              A chip, not bare text: this travels over fifteen full-bleed images
+              and 9px accent type on artwork is unreadable. */}
+          <div className="z-20 w-fit lg:sticky lg:top-28">
+            <a
+              href="/work/"
+              className="inline-flex items-center gap-2 border border-white/11 bg-ink/80 px-3 py-2 font-mono text-[9px] uppercase tracking-[0.22em] text-accent backdrop-blur-xl hover:border-accent/40 hover:text-accent-bright"
+            >
+              <span aria-hidden="true">&lt;</span> Archive
+            </a>
+          </div>
 
           <div className="mt-8 grid items-start gap-10 lg:mt-12 lg:grid-cols-[minmax(0,1fr)_30%] lg:gap-14">
             {/*
@@ -116,18 +128,31 @@ export function WorkDetailPage({ project }: { project: WorkDetail }) {
           </div>
 
           {/* Full measure, under both columns: this is the exit from the page,
-              not a property of either side of it. */}
+              not a property of either side of it. Three files rather than the
+              whole archive — this page is already fifteen images long, and a
+              sixteen-card grid at the foot of it would compete with both the
+              archive link at the top and the footer below. */}
           <div className="mt-16 border-t border-white/11 pt-10 lg:mt-24">
-            <span className="font-mono text-[9px] uppercase tracking-[0.22em] text-white/30">
-              Next file
-            </span>
-            <a
-              href={workPath(next.slug)}
-              className="group mt-2.5 flex items-center gap-2.5 font-display text-[26px] leading-none font-bold text-white hover:text-accent md:text-[34px]"
-            >
-              {next.title}
-              <ArrowUpRight className="h-4 w-4 opacity-0 transition-opacity group-hover:opacity-100" />
-            </a>
+            <div className="flex items-baseline justify-between gap-6">
+              <span className="font-mono text-[9px] uppercase tracking-[0.22em] text-white/30">
+                More files
+              </span>
+              <a
+                href="/work/"
+                className="group flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.16em] text-white/48 hover:text-white"
+              >
+                All {workIndex.length} files
+                <ArrowUpRight className="h-3 w-3" />
+              </a>
+            </div>
+
+            <ul className="mt-6 grid grid-cols-1 gap-3.5 sm:grid-cols-2 lg:grid-cols-3">
+              {related.map((item) => (
+                <li key={item.slug}>
+                  <WorkCard item={item} />
+                </li>
+              ))}
+            </ul>
           </div>
         </Container>
       </article>

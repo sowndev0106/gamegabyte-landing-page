@@ -98,8 +98,9 @@
       .cur { display: block; width: 6px; height: 12px; margin-left: 8px; background: var(--color-accent);
              box-shadow: 0 0 10px var(--color-accent); }
 
-      /* A — shipped. Square wave: on 550ms, off 550ms. */
-      .cur-a { animation: blink-hard 1.1s step-end infinite; }
+      /* A — shipped. Square wave: on 800ms, off 800ms. Slower than a real
+             terminal on purpose; see the note in src/index.css. */
+      .cur-a { animation: blink-hard 1.6s step-end infinite; }
 
       /* B — the rate a VT100 actually blinked at, and what xterm still uses. */
       .cur-b { animation: blink-hard 1.06s step-end infinite; }
@@ -208,10 +209,10 @@
       }
 
       const VARIANTS = [
-        { k: 'A', cls: 'cur-a', name: 'Hard 1.1s', shipped: true,
-          note: 'Sóng vuông, sáng 550ms / tắt 550ms. Dứt khoát — mắt đọc ra là “đang chờ gõ”.' },
+        { k: 'A', cls: 'cur-a', name: 'Hard 1.6s', shipped: true,
+          note: 'Sóng vuông, sáng 800ms / tắt 800ms. Dứt khoát — mắt đọc ra là “đang chờ gõ”. Chậm hơn terminal thật có chủ đích: con trỏ này nằm ở chrome cố định suốt phiên, chạy đúng nhịp shell thì thành nhức mắt.' },
         { k: 'B', cls: 'cur-b', name: 'Hard 1.06s',
-          note: 'Đúng nhịp VT100 ngày xưa, xterm tới giờ vẫn dùng. Nhanh hơn A một chút, gần như không phân biệt được.' },
+          note: 'Đúng nhịp VT100 ngày xưa, xterm tới giờ vẫn dùng. Nhanh hơn A hẳn — để cạnh nhau mới thấy vì sao A phải chậm lại.' },
         { k: 'C', cls: 'cur-c', name: 'Hard 0.7s',
           note: 'Nhanh hơn hẳn. Đọc ra là “đang bận” chứ không phải “đang chờ” — và ở header nó dễ gây khó chịu.' },
         { k: 'D', cls: 'cur-d', name: 'Asymmetric 70/30',

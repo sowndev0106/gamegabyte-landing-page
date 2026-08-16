@@ -1,5 +1,5 @@
 import { content } from '../../content/content'
-import { NAV_GROUPS, activeGroupId, sectionPath } from '../../content/sections'
+import { NAV_GROUPS, activeGroupId } from '../../content/sections'
 import { ArrowUpRight } from '../ui/ArrowUpRight'
 
 /**
@@ -10,8 +10,10 @@ import { ArrowUpRight } from '../ui/ArrowUpRight'
  *  - left, the five nav groups. The group being read carries a lime `>` caret
  *    and full-white text, the rest sit back at `white/48`. The caret is the
  *    whole treatment — no underline, no fill, no travelling marker.
- *  - right, the working directory. `sectionPath` turns the section owning the
- *    viewport into `gamegabyte:~/work/archive$`, so scrolling reads as `cd`.
+ *  - right, the working directory, formatted by `shellPath`. On the homepage
+ *    the section owning the viewport becomes `gamegabyte:~/work/archive`, so
+ *    scrolling reads as `cd`; on a sub-page the document's URL does, so the
+ *    readout is never at `~` while the reader is inside the archive.
  *
  * How it collapses, in the order things can be spared:
  *
@@ -19,10 +21,19 @@ import { ArrowUpRight } from '../ui/ArrowUpRight'
  *    Measured at `md` (760px, the narrowest the bar ever renders) this leaves
  *    127px between the last group and the CTA, so the groups never wrap.
  *  - below `md` the whole bar goes and `MobileCommandBar` takes over with all
- *    twelve sections. Groups are a desktop compression; the sheet has room for
+ *    nine sections. Groups are a desktop compression; the sheet has room for
  *    the real list.
  */
-export function CommandTopbar({ active, base = '' }: { active: string; base?: string }) {
+export function CommandTopbar({
+  active,
+  base = '',
+  path,
+}: {
+  active: string
+  base?: string
+  /** Already formatted by `shellPath` — the bar prints it, it does not derive it. */
+  path: string
+}) {
   const activeGroup = activeGroupId(active)
 
   return (
@@ -87,13 +98,20 @@ export function CommandTopbar({ active, base = '' }: { active: string; base?: st
           aria-hidden="true"
           className="hidden items-center pr-8 font-mono text-[9px] uppercase tracking-[0.16em] lg:flex"
         >
-          <span className="text-white/30">{content.shell.host}:</span>
-          <span className="text-white/70">{sectionPath(active)}</span>
+          <span className="shrink-0 text-white/30">{content.shell.host}:</span>
+          {/*
+            Bounded and clipped, because the archive slugs come from Behance and
+            the longest is 51 characters — `~/work/gaming-website-design-clash-of
+            -clans-website-revamp` set at this tracking would run past the CTA
+            and shove it off the bar. A shell that runs out of room and cuts the
+            line is the right failure here; a bar that reflows is not.
+          */}
+          <span className="max-w-[26ch] truncate text-white/70">{path}</span>
           {/*
             Square, not round — with the status sentence gone nothing here needs
             to be a dot, and the page allows no other rounded edge.
           */}
-          <span className="command-cursor ml-2 h-3 w-1.5 bg-accent" />
+          <span className="command-cursor ml-2 h-3 w-1.5 shrink-0 bg-accent" />
         </span>
 
         <a

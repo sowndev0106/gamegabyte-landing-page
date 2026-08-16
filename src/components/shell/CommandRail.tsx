@@ -8,7 +8,7 @@ import { RISE_EASE } from '../motion/motionTokens'
  */
 const EASE = `cubic-bezier(${RISE_EASE.join(',')})`
 
-/** Every third mark is long, which turns twelve ticks into a readable scale. */
+/** Every third mark is long, which turns nine ticks into a readable scale. */
 const MAJOR_EVERY = 3
 
 /**
@@ -16,7 +16,7 @@ const MAJOR_EVERY = 3
  *
  * The active tick is the reading. Its immediate neighbours extend part of the
  * way so the scale *swells* around it instead of one mark lighting up alone —
- * that swell is what makes twelve separate marks read as one continuous ruler
+ * that swell is what makes nine separate marks read as one continuous ruler
  * as it travels. Beyond two rows out the scale sits at rest.
  */
 function tickWidth(distance: number, isMajor: boolean): number {
@@ -30,8 +30,8 @@ function tickWidth(distance: number, isMajor: boolean): number {
 /**
  * The desktop navigation: a measuring scale down the edge of the page, with the
  * live section as the reading. Three things move, all of them driven by scroll
- * rather than running on their own — the page already spends its two continuous
- * animations on the status dot and the process orbit:
+ * rather than running on their own — the page already spends its continuous
+ * animations on the status dot, the topbar cursor and the hero's client band:
  *
  *  1. the swell travels along the scale (see `tickWidth`);
  *  2. each tick starts a beat after the one nearer the reading, so the swell
@@ -39,7 +39,7 @@ function tickWidth(distance: number, isMajor: boolean): number {
  *  3. the index prints beside the reading once the tick has finished extending.
  *
  * The ticks carry no text, so each link's accessible name comes from the
- * registry label — without it the whole rail would read as twelve unnamed links.
+ * registry label — without it the whole rail would read as nine unnamed links.
  */
 export function CommandRail({ active, base = '' }: { active: string; base?: string }) {
   // -1 before any section owns the viewport, which leaves the scale at rest

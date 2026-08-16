@@ -8,9 +8,8 @@ test('section export manifest uses stable png names and selectors', () => {
     [
       '01-hero-showreel-stats.png',
       '02-services.png',
-      '03-process.png',
       '04-growth-partner-selected-projects.png',
-      '05-testimonials-academy.png',
+      '05-academy.png',
       '06-faq.png',
       '07-contact.png',
       '08-footer.png',

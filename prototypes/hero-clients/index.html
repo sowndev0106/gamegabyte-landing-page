@@ -1,0 +1,1138 @@
+<!doctype html>
+<!--
+  HERO — CLIENT ROSTER ROUND. Five directions for putting the client list INTO
+  the fold, rendered inside the real Command OS shell (rail + topbar + mobile
+  bar) so each one is judged in the frame it will ship in.
+
+  Today the marks live in TrustBar.tsx, one section BELOW the fold (a 2x4 divided
+  panel under the showreel). The question this prototype answers: what does the
+  hero look like when the roster is promoted into it, and what does that cost the
+  headline?
+
+    1  TICKER →   — the marks become an infinite band pinned to the bottom edge
+                    of the fold, full-bleed, cells divided by the page hairline.
+                    The marks TRAVEL RIGHT, entering from the left edge.
+                    Hover pauses it.
+    2  ROSTER     — the right-column node dashboard is replaced by a client
+                    ledger: four ruled rows, index + mark + name. Static, prints.
+    3  SPINE      — the marks run VERTICALLY down the right edge as a narrow
+                    instrument strip, so the headline keeps the full left measure.
+    4  MASTHEAD   — the roster is promoted ABOVE the headline as a full-bleed
+                    strip under the topbar: the proof is the first thing read.
+    5  QUAD       — the marks ARE the hero art. A 2x2 hairline grid takes the
+                    whole right half to the viewport edge and the background
+                    plate is deleted; headline holds the left half.
+    6  TICKER ←   — variant 1 with the band reversed and nothing else changed.
+                    The marks TRAVEL LEFT, entering from the right edge, so the
+                    eye reads rightward into them: the conventional ticker.
+                    "Left to right" reads both ways; 1 and 6 are the two ways.
+
+  Truth rule (STYLE §4): the four clients, their marks and the label "Trusted by
+  teams at" are read verbatim from src/content/content.ts. No fifth client, no
+  invented engagement, scope or date is printed anywhere below. Variant 1 repeats
+  the same four to fill the band — that is a loop, not a longer roster.
+
+  Throwaway. Run under `npm run dev` and open
+  /prototypes/hero-clients/index.html — switch with the toolbar or ?v=1..6.
+  Press H to hide the toolbar.
+-->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark" />
+    <title>Gamegabyte — Hero with client roster</title>
+    <style>
+      /* ═══════════════════════════════════════════════════════════════
+         TOKENS — verbatim from src/index.css @theme
+         ═══════════════════════════════════════════════════════════════ */
+      @font-face {
+        font-family: 'Schibsted Grotesk';
+        src: url('/fonts/SchibstedGrotesk_wght__1/SchibstedGrotesk_wght__1-english.woff2') format('woff2');
+        font-weight: 400 700;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: Roboto;
+        src: url('/fonts/Roboto_wdth_wght__2/Roboto_wdth_wght__2-english.woff2') format('woff2');
+        font-weight: 400 500;
+        font-display: swap;
+      }
+
+      :root {
+        --color-brand: #601feb;
+        --color-accent: #b6e802;
+        --color-accent-bright: #d4ff00;
+        --color-ink: #05050c;
+
+        --font-display: 'Schibsted Grotesk', system-ui, sans-serif;
+        --font-sans: Roboto, system-ui, sans-serif;
+        --font-mono: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
+
+        --rail: 92px;
+        --topbar: 72px;
+        --topbar-pad: 44px;
+        --mobile-bar: 70px;
+
+        --measure: 1320px;
+        --gutter: 18px;
+
+        --line: rgb(255 255 255 / 0.11); /* border-white/11 — the one hairline */
+        --surface-panel: rgb(255 255 255 / 0.015); /* bg-white/1.5 — the one panel ground */
+      }
+
+      @media (min-width: 760px) {
+        :root { --gutter: 48px; }
+      }
+
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: var(--color-ink);
+        color: #e7e7ee;
+        font-family: var(--font-sans);
+        -webkit-font-smoothing: antialiased;
+      }
+      img { display: block; max-width: 100%; }
+      a { color: inherit; text-decoration: none; }
+
+      /* ═══════════════════════════════════════════════════════════════
+         PRIMITIVES — ports of src/components/ui/*
+         ═══════════════════════════════════════════════════════════════ */
+      .hud-grid {
+        background-image:
+          linear-gradient(to right, rgb(255 255 255 / 0.035) 1px, transparent 1px),
+          linear-gradient(to bottom, rgb(255 255 255 / 0.035) 1px, transparent 1px);
+        background-size: 72px 72px;
+      }
+
+      .container {
+        width: 100%;
+        max-width: var(--measure);
+        margin-inline: auto;
+        padding-inline: var(--gutter);
+      }
+
+      .panel {
+        position: relative;
+        border: 1px solid var(--line);
+        background: var(--surface-panel);
+      }
+
+      /* CornerTicks.tsx — 2px accent brackets, 16px, offset -1px */
+      .ticks::before,
+      .ticks::after {
+        content: '';
+        position: absolute;
+        z-index: 10;
+        width: 16px;
+        height: 16px;
+        border: 0 solid var(--color-accent);
+        pointer-events: none;
+      }
+      .ticks::before { top: -1px; left: -1px; border-top-width: 2px; border-left-width: 2px; }
+      .ticks::after { right: -1px; bottom: -1px; border-right-width: 2px; border-bottom-width: 2px; }
+
+      .eyebrow {
+        margin: 0;
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--color-accent);
+      }
+      .eyebrow i { font-style: normal; color: rgb(255 255 255 / 0.45); }
+
+      /* 9px / 0.22em — the panel-label step (STYLE §2 mono scale). */
+      .label {
+        font-family: var(--font-mono);
+        font-size: 9px;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: rgb(255 255 255 / 0.48);
+      }
+
+      .h1 {
+        margin: 0;
+        font-family: var(--font-display);
+        font-weight: 800;
+        text-transform: uppercase;
+        line-height: 0.82;
+        letter-spacing: -0.065em;
+        color: #fff;
+        font-size: clamp(34px, 12vw, 74px);
+      }
+      @media (min-width: 760px) { .h1 { font-size: clamp(56px, 6.6vw, 104px); } }
+      .h1 span { display: block; }
+      .h1 .accent { color: var(--color-accent); }
+
+      .sub {
+        margin: 0;
+        max-width: 650px;
+        font-size: 16px;
+        line-height: 1.625;
+        color: rgb(255 255 255 / 0.7);
+      }
+      @media (min-width: 760px) { .sub { font-size: 18px; } }
+
+      /* Button.tsx — min-h-14, px-8 py-4, text-base bold uppercase. */
+      .btn {
+        display: inline-flex;
+        min-height: 56px;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        border: 1px solid transparent;
+        padding: 16px 32px;
+        font-family: var(--font-sans);
+        font-size: 16px;
+        font-weight: 700;
+        text-transform: uppercase;
+        transition: background-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+      }
+      .btn:hover { transform: translateY(-2px); }
+      .btn:active { transform: scale(0.98); }
+      .btn--accent {
+        border-color: var(--color-accent);
+        background: var(--color-accent);
+        color: var(--color-ink);
+        box-shadow: 0 0 28px rgb(182 232 2 / 0.18);
+      }
+      .btn--ghost { border-color: rgb(255 255 255 / 0.7); color: #fff; }
+      .btn--ghost:hover { background: rgb(255 255 255 / 0.1); }
+      .btn svg { width: 16px; height: 16px; flex: none; }
+      .btn-row { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+
+      .creds { display: flex; flex-wrap: wrap; gap: 18px 28px; margin: 0; }
+      .creds dt {
+        font-family: var(--font-mono);
+        font-size: 8px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: rgb(255 255 255 / 0.42);
+      }
+      .creds dd { margin: 10px 0 0; font-family: var(--font-display); font-size: 13px; font-weight: 600; color: #fff; }
+
+      .status-dot {
+        width: 6px;
+        height: 6px;
+        flex: none;
+        border-radius: 50%;
+        background: var(--color-accent);
+        box-shadow: 0 0 14px var(--color-accent);
+        animation: command-status-pulse 2.6s ease-in-out infinite;
+      }
+      @keyframes command-status-pulse { 50% { opacity: 0.35; transform: scale(0.7); } }
+
+      /* The one mark treatment, shared by all five variants — TrustBar.tsx:
+         grayscale at 70%, full colour on hover. Only the size changes. */
+      .mark {
+        width: auto;
+        object-fit: contain;
+        opacity: 0.7;
+        filter: grayscale(1);
+        transition: opacity 0.3s ease, filter 0.3s ease;
+      }
+      .mark:hover { opacity: 1; filter: grayscale(0); }
+
+      /* ═══════════════════════════════════════════════════════════════
+         SHELL — CommandRail + CommandTopbar + MobileCommandBar
+         ═══════════════════════════════════════════════════════════════ */
+      .rail {
+        position: fixed;
+        inset-block: 0;
+        left: 0;
+        z-index: 40;
+        display: none;
+        width: var(--rail);
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        padding-block: 24px;
+        border-right: 1px solid var(--line);
+        background: rgb(5 5 12 / 0.95);
+        backdrop-filter: blur(24px);
+      }
+      .rail__logo { display: block; width: 60px; flex: none; }
+      .rail__nav { display: flex; flex-direction: column; gap: 4px; }
+      .rail__nav a { display: flex; width: 24px; height: 24px; align-items: center; justify-content: center; }
+      .rail__nav i {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: rgb(255 255 255 / 0.3);
+        transition: all 0.2s ease;
+      }
+      .rail__nav a:hover i { transform: scale(1.25); background: rgb(255 255 255 / 0.8); }
+      .rail__nav a[aria-current] i {
+        transform: scale(1.5);
+        background: var(--color-accent);
+        box-shadow: 0 0 12px var(--color-accent);
+      }
+      .rail__status {
+        writing-mode: vertical-rl;
+        font-family: var(--font-mono);
+        font-size: 8px;
+        letter-spacing: 0.13em;
+        text-transform: uppercase;
+        color: var(--color-accent);
+      }
+
+      .topbar {
+        position: fixed;
+        top: 0;
+        right: 0;
+        left: var(--rail);
+        z-index: 30;
+        display: none;
+        height: var(--topbar);
+        align-items: center;
+        justify-content: space-between;
+        padding-left: var(--topbar-pad);
+        border-bottom: 1px solid var(--line);
+        background: rgb(5 5 12 / 0.9);
+        backdrop-filter: blur(24px);
+      }
+      .topbar__status {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-family: var(--font-mono);
+        font-size: 10px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: rgb(255 255 255 / 0.7);
+      }
+      .topbar__cta {
+        display: flex;
+        height: var(--topbar);
+        align-items: center;
+        gap: 8px;
+        padding-inline: var(--topbar-pad);
+        background: var(--color-accent);
+        font-family: var(--font-display);
+        font-size: 14px;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: var(--color-ink);
+      }
+      .topbar__cta:hover { background: var(--color-accent-bright); }
+      .topbar__cta svg { width: 14px; height: 14px; }
+
+      .mobilebar {
+        position: fixed;
+        inset-inline: 0;
+        top: 0;
+        z-index: 50;
+        display: flex;
+        height: var(--mobile-bar);
+        align-items: center;
+        justify-content: space-between;
+        padding-inline: 18px;
+        border-bottom: 1px solid var(--line);
+        background: rgb(5 5 12 / 0.95);
+        backdrop-filter: blur(24px);
+      }
+      .mobilebar a { font-family: var(--font-display); font-size: 15px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
+      .mobilebar button {
+        min-height: 42px;
+        min-width: 48px;
+        border: 1px solid var(--line);
+        background: none;
+        color: inherit;
+        font-family: var(--font-mono);
+        font-size: 8px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+
+      .frame { margin-left: 0; }
+
+      @media (min-width: 760px) {
+        .rail { display: flex; }
+        .topbar { display: flex; }
+        .mobilebar { display: none; }
+        .frame { margin-left: var(--rail); }
+      }
+
+      /* ═══════════════════════════════════════════════════════════════
+         HERO SHARED
+         ═══════════════════════════════════════════════════════════════ */
+      .hero {
+        position: relative;
+        overflow: hidden;
+        background: var(--color-ink);
+        min-height: 100svh;
+        padding-top: calc(var(--mobile-bar) + 36px);
+      }
+      @media (min-width: 760px) { .hero { padding-top: var(--topbar); } }
+      .hero__plate { position: absolute; inset: 0; height: 100%; width: 100%; object-fit: cover; opacity: 0.38; }
+      .hero__scrim {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background:
+          linear-gradient(90deg, var(--color-ink) 4%, rgb(5 5 12 / 0.78) 51%, rgb(5 5 12 / 0.3)),
+          linear-gradient(0deg, var(--color-ink), transparent 45%);
+      }
+
+      /* ═══════════════════════════════════════════════════════════════
+         1 — TICKER
+         The roster becomes a moving band welded to the bottom edge of the
+         fold. Full-bleed on purpose: the band is the floor of the hero, so
+         it has to touch both sides of the housing or it reads as a widget
+         parked at the bottom (STYLE §3 — markings at the edges).
+
+         Direction is LEFT → RIGHT: the track holds two identical copies of
+         the group and animates from -50% to 0, so the seam always lands
+         outside the viewport and the loop has no reset frame.
+         ═══════════════════════════════════════════════════════════════ */
+      .v-ticker { display: flex; flex-direction: column; }
+      .v-ticker__body { flex: 1; display: flex; align-items: center; padding-block: 48px 56px; }
+      .v-ticker__lede { position: relative; z-index: 10; }
+      .v-ticker .creds { margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--line); max-width: 650px; }
+
+      .band { position: relative; z-index: 10; border-top: 1px solid var(--line); background: rgb(5 5 12 / 0.72); }
+      .band__head { padding: 12px 0 11px; }
+      .band__head .container { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+      .band__rail { overflow: hidden; border-top: 1px solid var(--line); }
+      .band__track {
+        display: flex;
+        width: max-content;
+        animation: band-roll 38s linear infinite;
+      }
+      /* -50% → 0 runs the marks left-to-right. The two groups are identical,
+         so the wrap point is invisible. */
+      @keyframes band-roll {
+        from { transform: translateX(-50%); }
+        to { transform: translateX(0); }
+      }
+      /* Variant 6 — the same band running the other way. Direction is the ONLY
+         difference between 1 and 6, which is the point: "left to right" reads
+         two ways (marks travelling right vs. the eye reading rightward into
+         oncoming marks) and the two have to be seen side by side to choose. */
+      .band--rtl .band__track { animation-name: band-roll-rtl; }
+      @keyframes band-roll-rtl {
+        from { transform: translateX(0); }
+        to { transform: translateX(-50%); }
+      }
+      .band:hover .band__track { animation-play-state: paused; }
+      .band__cell {
+        display: flex;
+        min-width: 232px;
+        height: 116px;
+        flex: none;
+        align-items: center;
+        justify-content: center;
+        padding-inline: 34px;
+        border-right: 1px solid var(--line);
+      }
+      .band__cell .mark { max-height: 34px; }
+      @media (max-width: 759px) {
+        .band__cell { min-width: 168px; height: 92px; padding-inline: 22px; }
+        .band__cell .mark { max-height: 26px; }
+      }
+      /* The band is full-bleed, so its ends need to fade into the housing or
+         the marks appear to be clipped by nothing. */
+      .band__rail {
+        -webkit-mask-image: linear-gradient(90deg, transparent, black 5%, black 95%, transparent);
+        mask-image: linear-gradient(90deg, transparent, black 5%, black 95%, transparent);
+      }
+
+      /* ═══════════════════════════════════════════════════════════════
+         2 — ROSTER
+         The hero's right column keeps its shape — one bordered panel
+         subdivided by hairlines — but stops listing what we sell and starts
+         listing who we did it for. Four ruled rows: index, mark, name.
+         The most conservative of the five; it changes the argument of the
+         fold without changing its geometry.
+         ═══════════════════════════════════════════════════════════════ */
+      .v-roster { display: flex; align-items: center; padding-block: 40px 56px; }
+      .v-roster__grid { position: relative; z-index: 10; display: grid; gap: 44px 3vw; align-items: start; }
+      @media (min-width: 1050px) {
+        .v-roster__grid { grid-template-columns: minmax(0, 1.2fr) minmax(330px, 440px); }
+      }
+      .v-roster__panel { display: flex; flex-direction: column; }
+      .v-roster__panel > header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 16px 20px;
+        border-bottom: 1px solid var(--line);
+      }
+      .v-roster__list { margin: 0; padding: 0; list-style: none; }
+      .v-roster__list li {
+        display: grid;
+        grid-template-columns: 34px minmax(0, 1fr) 128px;
+        align-items: center;
+        gap: 14px;
+        min-height: 92px;
+        padding: 16px 20px;
+        border-bottom: 1px solid var(--line);
+        transition: background-color 0.2s ease;
+      }
+      .v-roster__list li:last-child { border-bottom: 0; }
+      .v-roster__list li:hover { background: rgb(255 255 255 / 0.02); }
+      .v-roster__list i {
+        font-style: normal;
+        font-family: var(--font-mono);
+        font-size: 9px;
+        letter-spacing: 0.16em;
+        color: rgb(255 255 255 / 0.3);
+      }
+      .v-roster__list li:hover i { color: var(--color-accent); }
+      .v-roster__list b { font-family: var(--font-display); font-size: 15px; font-weight: 600; color: #fff; }
+      .v-roster__list .mark { max-height: 28px; margin-left: auto; }
+      .v-roster__panel > footer { padding: 14px 20px; border-top: 1px solid var(--line); }
+
+      /* ═══════════════════════════════════════════════════════════════
+         3 — SPINE
+         The marks stop being a row and become a column: a narrow instrument
+         strip pinned to the right edge of the housing, its label set
+         vertically the way the rail's status is. Costs the fold almost no
+         horizontal room, so the headline keeps the full left measure and can
+         run at the hero's top size.
+         ═══════════════════════════════════════════════════════════════ */
+      .v-spine { display: flex; align-items: center; padding-block: 44px 56px; }
+      .v-spine__inner { position: relative; z-index: 10; width: 100%; }
+      .v-spine .h1 { font-size: clamp(34px, 12vw, 74px); }
+      @media (min-width: 1050px) {
+        .v-spine .h1 { font-size: clamp(64px, 7.6vw, 118px); }
+        /* Clear the strip: the container is centred on the full frame, so
+           without this the sub and the credentials run under it. */
+        .v-spine__inner { padding-right: calc(var(--gutter) + 122px); }
+      }
+      .v-spine__strip {
+        position: absolute;
+        top: var(--topbar);
+        right: 0;
+        bottom: 0;
+        z-index: 12;
+        display: none;
+        width: 122px;
+        flex-direction: column;
+        border-left: 1px solid var(--line);
+        background: rgb(5 5 12 / 0.55);
+        backdrop-filter: blur(6px);
+      }
+      @media (min-width: 1050px) { .v-spine__strip { display: flex; } }
+      .v-spine__strip > span {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding-block: 18px;
+        border-bottom: 1px solid var(--line);
+        writing-mode: vertical-rl;
+        font-family: var(--font-mono);
+        font-size: 9px;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: rgb(255 255 255 / 0.48);
+      }
+      .v-spine__strip ul { display: flex; flex: 1; flex-direction: column; margin: 0; padding: 0; list-style: none; }
+      .v-spine__strip li {
+        display: flex;
+        flex: 1;
+        align-items: center;
+        justify-content: center;
+        padding: 16px 14px;
+        border-bottom: 1px solid var(--line);
+      }
+      .v-spine__strip li:last-child { border-bottom: 0; }
+      .v-spine__strip .mark { max-height: 30px; max-width: 84px; }
+      /* Below 1050 the strip is gone, so the marks fall back to a divided row
+         under the buttons rather than disappearing from the fold. */
+      .v-spine__fallback { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 40px; border: 1px solid var(--line); }
+      @media (min-width: 1050px) { .v-spine__fallback { display: none; } }
+      .v-spine__fallback div {
+        display: flex;
+        min-height: 84px;
+        align-items: center;
+        justify-content: center;
+        padding: 18px;
+        border-right: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+      }
+      .v-spine__fallback div:nth-child(2n) { border-right: 0; }
+      .v-spine__fallback div:nth-last-child(-n + 2) { border-bottom: 0; }
+      .v-spine__fallback .mark { max-height: 26px; }
+
+      /* ═══════════════════════════════════════════════════════════════
+         4 — MASTHEAD
+         The proof is promoted to the top of the reading order: a full-bleed
+         roster strip welded under the topbar, headline below it at the full
+         measure, credentials on the closing rule. Nothing floats; the fold is
+         framed by three rules. The aggressive version of "trusted by".
+         ═══════════════════════════════════════════════════════════════ */
+      .v-mast { display: flex; flex-direction: column; padding-top: var(--mobile-bar); }
+      @media (min-width: 760px) { .v-mast { padding-top: var(--topbar); } }
+      .v-mast__strip { position: relative; z-index: 10; border-bottom: 1px solid var(--line); background: rgb(5 5 12 / 0.66); }
+      .v-mast__strip > .container { display: grid; align-items: stretch; }
+      @media (min-width: 900px) { .v-mast__strip > .container { grid-template-columns: 190px minmax(0, 1fr); } }
+      .v-mast__strip header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding-block: 16px;
+        padding-right: 20px;
+      }
+      @media (min-width: 900px) { .v-mast__strip header { border-right: 1px solid var(--line); } }
+      .v-mast__marks { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      @media (min-width: 620px) { .v-mast__marks { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+      .v-mast__marks div {
+        display: flex;
+        min-height: 82px;
+        align-items: center;
+        justify-content: center;
+        padding: 16px 20px;
+        border-left: 1px solid var(--line);
+      }
+      .v-mast__marks div:first-child { border-left: 0; }
+      @media (max-width: 619px) {
+        .v-mast__marks div:nth-child(2n + 1) { border-left: 0; }
+        .v-mast__marks div:nth-child(-n + 2) { border-bottom: 1px solid var(--line); }
+      }
+      .v-mast__marks .mark { max-height: 30px; }
+      .v-mast__body { position: relative; z-index: 10; flex: 1; display: flex; flex-direction: column; justify-content: center; padding-block: 54px; }
+      .v-mast .h1 { font-size: clamp(36px, 11vw, 78px); }
+      @media (min-width: 760px) { .v-mast .h1 { font-size: clamp(60px, 8.6vw, 128px); } }
+      .v-mast__lede { display: grid; gap: 26px; margin-top: 44px; padding-top: 28px; border-top: 1px solid var(--line); }
+      @media (min-width: 1050px) { .v-mast__lede { grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 56px; } }
+      .v-mast__lede .btn-row { margin-top: 0; }
+      .v-mast__foot { position: relative; z-index: 10; border-top: 1px solid var(--line); }
+      .v-mast__foot > .container { padding-block: 18px; }
+
+      /* ═══════════════════════════════════════════════════════════════
+         5 — QUAD
+         The marks stop supporting the art and BECOME it. The key-visual plate
+         is deleted; the right half of the fold is a 2x2 hairline grid running
+         to the viewport edge, each cell a mark over bare ink with its name in
+         the mono voice beneath. Highest-risk of the five: the fold loses its
+         picture, and the roster has to carry the whole right side on its own.
+         ═══════════════════════════════════════════════════════════════ */
+      .v-quad { display: grid; align-items: stretch; padding-top: calc(var(--mobile-bar) + 20px); }
+      @media (min-width: 1050px) {
+        .v-quad { grid-template-columns: minmax(0, 1fr) minmax(420px, 44%); padding-top: var(--topbar); }
+      }
+      .v-quad__lede { display: flex; flex-direction: column; justify-content: center; padding-block: 40px 48px; }
+      .v-quad__lede > .container { max-width: calc(var(--measure) * 0.56); margin-inline: 0 auto; }
+      @media (min-width: 1050px) { .v-quad__lede > .container { padding-right: 56px; } }
+      .v-quad .h1 { font-size: clamp(34px, 11.5vw, 72px); }
+      /* Held below the hero's top size: the left column is only ~56% of the
+         measure here, and anything larger breaks "WE ARE THE GAME" onto a
+         fourth line. Three lines is the shape of the headline. */
+      @media (min-width: 1050px) { .v-quad .h1 { font-size: clamp(44px, 4.4vw, 72px); } }
+      .v-quad__wall { display: flex; flex-direction: column; border-left: 1px solid var(--line); }
+      @media (max-width: 1049px) { .v-quad__wall { border-left: 0; border-top: 1px solid var(--line); } }
+      .v-quad__wall > header { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 24px; border-bottom: 1px solid var(--line); }
+      .v-quad__cells { display: grid; flex: 1; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .v-quad__cells > div {
+        display: flex;
+        min-height: 172px;
+        flex-direction: column;
+        align-items: flex-start;
+        /* Centred as a PAIR, not spread to the cell's edges: the cells stretch
+           to fill a 900px fold, and space-between pushed the name so far from
+           its mark that the two stopped reading as one record. */
+        justify-content: center;
+        gap: 16px;
+        padding: 26px 24px;
+        border-right: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+        transition: background-color 0.25s ease;
+      }
+      .v-quad__cells > div:hover { background: rgb(255 255 255 / 0.02); }
+      .v-quad__cells > div:nth-child(2n) { border-right: 0; }
+      .v-quad__cells > div:nth-last-child(-n + 2) { border-bottom: 0; }
+      .v-quad__cells .mark { max-height: 38px; max-width: 100%; }
+      .v-quad__cells span {
+        font-family: var(--font-mono);
+        font-size: 9px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: rgb(255 255 255 / 0.42);
+      }
+
+      /* ═══════════════════════════════════════════════════════════════
+         PROTOTYPE TOOLBAR — not part of the design
+         ═══════════════════════════════════════════════════════════════ */
+      .switcher {
+        position: fixed;
+        z-index: 90;
+        left: 50%;
+        bottom: 16px;
+        transform: translateX(-50%);
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        max-width: calc(100vw - 32px);
+        gap: 4px;
+        padding: 5px;
+        border: 1px solid var(--line);
+        background: rgb(8 8 18 / 0.92);
+        backdrop-filter: blur(16px);
+      }
+      .switcher button {
+        padding: 9px 11px;
+        border: 0;
+        background: none;
+        color: rgb(255 255 255 / 0.45);
+        font-family: var(--font-mono);
+        font-size: 10px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        cursor: pointer;
+      }
+      .switcher button:hover { color: #fff; }
+      .switcher button[aria-current='true'] { background: var(--color-accent); color: var(--color-ink); }
+      .note {
+        position: fixed;
+        z-index: 90;
+        right: 16px;
+        bottom: 16px;
+        max-width: 300px;
+        padding: 12px 14px;
+        border: 1px solid var(--line);
+        background: rgb(8 8 18 / 0.92);
+        backdrop-filter: blur(16px);
+        font-family: var(--font-mono);
+        font-size: 9px;
+        line-height: 1.7;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: rgb(255 255 255 / 0.55);
+      }
+      .note b { color: var(--color-accent); font-weight: 400; }
+      body.chrome-off .switcher,
+      body.chrome-off .note { display: none; }
+      .chrome-toggle {
+        position: fixed;
+        z-index: 91;
+        left: 16px;
+        bottom: 16px;
+        padding: 9px 12px;
+        border: 1px solid var(--line);
+        background: rgb(8 8 18 / 0.92);
+        backdrop-filter: blur(16px);
+        color: rgb(255 255 255 / 0.45);
+        font-family: var(--font-mono);
+        font-size: 10px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        cursor: pointer;
+      }
+      .chrome-toggle:hover { color: var(--color-accent); }
+      .variant { display: none; }
+      .v-ticker.is-active,
+      .v-roster.is-active,
+      .v-spine.is-active,
+      .v-mast.is-active { display: flex; }
+      .v-quad.is-active { display: grid; }
+      @media (max-width: 1050px) { .note { display: none; } }
+
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+          animation-duration: 0.001ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.001ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ══════════ SHELL ══════════ -->
+    <aside class="rail">
+      <a href="#home" aria-label="Gamegabyte home" class="rail__logo">
+        <img src="/src/assets/logo.svg" alt="Gamegabyte" style="width: 100%; height: auto" />
+      </a>
+      <nav class="rail__nav" aria-label="Command sections" id="rail-nav"></nav>
+      <span class="rail__status">Online</span>
+    </aside>
+
+    <header class="topbar">
+      <span class="topbar__status">
+        <span class="status-dot" aria-hidden="true"></span>
+        Studio network online
+      </span>
+      <a class="topbar__cta" href="#contact">
+        Open channel
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true">
+          <path d="M4 12 12 4" /><path d="M5.5 4H12v6.5" />
+        </svg>
+      </a>
+    </header>
+
+    <header class="mobilebar">
+      <a href="#home">Gamegabyte / OS</a>
+      <button type="button" aria-expanded="false">Menu</button>
+    </header>
+
+    <div class="frame">
+      <main id="main">
+        <!-- ══════════ 1 — TICKER ══════════ -->
+        <section class="variant hero v-ticker hud-grid" data-variant="1" id="home">
+          <img class="hero__plate" src="/assets/img/backgrounds/hero-fantasy-battlefield-v1.png" alt="" aria-hidden="true" />
+          <div class="hero__scrim" aria-hidden="true"></div>
+
+          <div class="v-ticker__body">
+            <div class="container v-ticker__lede">
+              <p class="eyebrow"><i>[01]</i> Game growth systems</p>
+              <h1 class="h1" style="margin: 24px 0">
+                <span>We are the game</span>
+                <span class="accent">Marketing</span>
+                <span>Studio.</span>
+              </h1>
+              <p class="sub">From immersive websites to powerful digital strategies — we help your game win the market.</p>
+              <div class="btn-row">
+                <a class="btn btn--accent" href="#portfolio">
+                  Case Study
+                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true">
+                    <path d="M4 12 12 4" /><path d="M5.5 4H12v6.5" />
+                  </svg>
+                </a>
+                <a class="btn btn--ghost" href="#contact">Connect with us</a>
+              </div>
+              <dl class="creds">
+                <div><dt>Founded</dt><dd>2024 — Studio</dd></div>
+                <div><dt>Shipped</dt><dd>25+ projects</dd></div>
+                <div><dt>Focus</dt><dd>AAA &amp; mobile titles</dd></div>
+              </dl>
+            </div>
+          </div>
+
+          <!-- The band. Full-bleed, welded to the bottom edge of the fold. -->
+          <div class="band">
+            <div class="band__head">
+              <div class="container">
+                <span class="label">Trusted by teams at</span>
+                <span class="label" style="display: flex; align-items: center; gap: 9px">
+                  <span class="status-dot" aria-hidden="true"></span>
+                  Roster / 04
+                </span>
+              </div>
+            </div>
+            <div class="band__rail">
+              <div class="band__track" id="band-track" aria-label="Client roster"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ══════════ 2 — ROSTER ══════════ -->
+        <section class="variant hero v-roster hud-grid" data-variant="2">
+          <img class="hero__plate" src="/assets/img/backgrounds/hero-fantasy-battlefield-v1.png" alt="" aria-hidden="true" />
+          <div class="hero__scrim" aria-hidden="true"></div>
+
+          <div class="container v-roster__grid">
+            <div>
+              <p class="eyebrow"><i>[01]</i> Game growth systems</p>
+              <h1 class="h1" style="margin: 24px 0">
+                <span>We are the game</span>
+                <span class="accent">Marketing</span>
+                <span>Studio.</span>
+              </h1>
+              <p class="sub">From immersive websites to powerful digital strategies — we help your game win the market.</p>
+              <div class="btn-row">
+                <a class="btn btn--accent" href="#portfolio">
+                  Case Study
+                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true">
+                    <path d="M4 12 12 4" /><path d="M5.5 4H12v6.5" />
+                  </svg>
+                </a>
+                <a class="btn btn--ghost" href="#contact">Connect with us</a>
+              </div>
+            </div>
+
+            <aside class="panel ticks v-roster__panel" aria-label="Trusted by teams at">
+              <header>
+                <span class="label">Trusted by teams at</span>
+                <span class="status-dot" aria-hidden="true"></span>
+              </header>
+              <ul class="v-roster__list" id="roster-list"></ul>
+              <footer><span class="label" style="letter-spacing: 0.16em">Roster / 04 active</span></footer>
+            </aside>
+          </div>
+        </section>
+
+        <!-- ══════════ 3 — SPINE ══════════ -->
+        <section class="variant hero v-spine hud-grid" data-variant="3">
+          <img class="hero__plate" src="/assets/img/backgrounds/hero-fantasy-battlefield-v1.png" alt="" aria-hidden="true" />
+          <div class="hero__scrim" aria-hidden="true"></div>
+
+          <aside class="v-spine__strip" aria-label="Trusted by teams at">
+            <span>Trusted by / 04</span>
+            <ul id="spine-list"></ul>
+          </aside>
+
+          <div class="container v-spine__inner">
+            <p class="eyebrow"><i>[01]</i> Game growth systems</p>
+            <h1 class="h1" style="margin: 26px 0">
+              <span>We are the game</span>
+              <span class="accent">Marketing</span>
+              <span>Studio.</span>
+            </h1>
+            <p class="sub">From immersive websites to powerful digital strategies — we help your game win the market.</p>
+            <div class="btn-row">
+              <a class="btn btn--accent" href="#portfolio">
+                Case Study
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true">
+                  <path d="M4 12 12 4" /><path d="M5.5 4H12v6.5" />
+                </svg>
+              </a>
+              <a class="btn btn--ghost" href="#contact">Connect with us</a>
+            </div>
+            <div class="v-spine__fallback" id="spine-fallback" aria-label="Trusted by teams at"></div>
+          </div>
+        </section>
+
+        <!-- ══════════ 4 — MASTHEAD ══════════ -->
+        <section class="variant hero v-mast hud-grid" data-variant="4">
+          <img class="hero__plate" src="/assets/img/backgrounds/hero-fantasy-battlefield-v1.png" alt="" aria-hidden="true" />
+          <div class="hero__scrim" aria-hidden="true"></div>
+
+          <div class="v-mast__strip">
+            <div class="container">
+              <header>
+                <span class="status-dot" aria-hidden="true"></span>
+                <span class="label">Trusted by teams at</span>
+              </header>
+              <div class="v-mast__marks" id="mast-marks"></div>
+            </div>
+          </div>
+
+          <div class="container v-mast__body">
+            <p class="eyebrow"><i>[01]</i> Game growth systems</p>
+            <h1 class="h1" style="margin-top: 28px">
+              <span>We are the game</span>
+              <span class="accent">Marketing</span>
+              <span>Studio.</span>
+            </h1>
+            <div class="v-mast__lede">
+              <p class="sub">From immersive websites to powerful digital strategies — we help your game win the market.</p>
+              <div class="btn-row">
+                <a class="btn btn--accent" href="#portfolio">
+                  Case Study
+                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true">
+                    <path d="M4 12 12 4" /><path d="M5.5 4H12v6.5" />
+                  </svg>
+                </a>
+                <a class="btn btn--ghost" href="#contact">Connect with us</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="v-mast__foot">
+            <div class="container">
+              <dl class="creds">
+                <div><dt>Founded</dt><dd>2024 — Studio</dd></div>
+                <div><dt>Shipped</dt><dd>25+ projects</dd></div>
+                <div><dt>Focus</dt><dd>AAA &amp; mobile titles</dd></div>
+              </dl>
+            </div>
+          </div>
+        </section>
+
+        <!-- ══════════ 5 — QUAD ══════════ -->
+        <section class="variant hero v-quad hud-grid" data-variant="5">
+          <div class="v-quad__lede">
+            <div class="container">
+              <p class="eyebrow"><i>[01]</i> Game growth systems</p>
+              <h1 class="h1" style="margin: 24px 0">
+                <span>We are the game</span>
+                <span class="accent">Marketing</span>
+                <span>Studio.</span>
+              </h1>
+              <p class="sub">From immersive websites to powerful digital strategies — we help your game win the market.</p>
+              <div class="btn-row">
+                <a class="btn btn--accent" href="#portfolio">
+                  Case Study
+                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true">
+                    <path d="M4 12 12 4" /><path d="M5.5 4H12v6.5" />
+                  </svg>
+                </a>
+                <a class="btn btn--ghost" href="#contact">Connect with us</a>
+              </div>
+              <dl class="creds" style="margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--line)">
+                <div><dt>Founded</dt><dd>2024 — Studio</dd></div>
+                <div><dt>Shipped</dt><dd>25+ projects</dd></div>
+                <div><dt>Focus</dt><dd>AAA &amp; mobile titles</dd></div>
+              </dl>
+            </div>
+          </div>
+
+          <aside class="v-quad__wall" aria-label="Trusted by teams at">
+            <header>
+              <span class="label">Trusted by teams at</span>
+              <span class="label" style="display: flex; align-items: center; gap: 9px; letter-spacing: 0.16em">
+                <span class="status-dot" aria-hidden="true"></span>
+                04
+              </span>
+            </header>
+            <div class="v-quad__cells" id="quad-cells"></div>
+          </aside>
+        </section>
+
+        <!-- ══════════ 6 — TICKER, REVERSED ══════════
+             Identical to variant 1 in every respect except the direction of
+             the band. Kept as its own variant rather than a toggle so the two
+             can be flipped between with one key and judged against each other. -->
+        <section class="variant hero v-ticker hud-grid" data-variant="6">
+          <img class="hero__plate" src="/assets/img/backgrounds/hero-fantasy-battlefield-v1.png" alt="" aria-hidden="true" />
+          <div class="hero__scrim" aria-hidden="true"></div>
+
+          <div class="v-ticker__body">
+            <div class="container v-ticker__lede">
+              <p class="eyebrow"><i>[01]</i> Game growth systems</p>
+              <h1 class="h1" style="margin: 24px 0">
+                <span>We are the game</span>
+                <span class="accent">Marketing</span>
+                <span>Studio.</span>
+              </h1>
+              <p class="sub">From immersive websites to powerful digital strategies — we help your game win the market.</p>
+              <div class="btn-row">
+                <a class="btn btn--accent" href="#portfolio">
+                  Case Study
+                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true">
+                    <path d="M4 12 12 4" /><path d="M5.5 4H12v6.5" />
+                  </svg>
+                </a>
+                <a class="btn btn--ghost" href="#contact">Connect with us</a>
+              </div>
+              <dl class="creds">
+                <div><dt>Founded</dt><dd>2024 — Studio</dd></div>
+                <div><dt>Shipped</dt><dd>25+ projects</dd></div>
+                <div><dt>Focus</dt><dd>AAA &amp; mobile titles</dd></div>
+              </dl>
+            </div>
+          </div>
+
+          <div class="band band--rtl">
+            <div class="band__head">
+              <div class="container">
+                <span class="label">Trusted by teams at</span>
+                <span class="label" style="display: flex; align-items: center; gap: 9px">
+                  <span class="status-dot" aria-hidden="true"></span>
+                  Roster / 04
+                </span>
+              </div>
+            </div>
+            <div class="band__rail">
+              <div class="band__track" id="band-track-rtl" aria-label="Client roster"></div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- ══════════ PROTOTYPE TOOLBAR ══════════ -->
+    <nav class="switcher" aria-label="Hero + client roster variants">
+      <button data-v="1" type="button">1 Ticker</button>
+      <button data-v="2" type="button">2 Roster</button>
+      <button data-v="3" type="button">3 Spine</button>
+      <button data-v="4" type="button">4 Masthead</button>
+      <button data-v="5" type="button">5 Quad</button>
+      <button data-v="6" type="button">6 Ticker ←</button>
+    </nav>
+    <p class="note" id="note"></p>
+    <button class="chrome-toggle" type="button" id="chrome-toggle" title="Hide the prototype toolbar (H)">Hide UI · H</button>
+
+    <script>
+      // Read verbatim from src/content/content.ts — assets.clients. Four marks,
+      // no fifth. Adding a real client here fills every variant at once.
+      const CLIENTS = [
+        ['Sycamore', '/assets/img/clients/sycamore-logo.webp'],
+        ['Disney Speedstorm', '/assets/img/clients/disney-speedstorm-logo.webp'],
+        ['Tally', '/assets/img/clients/tally-logo.webp'],
+        ['Seedify', '/assets/img/clients/seedify-logo.webp'],
+      ]
+      // NOT `loading="lazy"`, unlike TrustBar.tsx: every mark here is above the
+      // fold, and in the ticker most of the track starts outside the viewport —
+      // lazy cells rolled into view blank and only then filled in.
+      const img = (name, logo) => `<img class="mark" src="${logo}" alt="${name}" />`
+
+      // The twelve-section registry the app generates its rail from.
+      const SECTIONS = [
+        ['home', 'Command'], ['reel', 'Transmission'], ['telemetry', 'Telemetry'],
+        ['services', 'Services'], ['process', 'Process'], ['about', 'Advantages'],
+        ['portfolio', 'Archive'], ['case-study', 'Dossier'], ['testimonials', 'Logs'],
+        ['academy', 'Academy'], ['faq', 'Diagnostics'], ['contact', 'Channel'],
+      ]
+      document.getElementById('rail-nav').innerHTML = SECTIONS.map(
+        ([id, label], i) => `<a href="#${id}" aria-label="${label}"${i === 0 ? ' aria-current="true"' : ''}><i></i></a>`
+      ).join('')
+
+      // 1 — TICKER. Four marks are not enough to fill a 1440 band, let alone
+      // twice over, so the group is the roster repeated until it is wider than
+      // the viewport; the track is that group printed TWICE. Both halves being
+      // identical is what makes -50% → 0 loop without a visible seam.
+      const perGroup = Math.max(2, Math.ceil((window.innerWidth * 1.25) / 232))
+      const group = Array.from({ length: perGroup }, (_, i) => {
+        const [name, logo] = CLIENTS[i % CLIENTS.length]
+        return `<div class="band__cell">${img(name, logo)}</div>`
+      }).join('')
+      document.getElementById('band-track').innerHTML = group + group
+      document.getElementById('band-track-rtl').innerHTML = group + group
+
+      // 2 — ROSTER. Index, mark, name. Nothing else: the engagement, scope and
+      // date for each client are not in content.ts, so no column claims them.
+      document.getElementById('roster-list').innerHTML = CLIENTS.map(
+        ([name, logo], i) => `<li><i>${String(i + 1).padStart(2, '0')}</i><b>${name}</b>${img(name, logo)}</li>`
+      ).join('')
+
+      // 3 — SPINE, plus its sub-1050 fallback row.
+      document.getElementById('spine-list').innerHTML = CLIENTS.map(([n, l]) => `<li>${img(n, l)}</li>`).join('')
+      document.getElementById('spine-fallback').innerHTML = CLIENTS.map(([n, l]) => `<div>${img(n, l)}</div>`).join('')
+
+      // 4 — MASTHEAD.
+      document.getElementById('mast-marks').innerHTML = CLIENTS.map(([n, l]) => `<div>${img(n, l)}</div>`).join('')
+
+      // 5 — QUAD. The only variant that prints the client's NAME under the mark:
+      // with no key visual behind them the cells need a second line to read as
+      // records rather than as a logo wall.
+      document.getElementById('quad-cells').innerHTML = CLIENTS.map(
+        ([name, logo]) => `<div>${img(name, logo)}<span>${name}</span></div>`
+      ).join('')
+
+      const NOTES = {
+        1: 'TICKER → — the roster becomes the floor of the fold: a full-bleed band welded to the bottom edge, marks divided by the page hairline. The marks TRAVEL RIGHT, entering from the left edge. Hover pauses it. Costs the headline ~120px of height.',
+        2: 'ROSTER — the fold keeps its geometry and changes its argument. The right-column panel stops listing what we sell and lists who we did it for: four ruled rows, index + name + mark. The safest of the five.',
+        3: 'SPINE — the marks turn vertical: a 122px instrument strip pinned to the right edge of the housing, label set vertically like the rail status. Buys the headline the full measure, so it runs to 118px. Falls back to a 2x2 row below 1050.',
+        4: 'MASTHEAD — proof first. The roster is a full-bleed strip under the topbar, so it is read before the headline; the headline then takes the whole measure at 128px underneath. Three rules frame the fold, nothing floats.',
+        5: 'QUAD — the marks ARE the art. The key-visual plate is deleted and the right half of the fold becomes a 2x2 hairline grid to the viewport edge, each cell a mark over bare ink with its name below. Highest risk: the fold loses its picture.',
+        6: 'TICKER ← — variant 1 with the band reversed, and nothing else changed. The marks TRAVEL LEFT, entering from the right edge; the eye reads rightward INTO them. This is the conventional news-ticker direction. Flip 1 / 6 to compare.',
+      }
+      const buttons = [...document.querySelectorAll('.switcher button')]
+      const note = document.getElementById('note')
+
+      const toggle = document.getElementById('chrome-toggle')
+      const flipChrome = () => {
+        const off = document.body.classList.toggle('chrome-off')
+        toggle.textContent = off ? 'Show UI · H' : 'Hide UI · H'
+      }
+      toggle.addEventListener('click', flipChrome)
+
+      function show(v) {
+        document.querySelectorAll('.variant').forEach((s) => s.classList.toggle('is-active', s.dataset.variant === v))
+        buttons.forEach((b) => b.setAttribute('aria-current', String(b.dataset.v === v)))
+        note.innerHTML = '<b>' + v + '</b> — ' + NOTES[v]
+        history.replaceState(null, '', '?v=' + v)
+        window.scrollTo(0, 0)
+      }
+
+      const KEYS = buttons.map((b) => b.dataset.v)
+      const current = () => new URLSearchParams(location.search).get('v') || KEYS[0]
+      const step = (d) => show(KEYS[(KEYS.indexOf(current()) + d + KEYS.length) % KEYS.length])
+
+      buttons.forEach((b) => b.addEventListener('click', () => show(b.dataset.v)))
+      addEventListener('keydown', (e) => {
+        if (/^(INPUT|TEXTAREA)$/.test(document.activeElement.tagName) || document.activeElement.isContentEditable) return
+        if (e.key === 'ArrowLeft') step(-1)
+        else if (e.key === 'ArrowRight') step(1)
+        else if (e.key.toLowerCase() === 'h') flipChrome()
+      })
+
+      show(KEYS.includes(current()) ? current() : KEYS[0])
+    </script>
+  </body>
+</html>

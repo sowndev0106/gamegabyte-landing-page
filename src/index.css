@@ -42,34 +42,58 @@
   50% { opacity: 0.35; transform: scale(0.7); }
 }
 
-/* The topbar prompt's cursor, sitting after `gamegabyte:~/work/archive$`.
+/* The topbar prompt's cursor, sitting after `gamegabyte:~/work/portfolio`.
    Deliberately NOT the status pulse above: a pulse eases, and an easing cursor
    reads as a decorative light. A terminal cursor is a square wave — it is on,
    then it is off — which is what says "waiting for input" rather than "this
    thing is alive". `step-end` is what holds each half flat instead of fading
    between them. Rests visible under reduced motion, since the block below caps
-   iterations at one and the keyframe ends back at full opacity. */
+   iterations at one and the keyframe ends back at full opacity.
+
+   1.6s, not the 1.1s a real terminal uses. A terminal cursor sits where you are
+   already looking; this one sits in fixed chrome that stays on screen the whole
+   visit, so the shell rate reads as nagging. 800ms on / 800ms off is slow
+   enough to ignore while still unmistakably a blink. */
 .command-cursor {
   box-shadow: 0 0 10px var(--color-accent);
-  animation: command-cursor-blink 1.1s step-end infinite;
+  animation: command-cursor-blink 1.6s step-end infinite;
 }
 
 @keyframes command-cursor-blink {
   50% { opacity: 0; }
 }
 
-/* Concentric rings turning at different rates. The dashed inner ring is what
-   makes the motion readable; both stop under the reduced-motion block below. */
-.orbit-ring {
-  animation: orbit-spin 12s linear infinite;
+/* The hero's client band. `w-max` on the track plus two identical halves inside
+   it mean -50% is exactly one half, so the wrap lands on a frame identical to
+   the one before it and the seam never becomes visible.
+
+   -50% → 0 rather than 0 → -50%: the marks travel RIGHT, entering from the left
+   edge. The reverse — the conventional news-ticker direction — was built and
+   compared side by side; see `prototypes/hero-clients`, variants 1 and 6.
+
+   56s across a 2784px half is ~50px/s, slow enough to read a mark as it passes.
+   Under reduced motion the block at the end of this file caps the animation at
+   one iteration, and this keyframe ends at translateX(0), so the band comes to
+   rest FULL rather than half-empty. */
+.trust-ticker__track {
+  animation: trust-ticker-roll 56s linear infinite;
 }
 
-.orbit-ring-inner {
-  animation: orbit-spin 18s linear infinite reverse;
+/* A moving mark is harder to read than a still one; stopping under the pointer
+   is what lets someone actually look at a logo they recognised. */
+.trust-ticker:hover .trust-ticker__track {
+  animation-play-state: paused;
 }
 
-@keyframes orbit-spin {
-  to { transform: rotate(360deg); }
+/* The band runs edge to edge, so its ends have to fade into the housing —
+   without this the marks appear to be clipped by nothing at all. */
+.trust-ticker__rail {
+  mask-image: linear-gradient(90deg, transparent, black 5%, black 95%, transparent);
+}
+
+@keyframes trust-ticker-roll {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0); }
 }
 
 @font-face {

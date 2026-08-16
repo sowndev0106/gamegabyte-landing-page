@@ -13,13 +13,13 @@ plainly in [Known deviations](#known-deviations) rather than quietly smoothed ov
 ## 1. What the design is
 
 **Command OS.** The page presents the studio as an instrument you are reading,
-not a brochure you are scrolling. Eleven numbered sections behave like panels of
+not a brochure you are scrolling. Nine numbered sections behave like panels of
 one operating system: a persistent rail on the left, a command bar across the
 top, a single dark ground, and hairline rules instead of boxes.
 
 The idea it is built on, and the one thing to protect:
 
-> **One surface, twelve structures.**
+> **One surface, nine structures.**
 > Every section shares the same ground, the same hairline, the same three type
 > voices. What changes between sections is *structure* — a matrix, an orbit, an
 > archive, a dossier. Nothing changes colour or texture to signal "new section".
@@ -61,17 +61,15 @@ component names and commits.
 
 | Section | Idiom | Called |
 |---|---|---|
-| 01 `home` | Split dashboard | Command |
+| 01 `home` | Split dashboard over a client band | Command |
 | 02 `reel` | Monitored feed | Transmission |
 | 03 `telemetry` | Readout board | Telemetry |
 | 04 `services` | Input/output matrix | Systems matrix |
-| 05 `process` | Orbital sequence on a signal path | Mission sequence |
-| 06 `about` | Parallel attribute nodes | Operational advantages |
-| 07 `portfolio` | Asymmetric archive | Archive |
-| 08 `testimonials` | Communication log | Logs |
-| 09 `academy` | External terminal | Training subsystem |
-| 10 `faq` | Diagnostic records | System diagnostics |
-| 11 `contact` | Open channel | Channel |
+| 05 `about` | Parallel attribute nodes | Operational advantages |
+| 06 `portfolio` | Asymmetric archive | Archive |
+| 07 `academy` | External terminal | Training subsystem |
+| 08 `faq` | Diagnostic records | System diagnostics |
+| 09 `contact` | Open channel | Channel |
 
 ---
 
@@ -91,7 +89,7 @@ component names and commits.
 | muted label | `white/48`, `white/30` | Mono labels, footnotes. |
 
 **Lime is a signal, not a decoration.** If lime appears on something that is not
-active, live, or the primary action, it is wrong. Measured: 10 of 12 sections use
+active, live, or the primary action, it is wrong. Measured: every section uses
 lime only for the section eyebrow, status dots and CTAs.
 
 ### Type
@@ -106,8 +104,8 @@ Three voices, no fourth.
 
 **Display scale** (measured at 1440):
 
-- Hero `h1` — `clamp(64px,7.2vw,112px)` → 104px. The hero is the only section allowed this size.
-- Section `h2` — `clamp(38px,6vw,84px)` → 84px. Identical in all 10 sections that use `SectionHeader`.
+- Hero `h1` — `clamp(48px,calc(7.1vw - 13px),112px)` → **89px** at 1440, from `lg` up. Below `lg` it keeps the older `clamp(64px,7.2vw,112px)` ramp (104px at 1440). The `lg` ramp is a solved slope, not a chosen size: the hero splits 50/50 there and the heading has to set inside its half — see [the hero split](#the-hero-split). **It is derived from the current `hero.headline`; changing that copy means re-deriving it.**
+- Section `h2` — `clamp(38px,6vw,84px)` → 84px. Identical in all 8 sections that use `SectionHeader`.
 - Panel title — 28px.
 - Grid-cell title — 22px.
 
@@ -120,7 +118,7 @@ makes a full sentence unreadable.
 | 11px | `0.22em` | Section eyebrow (`[04] SYSTEMS MATRIX`). Used by `SectionHeader` and the hero only. |
 | 9px | `0.22em` | Panel label — short, one to three words. |
 | 9px | `0.16em` | Mono sentence: caption, control label, nav item, readout note. |
-| 8px | `0.18em` | Micro meta — credentials, badges, the rail status. |
+| 8px | `0.18em` | Micro meta — badges, corner readings, the rail status. |
 
 ### Alignment
 
@@ -129,12 +127,11 @@ paragraphs, anywhere. A centred block has no edge to align to, so it breaks the
 column structure the rail and the section grid establish — one centred paragraph
 is enough to make the page look like a template again.
 
-Three exceptions, all narrow:
+Two exceptions, both narrow:
 
 | Exception | Why |
 |---|---|
 | A label inside a `<button>` | The control centres its own label; that is the button's internal layout, not page text. Three on the page. |
-| The caption under the process orbit | It sits beneath the only radially symmetric element on the page, so it centres on that element's axis. |
 | The corner meta in `about` (`Latency / Low` …) | Deliberately right-aligned, pinning a reading to the far corner of each node the way an instrument does. The only right-aligned text on the page — keep it to that one pattern. |
 
 Anything else that is not left-aligned is a mistake. The audit that produces
@@ -166,13 +163,26 @@ claiming a section conforms.
 
 - Entrances use `Reveal` / `Stagger` / `CountUp` (the `motion` library). Do not
   hand-roll an IntersectionObserver.
-- Three continuous animations exist, and a fourth needs a reason:
-  the status-dot pulse, the process orbit rings, and the topbar cursor blink.
-  The cursor earns its place because a cursor that does not blink is a
+- Three continuous animations exist, and a fourth needs a reason: the status-dot
+  pulse, the topbar cursor blink and the hero's client band. The cursor earns its place because a cursor that does not blink is a
   rectangle — the blink is the whole message ("waiting for input"), not a
-  decoration on top of one. Note it is a **square wave** (`step-end`), not the
-  eased pulse the status dot uses: an easing cursor reads as a light that is
-  alive rather than a prompt that is waiting.
+  decoration on top of one. Two constraints it must keep: a **square wave**
+  (`step-end`), not the eased pulse the status dot uses — an easing cursor reads
+  as a light that is alive rather than a prompt that is waiting; and **1.6s**,
+  not the ~1.1s a real terminal blinks at. A terminal cursor sits where the eye
+  already is, but this one lives in fixed chrome that stays on screen for the
+  whole visit, so the shell rate reads as nagging. Both were compared side by
+  side against five alternatives in `prototypes/cursor-blink/`.
+- The **client band** (`TrustTicker`) earns its place the same way: with four
+  marks a static row is a short list, but a band that never ends reads as a feed
+  the page is receiving — which is the claim the section is making. It is the
+  page's only horizontal motion, so keep it the only one. Constraints it must
+  keep: linear at ~50px/s (fast enough to be motion, slow enough to read a mark
+  as it passes), two identical halves so `-50%` wraps seamlessly, paused on
+  hover, and at rest on `translateX(0)` under reduced motion so it comes to a
+  stop **full** rather than half-empty. Direction is `-50% → 0`: the marks
+  travel right. Both directions were built and compared in
+  `prototypes/hero-clients` (variants 1 and 6).
 - Everything continuous must stop under `prefers-reduced-motion: reduce`.
   Capping `animation-duration` alone does **not** stop an infinite animation —
   `animation-iteration-count: 1` is what brings it to rest. `index.css` does both.
@@ -183,13 +193,13 @@ claiming a section conforms.
 
 Navigation is the one thing on the page that is not a section, and it is where
 the terminal register is stated most plainly. It exists at three resolutions of
-the *same* twelve-item list — never as three competing navigations.
+the *same* nine-item list — never as three competing navigations.
 
 | Where | Renders | Carries |
 |---|---|---|
-| Rail, `md`+ | Twelve ticks, no text | **Position**, as a reading on a scale. |
+| Rail, `md`+ | Nine ticks, no text | **Position**, as a reading on a scale. |
 | Topbar, `md`+ | Five text groups, plus a path readout at `lg`+ | **Destination** (the group being read carries a lime `>` caret) and **position** (the path names the section). |
-| Mobile bar, `<md` | Twelve rows in a sheet | Both. A sheet has room for the real list, so groups are not used. |
+| Mobile bar, `<md` | Nine rows in a sheet | Both. A sheet has room for the real list, so groups are not used. |
 
 All three read `src/content/sections.ts`. The rail and the sheet map `SECTIONS`
 directly; the topbar maps `NAV_GROUPS`, whose members are typed `SectionId`, so
@@ -198,7 +208,7 @@ nowhere. There is no second nav list anywhere in the tree — if you find yourse
 writing one, you are about to let the two drift apart.
 
 `home` and `contact` belong to no group on purpose: the logo is the way back to
-one and the CTA is the way to twelve. While either owns the viewport the topbar
+one and the CTA is the way to nine. While either owns the viewport the topbar
 shows **no** caret — the same rest state the rail takes before any section owns
 the viewport. Do not invent an active state for the hero to fill the gap; a
 prompt with nothing at it is a truthful reading.
@@ -241,9 +251,9 @@ Things go in the order they can be spared. Measured on the running page:
 
 | Width | State |
 |---|---|
-| `< md` (760) | The whole bar goes. `MobileCommandBar` takes over with twelve rows. |
+| `< md` (760) | The whole bar goes. `MobileCommandBar` takes over with nine rows. |
 | `md` – `lg` | No path. Nav spacing and CTA padding tighten (`pl-6` / `pr-4` / `px-6`). At 760 — the narrowest the bar ever renders — this leaves **127px** between the last group and the CTA. |
-| `lg` (1050) + | The path appears and spacing relaxes to `pl-11` / `pr-7` / `px-11`. The longest path, `~/studio/testimonials`, measures **265px** and clears the groups by 31px at 1050. |
+| `lg` (1050) + | The path appears and spacing relaxes to `pl-11` / `pr-7` / `px-11`. The longest path, `~/work/portfolio`, measures **236px** and clears the groups by 31px at 1050. |
 
 The path goes first because it is the one thing the rail still says on its own.
 The bar is 72px at every width and the five groups never wrap.
@@ -262,7 +272,7 @@ section picks one, it does not invent a third.
 
 | Arrangement | Where | Why |
 |---|---|---|
-| `split` | telemetry, services, process, about, logs, academy, diagnostics, channel | Bodies made of cells and readings. The title is a label for a system, so it sits beside it and holds station while the body scrolls. |
+| `split` | telemetry, services, about, academy, diagnostics, channel | Bodies made of cells and readings. The title is a label for a system, so it sits beside it and holds station while the body scrolls. |
 | `stacked` | reel, archive | Bodies that are imagery. A 70% column wastes them, so the title banners above and the content takes the full measure. |
 
 `stacked` is for content that needs the width, not an escape hatch for a split
@@ -352,7 +362,7 @@ alignment is the spine; do not break it to make one section look better.
 
 ### The pinned-panel pattern
 
-Three sections use the same construct and it is deliberate: a tall panel with a
+Two sections use the same construct and it is deliberate: a tall panel with a
 mono label pinned to the **top** edge, a status or figure pinned to the
 **bottom** edge, and the space between left empty.
 
@@ -360,12 +370,40 @@ mono label pinned to the **top** edge, a status or figure pinned to the
 |---|---|---|
 | `telemetry` | `STUDIO SIGNAL / ACTIVE` | the `25+` readout |
 | `case-study` | `CLIENT / SEEDIFY` and the title | `09 RECORDS` |
-| `testimonials` | `LOG 01 / HUMAN INTELLIGENCE` | the client's name |
 
 The void is the point — a gauge reads as an instrument because its markings sit
 at the edges of the housing, not because the housing is full. Do not "fix" these
-by centring the contents or shrinking the panel, and do not introduce a fourth
+by centring the contents or shrinking the panel, and do not introduce a third
 variant that fills the middle.
+
+The void is what the neighbours leave over, though — not a number typed into a
+`min-h`. `telemetry` set its own 430px height while the cells beside it needed
+more, so the panel's void and the board's ragged tail were two separate holes.
+It now takes a floor only (`min-h-72`) and stretches to whatever the supporting
+rows come to. If a pinned panel needs a tall `min-h` to look right, the content
+beside it is the thing to fix.
+
+### The telemetry board
+
+Five figures: one emphasised in a panel on the left, four in a 2×2 field on the
+right. **The count is the layout.** Four supporting readouts fill the field
+exactly; three leave the last cell spanning both columns with a void beside it,
+which reads as a gap and not as an instrument's empty housing. Adding or
+removing a stat is therefore a layout change, not a content change.
+
+Two measurements are derived and carry their working in comments — re-derive
+them if the split ratio, the cell padding or the longest string changes:
+
+| Value | Why not the obvious one |
+|---|---|
+| Board columns `0.78fr / 1fr` | An even split gives a supporting cell a quarter of the 70% body column — 85px inside its padding at the `lg` breakpoint, narrower than the word `PRODUCTION` and than the label `03 / DELIVERY`. Both spilled across the hairline into the next cell. |
+| Supporting figure `clamp(32px,3.6vw,52px)` | The cap is not the binding constraint; the slope is. Between `lg` and 1440 the cell grows at roughly the figure's own rate, so too steep a slope clips at *every* width in the band rather than at one. |
+
+A figure whose dimension is not a bare count (`3 Days`, `1 Week`) carries it in
+`Readout`'s `unit`, set one step down in the same display voice — not in mono,
+which would read as a caption stuck to the figure rather than as part of it. The
+unit sits **inside** `data-readout-value`, separated by a non-breaking space, so
+a screen reader and the QA harness read the figure the way a visitor does.
 
 ### Checklist for any new or edited section
 
@@ -397,6 +435,12 @@ reached production. Every figure now traces to `content.ts`:
 | `BUILD 24.08` | removed |
 | `DOSSIER UNLOCKED` | `09 records`, derived from `caseStudy.screens.length` |
 | `SIGNAL VERIFIED` | the client's company name |
+
+`3 DAYS` (to first prototype) and `1 WEEK` (brief to delivery) replaced `5+ YEARS
+IN THE GAME INDUSTRY` on the studio's own instruction. They are commitments the
+studio makes rather than figures it measured, which is why the notes under them
+qualify the claim — `FROM ONE WEEK, SCOPE DEPENDING` — instead of stating a flat
+turnaround. A commitment may ship; a measurement nobody took may not.
 
 Two claims are deliberately **not** shipped until the studio confirms them:
 the four Academy course tags, and the "replies in 2 working days" commitment
@@ -448,12 +492,74 @@ Always `aspect-[16/9]` (or `4/5`, `16/10`) with `object-cover`.
 Honest ledger of where the code does not yet match the rules above.
 
 Measured at 1440×1000. The header grid now resolves to `240px 936px` with the
-the eyebrow and the heading both at **x=154**, at **84px**, in **eleven of
-twelve** sections.
+the eyebrow and the heading both at **x=154**, at **84px**, in **eight of
+nine** sections.
 
 | Where | Deviation | Verdict |
 |---|---|---|
-| `home` | Heading 104px against the sections' 84px, and a split two-column layout instead of a stacked header | **Intentional and permanent.** The hero is the only section that must pitch and establish the instrument at once; it earns a different rhythm. Its **left edge now matches** every other section. |
+| `home` | Its own heading ramp, and a 50/50 copy-and-art split instead of a stacked header | **Intentional and permanent.** The hero is the only section that must pitch and establish the instrument at once; it earns a different rhythm. Its **left edge now matches** every other section. |
+
+### The hero split
+
+From `lg` up the fold is halved: copy left, `assets.backgrounds.heroMascot`
+right. Three rules hold it together.
+
+**The copy's half is a hard cap; the art's is only where it starts.** The copy
+carries `lg:max-w-1/2`, measured against the *padding* box — `(W - 96) / 2`,
+where the 48px left gutter sits inside its half and cancels the 48 lost to
+halving both gutters, so it stops exactly on the section's midpoint. Verified at
+1152, 1280, 1366, 1440, 1536, 1600, 1920 and 2560.
+
+The art does not answer to that line. It is not a grid child — a track would clip
+it at the section's padding — so it is pinned `right-0 bottom-0` at `lg:w-[58%]`
+and grows **leftward across the midpoint**, leaning ~8% into the copy's half.
+That is the whole scaling mechanism, and it is deliberate: pin the art's LEFT
+edge instead and every extra pixel runs off the screen, which scales the art by
+cropping it. Pinned right, nothing is clipped on any axis at any width — `bottom-0`
+puts the art's own bottom edge on the section's, and the guard below keeps the
+top inside the fold.
+
+The lean is legible because the 90deg scrim is still running where it lands
+(~40% of the section, still ~0.4 ink), so the swoosh fades UNDER the headline
+rather than colliding with it. Past ~62% the character's body — not the faint
+ring — reaches copy the scrim no longer covers, which is the ceiling on this
+knob.
+
+**`lg:max-h-[88%]` is the guard.** The section caps at 1000px but width does not,
+so past ~2500px a 58% width sets a height taller than the fold and beheads the
+character. Height binds there and `object-contain` letterboxes inside the box,
+which is why `lg:object-bottom-right` is load-bearing: the default centre would
+float the art off the edge.
+
+**The asset is tight-cropped, and must stay that way.** The export arrived
+1024×876 with 82px of transparent margin on the left and **199px on top** — 23%
+of its height was nothing. Anchored bottom and sized against the fold, that
+margin is pure dead space at the top of the art's box, so it is cropped out of
+the file (942×677) rather than paid for in layout. Only fully transparent pixels
+went: the crop is the alpha bounding box, so no artwork was lost. Re-crop any new
+export the same way before dropping it in, or the character silently shrinks.
+
+**The heading ramp is solved, not picked.** `hero.headline` is three fixed lines
+rendered as block spans, so a heading too wide for its half does not clip — it
+re-wraps to four lines, which pushes the section past the fold and drags the band
+off screen. The half is `(100vw - 188px) / 2` (188 = rail + both gutters) and the
+display face sets the longest line, "WEBSITES FOR", at 6.80× its font size, so the
+fit is `vw × 0.0734 - 13.7px`. `clamp(48px, calc(7.1vw - 13px), 112px)` is that
+line with ~3% headroom. It must stay a **slope**, not a plain `vw`: a pure ratio
+cannot clear a half that loses a fixed 188px to chrome — it wraps at the bottom of
+the range and leaves room at the top.
+
+**The ramp is copy-dependent, and that is the trap.** The 6.80× is a property of
+this headline, not of the face. Rewriting `hero.headline` changes it — the copy
+before this one measured 8.38×, and simply swapping the text without re-solving
+either wraps the heading to four lines or leaves it setting at 79% of its half,
+looking under-scaled for no visible reason. Measure the longest line against its
+font size in the browser, refit the slope through the 1024 and 1536 limits, then
+re-verify 3 lines across the range.
+
+Below `lg` there is no half to give: at 900px a 50/50 split leaves the copy
+~400px, narrower than the heading can set. The art drops behind the copy at 40%
+as ambience instead, and the copy runs uncapped on the `md` ramp.
 
 **Resolved: one left edge.** The hero is full-bleed off the rail while sections
 used to sit in a centred 1320px measure, so the two drifted apart as the screen
@@ -466,13 +572,10 @@ in `prototypes/section-header-alignment/`:
 | Sections keep the cap, pinned left | yes | 1148px |
 | **Sections drop the cap** | **yes, at every width** | **none** |
 
-The last one shipped. Verified: all twelve headings share one left edge at 390,
+The last one shipped. Verified: all nine headings share one left edge at 390,
 760, 1050, 1440, 1853 and 2560px, with no horizontal overflow.
 
-That is the whole list. An earlier revision of this document also flagged the
-empty middle of the `testimonials` meta column as unresolved. Reviewed against
-`telemetry` and `case-study`, it is the third instance of one deliberate
-construct, not a loose end — see [the pinned-panel pattern](#the-pinned-panel-pattern).
+That is the whole list.
 
 ### Resolved
 
@@ -494,7 +597,7 @@ difference between a page that is consistent and a page that is merely finished.
 ## 8. Verifying
 
 ```bash
-npm run qa      # 73 checks: structure, clipping at 390 and 1440, interaction, reduced motion
+npm run qa      # 67 checks: structure, clipping at 390 and 1440, interaction, reduced motion
 npm run build
 npm run lint
 ```

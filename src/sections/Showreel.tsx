@@ -5,7 +5,6 @@ import { Container } from '../components/ui/Container'
 import { Section } from '../components/ui/Section'
 import { SectionSplit } from '../components/ui/SectionSplit'
 import { CornerTicks } from '../components/ui/CornerTicks'
-import { TrustBar } from './TrustBar'
 
 export function Showreel() {
   return (
@@ -28,8 +27,6 @@ export function Showreel() {
               />
             </div>
           </Reveal>
-
-          <TrustBar />
         </SectionSplit>
       </Container>
     </Section>

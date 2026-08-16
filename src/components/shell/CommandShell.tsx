@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 import { useMemo } from 'react'
-import { SECTIONS } from '../../content/sections'
+import { SECTIONS, shellPath } from '../../content/sections'
 import { CommandRail } from './CommandRail'
 import { CommandTopbar } from './CommandTopbar'
 import { MobileCommandBar } from './MobileCommandBar'
@@ -27,8 +27,10 @@ export function CommandShell({
   const ids = useMemo(() => SECTIONS.map((section) => section.id), [])
   const observed = useActiveSection(ids)
   // Off the homepage none of those sections exist, so nothing is being read
-  // and the rail shows no active tick rather than a stale one.
+  // and the rail shows no active tick rather than a stale one. The path readout
+  // is the one thing that must NOT go quiet with it — see `shellPath`.
   const active = base ? '' : observed
+  const path = shellPath(active, typeof location === 'undefined' ? '/' : location.pathname)
 
   return (
     <>
@@ -40,7 +42,7 @@ export function CommandShell({
       </a>
 
       <CommandRail active={active} base={base} />
-      <CommandTopbar active={active} base={base} />
+      <CommandTopbar active={active} base={base} path={path} />
       <MobileCommandBar active={active} base={base} />
 
       {/* The footer sits beside `main`, not inside it — it is not page content. */}

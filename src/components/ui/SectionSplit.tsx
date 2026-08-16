@@ -7,7 +7,7 @@ import { sectionById, type SectionId } from '../../content/sections'
  * invent a third.
  *
  * `split` (default) is a sidehead: the title sits in a 30% column beside its
- * content and holds station while the body scrolls. It suits a body made of
+ * content, and the two scroll together as one block. It suits a body made of
  * cells and readings, where the title is a label for a system.
  *
  * `stacked` gives the body the full measure and banners the title above it. Use
@@ -83,9 +83,7 @@ export function SectionSplit({
 
   return (
     <div className="grid items-start gap-10 lg:grid-cols-[30%_minmax(0,1fr)] lg:gap-14">
-      {/* Sticky so a tall body cannot scroll its own title out of view. Cleared
-          by the 72px topbar plus a little air. */}
-      <div className="lg:sticky lg:top-28">
+      <div>
         {heading}
         {(description || action) && (
           <Reveal>

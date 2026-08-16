@@ -7,6 +7,9 @@ export const assets = {
   ],
   backgrounds: {
     hero: '/assets/img/backgrounds/hero-fantasy-battlefield-v1.png',
+    // Cut-out art with real alpha, not a scene: the hero composites it over ink
+    // rather than tinting a photo down to a texture. See `Hero`.
+    heroMascot: '/assets/img/backgrounds/hero-mascot-orbit.webp',
     pattern: '/assets/img/backgrounds/gamegabyte-pattern-glow.webp',
     pixelTrees: '/assets/img/backgrounds/pixel-tree-tiles.webp',
     battlefield: '/assets/img/backgrounds/hero-fantasy-battlefield-v1.png',
@@ -37,29 +40,22 @@ export const content = {
   hero: {
     // Three display lines rather than one string, so the accent line is data
     // rather than a substring the component has to go hunting for.
+    // Accent is per LINE, not per word, so the phrase has to break where the
+    // emphasis does — "Video games" is its own line because it is the lime one.
     headline: [
-      { text: 'We are the game', accent: false },
-      { text: 'Marketing', accent: true },
-      { text: 'Studio.', accent: false },
+      { text: 'We make', accent: false },
+      { text: 'websites for', accent: false },
+      { text: 'Video games', accent: true },
     ],
-    sub: 'From immersive websites to powerful digital strategies — we help your game win the market.',
+    sub: 'Launch pages, storefronts and campaign sites for game studios — built to turn attention into players.',
     primaryCta: 'Case Study',
     secondaryCta: 'Connect with us',
-    credentials: [
-      { label: 'Founded', value: '2024 — Studio' },
-      { label: 'Shipped', value: '25+ projects' },
-      { label: 'Focus', value: 'AAA & mobile titles' },
-    ],
-    // Labels only. Every row the node table shows is read from `services`
-    // below, so nothing on it can claim something untrue.
-    dashboard: {
-      focusLabel: 'Active focus',
-      focusValue: 'AAA + Mobile',
-      nodesLabel: 'Available system nodes',
-      // One word per row, not a sentence — the rows are a list of what is
-      // available, so the status is a column value rather than a claim.
-      nodeStatus: 'Online',
-    },
+    // The right half of the fold is `assets.backgrounds.heroMascot` and nothing
+    // else — no copy. It replaced a node table that restated `services` in a
+    // panel; the section it duplicated is one scroll down, so the table was
+    // paying for the fold's whole right half to say something already said.
+    // The client band across the floor of the fold carries no copy at all —
+    // it is `assets.clients` and nothing else. See `TrustTicker`.
   },
   reel: {
     title: 'Showreel 2025',
@@ -67,7 +63,6 @@ export const content = {
     ariaLabel: 'Gamegabyte Studio Reel 2025',
     src: assets.video,
     status: 'Transmission ready',
-    trust: 'Trusted by teams at',
     controls: {
       play: 'Play signal',
       pause: 'Pause signal',
@@ -79,9 +74,13 @@ export const content = {
     title: 'Growing with Game Studios Worldwide',
     note: 'Delivering focused impact for game teams.',
   },
+  // `unit` carries the dimension of a figure that is not a bare count, so the
+  // readout can set it a size down instead of running `1 WEEK` across a cell
+  // that is only ~150px wide inside its padding.
   stats: [
     { value: '25+', label: 'Studio Projects', note: 'Across AAA & mobile titles' },
-    { value: '5+', label: 'Years in the Game Industry', note: 'Formerly From Gameloft & Partners' },
+    { value: '3', unit: 'Days', label: 'To First Prototype', note: 'First loop back in three days' },
+    { value: '1', unit: 'Week', label: 'From Brief to Delivery', note: 'From one week, scope depending' },
     { value: '100%', label: 'Design-Led Production', note: 'No templates. No shortcuts.' },
     { value: '2024', label: 'Studio Founded', note: 'Built for long-term collaboration' },
   ],
@@ -89,36 +88,15 @@ export const content = {
   services: [
     { kind: 'Web', title: 'Game Landing Pages', body: 'High-impact campaign pages built around discovery and conversion.' },
     { kind: 'Product', title: 'UI/UX Design', body: 'Player-focused interfaces shaped around your game identity.' },
-    { kind: 'Data', title: 'Marketing Systems', body: 'Connected analytics and campaign experiences for launch.' },
-    { kind: 'Code', title: 'Development', body: 'Fast, accessible production tuned for every device.' },
-    { kind: 'Device', title: 'Responsive Design', body: 'Immersive layouts with thoughtful mobile behavior.' },
+    { kind: 'Data', title: 'Marketing Systems - SEO', body: 'Connected analytics and campaign experiences for launch.' },
     { kind: 'Players', title: 'Community Features', body: 'Systems that turn an audience into an active player base.' },
   ],
   systemsMatrix: {
-    title: ['One network.', 'Six capabilities.'],
-    intro: 'Six disciplines in one launch system. Technical detail stays compact and supports the work.',
+    title: ['One network.', 'Four capabilities.'],
+    intro: 'Four disciplines in one launch system, split between what goes in and what comes out.',
     inputKey: 'Input / Discipline',
     outputKey: 'Output / Growth',
   },
-  technology: [
-    { title: 'Documentation', body: 'Shared project intelligence' },
-    { title: 'Design', body: 'Rapid prototype loops' },
-    { title: 'Development', body: 'Modern frontend systems' },
-    { title: 'Deployment', body: 'Stable launch workflows' },
-  ],
-  processSection: {
-    title: ['Signal becomes', 'launch.'],
-    intro: 'A readable operational path from the first brief to a stable launch.',
-    engine: 'GGB / Mission engine',
-    engineNote: 'Sequence synchronized',
-  },
-  // `phase` names what each step does to the signal, in the page's voice.
-  process: [
-    { step: '01', phase: 'Decode', title: 'Consultation', body: 'Understand the world, audience and launch target.' },
-    { step: '02', phase: 'Shape', title: 'Design system', body: 'Prototype the story, interface and conversion path.' },
-    { step: '03', phase: 'Assemble', title: 'Production', body: 'Build, integrate and optimize the experience.' },
-    { step: '04', phase: 'Transmit', title: 'Launch support', body: 'Deploy, observe and stabilize the campaign.' },
-  ],
   // `sprite` indexes the 4×4 pixel-character sheet, left-to-right, top-to-bottom.
   // `tag` names the attribute each point stands for — these four are parallel
   // claims, not a sequence, so they carry a label rather than a step number.
@@ -169,13 +147,6 @@ export const content = {
       { src: '/assets/img/portfolio/season-pass-character.webp', label: 'Season pass — Emberborn Saga' },
     ],
   },
-  testimonialsSection: {
-    title: 'Trusted by game teams.',
-    intro: 'Incoming studio transmission / verified partner record.',
-  },
-  testimonials: [
-    { quote: "We're not just another agency. We're strategic partners helping your game succeed in the fiercely competitive market.", name: 'Mickael Grants', role: 'CEO of Apples to Oranges' },
-  ],
   academy: {
     title: 'GaByte Academy',
     body: 'Training and resources for game studios.',
