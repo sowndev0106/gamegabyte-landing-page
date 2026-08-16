@@ -25,11 +25,22 @@ export function Stagger({ children, className }: { children: ReactNode; classNam
   )
 }
 
-export function StaggerItem({ children, className }: { children: ReactNode; className?: string }) {
+export function StaggerItem({
+  children,
+  className,
+  ...rest
+}: {
+  children: ReactNode
+  className?: string
+  /**
+   * Hook attributes are forwarded. TypeScript does not check hyphenated JSX
+   * props on components, so without this they vanish silently.
+   */
+} & Record<`data-${string}`, string | undefined>) {
   const reduceMotion = useReducedMotion()
 
   return (
-    <motion.div variants={reduceMotion ? undefined : child} className={className}>
+    <motion.div variants={reduceMotion ? undefined : child} className={className} {...rest}>
       {children}
     </motion.div>
   )

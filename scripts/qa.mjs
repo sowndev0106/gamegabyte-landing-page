@@ -112,6 +112,15 @@ for (const viewport of VIEWPORTS) {
   }
 
   check(
+    `${viewport.label}: footer has three link groups`,
+    (await page.locator('footer [data-footer-column]').count()) === 3,
+  )
+  check(
+    `${viewport.label}: footer has four social links`,
+    (await page.locator('footer [data-footer-social]').count()) === 4,
+  )
+
+  check(
     `${viewport.label}: contact form has all three fields`,
     (await page.locator('#contact-name').count()) === 1 &&
       (await page.locator('#contact-email').count()) === 1 &&
