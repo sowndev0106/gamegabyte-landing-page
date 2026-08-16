@@ -14,8 +14,8 @@ plainly in [Known deviations](#known-deviations) rather than quietly smoothed ov
 
 **Command OS.** The page presents the studio as an instrument you are reading,
 not a brochure you are scrolling. Twelve numbered sections behave like panels of
-one operating system: a persistent rail on the left, a status bar across the top,
-a single dark ground, and hairline rules instead of boxes.
+one operating system: a persistent rail on the left, a command bar across the
+top, a single dark ground, and hairline rules instead of boxes.
 
 The idea it is built on, and the one thing to protect:
 
@@ -27,6 +27,31 @@ The idea it is built on, and the one thing to protect:
 That is why the page reads as a system rather than a stack of cards. A new
 section that invents its own surface treatment breaks it; a new section that
 invents its own *layout* on the shared surface strengthens it.
+
+### The register is a terminal
+
+Not a retro CRT pastiche — no scanlines, no green phosphor, no typewriter
+animation, no ASCII boxes. What the page borrows is the plain working grammar of
+a command line: **everything is labelled, everything is numbered, nothing is
+decorated.** `[04] SYSTEMS MATRIX` is a prompt line, not a chip. A hairline is a
+rule, not a card edge. Lime is a cursor colour. The mono voice is not a font
+choice, it is the claim that these strings are output rather than copywriting.
+
+Two tests for anything new:
+
+1. **Would it print?** The page should survive being read as plain text.
+   Structure comes from labels, indices and rules — things that still carry
+   meaning without colour — never from a shape whose only job is to look
+   technical.
+2. **Does it claim something?** Terminals report. If an element looks like a
+   readout it must be reading something real (see [Truth rule](#truth-rule)). An
+   invented figure in this voice is not a flourish; it is a lie in a monospace
+   font.
+
+The costume version of this design is the failure mode to watch for: a `$` on a
+button, a caret in front of a heading, a blinking block after a paragraph. Those
+say "terminal" instead of *behaving* like one. The two places the page does
+speak in prompt syntax are fixed and listed in [The shell](#the-shell).
 
 ### Vocabulary
 
@@ -120,12 +145,12 @@ claiming a section conforms.
 
 | Thing | Value |
 |---|---|
-| Container | `max-w-330` (1320px), `px-4.5` → `md:px-12` |
+| Container | gutter only — `px-4.5` → `md:px-12`, **no width cap**. Capping and centring it put every section on a different left edge from the hero, and the gap grew with the viewport. |
 | Rail | 92px, `md` and up only |
 | Topbar | 72px; mobile command bar 70px |
 | Section rhythm | `py-19.5` → `md:py-28` → `lg:py-32` (128px at desktop) |
 | Panel padding | 28px desktop, 22px mobile |
-| Breakpoints | `md: 760px`, `lg: 1050px` — matched to the prototype, **not** Tailwind's stock 768/1024 |
+| Breakpoints | `md: 760px`, `lg: 1050px` — matched to the prototype, **not** Tailwind's stock 768/1024. `sm`, `xl` and `2xl` are untouched, so `xl` is still 1280; the topbar is the only thing that uses it. |
 
 ### Form
 
@@ -149,7 +174,61 @@ claiming a section conforms.
 
 ---
 
-## 3. The section contract
+## 3. The shell
+
+Navigation is the one thing on the page that is not a section, and it is where
+the terminal register is stated most plainly. It exists at three resolutions of
+the *same* twelve-item list — never as three competing navigations.
+
+| Where | Renders | Carries |
+|---|---|---|
+| Rail, `md`+ | Twelve ticks, no text | **Position.** The active tick is a reading on a scale. |
+| Topbar, `md`+ | Five text groups | **Destination.** The group being read carries a lime `>` caret. |
+| Mobile bar, `<md` | Twelve rows in a sheet | Both. A sheet has room for the real list, so groups are not used. |
+
+All three read `src/content/sections.ts`. The rail and the sheet map `SECTIONS`
+directly; the topbar maps `NAV_GROUPS`, whose members are typed `SectionId`, so
+a renamed section fails the build instead of shipping a link that scrolls
+nowhere. There is no second nav list anywhere in the tree — if you find yourself
+writing one, you are about to let the two drift apart.
+
+`home` and `contact` belong to no group on purpose: the logo is the way back to
+one and the CTA is the way to twelve. While either owns the viewport the topbar
+shows **no** caret — the same rest state the rail takes before any section owns
+the viewport. Do not invent an active state for the hero to fill the gap; a
+prompt with nothing at it is a truthful reading.
+
+### The prompt
+
+Two constructs carry the prompt syntax, and they are the only two on the page:
+
+| Construct | Where | Rule |
+|---|---|---|
+| `>` caret | The active topbar group | Lime. **Always rendered**, faded to `opacity-0` when inactive — taking it out of the flow would shift the whole row sideways every time the reading moves. |
+| `gamegabyte:~$` | In front of the status readout | `white/30`, so it frames the status rather than competing with it. Chrome, not a claim: it asserts nothing measurable. |
+
+Everything else in the shell does its ordinary job — mono labels, indices,
+hairlines. That restraint is what keeps the voice from tipping into costume; see
+[The register is a terminal](#the-register-is-a-terminal).
+
+### How the topbar collapses
+
+Things go in the order they can be spared. Measured on the running page:
+
+| Width | State |
+|---|---|
+| `< md` (760) | The whole bar goes. `MobileCommandBar` takes over with twelve rows. |
+| `md` – `lg` | Nav spacing and CTA padding tighten (`pl-6` / `pr-4` / `px-6`). At 760 — the narrowest the bar ever renders — this leaves **127px** between the last group and the CTA. |
+| `lg` – `xl` | Spacing relaxes to `pl-11` / `pr-7` / `px-11`. |
+| `xl` (1280) + | The status readout appears. It is the only decorative element in the bar, so it is first to go and last to return. |
+
+The bar is 72px at every width and the five groups never wrap. `npm run qa`
+covers 1440 and 390 only, so the 760–1280 band is verified by hand — measure it
+before adding anything to the bar.
+
+---
+
+## 4. The section contract
 
 Every section except the hero **must** open with `SectionHeader`:
 
@@ -212,7 +291,7 @@ variant that fills the middle.
 
 ---
 
-## 4. Truth rule
+## 5. Truth rule
 
 **No fabricated metrics ship.** The prototype invented telemetry to sell the
 look — `CAMPAIGN READINESS 87%`, `BUILD 24.08`, `DOSSIER UNLOCKED`. None of it
@@ -236,7 +315,7 @@ to *assert* telemetry that nobody measured.
 
 ---
 
-## 5. Traps
+## 6. Traps
 
 Three failure modes have already cost real time on this design. All three are
 invisible to `tsc` and to a passing build.
@@ -271,7 +350,7 @@ Always `aspect-[16/9]` (or `4/5`, `16/10`) with `object-cover`.
 
 ---
 
-## 6. Known deviations
+## 7. Known deviations
 
 Honest ledger of where the code does not yet match the rules above.
 
@@ -281,20 +360,21 @@ twelve** sections.
 
 | Where | Deviation | Verdict |
 |---|---|---|
-| `home` | Eyebrow and heading at x=140, heading 104px, outside the `SectionHeader` grid | **Intentional** as a layout — the hero is the only full-bleed section. **But its left edge does not match the rest of the page**, and the mismatch grows with the viewport: 14px at 1440, 221px at 1853, 574px at 2560, because the hero is pinned to the rail while every section sits in a centred 1320px measure. Unresolved; see below. |
+| `home` | Heading 104px against the sections' 84px, and a split two-column layout instead of a stacked header | **Intentional and permanent.** The hero is the only section that must pitch and establish the instrument at once; it earns a different rhythm. Its **left edge now matches** every other section. |
 
-**The open question.** Two ways to close that gap, both measured in
-`prototypes/section-header-alignment/`:
+**Resolved: one left edge.** The hero is full-bleed off the rail while sections
+used to sit in a centred 1320px measure, so the two drifted apart as the screen
+widened — 14px at 1440, 221px at 1853, 574px at 2560. Three fixes were measured
+in `prototypes/section-header-alignment/`:
 
-| Fix | 1440 | 1853 | 2560 |
-|---|---|---|---|
-| Hero joins the measure | both at 154 | both at 361 | both at 714 |
-| Sections drop the measure | both at 140 | both at 140 | both at 140 |
+| Fix | Edges match | Dead space right @2560 |
+|---|---|---|
+| Hero joins the measure | yes | 574px, and the whole page drifts right |
+| Sections keep the cap, pinned left | yes | 1148px |
+| **Sections drop the cap** | **yes, at every width** | **none** |
 
-The first matches the edges but lets the whole page drift rightwards on a wide
-monitor. The second keeps everything hard left at any width, which is what the
-rest of this document argues for — but it removes the reading measure from
-`Container`, which every section shares.
+The last one shipped. Verified: all twelve headings share one left edge at 390,
+760, 1050, 1440, 1853 and 2560px, with no horizontal overflow.
 
 That is the whole list. An earlier revision of this document also flagged the
 empty middle of the `testimonials` meta column as unresolved. Reviewed against
@@ -318,7 +398,7 @@ difference between a page that is consistent and a page that is merely finished.
 
 ---
 
-## 7. Verifying
+## 8. Verifying
 
 ```bash
 npm run qa      # 73 checks: structure, clipping at 390 and 1440, interaction, reduced motion
