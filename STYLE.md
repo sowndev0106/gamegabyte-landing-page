@@ -273,21 +273,26 @@ Every section except the hero **must** be built with `SectionSplit`:
 rather than above it, and stays sticky so a tall body cannot scroll its own
 title out of view.
 
-**The 38/62 split is set by the type, not by taste.** At the heading's 60px the
-widest unbreakable line on the page — `CAPABILITIES.` — measures 418px.
-Measured at 1440:
+**The 30/70 split and the heading size are one decision.** The widest
+unbreakable line on the page is `CAPABILITIES.` — 418px at 60px type, 359px at
+52px. The heading is `clamp(30px, 3.3vw, 52px)`; a 30% column is 376px at 1440.
 
-| Split | Heading column | 60px | 48px | 40px |
-|---|---|---|---|---|
-| 25 / 75 | 313px | 3 headings clip | 1 clips | fits |
-| 33 / 67 | 413px | 1 clips | fits | fits |
-| **38 / 62** | **476px** | **fits** | fits | fits |
-| 45 / 55 | 563px | fits | fits | fits |
+The `vw` term matters more than the cap, and this is the subtle part: between
+the split turning on at 1050px and the cap biting, the heading grows with the
+viewport at roughly the same rate as its column. Too steep a slope therefore
+clips at **every** width in that band, not at one. `3.6vw` clipped from 1050 all
+the way to ~1428; `3.3vw` clears the whole range:
 
-Narrowing the heading column means shrinking the heading with it — never one
-without the other. Re-measure when copy changes: a longer word moves that 418px.
-`prototypes/section-split/` outlines any heading that will not fit its column
-and counts them, so the check takes a click.
+| Width | 1050 | 1120 | 1280 | 1440 | 1600 | 2560 |
+|---|---|---|---|---|---|---|
+| Heading | 35px | 37px | 42px | 48px | 52px | 52px |
+| Column | 259 | 280 | 328 | 376 | 424 | 712 |
+| Widest line | 242 | 255 | 292 | 329 | 359 | 359 |
+
+Never change the ratio without re-deriving the slope, and re-measure when copy
+changes — a longer word moves that 418px. `prototypes/section-split/` outlines
+any heading that will not fit its column and counts them, so the check is a
+click.
 
 The content column carries `min-w-0`. Without it a wide child — the dossier
 rail, a long table row — pushes the track past its share and the split silently
