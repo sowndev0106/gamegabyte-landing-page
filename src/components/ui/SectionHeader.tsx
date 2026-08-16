@@ -42,7 +42,9 @@ export function SectionHeader({
             </span>{' '}
             {eyebrow}
           </p>
-          <h2 className="mt-5 font-display text-[clamp(38px,6vw,84px)] font-extrabold uppercase leading-[0.86] tracking-tighter text-white">
+          {/* Down from clamp(38px,6vw,84px). At 84 the heading was the loudest
+              thing on every screen and left no room to move into a column. */}
+          <h2 className="mt-5 font-display text-[clamp(30px,4.2vw,60px)] font-extrabold uppercase leading-[0.9] tracking-tighter text-white">
             {title}
           </h2>
         </div>
