@@ -270,6 +270,31 @@ that feels awkward. The heading size is the same in both: a stacked section has
 room for a larger one, but two heading sizes on one page read as two levels of
 importance that do not exist.
 
+### The one exception: the project page
+
+`/work/<slug>/` uses a **mirrored split** — work on the left at 70%, a sticky
+metadata rail on the right at 30%. It is the only place on the site where the
+sidehead sits on the right, and it is a page rather than a section, so the
+two-arrangements rule above is untouched.
+
+The reversal is the whole point: a section's title is a label for the system
+beside it, so it leads. A project page's reader came for the work, so the work
+takes the reading position and everything said about it moves to the margin.
+Below `lg` the rail is first in the DOM and first on screen — nobody should
+scroll fifteen images before learning what they are looking at.
+
+The **ratio is deliberately the same 30%**, and the `h1` reuses the section
+heading's `clamp(30px,3.3vw,52px)`. Both are already derived against a 376px
+column (see `SectionSplit`); a second ratio or a second slope would read as a
+second system rather than the same one turned around.
+
+One trap, since it costs an afternoon each time: **`overflow` of anything but
+`visible` on any ancestor silently kills `position: sticky` in every
+descendant.** The rail's container carries an absolutely-positioned backdrop and
+looks like it wants `overflow-hidden`; it must not have it. `inset-x-0` on the
+backdrop is what actually holds it. A sticky grid item also needs `self-start`,
+or it stretches to the row height and has nothing left to stick within.
+
 ```tsx
 
 <Section id="services" grid>
