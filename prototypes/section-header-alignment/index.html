@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Section header alignment — A / B / C</title>
+    <title>Section header alignment — A / B / C / D</title>
     <style>
       @font-face {
         font-family: 'Schibsted Grotesk';
@@ -28,6 +28,8 @@
         --rail: 92px;
         --pad: 48px;
         --measure: 1320px;
+        --margin: 88px;
+        --margin-gap: 24px;
       }
 
       * { box-sizing: border-box; }
@@ -135,6 +137,22 @@
         margin: 0 auto;
       }
 
+      /*
+        Two ways to make the two left edges agree, and they diverge sharply as
+        the viewport grows:
+
+          hero-measured    the hero joins the centred 1320px measure. Both edges
+                           match, but both drift rightwards on a wide monitor.
+          sections-bleed   the sections drop the measure and pin to the rail, as
+                           the hero already does. Both edges match and both stay
+                           hard left at every width.
+
+        Measured on the live page before this prototype existed: the gap between
+        the two edges is 14px at 1440 but 574px at 2560, because the hero is
+        pinned while the sections are centred.
+      */
+      body.sections-bleed .container { max-width: none; }
+
       .hero h1 {
         margin: 22px 0 0;
         font: 780 clamp(64px, 7.2vw, 104px) / 0.82 var(--display);
@@ -202,6 +220,29 @@
       body[data-variant='C'] .head h2 { margin: 20px 0 0; }
       body[data-variant='C'] .head .desc { margin: 0 0 8px; }
 
+      /* D — B's stacking, but the number hangs in a narrow margin so the block
+         keeps a left indent, far smaller than A's 288px. Only `[04]` sits in the
+         margin; the words move up beside the heading, which is what lets the
+         column be narrow in the first place. */
+      body[data-variant='D'] .head {
+        grid-template-columns: var(--margin) minmax(0, 1fr);
+        gap: 0 var(--margin-gap);
+        align-items: start;
+      }
+      body[data-variant='D'] .head .marker { grid-row: 1 / span 3; }
+      body[data-variant='D'] .head .stack { display: contents; }
+      body[data-variant='D'] .head h2 { margin: 6px 0 0; }
+      body[data-variant='D'] .head .desc { margin: 22px 0 0; max-width: 36rem; }
+      body:not([data-variant='D']) .head .marker { display: none; }
+      body[data-variant='D'] .head .eyebrow i { display: none; }
+
+      .head .marker {
+        margin: 0;
+        color: rgb(255 255 255 / 0.45);
+        font: 11px/1.5 var(--mono);
+        letter-spacing: 0.22em;
+      }
+
       .head h2 {
         font: 800 clamp(38px, 6vw, 84px) / 0.86 var(--display);
         letter-spacing: -0.05em;
@@ -262,7 +303,7 @@
 
     <div class="shell">
       <p class="note">
-        Prototype only / section header alignment — press A, B, C or use the switch. G toggles the guides.
+        Prototype only / section header alignment — A B C D · M hero on measure · F sections full-bleed · G guides<br /><b id="readout" style="color: var(--accent); font-weight: 400"></b>
       </p>
 
       <!-- HERO — the flush-left benchmark every section is measured against -->
@@ -290,6 +331,7 @@
       <section class="section">
         <div class="container">
           <div class="head">
+            <p class="marker" aria-hidden="true">[04]</p>
             <div class="stack">
               <p class="eyebrow"><i>[04]</i> Systems matrix</p>
               <h2>One network.<br />Six capabilities.</h2>
@@ -316,6 +358,7 @@
       <section class="section">
         <div class="container">
           <div class="head">
+            <p class="marker" aria-hidden="true">[03]</p>
             <div class="stack">
               <p class="eyebrow"><i>[03]</i> Studio telemetry</p>
               <h2>Growing with game studios worldwide</h2>
@@ -358,6 +401,7 @@
       <section class="section">
         <div class="container">
           <div class="head">
+            <p class="marker" aria-hidden="true">[09]</p>
             <div class="stack">
               <p class="eyebrow"><i>[09]</i> Communication logs</p>
               <h2>Trusted by game teams.</h2>
@@ -383,7 +427,9 @@
       <button type="button" data-set="A" aria-pressed="false">A · hanging</button>
       <button type="button" data-set="B" aria-pressed="false">B · stacked</button>
       <button type="button" data-set="C" aria-pressed="true">C · sentence right</button>
+      <button type="button" data-set="D" aria-pressed="false">D · hung number</button>
       <button type="button" data-measure aria-pressed="false">Hero on measure</button>
+      <button type="button" data-bleed aria-pressed="false">Sections full-bleed</button>
       <button type="button" data-guides aria-pressed="true">Guides</button>
     </div>
 
@@ -403,8 +449,14 @@
       function placeGuides() {
         const head = document.querySelector('.head h2')
         const hero = document.querySelector('.hero h1')
-        if (head) document.getElementById('g-section').style.left = `${head.getBoundingClientRect().x}px`
-        if (hero) document.getElementById('g-hero').style.left = `${hero.getBoundingClientRect().x}px`
+        if (!head || !hero) return
+        const sx = head.getBoundingClientRect().x
+        const hx = hero.getBoundingClientRect().x
+        document.getElementById('g-section').style.left = `${sx}px`
+        document.getElementById('g-hero').style.left = `${hx}px`
+        const gap = Math.round(sx - hx)
+        document.getElementById('readout').textContent =
+          gap === 0 ? 'edges match · gap 0px' : `gap ${gap}px · hero ${Math.round(hx)} / section ${Math.round(sx)}`
       }
 
       for (const b of document.querySelectorAll('[data-set]')) {
@@ -415,15 +467,21 @@
         e.currentTarget.setAttribute('aria-pressed', String(on))
         placeGuides()
       })
+      document.querySelector('[data-bleed]').addEventListener('click', (e) => {
+        const on = body.classList.toggle('sections-bleed')
+        e.currentTarget.setAttribute('aria-pressed', String(on))
+        placeGuides()
+      })
       document.querySelector('[data-guides]').addEventListener('click', (e) => {
         const on = body.classList.toggle('show-guides')
         e.currentTarget.setAttribute('aria-pressed', String(on))
       })
       addEventListener('keydown', (e) => {
         const k = e.key.toUpperCase()
-        if (['A', 'B', 'C'].includes(k)) setVariant(k)
+        if (['A', 'B', 'C', 'D'].includes(k)) setVariant(k)
         if (k === 'G') document.querySelector('[data-guides]').click()
         if (k === 'M') document.querySelector('[data-measure]').click()
+        if (k === 'F') document.querySelector('[data-bleed]').click()
       })
       addEventListener('resize', placeGuides)
       addEventListener('scroll', placeGuides, { passive: true })
