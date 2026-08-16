@@ -23,39 +23,6 @@
   --font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
 }
 
-/*
- * HUD surface language. One card recipe for the whole page: near-flat dark
- * surface, hairline border, accent border + glow on hover.
- */
-@utility hud-surface {
-  background-color: rgb(255 255 255 / 0.028);
-  border: 1px solid rgb(255 255 255 / 0.09);
-  transition: border-color 200ms ease, background-color 200ms ease, box-shadow 200ms ease;
-}
-
-@utility hud-surface-interactive {
-  &:hover {
-    background-color: rgb(255 255 255 / 0.05);
-    border-color: rgb(182 232 2 / 0.45);
-    box-shadow: 0 0 0 1px rgb(182 232 2 / 0.12), 0 18px 40px -24px rgb(182 232 2 / 0.5);
-  }
-}
-
-/*
- * Character-portrait plate: a fine grid with accent light pooling at the feet,
- * so a sprite reads as standing on a stage rather than floating on a panel.
- */
-@utility hud-portrait {
-  background-image:
-    radial-gradient(120% 100% at 50% 100%, rgb(182 232 2 / 0.1), transparent 62%),
-    linear-gradient(rgb(255 255 255 / 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgb(255 255 255 / 0.035) 1px, transparent 1px);
-  background-size:
-    100% 100%,
-    100% 22px,
-    22px 100%;
-}
-
 /* Faint technical grid, used instead of flat colour slabs to separate sections. */
 @utility hud-grid {
   background-image:
@@ -120,34 +87,7 @@ textarea {
   font: inherit;
 }
 
-.pointer-glow {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-}
-
-.pointer-glow::before {
-  position: absolute;
-  z-index: 0;
-  inset: 0;
-  background: radial-gradient(
-    320px circle at var(--pointer-x, -400px) var(--pointer-y, -400px),
-    rgb(182 232 2 / 0.12),
-    transparent 58%
-  );
-  content: "";
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 250ms ease;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .pointer-glow:hover::before {
-    opacity: 1;
-  }
-}
-
-/* Fixed header is 5rem tall; keep anchor targets clear of it. */
+/* The command topbar is 4.5rem tall; keep anchor targets clear of it. */
 :is(section, footer, div)[id] {
   scroll-margin-top: 6rem;
 }

@@ -4,6 +4,7 @@ import { Reveal } from '../components/motion/Reveal'
 import { Container } from '../components/ui/Container'
 import { Section } from '../components/ui/Section'
 import { SectionHeader } from '../components/ui/SectionHeader'
+import { CornerTicks } from '../components/ui/CornerTicks'
 import { TrustBar } from './TrustBar'
 
 export function Showreel() {
@@ -16,14 +17,7 @@ export function Showreel() {
           {/* Ticks at opposite corners frame the player as a monitored feed
               rather than a plain embed. */}
           <div className="relative border border-white/11 p-3.5 md:p-5">
-            <span
-              aria-hidden="true"
-              className="absolute -top-px -left-px h-6 w-6 border-t-2 border-l-2 border-accent"
-            />
-            <span
-              aria-hidden="true"
-              className="absolute -right-px -bottom-px h-6 w-6 border-r-2 border-b-2 border-accent"
-            />
+            <CornerTicks size="h-6 w-6" corners="diagonal" />
             <LazyVideo
               src={content.reel.src}
               poster={assets.reelPoster}
