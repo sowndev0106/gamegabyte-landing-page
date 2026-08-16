@@ -171,6 +171,23 @@ Measured result of that contract at 1440: eyebrow at **x=154**, heading at
 **x=442**, heading **84px**, in eleven of twelve sections. That alignment is the
 page's spine. Do not break it to make one section look better.
 
+### The pinned-panel pattern
+
+Three sections use the same construct and it is deliberate: a tall panel with a
+mono label pinned to the **top** edge, a status or figure pinned to the
+**bottom** edge, and the space between left empty.
+
+| Section | Top | Bottom |
+|---|---|---|
+| `telemetry` | `STUDIO SIGNAL / ACTIVE` | the `25+` readout |
+| `case-study` | `CLIENT / SEEDIFY` and the title | `09 RECORDS` |
+| `testimonials` | `LOG 01 / HUMAN INTELLIGENCE` | the client's name |
+
+The void is the point — a gauge reads as an instrument because its markings sit
+at the edges of the housing, not because the housing is full. Do not "fix" these
+by centring the contents or shrinking the panel, and do not introduce a fourth
+variant that fills the middle.
+
 ### Checklist for any new or edited section
 
 1. `id` is in `src/content/sections.ts` and typed as `SectionId`.
@@ -258,7 +275,11 @@ twelve** sections.
 | Where | Deviation | Verdict |
 |---|---|---|
 | `home` | Eyebrow and heading at x=140, heading 104px, outside the `SectionHeader` grid | **Intentional and permanent.** The hero is the only full-bleed section; it opens the page rather than taking a place in the sequence. |
-| `testimonials` | Meta column has ~350px of empty space between its top and bottom labels at desktop | **Open.** Reads as unresolved rather than instrumental; wants a middle element or a shorter column. |
+
+That is the whole list. An earlier revision of this document also flagged the
+empty middle of the `testimonials` meta column as unresolved. Reviewed against
+`telemetry` and `case-study`, it is the third instance of one deliberate
+construct, not a loose end — see [the pinned-panel pattern](#the-pinned-panel-pattern).
 
 ### Resolved
 
