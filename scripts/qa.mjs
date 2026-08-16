@@ -111,6 +111,11 @@ for (const viewport of VIEWPORTS) {
     await page.waitForTimeout(300)
   }
 
+  check(
+    `${viewport.label}: six service cells`,
+    (await page.locator('#services [data-service-cell]').count()) === 6,
+  )
+
   const readouts = await page.locator('#telemetry [data-readout-value]').allTextContents()
   check(`${viewport.label}: four telemetry readouts`, readouts.length === 4, readouts.join(','))
 

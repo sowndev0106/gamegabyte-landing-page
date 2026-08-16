@@ -64,52 +64,6 @@
   background-size: 72px 72px;
 }
 
-/* Variant A uses a tighter, fully visible technical grid behind Services. */
-.services-grid-background > .hud-grid {
-  background-size: 56px 56px;
-  opacity: 1;
-}
-
-.services-card-grid > * {
-  border-bottom: 1px solid rgb(255 255 255 / 0.09);
-}
-
-@media (min-width: 640px) {
-  .services-card-grid > * {
-    border-right: 1px solid rgb(255 255 255 / 0.09);
-  }
-
-  .services-card-grid > :nth-child(2n) {
-    border-right: 0;
-  }
-}
-
-@media (min-width: 1024px) {
-  .services-card-grid > :nth-child(2n) {
-    border-right: 1px solid rgb(255 255 255 / 0.09);
-  }
-
-  .services-card-grid > :nth-child(3n) {
-    border-right: 0;
-  }
-
-  .services-card-grid > :nth-last-child(-n + 3) {
-    border-bottom: 0;
-  }
-}
-
-@media (min-width: 640px) and (max-width: 1023px) {
-  .services-card-grid > :nth-last-child(-n + 2) {
-    border-bottom: 0;
-  }
-}
-
-@media (max-width: 639px) {
-  .services-card-grid > :last-child {
-    border-bottom: 0;
-  }
-}
-
 /* The one live signal on the page. Utilities cannot express a keyframe, so it
    stays here; the global reduced-motion block below disables it. */
 .command-status-dot {

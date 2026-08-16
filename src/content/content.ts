@@ -81,14 +81,21 @@ export const content = {
     { value: '100%', label: 'Design-Led Production', note: 'No templates. No shortcuts.' },
     { value: '2024', label: 'Studio Founded', note: 'Built for long-term collaboration' },
   ],
+  // `kind` names the axis each discipline sits on in the systems matrix.
   services: [
-    { title: 'Game Landing Pages', body: 'High-impact campaign pages built around discovery and conversion.' },
-    { title: 'UI/UX Design', body: 'Player-focused interfaces shaped around your game identity.' },
-    { title: 'Marketing Systems', body: 'Connected analytics and campaign experiences for launch.' },
-    { title: 'Development', body: 'Fast, accessible production tuned for every device.' },
-    { title: 'Responsive Design', body: 'Immersive layouts with thoughtful mobile behavior.' },
-    { title: 'Community Features', body: 'Systems that turn an audience into an active player base.' },
+    { kind: 'Web', title: 'Game Landing Pages', body: 'High-impact campaign pages built around discovery and conversion.' },
+    { kind: 'Product', title: 'UI/UX Design', body: 'Player-focused interfaces shaped around your game identity.' },
+    { kind: 'Data', title: 'Marketing Systems', body: 'Connected analytics and campaign experiences for launch.' },
+    { kind: 'Code', title: 'Development', body: 'Fast, accessible production tuned for every device.' },
+    { kind: 'Device', title: 'Responsive Design', body: 'Immersive layouts with thoughtful mobile behavior.' },
+    { kind: 'Players', title: 'Community Features', body: 'Systems that turn an audience into an active player base.' },
   ],
+  systemsMatrix: {
+    title: ['One network.', 'Six capabilities.'],
+    intro: 'Six disciplines in one launch system. Technical detail stays compact and supports the work.',
+    inputKey: 'Input / Discipline',
+    outputKey: 'Output / Growth',
+  },
   technology: [
     { title: 'Documentation', body: 'Shared project intelligence' },
     { title: 'Design', body: 'Rapid prototype loops' },
