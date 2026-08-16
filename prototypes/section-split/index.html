@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Section split — heading left, content right</title>
+    <style>
+      @font-face {
+        font-family: 'Schibsted Grotesk';
+        src: url('/fonts/SchibstedGrotesk_wght__1/SchibstedGrotesk_wght__1-english.woff2') format('woff2');
+        font-weight: 400 700;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: 'Roboto';
+        src: url('/fonts/Roboto_wdth_wght__2/Roboto_wdth_wght__2-english.woff2') format('woff2');
+        font-weight: 400 500;
+        font-display: swap;
+      }
+
+      :root {
+        --ink: #05050c;
+        --accent: #b6e802;
+        --bright: #d4ff00;
+        --line: rgb(255 255 255 / 0.11);
+        --display: 'Schibsted Grotesk', system-ui, sans-serif;
+        --sans: Roboto, system-ui, sans-serif;
+        --mono: ui-monospace, SFMono-Regular, Consolas, monospace;
+        --rail: 92px;
+        --pad: 48px;
+        --topbar: 72px;
+
+        /* the two knobs under test */
+        --split: 38%;
+        --h2: 60px;
+      }
+
+      * { box-sizing: border-box; }
+      figure, blockquote { margin: 0; }
+      body { margin: 0; background: var(--ink); color: #e7e7ee; font-family: var(--sans); }
+
+      .rail { position: fixed; inset: 0 auto 0 0; z-index: 40; width: var(--rail); border-right: 1px solid var(--line); background: rgb(5 5 12 / 0.95); }
+      .topbar { position: fixed; z-index: 30; inset: 0 0 auto var(--rail); display: flex; height: var(--topbar); align-items: center; padding: 0 var(--pad); border-bottom: 1px solid var(--line); background: rgb(5 5 12 / 0.9); backdrop-filter: blur(12px); }
+      .topbar span { color: rgb(255 255 255 / 0.7); font: 9px/1 var(--mono); letter-spacing: 0.22em; text-transform: uppercase; }
+      .shell { margin-left: var(--rail); padding-top: var(--topbar); }
+      .gutter { width: 100%; padding: 0 var(--pad); }
+
+      /* ── the pattern under test ───────────────────────────────
+         A sidehead: the section title sits in a column beside its
+         content rather than above it. Sticky so the title holds
+         station while a tall body scrolls past. */
+      .section { padding: 112px 0; border-bottom: 1px solid var(--line); }
+      .split {
+        display: grid;
+        grid-template-columns: var(--split) minmax(0, 1fr);
+        gap: 56px;
+        align-items: start;
+      }
+      body.sticky .split > .side {
+        position: sticky;
+        top: calc(var(--topbar) + 40px);
+      }
+
+      .eyebrow { margin: 0; color: var(--accent); font: 11px/1.5 var(--mono); letter-spacing: 0.22em; text-transform: uppercase; }
+      .eyebrow i { color: rgb(255 255 255 / 0.45); font-style: normal; }
+      .side h2 {
+        margin: 18px 0 0;
+        font-family: var(--display);
+        font-size: var(--h2);
+        font-weight: 800;
+        line-height: 0.9;
+        letter-spacing: -0.05em;
+        text-transform: uppercase;
+        color: #fff;
+      }
+      .side .desc { margin: 22px 0 0; color: rgb(255 255 255 / 0.7); font-size: 16px; line-height: 1.65; }
+      .side .cta { display: inline-flex; min-height: 48px; align-items: center; gap: 8px; margin-top: 28px; padding: 0 22px; border: 1px solid var(--line); color: inherit; font: 9px/1 var(--mono); letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none; }
+
+      /* overflow warning — turns red when the heading cannot fit its column */
+      .side h2.tight { outline: 1px solid rgb(255 92 92 / 0.9); outline-offset: 6px; }
+
+      .mono-label { font: 9px/1 var(--mono); letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); }
+
+      /* matrix */
+      .matrix { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
+      .matrix article { min-height: 190px; padding: 24px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+      .matrix h3 { margin: 38px 0 8px; font: 700 22px/1.1 var(--display); }
+      .matrix p { margin: 0; color: rgb(255 255 255 / 0.7); line-height: 1.55; }
+
+      /* archive */
+      .archive { display: grid; grid-template-columns: 1.2fr 0.8fr; grid-template-rows: 240px 240px; gap: 14px; }
+      .archive a { position: relative; overflow: hidden; border: 1px solid var(--line); text-decoration: none; color: inherit; }
+      .archive a:first-child { grid-row: 1 / 3; }
+      .archive img { width: 100%; height: 100%; object-fit: cover; filter: saturate(0.75); }
+      .archive .label { position: absolute; inset: auto 0 0; padding: 48px 20px 20px; background: linear-gradient(transparent, rgb(3 2 19 / 0.96)); }
+      .archive h3 { margin: 8px 0 0; font: 700 22px/1 var(--display); }
+
+      /* log */
+      .log { display: grid; grid-template-columns: minmax(0, 200px) minmax(0, 1fr); border: 1px solid var(--line); }
+      .log .meta { display: flex; flex-direction: column; justify-content: space-between; min-height: 260px; padding: 24px; border-right: 1px solid var(--line); }
+      .log blockquote { padding: 40px; font: 700 clamp(22px, 2.4vw, 34px) / 1.12 var(--display); color: #fff; }
+
+      /* readouts */
+      .board { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
+      .board article { padding: 28px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+      .board .value { display: block; margin: 14px 0 0; color: var(--bright); font: 700 clamp(40px, 4vw, 60px) / 0.84 var(--display); letter-spacing: -0.055em; }
+      .board .stat { margin: 16px 0 0; font: 700 13px/1.35 var(--display); letter-spacing: 0.13em; text-transform: uppercase; }
+
+      @media (max-width: 1050px) {
+        .split { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+        body.sticky .split > .side { position: static; }
+        .matrix, .board { grid-template-columns: minmax(0, 1fr); }
+        .archive { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto; }
+        .archive a:first-child { grid-row: auto; }
+        .log { grid-template-columns: minmax(0, 1fr); }
+      }
+
+      .switch { position: fixed; z-index: 70; right: 18px; bottom: 18px; display: flex; flex-wrap: wrap; gap: 8px; max-width: 620px; padding: 10px; border: 1px solid var(--line); background: rgb(5 5 12 / 0.96); backdrop-filter: blur(12px); }
+      .switch button { min-height: 36px; padding: 0 12px; border: 1px solid var(--line); background: transparent; color: inherit; font: 9px/1 var(--mono); letter-spacing: 0.14em; text-transform: uppercase; cursor: pointer; }
+      .switch button[aria-pressed='true'] { border-color: var(--accent); background: var(--accent); color: var(--ink); }
+      .readout { position: fixed; z-index: 70; left: calc(var(--rail) + 18px); bottom: 18px; padding: 10px 14px; border: 1px solid var(--line); background: rgb(5 5 12 / 0.96); color: var(--accent); font: 9px/1.6 var(--mono); letter-spacing: 0.14em; text-transform: uppercase; }
+    </style>
+  </head>
+
+  <body class="sticky">
+    <aside class="rail" aria-hidden="true"></aside>
+    <header class="topbar"><span>Prototype only / section split — heading left, content right</span></header>
+
+    <div class="shell">
+      <!-- 04 · matrix: the densest body on the page -->
+      <section class="section">
+        <div class="gutter split">
+          <div class="side">
+            <p class="eyebrow"><i>[04]</i> Systems matrix</p>
+            <h2>One network.<br />Six capabilities.</h2>
+            <p class="desc">Six disciplines in one launch system. Technical detail stays compact and supports the work.</p>
+            <a class="cta" href="#">Open channel ↗</a>
+          </div>
+          <div class="matrix">
+            <article><span class="mono-label">01 / Web</span><h3>Game Landing Pages</h3><p>High-impact campaign pages built around discovery and conversion.</p></article>
+            <article><span class="mono-label">02 / Product</span><h3>UI/UX Design</h3><p>Player-focused interfaces shaped around your game identity.</p></article>
+            <article><span class="mono-label">03 / Data</span><h3>Marketing Systems</h3><p>Connected analytics and campaign experiences for launch.</p></article>
+            <article><span class="mono-label">04 / Code</span><h3>Development</h3><p>Fast, accessible production tuned for every device.</p></article>
+            <article><span class="mono-label">05 / Device</span><h3>Responsive Design</h3><p>Immersive layouts with thoughtful mobile behavior.</p></article>
+            <article><span class="mono-label">06 / Players</span><h3>Community Features</h3><p>Systems that turn an audience into an active player base.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <!-- 03 · telemetry: the longest heading on the page -->
+      <section class="section">
+        <div class="gutter split">
+          <div class="side">
+            <p class="eyebrow"><i>[03]</i> Studio telemetry</p>
+            <h2>Growing with game studios worldwide</h2>
+            <p class="desc">Delivering focused impact for game teams.</p>
+          </div>
+          <div class="board">
+            <article><span class="mono-label">01 / Volume</span><strong class="value">25+</strong><p class="stat">Studio Projects</p></article>
+            <article><span class="mono-label">02 / Experience</span><strong class="value">5+</strong><p class="stat">Years in the Game Industry</p></article>
+            <article><span class="mono-label">03 / Method</span><strong class="value">100%</strong><p class="stat">Design-Led Production</p></article>
+            <article><span class="mono-label">04 / Origin</span><strong class="value">2024</strong><p class="stat">Studio Founded</p></article>
+          </div>
+        </div>
+      </section>
+
+      <!-- 07 · archive: an image body, where a narrow side column costs the most -->
+      <section class="section">
+        <div class="gutter split">
+          <div class="side">
+            <p class="eyebrow"><i>[07]</i> Archive / 03 files</p>
+            <h2>Project showcase</h2>
+            <p class="desc">Explore the game marketing websites we've created for game developers worldwide.</p>
+          </div>
+          <div class="archive">
+            <a href="#"><img src="/assets/img/portfolio/combat-magic-scene.webp" alt="" /><span class="label"><span class="mono-label">01 / UI-UX</span><h3>RPG Fantasy Quest</h3></span></a>
+            <a href="#"><img src="/assets/img/portfolio/fantasy-character-art.webp" alt="" /><span class="label"><span class="mono-label">02 / Frontend</span><h3>Fantasy Character Campaign</h3></span></a>
+            <a href="#"><img src="/assets/img/portfolio/beyond-the-keep-menu.webp" alt="" /><span class="label"><span class="mono-label">03 / Backend</span><h3>Beyond The Keep</h3></span></a>
+          </div>
+        </div>
+      </section>
+
+      <!-- 09 · log: a short body, where the side column risks looking empty -->
+      <section class="section">
+        <div class="gutter split">
+          <div class="side">
+            <p class="eyebrow"><i>[09]</i> Communication logs</p>
+            <h2>Trusted by game teams.</h2>
+            <p class="desc">Incoming studio transmission / verified partner record.</p>
+          </div>
+          <figure class="log">
+            <div class="meta">
+              <span class="mono-label">Log 01 / Human intelligence</span>
+              <span class="mono-label" style="color: rgb(255 255 255 / 0.6)">Apples to Oranges</span>
+            </div>
+            <blockquote>“We're not just another agency. We're strategic partners helping your game succeed in the fiercely competitive market.”</blockquote>
+          </figure>
+        </div>
+      </section>
+    </div>
+
+    <p class="readout" id="readout"></p>
+
+    <div class="switch" role="group" aria-label="Split controls">
+      <button type="button" data-split="25%">25 / 75</button>
+      <button type="button" data-split="33%">33 / 67</button>
+      <button type="button" data-split="38%" aria-pressed="true">38 / 62</button>
+      <button type="button" data-split="45%">45 / 55</button>
+      <button type="button" data-h2="60px" aria-pressed="true">H2 60</button>
+      <button type="button" data-h2="48px">H2 48</button>
+      <button type="button" data-h2="40px">H2 40</button>
+      <button type="button" data-sticky aria-pressed="true">Sticky</button>
+    </div>
+
+    <script>
+      const root = document.documentElement
+      const body = document.body
+
+      function press(attr, value) {
+        for (const b of document.querySelectorAll(`[data-${attr}]`)) {
+          b.setAttribute('aria-pressed', String(b.dataset[attr] === value))
+        }
+      }
+
+      // A heading wider than its own column is the failure this prototype exists
+      // to catch, so it is measured rather than eyeballed.
+      function audit() {
+        let worst = 0
+        let overflowing = 0
+        for (const h of document.querySelectorAll('.side h2')) {
+          const col = h.parentElement.getBoundingClientRect().width
+          // The probe must live inside the same parent, or it drops out of the
+          // `.side h2` selector and silently measures the browser default size.
+          const probe = h.cloneNode(true)
+          probe.style.cssText = 'position:absolute;visibility:hidden;left:-9999px;width:min-content'
+          h.parentElement.appendChild(probe)
+          const need = Math.ceil(probe.getBoundingClientRect().width)
+          probe.remove()
+          const tight = need > col
+          h.classList.toggle('tight', tight)
+          if (tight) overflowing++
+          worst = Math.max(worst, need)
+        }
+        const col = Math.round(document.querySelector('.side').getBoundingClientRect().width)
+        document.getElementById('readout').textContent =
+          `side column ${col}px · widest heading needs ${worst}px · ` +
+          (overflowing ? `${overflowing} heading(s) do not fit` : 'all headings fit')
+      }
+
+      for (const b of document.querySelectorAll('[data-split]')) {
+        b.addEventListener('click', () => {
+          root.style.setProperty('--split', b.dataset.split)
+          press('split', b.dataset.split)
+          audit()
+        })
+      }
+      for (const b of document.querySelectorAll('[data-h2]')) {
+        b.addEventListener('click', () => {
+          root.style.setProperty('--h2', b.dataset.h2)
+          press('h2', b.dataset.h2)
+          audit()
+        })
+      }
+      document.querySelector('[data-sticky]').addEventListener('click', (e) => {
+        const on = body.classList.toggle('sticky')
+        e.currentTarget.setAttribute('aria-pressed', String(on))
+      })
+      addEventListener('resize', audit)
+      audit()
+    </script>
+  </body>
+</html>
