@@ -3,8 +3,8 @@ import { Hero } from './sections/Hero'
 import { Showreel } from './sections/Showreel'
 import { Stats } from './sections/Stats'
 import { Services } from './sections/Services'
-import { WhyChooseUs } from './sections/WhyChooseUs'
 import { Portfolio } from './sections/Portfolio'
+import { WhyChooseUs } from './sections/WhyChooseUs'
 import { Academy } from './sections/Academy'
 import { Faq } from './sections/Faq'
 import { Contact } from './sections/Contact'
@@ -21,8 +21,8 @@ function App() {
       <Showreel />
       <Stats />
       <Services />
-      <WhyChooseUs />
       <Portfolio />
+      <WhyChooseUs />
       <Academy />
       <Faq />
       <Contact />

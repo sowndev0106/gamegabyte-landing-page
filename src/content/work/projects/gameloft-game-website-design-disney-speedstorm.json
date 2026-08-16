@@ -53,12 +53,14 @@
       "caption": ""
     },
     {
-      "type": "embed",
-      "url": "https://player.vimeo.com/video/909793971?h=1640682ca9&badge=0&autoplay=1&loop=1&autopause=0&player_id=0&app_id=58479",
-      "provider": "vimeo",
-      "width": 1400,
-      "height": 740,
-      "caption": ""
+      "type": "video",
+      "src": "/assets/img/work/gameloft-game-website-design-disney-speedstorm/embed-02.webm",
+      "poster": "/assets/img/work/gameloft-game-website-design-disney-speedstorm/embed-02.webp",
+      "width": 1600,
+      "height": 844,
+      "alt": "",
+      "caption": "",
+      "player": true
     },
     {
       "type": "image",

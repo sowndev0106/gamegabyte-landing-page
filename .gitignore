@@ -38,3 +38,4 @@ dist-ssr
 
 # generated work page shells (scripts/generate-pages.mjs)
 /work/
+.env

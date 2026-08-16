@@ -15,7 +15,8 @@ export type WorkBlock =
       caption: string
     }
   | {
-      // A GIF too long to ship as animated WebP, transcoded to h264.
+      // Either a GIF too long to ship as animated WebP, transcoded to h264, or
+      // a Vimeo/CCV player pulled onto our own domain by `mirror-video.mjs`.
       type: 'video'
       src: string
       poster: string
@@ -23,6 +24,16 @@ export type WorkBlock =
       height: number
       alt: string
       caption: string
+      /**
+       * True for a mirrored player, absent for a transcoded GIF. The two behave
+       * oppositely and are otherwise indistinguishable at the type level.
+       *
+       * Deliberately not "has audio": a mirrored film with a silent track is
+       * still several megabytes, and autoplaying it on a loop the way a 200KB
+       * GIF is autoplayed spends the reader's bandwidth on something they never
+       * asked to watch. Weight decides this, not sound.
+       */
+      player?: boolean
     }
   | {
       // Hosted elsewhere (Vimeo, Adobe CCV) and not mirrored — an iframe URL.

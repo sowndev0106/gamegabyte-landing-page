@@ -21,13 +21,21 @@ export const assets = {
     '/assets/img/portfolio/fantasy-character-art.webp',
     '/assets/img/portfolio/beyond-the-keep-menu.webp',
   ],
-  reelPoster: '/assets/img/portfolio/nova-core-ui.webp',
-  // Key art for the current master class, cropped from the course poster to the
-  // mascot side. The poster's right half is its own typeset billing block —
-  // course number, date, schedule — and it is deliberately cropped out: that
-  // information is set as real text in `Academy`, where it can be read, copied
-  // and translated. The crop keeps the Master Classes lockup and the
-  // instructor's signature, which are art rather than data.
+  // Cut from the reel itself rather than borrowed from the portfolio grid, so
+  // the still under the play button is a frame of what actually plays. Lives
+  // beside its video on the same stem, the way mirrored project video does.
+  reelPoster: '/video/reel-2025.webp',
+  // The studio's poster for the current master class, whole and uncropped at
+  // its native 16:9. `Academy` gives it a full-width frame at that exact ratio,
+  // so nothing composed into it — the mascot, the billing block, the Master
+  // Classes lockup, the instructor's signature — is ever trimmed by a column.
+  //
+  // Its right half is a typeset billing block: course number, date, schedule.
+  // Type baked into an image cannot be read by a screen reader, selected,
+  // translated or searched, and at 350px wide it is barely legible at all — so
+  // `academy.course.rows` sets the same four facts as real text under the
+  // frame. That is a deliberate duplication, not an oversight: the poster is
+  // the picture of the course, the strip is the readable copy of it.
   academyCourse: '/assets/img/academy/game-uxui-fundamentals.webp',
   video: '/video/reel-2025.mp4',
 } as const
@@ -156,31 +164,42 @@ export const content = {
   },
   academy: {
     title: 'Learn the system.',
-    body: 'GaByte Academy is the studio teaching what it ships. Live online master classes in game UX/UI, run by the designers doing the client work — small intakes, real briefs, feedback on every piece of homework.',
+    // The course number and the instructor are carried here rather than in the
+    // card beside the poster. Both are printed on the poster, but type baked
+    // into an image cannot be read by a screen reader, selected, searched or
+    // translated, and it is gone entirely if the image fails — so they are held
+    // in a sentence, which costs the card no height. See `Academy`.
+    body: 'GaByte Academy is the studio teaching what it ships. Course #03 is a live online master class in game UX/UI with Thalia Tran — small intakes, real briefs, and feedback on every piece of homework.',
     cta: 'Register now',
-    destination: 'Destination / external',
     // The course lives off-site; this was the only external destination in the
     // old nav list, so it moved here when the rail replaced that list. The
     // panel prints this host, derived from the URL rather than retyped.
     href: 'https://game-uxui-fundamentals.gamegabyte.com/',
-    // Every field below is printed on the course poster this section's art is
-    // cropped from (`assets.academyCourse`) — nothing here is inferred. The
-    // course name keeps the poster's spelling, `UXUI`, which is also the host.
-    // NOTE: `date` is a fixed intake, not an evergreen line. Once 17 Sep 2026
-    // passes, this block is stale copy, not a design problem — update it (or
-    // the studio's next intake) here, in one place.
+    // Both facts below are printed on the poster (`assets.academyCourse`) —
+    // nothing here is inferred. The name keeps the poster's spelling, `UXUI`,
+    // which is also the host.
+    //
+    // Two rows, and the card is full. They are the two a visitor needs before
+    // clicking, and they are what the height beside a 16:9 poster affords — a
+    // third row makes the column taller than the artwork it sits next to and
+    // the poster starts floating in a band of ink. The rest of the poster's
+    // billing block (the free 1:1 homework support, the A/B prompts) stays on
+    // the poster.
+    //
+    // NOTE: `Starts` is a fixed intake, not an evergreen date. Once 17 Sep 2026
+    // passes this is stale copy, not a design problem — update it, and
+    // `assets.academyCourse`, for the studio's next intake.
     course: {
-      label: 'Online course #03',
       name: 'Game UXUI Fundamentals',
-      // The keys are the panel's row labels; keeping them here means the card
+      // The keys are the card's row labels; keeping them here means the card
       // never hard-codes a user-visible string in JSX.
       rows: [
         { key: 'Starts', value: '17 September 2026' },
         { key: 'Live', value: 'Every Thursday, 8:00–10:30 PM' },
-        { key: 'Taught by', value: 'Thalia Tran' },
-        { key: 'Included', value: 'Unlimited 1:1 homework support, free' },
       ],
-      alt: 'Key art for Game UXUI Fundamentals: a hooded sprout character in a purple mushroom forest, signed by instructor Thalia Tran.',
+      // The schedule is set as text beside the poster, so the alt describes the
+      // picture rather than reciting the billing block a second time.
+      alt: 'Poster for Game UXUI Fundamentals: a hooded sprout character standing in a purple mushroom forest, with the course details typeset beside it and instructor Thalia Tran’s signature below.',
     },
   },
   faqSection: {
