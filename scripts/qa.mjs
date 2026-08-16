@@ -111,6 +111,9 @@ for (const viewport of VIEWPORTS) {
     await page.waitForTimeout(300)
   }
 
+  const readouts = await page.locator('#telemetry [data-readout-value]').allTextContents()
+  check(`${viewport.label}: four telemetry readouts`, readouts.length === 4, readouts.join(','))
+
   for (const section of SECTIONS) {
     const el = page.locator(`#${section.id}`)
     const count = await el.count()

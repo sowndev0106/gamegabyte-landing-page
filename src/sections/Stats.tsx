@@ -2,51 +2,58 @@ import { content } from '../content/content'
 import { Reveal } from '../components/motion/Reveal'
 import { CountUp } from '../components/motion/CountUp'
 import { Container } from '../components/ui/Container'
-import { Section, GlowSpot } from '../components/ui/Section'
+import { Section } from '../components/ui/Section'
 import { SectionHeader } from '../components/ui/SectionHeader'
+import { Readout } from '../components/ui/Readout'
+
+const SUPPORTING_LABELS = ['Experience', 'Method', 'Origin']
 
 export function Stats() {
-  const primaryStat = content.stats[0]
+  const [primary, ...supporting] = content.stats
 
   return (
-    <Section
-      id="telemetry"
-      data-export="stats"
-      grid
-      backdrop={<GlowSpot className="left-[10%] top-[10%] h-[300px] w-[500px]" />}
-    >
+    <Section id="telemetry" grid data-export="stats">
       <Container>
-        <SectionHeader
-          id="telemetry"
-          title={content.trust.title}
-          description={content.trust.note}
-        />
+        <SectionHeader id="telemetry" title={content.trust.title} description={content.trust.note} />
 
         <Reveal>
-          <div className="stats-command-board">
-            <article className="stats-command-primary">
-              <span className="stats-command-status">Studio signal / active</span>
+          <div className="grid border border-white/11 lg:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)]">
+            <article className="relative flex min-h-85 flex-col justify-between overflow-hidden border-b border-white/11 p-7 lg:min-h-107.5 lg:border-r lg:border-b-0 lg:p-12">
+              <span className="flex items-center gap-2.5 font-mono text-[10px] uppercase tracking-[0.18em] text-accent">
+                <span aria-hidden="true" className="command-status-dot h-1.75 w-1.75 rounded-full bg-accent" />
+                Studio signal / active
+              </span>
+              {/* A single wide ring, cropped by the panel — the telemetry
+                  equivalent of a dial you only see part of. */}
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute -right-22.5 -bottom-35 h-97.5 w-97.5 rounded-full border border-accent/18"
+              />
               <div className="relative z-10">
-                <CountUp value={primaryStat.value} className="stats-command-primary-value" />
-                <p className="stats-command-label mt-8">{primaryStat.label}</p>
-                {primaryStat.note && <p className="stats-command-note mt-3">{primaryStat.note}</p>}
+                <Readout
+                  size="lg"
+                  label="01 / Volume"
+                  value={<CountUp value={primary.value} />}
+                  title={primary.label}
+                  note={primary.note}
+                />
               </div>
             </article>
 
-            <div className="stats-command-secondary">
-              {content.stats.slice(1).map((stat, index) => (
-                <article key={stat.label} className="stats-command-reading">
-                  <span className="stats-command-index">
-                    {String(index + 2).padStart(2, '0')} / {index === 0 ? 'Experience' : index === 1 ? 'Method' : 'Origin'}
-                  </span>
-                  <CountUp value={stat.value} className="stats-command-value" />
-                  <p className="stats-command-label mt-5">{stat.label}</p>
-                  {stat.note && <p className="stats-command-note mt-2">{stat.note}</p>}
-                  {index === 2 && (
-                    <svg className="stats-signal-trace" viewBox="0 0 118 35" aria-hidden="true">
-                      <polyline points="0,25 18,25 25,10 35,31 45,18 53,25 72,25 79,15 88,25 118,25" />
-                    </svg>
-                  )}
+            <div className="grid lg:grid-cols-2">
+              {supporting.map((stat, i) => (
+                <article
+                  key={stat.label}
+                  className={`min-w-0 border-white/11 p-7 lg:p-8 ${
+                    i < 2 ? 'border-b' : 'lg:col-span-2'
+                  } ${i === 0 ? 'lg:border-r' : ''}`}
+                >
+                  <Readout
+                    label={`0${i + 2} / ${SUPPORTING_LABELS[i]}`}
+                    value={<CountUp value={stat.value} />}
+                    title={stat.label}
+                    note={stat.note}
+                  />
                 </article>
               ))}
             </div>
