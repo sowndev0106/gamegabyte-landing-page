@@ -50,7 +50,7 @@ function page({ title, description, canonical, image, entry }) {
     <meta property="og:description" content="${escape(description)}" />
     <meta property="og:type" content="article" />
     <meta property="og:url" content="${escape(canonical)}" />
-${image ? `    <meta property="og:image" content="${escape(image)}" />\n    <meta name="twitter:card" content="summary_large_image" />\n` : ''}    <link rel="icon" href="/assets/img/cd9d6a45540edadf4778c6654fa8c3501df46b99.webp" />
+${image ? `    <meta property="og:image" content="${escape(image)}" />\n    <meta name="twitter:card" content="summary_large_image" />\n` : ''}    <link rel="icon" href="/assets/img/brand/favicon.png" />
   </head>
   <body>
     <div id="root"></div>

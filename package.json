@@ -18,6 +18,7 @@
     "preview": "vite preview",
     "deploy": "npm run build && wrangler pages deploy dist --project-name=gamegabyte-web",
     "optimize": "node scripts/optimize-images.mjs",
+    "favicons": "node scripts/generate-favicons.mjs",
     "clone:behance": "node scripts/clone-behance.mjs",
     "pages": "node scripts/generate-pages.mjs"
   },

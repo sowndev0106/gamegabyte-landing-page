@@ -22,6 +22,13 @@ export const assets = {
     '/assets/img/portfolio/beyond-the-keep-menu.webp',
   ],
   reelPoster: '/assets/img/portfolio/nova-core-ui.webp',
+  // Key art for the current master class, cropped from the course poster to the
+  // mascot side. The poster's right half is its own typeset billing block —
+  // course number, date, schedule — and it is deliberately cropped out: that
+  // information is set as real text in `Academy`, where it can be read, copied
+  // and translated. The crop keeps the Master Classes lockup and the
+  // instructor's signature, which are art rather than data.
+  academyCourse: '/assets/img/academy/game-uxui-fundamentals.webp',
   video: '/video/reel-2025.mp4',
 } as const
 
@@ -148,14 +155,33 @@ export const content = {
     ],
   },
   academy: {
-    title: 'GaByte Academy',
-    body: 'Training and resources for game studios.',
-    cta: 'Learn more',
+    title: 'Learn the system.',
+    body: 'GaByte Academy is the studio teaching what it ships. Live online master classes in game UX/UI, run by the designers doing the client work — small intakes, real briefs, feedback on every piece of homework.',
+    cta: 'Register now',
     destination: 'Destination / external',
     // The course lives off-site; this was the only external destination in the
     // old nav list, so it moved here when the rail replaced that list. The
     // panel prints this host, derived from the URL rather than retyped.
     href: 'https://game-uxui-fundamentals.gamegabyte.com/',
+    // Every field below is printed on the course poster this section's art is
+    // cropped from (`assets.academyCourse`) — nothing here is inferred. The
+    // course name keeps the poster's spelling, `UXUI`, which is also the host.
+    // NOTE: `date` is a fixed intake, not an evergreen line. Once 17 Sep 2026
+    // passes, this block is stale copy, not a design problem — update it (or
+    // the studio's next intake) here, in one place.
+    course: {
+      label: 'Online course #03',
+      name: 'Game UXUI Fundamentals',
+      // The keys are the panel's row labels; keeping them here means the card
+      // never hard-codes a user-visible string in JSX.
+      rows: [
+        { key: 'Starts', value: '17 September 2026' },
+        { key: 'Live', value: 'Every Thursday, 8:00–10:30 PM' },
+        { key: 'Taught by', value: 'Thalia Tran' },
+        { key: 'Included', value: 'Unlimited 1:1 homework support, free' },
+      ],
+      alt: 'Key art for Game UXUI Fundamentals: a hooded sprout character in a purple mushroom forest, signed by instructor Thalia Tran.',
+    },
   },
   faqSection: {
     title: 'Questions / decoded.',
