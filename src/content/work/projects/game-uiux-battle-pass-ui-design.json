@@ -1,12 +1,15 @@
 {
   "id": "219355389",
   "slug": "game-uiux-battle-pass-ui-design",
-  "title": "Game UI/UX | Battle Pass UI Design",
+  "title": "Emberborn Saga — Battle Pass",
+  "sourceTitle": "Game UI/UX | Battle Pass UI Design",
   "titleParts": [
     "Game UI/UX",
     "Battle Pass UI Design"
   ],
-  "description": "",
+  "client": "",
+  "engagement": "challenge",
+  "description": "A season pass system for a fictional open-world RPG, made for the UI Peeps monthly challenge. Celestial-fantasy art direction — ethereal light, floating islands, gold accents — carries a reward track, tier progression and monetisation surfaces that have to stay legible under heavy ornament.",
   "cover": "/assets/img/work/game-uiux-battle-pass-ui-design/cover.webp",
   "coverWidth": 1920,
   "coverHeight": 1479,

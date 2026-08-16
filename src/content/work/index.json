@@ -2,12 +2,15 @@
   {
     "id": "239775853",
     "slug": "seedworld-game-ui-creative-mode",
-    "title": "Seedworld Game UI | Creative Mode",
+    "title": "Seedworld — Creative Mode",
+    "sourceTitle": "Seedworld Game UI | Creative Mode",
     "titleParts": [
       "Seedworld Game UI",
       "Creative Mode"
     ],
-    "description": "A UI/UX showcase for Seedworld’s Creative Mode, featuring interfaces crafted to support world-building, terrain editing, and asset creation.",
+    "client": "Seedworld Studio",
+    "engagement": "client",
+    "description": "Interface design for Creative Mode, the world-building layer of Seedworld's UGC metaverse. The screens cover island selection, terraforming and painting tools, structure and decoration placement, and the prefab asset library — a builder's toolkit that has to stay readable while the player is mid-edit.",
     "cover": "/assets/img/work/seedworld-game-ui-creative-mode/cover.webp",
     "coverWidth": 2048,
     "coverHeight": 1152,
@@ -31,13 +34,16 @@
   {
     "id": "236189895",
     "slug": "game-platform-uiux-design-seedworld-quests",
-    "title": "Game Platform | UI/UX Design | Seedworld Quests",
+    "title": "Seedworld Quests",
+    "sourceTitle": "Game Platform | UI/UX Design | Seedworld Quests",
     "titleParts": [
       "Game Platform",
       "UI/UX Design",
       "Seedworld Quests"
     ],
-    "description": "",
+    "client": "Seedworld Studio",
+    "engagement": "client",
+    "description": "A gamified web platform where players complete quests, battles and community actions to earn points and rewards. Fantasy RPG styling sits over modern web-app usability: landing page, one-time and daily quest boards, progress tracking and social connect flows, built responsive from desktop down to phone.",
     "cover": "/assets/img/work/game-platform-uiux-design-seedworld-quests/cover.webp",
     "coverWidth": 2048,
     "coverHeight": 1577,
@@ -64,12 +70,15 @@
   {
     "id": "237264481",
     "slug": "game-ui-sparkball-hero-selection-menu",
-    "title": "Game UI | Sparkball Hero Selection Menu",
+    "title": "Sparkball — Hero Select",
+    "sourceTitle": "Game UI | Sparkball Hero Selection Menu",
     "titleParts": [
       "Game UI",
       "Sparkball Hero Selection Menu"
     ],
-    "description": "",
+    "client": "OptiGames",
+    "engagement": "client",
+    "description": "New visual directions for the hero select screen of Sparkball, OptiGames' fast-paced 4v4 competitive sports-brawler. The work explored layouts that give each hero a stronger individual presence while keeping the team overview clean and readable at match speed.",
     "cover": "/assets/img/work/game-ui-sparkball-hero-selection-menu/cover.webp",
     "coverWidth": 2048,
     "coverHeight": 1600,
@@ -96,12 +105,15 @@
   {
     "id": "237182449",
     "slug": "game-website-design-waterpark-simulator",
-    "title": "Game Website Design | Waterpark Simulator",
+    "title": "Waterpark Simulator",
+    "sourceTitle": "Game Website Design | Waterpark Simulator",
     "titleParts": [
       "Game Website Design",
       "Waterpark Simulator"
     ],
-    "description": "",
+    "client": "",
+    "engagement": "client",
+    "description": "The official website for Waterpark Simulator, taken from concept to launch in nineteen days. Bright, high-energy art direction matched to the game, tuned for fast loading under heavy visuals and for both EN and VN audiences. The launch reported 26K active users, 151K event interactions and a top-three Google ranking for the game's name.",
     "cover": "/assets/img/work/game-website-design-waterpark-simulator/cover.webp",
     "coverWidth": 2048,
     "coverHeight": 1600,
@@ -128,12 +140,15 @@
   {
     "id": "190730687",
     "slug": "gameloft-game-website-design-disney-speedstorm",
-    "title": "Gameloft Game Website Design | Disney Speedstorm",
+    "title": "Disney Speedstorm",
+    "sourceTitle": "Gameloft Game Website Design | Disney Speedstorm",
     "titleParts": [
       "Gameloft Game Website Design",
       "Disney Speedstorm"
     ],
-    "description": "",
+    "client": "Gameloft",
+    "engagement": "client",
+    "description": "The official website for Disney Speedstorm, Gameloft Barcelona's free-to-play kart racer, launched in April 2023 with the Gameloft Saigon web marketing team. It carries the early-access story: character lineup, the three Founder's Pack tiers, pre-orders, Twitch Drops milestones and the news system.",
     "cover": "/assets/img/work/gameloft-game-website-design-disney-speedstorm/cover.webp",
     "coverWidth": 2048,
     "coverHeight": 1577,
@@ -162,12 +177,15 @@
   {
     "id": "208782363",
     "slug": "gaming-website-design-carmen-sandiego",
-    "title": "Gaming Website Design | Carmen Sandiego",
+    "title": "Carmen Sandiego",
+    "sourceTitle": "Gaming Website Design | Carmen Sandiego",
     "titleParts": [
       "Gaming Website Design",
       "Carmen Sandiego"
     ],
-    "description": "",
+    "client": "",
+    "engagement": "",
+    "description": "A website for Carmen Sandiego built around storytelling rather than a feature list, leaning on the character's register of mystery and nostalgia. A 'Traverse the Globe' world map turns the game's core mechanic — global exploration — into the page's main interaction.",
     "cover": "/assets/img/work/gaming-website-design-carmen-sandiego/cover.webp",
     "coverWidth": 1400,
     "coverHeight": 1078,
@@ -195,11 +213,14 @@
   {
     "id": "240684015",
     "slug": "asphalt-legends-unite-rewind-campaign-2024",
-    "title": "Asphalt Legends Unite Rewind Campaign (2024)",
+    "title": "Asphalt Legends Unite — Rewind",
+    "sourceTitle": "Asphalt Legends Unite Rewind Campaign (2024)",
     "titleParts": [
       "Asphalt Legends Unite Rewind Campaign (2024)"
     ],
-    "description": "",
+    "client": "",
+    "engagement": "",
+    "description": "Rewind is a brand-led campaign marking Asphalt's move from Asphalt 9 to Asphalt Legends Unite. A personalised year-in-review hands each player their own stats and story, using nostalgia as the emotional hook while establishing a bolder, esports-facing identity for the Unite era. Brand, UI/UX, visual system and interactive experience.",
     "cover": "/assets/img/work/asphalt-legends-unite-rewind-campaign-2024/cover.webp",
     "coverWidth": 2048,
     "coverHeight": 1536,
@@ -228,12 +249,15 @@
   {
     "id": "219355389",
     "slug": "game-uiux-battle-pass-ui-design",
-    "title": "Game UI/UX | Battle Pass UI Design",
+    "title": "Emberborn Saga — Battle Pass",
+    "sourceTitle": "Game UI/UX | Battle Pass UI Design",
     "titleParts": [
       "Game UI/UX",
       "Battle Pass UI Design"
     ],
-    "description": "",
+    "client": "",
+    "engagement": "challenge",
+    "description": "A season pass system for a fictional open-world RPG, made for the UI Peeps monthly challenge. Celestial-fantasy art direction — ethereal light, floating islands, gold accents — carries a reward track, tier progression and monetisation surfaces that have to stay legible under heavy ornament.",
     "cover": "/assets/img/work/game-uiux-battle-pass-ui-design/cover.webp",
     "coverWidth": 1920,
     "coverHeight": 1479,
@@ -254,12 +278,15 @@
   {
     "id": "190721493",
     "slug": "gaming-website-uiux-design-disney-magic-kingdoms",
-    "title": "Gaming Website UIUX Design | Disney Magic Kingdoms",
+    "title": "Disney Magic Kingdoms",
+    "sourceTitle": "Gaming Website UIUX Design | Disney Magic Kingdoms",
     "titleParts": [
       "Gaming Website UIUX Design",
       "Disney Magic Kingdoms"
     ],
-    "description": "",
+    "client": "Gameloft",
+    "engagement": "client",
+    "description": "A full revamp of the Disney Magic Kingdoms site, live in January 2024 with the Gameloft Saigon web marketing team. The role covered theme, mood and animation direction plus the final desktop and mobile mockups — homepage, newsletter capture, featured news and the update article template.",
     "cover": "/assets/img/work/gaming-website-uiux-design-disney-magic-kingdoms/cover.webp",
     "coverWidth": 2048,
     "coverHeight": 1577,
@@ -288,13 +315,16 @@
   {
     "id": "210595511",
     "slug": "game-landing-page-game-website-the-lost-tyrants",
-    "title": "Game Landing Page | Game Website | The Lost Tyrants",
+    "title": "The Lost Tyrants",
+    "sourceTitle": "Game Landing Page | Game Website | The Lost Tyrants",
     "titleParts": [
       "Game Landing Page",
       "Game Website",
       "The Lost Tyrants"
     ],
-    "description": "",
+    "client": "Gameloft",
+    "engagement": "client",
+    "description": "A landing page for The Lost Tyrants, the event that replaced Divine Events in Gameloft's Dragon Mania Legends. It introduces the new Dragon Grid mechanic, the Tyrant element and the event's cast — an in-game storyline retold as a standalone page.",
     "cover": "/assets/img/work/game-landing-page-game-website-the-lost-tyrants/cover.webp",
     "coverWidth": 2048,
     "coverHeight": 1536,
@@ -315,12 +345,15 @@
   {
     "id": "220702859",
     "slug": "game-website-uiux-design-starborn",
-    "title": "Game Website UI/UX Design | Starborn",
+    "title": "Starborn",
+    "sourceTitle": "Game Website UI/UX Design | Starborn",
     "titleParts": [
       "Game Website UI/UX Design",
       "Starborn"
     ],
-    "description": "",
+    "client": "",
+    "engagement": "concept",
+    "description": "A self-initiated exercise in adapting UI/UX to a game style that did not exist yet. It runs the full path from wireframe to UI to high-fidelity prototype, building Starborn's branding and landing page around a character cast and a near-future street setting.",
     "cover": "/assets/img/work/game-website-uiux-design-starborn/cover.webp",
     "coverWidth": 2048,
     "coverHeight": 1577,
@@ -345,12 +378,15 @@
   {
     "id": "220883439",
     "slug": "game-website-design-game-uiux",
-    "title": "Game Website Design | Game UI/UX",
+    "title": "Carnivora",
+    "sourceTitle": "Game Website Design | Game UI/UX",
     "titleParts": [
       "Game Website Design",
       "Game UI/UX"
     ],
-    "description": "",
+    "client": "",
+    "engagement": "",
+    "description": "Carnivora, a game website built on a documented component system rather than one-off layouts. Vina Sans and Teachers set the type, a neon pink-and-cyan palette sets the tone, and buttons, cards and navigation are specified before the page is assembled from them.",
     "cover": "/assets/img/work/game-website-design-game-uiux/cover.webp",
     "coverWidth": 2048,
     "coverHeight": 1577,
@@ -371,13 +407,16 @@
   {
     "id": "208921493",
     "slug": "game-banner-game-social-post",
-    "title": "Game Banner | Game | Social Post",
+    "title": "Seedworld — Campaign Art",
+    "sourceTitle": "Game Banner | Game | Social Post",
     "titleParts": [
       "Game Banner",
       "Game",
       "Social Post"
     ],
-    "description": "",
+    "client": "Seedworld Studio",
+    "engagement": "client",
+    "description": "A run of banners and social posts for Seedworld: dev updates, the Mercenary Bunkhouse drop, $SWORLD points staking, Mounts & Vanguards, and the 2024 roadmap. One visual system stretched across announcement posters, article headers and social cards without coming apart.",
     "cover": "/assets/img/work/game-banner-game-social-post/cover.webp",
     "coverWidth": 2048,
     "coverHeight": 1577,
@@ -398,12 +437,15 @@
   {
     "id": "208861217",
     "slug": "game-store-uiux-design",
-    "title": "Game Store | UI/UX Design",
+    "title": "Gameloft Shop",
+    "sourceTitle": "Game Store | UI/UX Design",
     "titleParts": [
       "Game Store",
       "UI/UX Design"
     ],
-    "description": "",
+    "client": "Gameloft",
+    "engagement": "client",
+    "description": "Gameloft Shop, the storefront for exclusive offers, discounts and pre-releases across Gameloft's catalogue. The work covers the club header, the featured pack promotion and the game list carrying March of Empires, War Planet Online, Ballistic Baseball, Brothers in Arms 3 and Dungeon Hunter Champions.",
     "cover": "/assets/img/work/game-store-uiux-design/cover.webp",
     "coverWidth": 808,
     "coverHeight": 632,
@@ -427,12 +469,15 @@
   {
     "id": "187028411",
     "slug": "gaming-website-design-clash-of-clans-website-revamp",
-    "title": "Gaming Website Design | Clash of Clans Website Revamp",
+    "title": "Clash of Clans — Revamp",
+    "sourceTitle": "Gaming Website Design | Clash of Clans Website Revamp",
     "titleParts": [
       "Gaming Website Design",
       "Clash of Clans Website Revamp"
     ],
-    "description": "",
+    "client": "",
+    "engagement": "concept",
+    "description": "An unsolicited concept revamp of the Clash of Clans site, aimed at new players rather than returning ones: clearer navigation, one obvious call to action, and a front page that sells the game before it explains it.",
     "cover": "/assets/img/work/gaming-website-design-clash-of-clans-website-revamp/cover.webp",
     "coverWidth": 2048,
     "coverHeight": 1577,
@@ -461,13 +506,16 @@
   {
     "id": "210510493",
     "slug": "game-landing-page-game-campaign-website",
-    "title": "Game Landing Page | Game | Campaign Website",
+    "title": "March of Empires — Medieval Fair",
+    "sourceTitle": "Game Landing Page | Game | Campaign Website",
     "titleParts": [
       "Game Landing Page",
       "Game",
       "Campaign Website"
     ],
-    "description": "",
+    "client": "",
+    "engagement": "",
+    "description": "A campaign landing page bringing March of Empires to the Medieval Fair of Norman. Festival attendees spin a wheel for exclusive in-game rewards across four reward types — a physical-event mechanic mapped onto a responsive page.",
     "cover": "/assets/img/work/game-landing-page-game-campaign-website/cover.webp",
     "coverWidth": 2048,
     "coverHeight": 1536,

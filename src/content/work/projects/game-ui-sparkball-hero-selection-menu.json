@@ -1,12 +1,15 @@
 {
   "id": "237264481",
   "slug": "game-ui-sparkball-hero-selection-menu",
-  "title": "Game UI | Sparkball Hero Selection Menu",
+  "title": "Sparkball — Hero Select",
+  "sourceTitle": "Game UI | Sparkball Hero Selection Menu",
   "titleParts": [
     "Game UI",
     "Sparkball Hero Selection Menu"
   ],
-  "description": "",
+  "client": "OptiGames",
+  "engagement": "client",
+  "description": "New visual directions for the hero select screen of Sparkball, OptiGames' fast-paced 4v4 competitive sports-brawler. The work explored layouts that give each hero a stronger individual presence while keeping the team overview clean and readable at match speed.",
   "cover": "/assets/img/work/game-ui-sparkball-hero-selection-menu/cover.webp",
   "coverWidth": 2048,
   "coverHeight": 1600,

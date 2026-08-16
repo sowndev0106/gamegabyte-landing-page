@@ -1,12 +1,15 @@
 {
   "id": "208861217",
   "slug": "game-store-uiux-design",
-  "title": "Game Store | UI/UX Design",
+  "title": "Gameloft Shop",
+  "sourceTitle": "Game Store | UI/UX Design",
   "titleParts": [
     "Game Store",
     "UI/UX Design"
   ],
-  "description": "",
+  "client": "Gameloft",
+  "engagement": "client",
+  "description": "Gameloft Shop, the storefront for exclusive offers, discounts and pre-releases across Gameloft's catalogue. The work covers the club header, the featured pack promotion and the game list carrying March of Empires, War Planet Online, Ballistic Baseball, Brothers in Arms 3 and Dungeon Hunter Champions.",
   "cover": "/assets/img/work/game-store-uiux-design/cover.webp",
   "coverWidth": 808,
   "coverHeight": 632,

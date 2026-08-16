@@ -1,12 +1,15 @@
 {
   "id": "190730687",
   "slug": "gameloft-game-website-design-disney-speedstorm",
-  "title": "Gameloft Game Website Design | Disney Speedstorm",
+  "title": "Disney Speedstorm",
+  "sourceTitle": "Gameloft Game Website Design | Disney Speedstorm",
   "titleParts": [
     "Gameloft Game Website Design",
     "Disney Speedstorm"
   ],
-  "description": "",
+  "client": "Gameloft",
+  "engagement": "client",
+  "description": "The official website for Disney Speedstorm, Gameloft Barcelona's free-to-play kart racer, launched in April 2023 with the Gameloft Saigon web marketing team. It carries the early-access story: character lineup, the three Founder's Pack tiers, pre-orders, Twitch Drops milestones and the news system.",
   "cover": "/assets/img/work/gameloft-game-website-design-disney-speedstorm/cover.webp",
   "coverWidth": 2048,
   "coverHeight": 1577,

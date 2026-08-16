@@ -39,9 +39,16 @@ export type WorkBlock =
 export type WorkSummary = {
   id: string
   slug: string
+  /** Display name. Hand-written in `overrides.json` where Behance's is a keyword string. */
   title: string
-  /** `title` split on '|' — Behance titles are pipe-delimited, ours need not be. */
+  /** What Behance calls it, kept so the two can be matched up. */
+  sourceTitle: string
+  /** `sourceTitle` split on '|' — Behance titles are pipe-delimited, ours need not be. */
   titleParts: string[]
+  /** '' where the artwork never named one — do not guess on a studio site. */
+  client: string
+  /** '' means unclassified, not "client work". See overrides.json. */
+  engagement: '' | 'client' | 'concept' | 'challenge'
   description: string
   cover: string
   coverWidth: number

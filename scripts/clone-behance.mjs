@@ -351,7 +351,7 @@ function blockFor(module) {
   }
 }
 
-async function normalizeProject(entry) {
+async function normalizeProject(entry, override = {}) {
   const raw = JSON.parse(
     await readFile(path.join(RAW, 'projects', `${entry.id}-${entry.slug}.json`), 'utf8'),
   )
@@ -406,12 +406,21 @@ async function normalizeProject(entry) {
   const summary = {
     id: String(raw.id ?? entry.id),
     slug: entry.slug,
-    title,
+    // Behance titles are keyword strings, not names — "Game Website Design |
+    // Game UI/UX" is the project we call Carnivora. `title` is what we show;
+    // `sourceTitle` keeps what Behance called it so the two can be matched up.
+    title: override.title ?? title,
+    sourceTitle: title,
     titleParts: title
       .split('|')
       .map((s) => s.trim())
       .filter(Boolean),
-    description: raw.description ?? '',
+    client: override.client ?? '',
+    // Whether this was paid work, a self-directed concept, or a community
+    // challenge. A studio site that blurs the three is making a claim it cannot
+    // support, so the distinction is data rather than tone.
+    engagement: override.engagement ?? '',
+    description: override.description ?? raw.description ?? '',
     cover: publicPath(cover.file),
     coverWidth: cover.width,
     coverHeight: cover.height,
@@ -434,16 +443,37 @@ async function normalizeProject(entry) {
   return summary
 }
 
+/**
+ * Hand-written copy, merged over the clone.
+ *
+ * Behance carries almost no prose: 15 of these 16 projects have an empty
+ * `description`, and the real write-ups are baked into the artwork as pixels.
+ * So the copy lives here, in the one file a re-clone never touches, and the
+ * generated records stay generated.
+ */
+async function loadOverrides(slugs) {
+  const file = path.join(CONTENT, 'overrides.json')
+  if (!(await exists(file))) return {}
+  const overrides = JSON.parse(await readFile(file, 'utf8'))
+  // A typo'd slug would otherwise fail silently, and silently losing the only
+  // hand-written content in the pipeline is the worst outcome available.
+  for (const slug of Object.keys(overrides)) {
+    if (!slugs.has(slug)) throw new Error(`overrides.json: no project named "${slug}"`)
+  }
+  return overrides
+}
+
 async function normalize(limit) {
   const profile = JSON.parse(await readFile(path.join(RAW, 'profile.json'), 'utf8'))
   const entries = profile.projects.slice(0, limit)
-  console.log(`normalize: ${entries.length} projects`)
+  const overrides = await loadOverrides(new Set(entries.map((e) => e.slug)))
+  console.log(`normalize: ${entries.length} projects, ${Object.keys(overrides).length} overridden`)
 
   await mkdir(path.join(CONTENT, 'projects'), { recursive: true })
   const summaries = []
   for (const entry of entries) {
     try {
-      summaries.push(await normalizeProject(entry))
+      summaries.push(await normalizeProject(entry, overrides[entry.slug]))
     } catch (err) {
       fail(`normalize ${entry.slug}`, err)
     }
