@@ -115,10 +115,26 @@ makes a full sentence unreadable.
 
 | Size | Tracking | Role |
 |---|---|---|
+| 13px | `0.16em` | Desktop topbar only — its nav groups and its path readout. |
 | 11px | `0.22em` | Section eyebrow (`[04] SYSTEMS MATRIX`). Used by `SectionHeader` and the hero only. |
+| 11px | `0.16em` | Mobile sheet section link. |
 | 9px | `0.22em` | Panel label — short, one to three words. |
-| 9px | `0.16em` | Mono sentence: caption, control label, nav item, readout note. |
+| 9px | `0.16em` | Mono sentence: caption, control label, readout note. |
 | 8px | `0.18em` | Micro meta — badges, corner readings, the rail status. |
+
+The 13px step is the topbar's alone and does not open up to the rest of the
+page — a caption set at it stops reading as an aside. The bar's two strings
+share one size on purpose: they are the two halves of the same prompt, and at
+different sizes they read as two systems rather than one line. Two costs came
+with the step, both measured: the readout no longer fits beside the groups
+between `lg` and `xl`, so it waits for `xl` (see `CommandTopbar`); and the
+mobile sheet cannot take it at all — at 13px `02 / TRANSMISSION` and
+`08 / DIAGNOSTICS` wrap inside their grid cells at 390px, so the sheet holds at
+11px. The sheet is a two-column grid, not a bar; it is sized by its cell, not by
+the topbar it mirrors. At 11px it sets on one line from 360px up; at 320px the
+longest labels break after the index, which is accepted — the break lands at the
+`/`, and a grid row sizes to its tallest cell, so each row stays internally even.
+Below 360px is the only place the sheet is not a uniform ladder.
 
 ### Alignment
 

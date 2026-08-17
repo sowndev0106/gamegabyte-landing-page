@@ -17,9 +17,17 @@ import { ArrowUpRight } from '../ui/ArrowUpRight'
  *
  * How it collapses, in the order things can be spared:
  *
- *  - below `lg` the path goes, and the nav spacing and CTA padding tighten.
- *    Measured at `md` (760px, the narrowest the bar ever renders) this leaves
- *    76px between the last group and the CTA, so the groups never wrap.
+ *  - below `xl` the path goes. At the mono nav step the readout needs room the
+ *    bar does not have between `lg` and `xl`: the `GAMEGABYTE:` prefix alone
+ *    sets ~109px, and at 1100 only ~81px is free once the groups and the CTA
+ *    are placed. Revealing it at `lg` squeezed the CTA until it broke onto two
+ *    lines — so it now waits for `xl`, where the longest archive slug leaves
+ *    67px of slack.
+ *  - below `lg` the nav spacing and CTA padding tighten. Measured at `md`
+ *    (760px, the narrowest the bar ever renders) this leaves 26px between the
+ *    last group and the CTA, so the groups never wrap. That is the tightest the
+ *    bar gets; a sixth group or a label longer than `SERVICES` needs this
+ *    re-measured before it ships.
  *  - below `md` the whole bar goes and `MobileCommandBar` takes over with all
  *    nine sections. Groups are a desktop compression; the sheet has room for
  *    the real list.
@@ -52,7 +60,7 @@ export function CommandTopbar({
               key={group.id}
               href={`${base}#${group.sections[0]}`}
               aria-current={isActive ? 'true' : undefined}
-              className={`flex items-center gap-1.5 pr-4 font-mono text-[11px] uppercase tracking-[0.16em] transition-colors lg:pr-7 ${
+              className={`flex items-center gap-1.5 pr-4 font-mono text-[13px] uppercase tracking-[0.16em] transition-colors lg:pr-7 ${
                 isActive ? 'text-white' : 'text-white/48 hover:text-white'
               }`}
             >
@@ -96,7 +104,7 @@ export function CommandTopbar({
         */}
         <span
           aria-hidden="true"
-          className="hidden items-center pr-8 font-mono text-[9px] uppercase tracking-[0.16em] lg:flex"
+          className="hidden items-center pr-8 font-mono text-[13px] uppercase tracking-[0.16em] xl:flex"
         >
           <span className="shrink-0 text-white/30">{content.shell.host}:</span>
           {/*
@@ -116,7 +124,7 @@ export function CommandTopbar({
 
         <a
           href={`${base}#contact`}
-          className="flex items-center gap-2 self-stretch bg-accent px-6 font-display text-sm font-bold uppercase text-ink transition-colors hover:bg-accent-bright lg:px-11"
+          className="flex items-center gap-2 self-stretch whitespace-nowrap bg-accent px-6 font-display text-sm font-bold uppercase text-ink transition-colors hover:bg-accent-bright lg:px-11"
         >
           {content.shell.cta}
           <ArrowUpRight className="h-3.5 w-3.5" />
