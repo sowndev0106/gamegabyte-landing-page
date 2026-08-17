@@ -19,7 +19,7 @@ import { ArrowUpRight } from '../ui/ArrowUpRight'
  *
  *  - below `lg` the path goes, and the nav spacing and CTA padding tighten.
  *    Measured at `md` (760px, the narrowest the bar ever renders) this leaves
- *    127px between the last group and the CTA, so the groups never wrap.
+ *    76px between the last group and the CTA, so the groups never wrap.
  *  - below `md` the whole bar goes and `MobileCommandBar` takes over with all
  *    nine sections. Groups are a desktop compression; the sheet has room for
  *    the real list.
@@ -52,7 +52,7 @@ export function CommandTopbar({
               key={group.id}
               href={`${base}#${group.sections[0]}`}
               aria-current={isActive ? 'true' : undefined}
-              className={`flex items-center gap-1.5 pr-4 font-mono text-[9px] uppercase tracking-[0.16em] transition-colors lg:pr-7 ${
+              className={`flex items-center gap-1.5 pr-4 font-mono text-[11px] uppercase tracking-[0.16em] transition-colors lg:pr-7 ${
                 isActive ? 'text-white' : 'text-white/48 hover:text-white'
               }`}
             >

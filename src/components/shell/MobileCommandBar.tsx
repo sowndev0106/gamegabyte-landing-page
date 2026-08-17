@@ -53,7 +53,7 @@ export function MobileCommandBar({ active, base = '' }: { active: string; base?:
             href={`${base}#${section.id}`}
             aria-current={active === section.id ? 'true' : undefined}
             onClick={() => setOpen(false)}
-            className="border-b border-r border-white/11 px-4.5 py-4 font-mono text-[9px] uppercase tracking-[0.16em] text-white/70"
+            className="border-b border-r border-white/11 px-4.5 py-4 font-mono text-[11px] uppercase tracking-[0.16em] text-white/70"
           >
             {section.index} / {section.label}
           </a>
